@@ -7,11 +7,11 @@
 class TraceEvent {
 public:
 
-    TraceEvent(const std::string& _category, const std::string& _name);
+    TraceEvent(const char* _category, const char* _name);
     friend std::ostream& operator<<(std::ostream& os, const TraceEvent& te);
 
 private:
     const std::chrono::system_clock::duration time;
-    std::string category;
-    std::string name;
+    const char* category;
+    const char* name;
 };

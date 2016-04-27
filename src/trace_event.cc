@@ -1,7 +1,7 @@
 #include <vector>
 #include "trace_event.h"
 
-TraceEvent::TraceEvent(const std::string& _category, const std::string& _name)
+TraceEvent::TraceEvent(const char* _category, const char* _name)
         : time(std::chrono::system_clock::now().time_since_epoch()),
           name(_name),
           category(_category) {
@@ -23,12 +23,12 @@ std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     ttime -= s;
     auto ms = duration_cast<microseconds>(ttime);
 
-    auto len = snprintf(nullptr, 0, "TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>", d.count(), h.count(), m.count(), s.count(), ms.count(), te.category.c_str(), te.name.c_str());
+    auto len = snprintf(nullptr, 0, "TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>", d.count(), h.count(), m.count(), s.count(), ms.count(), te.category, te.name);
     buffer.resize(len + 1);
-    snprintf(buffer.data(), buffer.size(), "TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>", d.count(), h.count(), m.count(), s.count(), ms.count(), te.category.c_str(), te.name.c_str());
+    snprintf(buffer.data(), buffer.size(), "TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>", d.count(), h.count(), m.count(), s.count(), ms.count(), te.category, te.name);
 
 
-    os << std::string(buffer.data());
+    os << buffer.data();
 
     return os;
 }
