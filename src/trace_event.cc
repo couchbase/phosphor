@@ -1,4 +1,6 @@
 #include <vector>
+
+#include "string_utils.h"
 #include "trace_event.h"
 
 TraceEvent::TraceEvent(const char* _category, const char* _name)
@@ -10,7 +12,6 @@ TraceEvent::TraceEvent(const char* _category, const char* _name)
 std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     using namespace std::chrono;
     typedef duration<int, std::ratio_multiply<hours::period, std::ratio<24> >::type> days;
-    std::vector<char> buffer;
 
     auto ttime(te.time);
     auto d = duration_cast<days>(ttime);
@@ -23,12 +24,9 @@ std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     ttime -= s;
     auto ms = duration_cast<microseconds>(ttime);
 
-    auto len = snprintf(nullptr, 0, "TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>", d.count(), h.count(), m.count(), s.count(), ms.count(), te.category, te.name);
-    buffer.resize(len + 1);
-    snprintf(buffer.data(), buffer.size(), "TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>", d.count(), h.count(), m.count(), s.count(), ms.count(), te.category, te.name);
-
-
-    os << buffer.data();
+    os << format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>",
+                        d.count(), h.count(), m.count(), s.count(), ms.count(),
+                        te.category, te.name);
 
     return os;
 }

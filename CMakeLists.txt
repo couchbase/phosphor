@@ -11,6 +11,7 @@ include_directories(BEFORE
         ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(SOURCE_FILES
+        src/string_utils.cc
         src/trace_event.cc)
 add_library(event_tracer SHARED ${SOURCE_FILES})
 
