@@ -1,0 +1,27 @@
+# Keep the entries sorted to reduce the risk for a merge conflict
+*.[ao]
+*.dll
+*.dll.manifest
+*.dll.embed.manifest
+*.dll.embed.manifest.res
+*.dll.intermediate.manifest
+*.dll.resource.txt
+*.dylib
+*.exe
+*.exe.manifest
+*.exe.embed.manifest
+*.exe.embed.manifest.res
+*.exe.intermediate.manifest
+*.exe.resource.txt
+*.exp
+*.ilk
+*.lib
+*.pdb
+*.pyc
+*.so
+*.so.*
+*~
+/CMakeCache.txt
+/CMakeFiles/
+/CTestTestfile.cmake
+.DS_Store
