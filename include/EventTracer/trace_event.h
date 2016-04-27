@@ -11,7 +11,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const TraceEvent& te);
 
 private:
-    std::chrono::system_clock::duration time;
+    const std::chrono::system_clock::duration time;
     std::string category;
     std::string name;
 };
