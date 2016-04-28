@@ -9,6 +9,8 @@ TraceEvent::TraceEvent(const char* _category, const char* _name)
           category(_category) {
 }
 
+TraceEvent::TraceEvent() {}
+
 std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     using namespace std::chrono;
     typedef duration<int, std::ratio_multiply<hours::period, std::ratio<24> >::type> days;

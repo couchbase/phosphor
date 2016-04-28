@@ -12,6 +12,7 @@ include_directories(BEFORE
 
 set(SOURCE_FILES
         src/string_utils.cc
+        src/trace_buffer.cc
         src/trace_event.cc)
 add_library(event_tracer SHARED ${SOURCE_FILES})
 

@@ -6,12 +6,12 @@
 
 class TraceEvent {
 public:
-
+    TraceEvent();
     TraceEvent(const char* _category, const char* _name);
     friend std::ostream& operator<<(std::ostream& os, const TraceEvent& te);
 
 private:
-    const std::chrono::steady_clock::duration time;
+    std::chrono::steady_clock::duration time;
     const char* category;
     const char* name;
 };
