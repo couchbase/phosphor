@@ -4,7 +4,7 @@
 #include "trace_event.h"
 
 TraceEvent::TraceEvent(const char* _category, const char* _name)
-        : time(std::chrono::system_clock::now().time_since_epoch()),
+        : time(std::chrono::steady_clock::now().time_since_epoch()),
           name(_name),
           category(_category) {
 }
@@ -22,10 +22,10 @@ std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     ttime -= m;
     auto s = duration_cast<seconds>(ttime);
     ttime -= s;
-    auto ms = duration_cast<microseconds>(ttime);
+    auto us = duration_cast<nanoseconds>(ttime);
 
-    os << format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%06lld, %s, %s>",
-                        d.count(), h.count(), m.count(), s.count(), ms.count(),
+    os << format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s>",
+                        d.count(), h.count(), m.count(), s.count(), us.count(),
                         te.category, te.name);
 
     return os;
