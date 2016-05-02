@@ -16,34 +16,56 @@
  */
 
 #include <array>
+#include <thread>
 #include <vector>
 
 #include "trace_event.h"
 
 
+/**
+ * The mode of a TraceBuffer implementation
+ */
+enum class BufferMode : char {
+
+    /* Custom signifies a custom implementation given by the user */
+    custom = 0,
+
+    /* The Fixed mode uses a fixed amount of space and will get full */
+    fixed,
+
+    /* The Ring mode never runs out of space as it will reuse old chunks */
+    ring,
+};
+
+
+/**
+ * TraceBufferChunk represents an array of TraceEvents
+ *
+ * The TraceBufferChunk should be used from a single thread to
+ * store various events.
+ */
 class TraceBufferChunk {
-public:
     static constexpr auto chunk_page_count = 1;
     static constexpr auto page_size = 4096;
     static constexpr auto chunk_size = ((page_size * chunk_page_count) / sizeof(TraceEvent));
     using event_array = std::array<TraceEvent, chunk_size>;
 
+public:
+
     /**
      * Default constructor for a TraceBufferChunk
+     *
+     * @param seq_no_ Sequence number of the TraceBuffer the chunk comes from
+     * @param buffer_index_ Index in the TraceBuffer the chunk comes from
      */
-    TraceBufferChunk();
+    TraceBufferChunk(size_t seq_no_, size_t buffer_index_);
 
     /**
      * Used for adding TraceEvents to the chunk
      *
-     * Once this function is called the returned reference *must* be
-     * appropriately initialised as the bounds check will mark this
-     * as a valid Event.
-     *
-     * @return A non-const reference to a TraceEvent in the chunk
-     *         that can be used to set the event data
+     * @param event An rvalue reference to a TraceEvent to be added
      */
-    TraceEvent& addEvent();
+    void addEvent(TraceEvent&& event);
 
     /**
      * Used for reviewing TraceEvents in the chunk
@@ -71,14 +93,81 @@ public:
      */
     size_t count() const;
 
+    /**
+     * @return The index in the TraceBuffer the chunk comes from
+     */
+    size_t getIndex() const;
+
+    /**
+     * @return The sequence number of the TraceBuffer the chunk
+     *         came from
+     */
+    size_t getSeqno() const;
+
 private:
-    event_array::iterator next_free;
+    std::thread::id thread_id;
+    size_t seq_no;
+    size_t buffer_index;
+
+    u_short next_free;
     event_array chunk;
 };
 
+
+/**
+ * Type of a chunk pointer
+ */
+using chunk_ptr = std::unique_ptr<TraceBufferChunk>;
+
+
+/**
+ * Abstract base-class for a buffer of TraceEvents
+ *
+ * The TraceBuffer loans out TraceBufferChunks to individual
+ * threads to reduce lock-contention on event logging.
+ */
 class TraceBuffer {
 public:
-    TraceBuffer(size_t _buffer_size);
 
+    /**
+     * Virtual destructor
+     */
+    virtual ~TraceBuffer();
+
+    /**
+     * Used for getting a TraceBufferChunk to add events to
+     *
+     * @return A unique pointer to a TraceBufferChunk to
+     *         insert events into.
+     */
+    virtual std::unique_ptr<TraceBufferChunk> getChunk();
+
+    /**
+     * Used for returning a TraceBufferChunk once full
+     *
+     * @param chunk The chunk to be returned
+     */
+    virtual void returnChunk(chunk_ptr&& chunk);
+
+    /**
+     * Determine if there are no remaining chunks left to be
+     * used
+     *
+     * @return true if there are no chunks left or false
+     *         otherwise
+     */
+    virtual bool isFull() const;
+
+    /**
+     * @return The sequence number of the TraceBuffer
+     */
+    virtual size_t getSequence() const;
 
 };
+
+
+/**
+ * Interface for a TraceBuffer factory
+ */
+using trace_buffer_factory = std::unique_ptr<TraceBuffer>(size_t seq_no_,
+                                                          size_t buffer_size);
