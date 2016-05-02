@@ -19,7 +19,25 @@
 
 
 int main(int argc, char* argv[]) {
-    TRACE_EVENT("MyCategory", "MyEvent1");
-    TRACE_EVENT("MyCategory", "MyEvent2");
+    TraceBufferChunk tbc(0, 0);
+
+    while(!tbc.isFull()) {
+        std::array<TraceEvent::Value, 2>  _args{false, false};
+        std::array<TraceEvent::ValueType, 2>  _types{TraceEvent::ValueType::Bool, TraceEvent::ValueType::Bool};
+
+        tbc.addEvent(TraceEvent("MyCategory",
+                                "MyEvent",
+                                 TraceEvent::Type::Instant,
+                                 0,
+                                _args,
+                                _types));
+    }
+    for(int i = 0; i < tbc.count(); i++) {
+        std::cerr << tbc[i] << std::endl;
+    }
+
+    std::cerr << "Count: " << tbc.count() << ", Event Size: "
+              << sizeof(TraceEvent) << std::endl;
+
     return 0;
 }

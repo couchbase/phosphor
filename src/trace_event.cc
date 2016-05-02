@@ -20,13 +20,28 @@
 #include "string_utils.h"
 #include "trace_event.h"
 
-TraceEvent::TraceEvent(const char* _category, const char* _name)
-        : time(std::chrono::steady_clock::now().time_since_epoch()),
-          name(_name),
-          category(_category) {
+
+TraceEvent::TraceEvent(const char* _category,
+                       const char* _name,
+                       Type _type,
+                       size_t _id,
+                       const std::array<Value, arg_count>& _args,
+                       const std::array<ValueType, arg_count>& _arg_types)
+        // Premature optimisation #1:
+        //   Initialise name and category first to avoid copying two registers
+        //   in advance of the steady_clock::now() function call
+        : name(_name),
+          category(_category),
+          id(_id),
+          args(_args),
+          time(std::chrono::steady_clock::now().time_since_epoch()),
+          type(_type),
+          arg_types(_arg_types){
 }
 
+
 TraceEvent::TraceEvent() {}
+
 
 std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     using namespace std::chrono;
