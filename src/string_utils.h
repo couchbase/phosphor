@@ -19,6 +19,7 @@
 
 #pragma once
 
+
 /*
  * Rough std::string version of sprintf
  *
