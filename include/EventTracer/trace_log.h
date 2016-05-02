@@ -15,6 +15,7 @@
  *   limitations under the License.
  */
 
+
 class TraceLog {
 public:
     TraceLog& getInstance();
