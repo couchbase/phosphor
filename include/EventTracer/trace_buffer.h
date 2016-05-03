@@ -55,10 +55,12 @@ public:
     /**
      * Default constructor for a TraceBufferChunk
      *
-     * @param seq_no_ Sequence number of the TraceBuffer the chunk comes from
-     * @param buffer_index_ Index in the TraceBuffer the chunk comes from
+     * @param generation_ Generation number of the TraceBuffer
+     *                    the chunk comes from
+     * @param buffer_index_ Index in the TraceBuffer the chunk
+     *                      comes from
      */
-    TraceBufferChunk(size_t seq_no_, size_t buffer_index_);
+    TraceBufferChunk(size_t generation_, size_t buffer_index_);
 
     /**
      * Used for adding TraceEvents to the chunk
@@ -99,14 +101,14 @@ public:
     size_t getIndex() const;
 
     /**
-     * @return The sequence number of the TraceBuffer the chunk
+     * @return The generation number of the TraceBuffer the chunk
      *         came from
      */
-    size_t getSeqno() const;
+    size_t getGeneration() const;
 
 private:
     std::thread::id thread_id;
-    size_t seq_no;
+    size_t generation;
     size_t buffer_index;
 
     u_short next_free;
@@ -159,9 +161,9 @@ public:
     virtual bool isFull() const;
 
     /**
-     * @return The sequence number of the TraceBuffer
+     * @return The generation number of the TraceBuffer
      */
-    virtual size_t getSequence() const;
+    virtual size_t getGeneration() const;
 
 };
 
@@ -169,5 +171,5 @@ public:
 /**
  * Interface for a TraceBuffer factory
  */
-using trace_buffer_factory = std::unique_ptr<TraceBuffer>(size_t seq_no_,
+using trace_buffer_factory = std::unique_ptr<TraceBuffer>(size_t generation_,
                                                           size_t buffer_size);

@@ -22,9 +22,9 @@
 
 using chunk_ptr = std::unique_ptr<TraceBufferChunk>;
 
-TraceBufferChunk::TraceBufferChunk(size_t seq_no_, size_t buffer_index_)
+TraceBufferChunk::TraceBufferChunk(size_t generation_, size_t buffer_index_)
     : thread_id(std::this_thread::get_id()),
-      seq_no(seq_no_),
+      generation(generation_),
       buffer_index(buffer_index_),
       next_free(0) {
 }
@@ -42,8 +42,8 @@ size_t TraceBufferChunk::getIndex() const {
     return buffer_index;
 }
 
-size_t TraceBufferChunk::getSeqno() const {
-    return seq_no;
+size_t TraceBufferChunk::getGeneration() const {
+    return generation;
 }
 
 
@@ -65,8 +65,8 @@ const TraceEvent& TraceBufferChunk::operator[] (const int index) const {
 class FixedTraceBuffer : public TraceBuffer {
 
 public:
-    FixedTraceBuffer(size_t seq_no_, size_t buffer_size_)
-        : seq_no(seq_no_),
+    FixedTraceBuffer(size_t generation_, size_t buffer_size_)
+        : generation(generation_),
           buffer_size(buffer_size_) {
         buffer.reserve(buffer_size);
     }
@@ -82,11 +82,11 @@ public:
 
         auto index(buffer.size());
         buffer.push_back(nullptr);
-        return make_unique<TraceBufferChunk>(seq_no, index);
+        return make_unique<TraceBufferChunk>(generation, index);
     }
 
     void returnChunk(chunk_ptr&& chunk) override {
-        if(chunk->getSeqno() != seq_no) {
+        if(chunk->getGeneration() != generation) {
             throw std::invalid_argument("Chunk is not from this buffer");
         }
 
@@ -97,12 +97,12 @@ public:
         return buffer.size() >= buffer_size;
     }
 
-    size_t getSequence() const override {
-        return seq_no;
+    size_t getGeneration() const override {
+        return generation;
     }
 
 protected:
     std::vector<chunk_ptr> buffer;
-    size_t seq_no;
+    size_t generation;
     size_t buffer_size;
 };
