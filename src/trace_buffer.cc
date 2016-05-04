@@ -20,8 +20,6 @@
 #include "polyfill.h"
 #include "trace_buffer.h"
 
-using chunk_ptr = std::unique_ptr<TraceBufferChunk>;
-
 TraceBufferChunk::TraceBufferChunk(size_t generation_, size_t buffer_index_)
     : thread_id(std::this_thread::get_id()),
       generation(generation_),
