@@ -19,25 +19,29 @@
 
 
 int main(int argc, char* argv[]) {
-    TraceBufferChunk tbc(0, 0);
+    auto buffer(make_fixed_buffer(0, 1000));
 
-    while(!tbc.isFull()) {
-        std::array<TraceEvent::Value, 2>  _args{false, false};
-        std::array<TraceEvent::ValueType, 2>  _types{TraceEvent::ValueType::Bool, TraceEvent::ValueType::Bool};
+    while(!buffer->isFull()) {
+        auto tbc(buffer->getChunk());
 
-        tbc.addEvent(TraceEvent("MyCategory",
-                                "MyEvent",
-                                 TraceEvent::Type::Instant,
-                                 0,
-                                _args,
-                                _types));
+        while(!tbc->isFull()) {
+            tbc->addEvent() = TraceEvent("MyCategory",
+                                         "MyEvent",
+                                         TraceEvent::Type::Instant,
+                                         0,
+                                         {false, false},
+                                         {TraceEvent::ValueType::Bool, TraceEvent::ValueType::Bool});
+        }
+        buffer->returnChunk(std::move(tbc));
     }
-    for(int i = 0; i < tbc.count(); i++) {
-        std::cerr << tbc[i] << std::endl;
+    std::ios_base::sync_with_stdio(false);
+
+    for(const auto& it : *buffer) {
+        std::cout << it << "\n";
     }
 
-    std::cerr << "Count: " << tbc.count() << ", Event Size: "
-              << sizeof(TraceEvent) << std::endl;
+    std::cout << "First: " << *buffer->begin() << "\n";
+    std::cout << "Last: " << *(--buffer->end()) << "\n";
 
     return 0;
 }

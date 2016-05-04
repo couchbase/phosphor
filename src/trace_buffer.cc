@@ -54,6 +54,13 @@ void TraceBufferChunk::addEvent(TraceEvent&& event) {
     chunk[next_free++] = event;
 }
 
+TraceEvent& TraceBufferChunk::addEvent() {
+    if(isFull()) {
+        throw std::out_of_range("All events in chunk have been used");
+    }
+    return chunk[next_free++];
+}
+
 const TraceEvent& TraceBufferChunk::operator[] (const int index) const {
     return chunk[index];
 }
@@ -101,8 +108,21 @@ public:
         return generation;
     }
 
+    TraceEventIterator begin() const override {
+        return TraceEventIterator(buffer.begin());
+    }
+
+    TraceEventIterator end() const override {
+        return TraceEventIterator(buffer.end());
+    }
+
 protected:
     std::vector<chunk_ptr> buffer;
     size_t generation;
     size_t buffer_size;
 };
+
+std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,
+                                               size_t buffer_size) {
+    return make_unique<FixedTraceBuffer>(generation, buffer_size);
+}

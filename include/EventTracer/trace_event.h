@@ -24,7 +24,7 @@
 
 constexpr auto arg_count = 2;
 
-class alignas(64) TraceEvent {
+class TraceEvent {
 public:
     enum class Type: char {
         AsyncStart,
@@ -50,18 +50,44 @@ public:
         unsigned long long as_uint;
         long long as_int;
         double as_double;
-        const void* as_pointer;
         const char* as_string;
+        const void* as_pointer;
+
+        Value(bool from_bool) {as_bool = from_bool;}
+        Value(unsigned long long from_uint) {as_uint = from_uint;}
+        Value(long long from_int) {as_int = from_int;}
+        Value(double from_double) {as_double = from_double;}
+        Value(char* from_string) {as_string = from_string;}
+        Value(void* from_pointer) {as_pointer = from_pointer;}
     };
 
+    /**
+     * Inlined default constructor for efficient
+     * TraceBufferChunk initialisation
+     */
+    TraceEvent() {};
 
-    TraceEvent();
+    /**
+     * Constructor for creating new events
+     *
+     * @param _category C-String for the event's category
+     * @param _name C-String for the event's name
+     * @param _type The event type
+     * @param _id A unique identifier for the event for pairing up
+     *            async start/stop events
+     * @param _args An array of `Value`
+     * @param _arg_types An array of argument types
+     */
     TraceEvent(const char* _category,
                const char* _name,
                Type _type,
                size_t _id,
-               const std::array<Value, arg_count>& _args,
-               const std::array<ValueType, arg_count>& _arg_types);
+               std::array<Value, arg_count>&& _args,
+               std::array<ValueType, arg_count>&& _arg_types);
+
+    /**
+     * Used for debugging purposes to stream the event to e.g. stdout
+     */
     friend std::ostream& operator<<(std::ostream& os, const TraceEvent& te);
 
 private:

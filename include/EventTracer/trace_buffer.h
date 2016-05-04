@@ -16,6 +16,7 @@
  */
 
 #include <array>
+#include <iterator>
 #include <thread>
 #include <vector>
 
@@ -45,7 +46,7 @@ enum class BufferMode : char {
  * store various events.
  */
 class TraceBufferChunk {
-    static constexpr auto chunk_page_count = 1;
+    static constexpr auto chunk_page_count = 10;
     static constexpr auto page_size = 4096;
     static constexpr auto chunk_size = ((page_size * chunk_page_count) / sizeof(TraceEvent));
     using event_array = std::array<TraceEvent, chunk_size>;
@@ -68,6 +69,13 @@ public:
      * @param event An rvalue reference to a TraceEvent to be added
      */
     void addEvent(TraceEvent&& event);
+
+    /**
+     * Used for adding TraceEvents to the chunk
+     *
+     * @return A reference to a TraceEvent to be replaced
+     */
+    TraceEvent& addEvent();
 
     /**
      * Used for reviewing TraceEvents in the chunk
@@ -121,6 +129,61 @@ private:
  */
 using chunk_ptr = std::unique_ptr<TraceBufferChunk>;
 
+class TraceEventIterator : public std::iterator<std::bidirectional_iterator_tag, TraceEvent> {
+public:
+    TraceEventIterator()
+        : chunk_index(0) {
+    }
+
+    TraceEventIterator(std::vector<chunk_ptr>::const_iterator chunk_)
+        : chunk(chunk_),
+          chunk_index(0) {
+    }
+
+    TraceEventIterator(std::vector<chunk_ptr>::const_iterator chunk_, size_t index)
+            : chunk(chunk_),
+              chunk_index(index) {
+    }
+
+    const value_type& operator* () const {
+        return (**chunk)[chunk_index];
+    }
+
+    const value_type* operator-> () const {
+        return &(**chunk)[chunk_index];
+    }
+
+    TraceEventIterator& operator++() {
+        chunk_index++;
+        if(chunk_index == (*chunk)->count()) {
+            chunk_index = 0;
+            chunk++;
+        }
+        return *this;
+    }
+
+    TraceEventIterator& operator--() {
+        if(chunk_index == 0) {
+            chunk--;
+            chunk_index = (*chunk)->count();
+        }
+        chunk_index--;
+        return *this;
+    }
+
+    bool operator==(const TraceEventIterator& other) const {
+        return (chunk == other.chunk) && (chunk_index == other.chunk_index);
+    }
+
+    bool operator!=(const TraceEventIterator& other) const {
+        return !(*this == other);
+    }
+
+
+protected:
+    std::vector<chunk_ptr>::const_iterator chunk;
+    size_t chunk_index;
+};
 
 /**
  * Abstract base-class for a buffer of TraceEvents
@@ -134,7 +197,7 @@ public:
     /**
      * Virtual destructor
      */
-    virtual ~TraceBuffer();
+    virtual ~TraceBuffer() {}
 
     /**
      * Used for getting a TraceBufferChunk to add events to
@@ -142,14 +205,14 @@ public:
      * @return A unique pointer to a TraceBufferChunk to
      *         insert events into.
      */
-    virtual std::unique_ptr<TraceBufferChunk> getChunk();
+    virtual std::unique_ptr<TraceBufferChunk> getChunk() = 0;
 
     /**
      * Used for returning a TraceBufferChunk once full
      *
      * @param chunk The chunk to be returned
      */
-    virtual void returnChunk(chunk_ptr&& chunk);
+    virtual void returnChunk(chunk_ptr&& chunk) = 0;
 
     /**
      * Determine if there are no remaining chunks left to be
@@ -158,18 +221,27 @@ public:
      * @return true if there are no chunks left or false
      *         otherwise
      */
-    virtual bool isFull() const;
+    virtual bool isFull() const = 0;
 
     /**
      * @return The generation number of the TraceBuffer
      */
-    virtual size_t getGeneration() const;
+    virtual size_t getGeneration() const = 0;
 
+    virtual TraceEventIterator begin() const = 0;
+    virtual TraceEventIterator end() const = 0;
 };
 
 
 /**
  * Interface for a TraceBuffer factory
  */
-using trace_buffer_factory = std::unique_ptr<TraceBuffer>(size_t generation_,
+using trace_buffer_factory = std::unique_ptr<TraceBuffer>(size_t generation,
                                                           size_t buffer_size);
+
+std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,
+                                               size_t buffer_size);
+
+static_assert(
+        std::is_same<decltype(make_fixed_buffer), trace_buffer_factory>::value,
+        "make_fixed_buffer should be the same type as trace_buffer_factory");

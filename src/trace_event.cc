@@ -25,8 +25,8 @@ TraceEvent::TraceEvent(const char* _category,
                        const char* _name,
                        Type _type,
                        size_t _id,
-                       const std::array<Value, arg_count>& _args,
-                       const std::array<ValueType, arg_count>& _arg_types)
+                       std::array<Value, arg_count>&& _args,
+                       std::array<ValueType, arg_count>&& _arg_types)
         // Premature optimisation #1:
         //   Initialise name and category first to avoid copying two registers
         //   in advance of the steady_clock::now() function call
@@ -39,9 +39,7 @@ TraceEvent::TraceEvent(const char* _category,
           arg_types(_arg_types){
 }
 
-
-TraceEvent::TraceEvent() {}
-
+TraceEvent::TraceValue::TraceValue
 
 std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     using namespace std::chrono;
