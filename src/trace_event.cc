@@ -25,8 +25,8 @@ TraceEvent::TraceEvent(const char* _category,
                        const char* _name,
                        Type _type,
                        size_t _id,
-                       std::array<Value, arg_count>&& _args,
-                       std::array<ValueType, arg_count>&& _arg_types)
+                       std::array<TraceArgument, arg_count>&& _args,
+                       std::array<TraceArgument::Type, arg_count>&& _arg_types)
         // Premature optimisation #1:
         //   Initialise name and category first to avoid copying two registers
         //   in advance of the steady_clock::now() function call
@@ -39,7 +39,6 @@ TraceEvent::TraceEvent(const char* _category,
           arg_types(_arg_types){
 }
 
-TraceEvent::TraceValue::TraceValue
 
 std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     using namespace std::chrono;
@@ -56,9 +55,13 @@ std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     ttime -= s;
     auto us = duration_cast<nanoseconds>(ttime);
 
-    os << format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s>",
+    // Roughly: `TraceEvent<123d 12:34:56.123456789, Category, Name`
+    os << format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, "
+                        "arg1=%s, arg2=%s>",
                         d.count(), h.count(), m.count(), s.count(), us.count(),
-                        te.category, te.name);
+                        te.category, te.name,
+                        te.args[0].to_string(te.arg_types[0]).c_str(),
+                        te.args[1].to_string(te.arg_types[1]).c_str());
 
     return os;
 }

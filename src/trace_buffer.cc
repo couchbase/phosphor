@@ -20,10 +20,10 @@
 #include "polyfill.h"
 #include "trace_buffer.h"
 
-TraceBufferChunk::TraceBufferChunk(size_t generation_, size_t buffer_index_)
+TraceBufferChunk::TraceBufferChunk(size_t _generation, size_t _buffer_index)
     : thread_id(std::this_thread::get_id()),
-      generation(generation_),
-      buffer_index(buffer_index_),
+      generation(_generation),
+      buffer_index(_buffer_index),
       next_free(0) {
 }
 
@@ -107,6 +107,7 @@ public:
     }
 
     TraceEventIterator begin() const override {
+        std::cerr << buffer.size() << std::endl;
         return TraceEventIterator(buffer.begin());
     }
 

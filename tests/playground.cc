@@ -19,29 +19,27 @@
 
 
 int main(int argc, char* argv[]) {
-    auto buffer(make_fixed_buffer(0, 1000));
+    TraceLog::getInstance().start(
+            TraceConfig(BufferMode::fixed, 1000)
+    );
 
-    while(!buffer->isFull()) {
-        auto tbc(buffer->getChunk());
+    TraceLog::getInstance().logEvent("Tracing",
+                                     "Started",
+                                     TraceEvent::Type::Instant,
+                                     0, 123, 0);
+    TraceLog::getInstance().logEvent("Tracing",
+                                     "Started",
+                                     TraceEvent::Type::Instant,
+                                     0, 123, 0);
+    TraceLog::getInstance().stop();
 
-        while(!tbc->isFull()) {
-            tbc->addEvent() = TraceEvent("MyCategory",
-                                         "MyEvent",
-                                         TraceEvent::Type::Instant,
-                                         0,
-                                         {false, false},
-                                         {TraceEvent::ValueType::Bool, TraceEvent::ValueType::Bool});
-        }
-        buffer->returnChunk(std::move(tbc));
+    auto buffer(TraceLog::getInstance().getBuffer());
+
+    std::cout << *buffer->begin() << std::endl;
+    for(const auto& event : *buffer) {
+        std::cout << event << std::endl;
+        break;
     }
-    std::ios_base::sync_with_stdio(false);
-
-    for(const auto& it : *buffer) {
-        std::cout << it << "\n";
-    }
-
-    std::cout << "First: " << *buffer->begin() << "\n";
-    std::cout << "Last: " << *(--buffer->end()) << "\n";
 
     return 0;
 }
