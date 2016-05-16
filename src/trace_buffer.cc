@@ -107,7 +107,6 @@ public:
     }
 
     TraceEventIterator begin() const override {
-        std::cerr << buffer.size() << std::endl;
         return TraceEventIterator(buffer.begin());
     }
 
