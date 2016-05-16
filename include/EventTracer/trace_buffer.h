@@ -56,7 +56,7 @@ class TraceBufferChunk {
 public:
 
     /**
-     * Default constructor for a TraceBufferChunk
+     * Constructor for a TraceBufferChunk
      *
      * @param generation_ Generation number of the TraceBuffer
      *                    the chunk comes from
