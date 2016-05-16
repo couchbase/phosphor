@@ -23,21 +23,14 @@ int main(int argc, char* argv[]) {
             TraceConfig(BufferMode::fixed, 1000)
     );
 
-    TraceLog::getInstance().logEvent("Tracing",
-                                     "Started",
-                                     TraceEvent::Type::Instant,
-                                     0, 123, 0);
-    TraceLog::getInstance().logEvent("Tracing",
-                                     "Started",
-                                     TraceEvent::Type::Instant,
-                                     0, 123, 0);
+    TRACE_INSTANT("HelloCategory", "WorldEvent", 123, "XYZ");
     while(TraceLog::getInstance().isEnabled()) {
-        TraceLog::getInstance().logEvent("Hello", "World", TraceEvent::Type::SyncStart, 0);
+        TRACE_INSTANT0("ABC", "DEF");
     }
 
     auto buffer(TraceLog::getInstance().getBuffer());
 
-    for(const auto& event : *buffer) {
+    for (const auto& event : *buffer) {
         std::cout << event << std::endl;
     }
 
