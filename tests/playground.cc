@@ -31,14 +31,14 @@ int main(int argc, char* argv[]) {
                                      "Started",
                                      TraceEvent::Type::Instant,
                                      0, 123, 0);
-    TraceLog::getInstance().stop();
+    while(TraceLog::getInstance().isEnabled()) {
+        TraceLog::getInstance().logEvent("Hello", "World", TraceEvent::Type::SyncStart, 0);
+    }
 
     auto buffer(TraceLog::getInstance().getBuffer());
 
-    std::cout << *buffer->begin() << std::endl;
     for(const auto& event : *buffer) {
         std::cout << event << std::endl;
-        break;
     }
 
     return 0;
