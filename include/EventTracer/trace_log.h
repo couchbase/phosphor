@@ -110,6 +110,36 @@ public:
                 {TraceArgument(argA), TraceArgument(argB)},
                 {TraceArgument::getType<T>(), TraceArgument::getType<U>()});
     };
+    template <typename T>
+    void logEvent(const char* category, const char* name, TraceEvent::Type type,
+                  size_t id, T argA) {
+        if(!enabled) return;
+
+        if(!tls.chunk || tls.chunk->isFull()) {
+            updateChunk();
+        }
+        if(!tls.chunk) return;
+
+        tls.chunk->addEvent() = TraceEvent(
+                category, name, type, id,
+                {TraceArgument(argA), 0},
+                {TraceArgument::getType<T>(), TraceArgument::Type::is_none});
+    };
+
+    void logEvent(const char* category, const char* name, TraceEvent::Type type,
+                  size_t id) {
+        if(!enabled) return;
+
+        if(!tls.chunk || tls.chunk->isFull()) {
+            updateChunk();
+        }
+        if(!tls.chunk) return;
+
+        tls.chunk->addEvent() = TraceEvent(
+                category, name, type, id,
+                {0, 0},
+                {TraceArgument::Type::is_none, TraceArgument::Type::is_none});
+    };
 
     /**
      * Transfers ownership of the current TraceBuffer to the caller
