@@ -140,7 +140,7 @@ inline std::string TraceArgument::to_string(TraceArgument::Type type) const {
             ss << as_pointer;
             return ss.str();
         case Type::is_string:
-            return std::string(as_string);
+            return "'" + std::string(as_string) + "'";
         case Type::is_none:
             return std::string("NONE");
         default:
