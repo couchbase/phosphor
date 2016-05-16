@@ -20,7 +20,17 @@
 #include <sstream>
 #include <string>
 
+/**
+ * A union which holds a single TraceArgument.
+ *
+ * Has various methods / constructors for tidily creating
+ * and printing the TraceArgument.
+ */
 union TraceArgument {
+
+    /**
+     * Enumeration of the possible types of a TraceArgument
+     */
     enum class Type : char {
         is_bool,
         is_uint,
@@ -38,14 +48,31 @@ union TraceArgument {
     const char* as_string;
     const void* as_pointer;
 
+    /**
+     * Default constructor
+     */
     TraceArgument() {};
 
+    /**
+     * Templated conversion constructor
+     *
+     * @param src Value to be converted to a TraceArgument
+     */
     template <class T>
     inline TraceArgument(T src);
 
+    /**
+     * @return The enum used for a given type
+     */
     template <class T>
     inline static constexpr Type getType();
 
+    /**
+     * Converts the TraceArgument to string
+     *
+     * @param type The enum which describes the type of the TraceArgument
+     * @return String form of the TraceArgument as the given type
+     */
     inline std::string to_string(TraceArgument::Type type) const;
 
 private:
@@ -56,6 +83,10 @@ private:
 /**
  * Used for defining the constructor and type-to-enum
  * constexpr for a given type.
+ *
+ * @param src The origin type of the argument
+ * @param dst The destination 'type' (aka the appropriate is_/as_
+ *            suffix) of the argument.
  */
 #define ARGUMENT_CONVERSION(src, dst) \
     template <> \
@@ -88,6 +119,12 @@ ARGUMENT_CONVERSION(const char*, string);
 
 #undef ARGUMENT_CONVERSION
 
+
+/**
+ * Used for quickly defining a case statement for
+ * converting the union to an appropriately
+ * formatted string.
+ */
 #define ADD_CASE(dst) \
     case Type::is_ ##dst: \
         return std::to_string(as_ ##dst);
@@ -110,3 +147,5 @@ inline std::string TraceArgument::to_string(TraceArgument::Type type) const {
             throw std::invalid_argument("Invalid TraceArgument type");
     }
 }
+
+#undef ADD_CASE
