@@ -45,14 +45,6 @@ size_t TraceBufferChunk::getGeneration() const {
     return generation;
 }
 
-
-void TraceBufferChunk::addEvent(TraceEvent&& event) {
-    if(isFull()) {
-        throw std::out_of_range("All events in chunk have been used");
-    }
-    chunk[next_free++] = event;
-}
-
 TraceEvent& TraceBufferChunk::addEvent() {
     if(isFull()) {
         throw std::out_of_range("All events in chunk have been used");

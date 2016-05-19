@@ -15,14 +15,14 @@
  *   limitations under the License.
  */
 
-#include "etracer.h"
+#include "phosphor.h"
 
 #include <thread>
 #include <vector>
 
 int main(int argc, char* argv[]) {
     TraceLog::getInstance().start(
-        TraceConfig(BufferMode::fixed, 1000)
+        TraceConfig(BufferMode::fixed, 1)
     );
 
     std::vector<std::thread> threads;

@@ -27,4 +27,4 @@
  * @param args Variable arguments to format into format string
  * @return Formatted string
  */
-std::string format_string(const char* fmt...);
+std::string format_string(const char* fmt, ...);
