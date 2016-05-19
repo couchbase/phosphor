@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "trace_event.h"
+#include "sentinel.h"
 
 
 /**
@@ -48,7 +49,7 @@ enum class BufferMode : char {
  * store various events.
  */
 class TraceBufferChunk {
-    static constexpr auto chunk_page_count = 10;
+    static constexpr auto chunk_page_count = 1;
     static constexpr auto page_size = 4096;
     static constexpr auto chunk_size = ((page_size * chunk_page_count) / sizeof(TraceEvent));
     using event_array = std::array<TraceEvent, chunk_size>;
@@ -64,13 +65,6 @@ public:
      *                      comes from
      */
     TraceBufferChunk(size_t generation_, size_t buffer_index_);
-
-    /**
-     * Used for adding TraceEvents to the chunk
-     *
-     * @param event An rvalue reference to a TraceEvent to be added
-     */
-    void addEvent(TraceEvent&& event);
 
     /**
      * Used for adding TraceEvents to the chunk
@@ -137,27 +131,27 @@ public:
         : chunk_index(0) {
     }
 
-    TraceEventIterator(std::vector<chunk_ptr>::const_iterator chunk_)
+    TraceEventIterator(std::vector<TraceBufferChunk>::const_iterator chunk_)
         : chunk(chunk_),
           chunk_index(0) {
     }
 
-    TraceEventIterator(std::vector<chunk_ptr>::const_iterator chunk_, size_t index)
+    TraceEventIterator(std::vector<TraceBufferChunk>::const_iterator chunk_, size_t index)
             : chunk(chunk_),
               chunk_index(index) {
     }
 
     const value_type& operator* () const {
-        return (**chunk)[chunk_index];
+        return (*chunk)[chunk_index];
     }
 
     const value_type* operator-> () const {
-        return &(**chunk)[chunk_index];
+        return &(*chunk)[chunk_index];
     }
 
     TraceEventIterator& operator++() {
         chunk_index++;
-        if(chunk_index == (*chunk)->count()) {
+        if(chunk_index == (*chunk).count()) {
             chunk_index = 0;
             chunk++;
         }
@@ -167,7 +161,7 @@ public:
     TraceEventIterator& operator--() {
         if(chunk_index == 0) {
             chunk--;
-            chunk_index = (*chunk)->count();
+            chunk_index = (*chunk).count();
         }
         chunk_index--;
         return *this;
@@ -183,7 +177,7 @@ public:
 
 
 protected:
-    std::vector<chunk_ptr>::const_iterator chunk;
+    std::vector<TraceBufferChunk>::const_iterator chunk;
     size_t chunk_index;
 };
 
@@ -204,17 +198,22 @@ public:
     /**
      * Used for getting a TraceBufferChunk to add events to
      *
-     * @return A unique pointer to a TraceBufferChunk to
+     * @param Access sentinel for the calling thread
+     * @return A reference to a TraceBufferChunk to
      *         insert events into.
      */
-    virtual std::unique_ptr<TraceBufferChunk> getChunk() = 0;
+    virtual TraceBufferChunk& getChunk(Sentinel& sentinel) = 0;
+
+    // TODO: Add method for removing sentinel ref (e.g. for thread destruction)
+
+    virtual void evictThreads() = 0;
 
     /**
      * Used for returning a TraceBufferChunk once full
      *
      * @param chunk The chunk to be returned
      */
-    virtual void returnChunk(chunk_ptr&& chunk) = 0;
+    virtual void returnChunk(TraceBufferChunk& chunk) = 0;
 
     /**
      * Determine if there are no remaining chunks left to be

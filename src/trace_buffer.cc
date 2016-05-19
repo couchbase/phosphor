@@ -16,6 +16,7 @@
  */
 
 #include <stdexcept>
+#include <unordered_set>
 
 #include "polyfill.h"
 #include "trace_buffer.h"
@@ -80,22 +81,27 @@ public:
 
     }
 
-    std::unique_ptr<TraceBufferChunk> getChunk() override {
+    TraceBufferChunk& getChunk(Sentinel& sentinel) override {
         if(isFull()) {
             throw std::out_of_range("The TraceBuffer is full");
         }
+        sentinels.insert(&sentinel);
 
-        auto index(buffer.size());
-        buffer.push_back(nullptr);
-        return make_unique<TraceBufferChunk>(generation, index);
+        auto index = buffer.size();
+        buffer.emplace_back(generation, index);
+        return buffer.back();
     }
 
-    void returnChunk(chunk_ptr&& chunk) override {
-        if(chunk->getGeneration() != generation) {
+    void evictThreads() override {
+        for(auto& sentinel : sentinels) {
+            sentinel->close();
+        }
+    }
+
+    void returnChunk(TraceBufferChunk& chunk) override {
+        if(chunk.getGeneration() != generation) {
             throw std::invalid_argument("Chunk is not from this buffer");
         }
-
-        buffer.at(chunk->getIndex()) = std::move(chunk);
     }
 
     bool isFull() const override {
@@ -115,9 +121,11 @@ public:
     }
 
 protected:
-    std::vector<chunk_ptr> buffer;
+    std::vector<TraceBufferChunk> buffer;
     size_t generation;
     size_t buffer_size;
+
+    std::unordered_set<Sentinel*> sentinels;
 };
 
 std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,

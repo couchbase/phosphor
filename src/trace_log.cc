@@ -75,6 +75,7 @@ TraceConfig& TraceConfig::setStoppedCallback(
 
 TraceLog::TraceLog()
     : enabled(false) {
+    shared_chunk.sentinel = new Sentinel;
 }
 
 
@@ -82,19 +83,6 @@ TraceLog& TraceLog::getInstance() {
     // TODO: Not thread-safe on Windows
     static TraceLog log_instance;
     return log_instance;
-}
-
-
-void TraceLog::updateChunk() {
-    std::lock_guard<std::mutex> lh(mutex);
-    if(tls.chunk) {
-        buffer->returnChunk(std::move(tls.chunk));
-    }
-    if(!buffer->isFull()) {
-        tls.chunk = buffer->getChunk();
-    } else {
-        stopUNLOCKED();
-    }
 }
 
 
@@ -109,6 +97,7 @@ void TraceLog::stopUNLOCKED() {
         if(trace_config.getStoppedCallback()) {
             trace_config.getStoppedCallback()(*this);
         }
+        buffer->evictThreads();
     }
 }
 
@@ -136,3 +125,6 @@ std::unique_ptr<TraceBuffer> TraceLog::getBuffer() {
 bool TraceLog::isEnabled() {
     return enabled;
 }
+
+THREAD_LOCAL TraceLog::ChunkTenant TraceLog::thread_chunk;
+TraceLog::ChunkTenant TraceLog::shared_chunk;

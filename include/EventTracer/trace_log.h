@@ -23,7 +23,12 @@
 #include "trace_buffer.h"
 #include "trace_event.h"
 
+#if __APPLE__
+/* Apple's clang is awkward and disables thread_local keyword support */
 #define THREAD_LOCAL __thread
+#else
+#define THREAD_LOCAL thread_local
+#endif
 
 /**
  * Callback definition for receiving a reference to the
@@ -100,45 +105,23 @@ public:
                   size_t id, T argA, U argB) {
         if(!enabled) return;
 
-        if(!tls.chunk || tls.chunk->isFull()) {
-            updateChunk();
-        }
-        if(!tls.chunk) return;
+        ChunkTenant& cs = (thread_chunk.sentinel)?thread_chunk:shared_chunk;
 
-        tls.chunk->addEvent() = TraceEvent(
+        if(!cs.sentinel->acquire()) {
+            resetChunk(cs); // Acquires busy from closed, sets cs.chunk to nullptr then releases from busy to open
+            return;
+        }
+        // State is busy
+        if (!cs.chunk || cs.chunk->isFull()) {
+            replaceChunk(cs); // Drop llock, Acquire glock, Acquire llock if enabled: return chunk to buffer, get chunk from buffer, drop glock
+        }
+        if (!cs.chunk) return;
+
+        cs.chunk->addEvent() = TraceEvent(
                 category, name, type, id,
                 {TraceArgument(argA), TraceArgument(argB)},
                 {TraceArgument::getType<T>(), TraceArgument::getType<U>()});
-    };
-    template <typename T>
-    void logEvent(const char* category, const char* name, TraceEvent::Type type,
-                  size_t id, T argA) {
-        if(!enabled) return;
-
-        if(!tls.chunk || tls.chunk->isFull()) {
-            updateChunk();
-        }
-        if(!tls.chunk) return;
-
-        tls.chunk->addEvent() = TraceEvent(
-                category, name, type, id,
-                {TraceArgument(argA), 0},
-                {TraceArgument::getType<T>(), TraceArgument::Type::is_none});
-    };
-
-    void logEvent(const char* category, const char* name, TraceEvent::Type type,
-                  size_t id) {
-        if(!enabled) return;
-
-        if(!tls.chunk || tls.chunk->isFull()) {
-            updateChunk();
-        }
-        if(!tls.chunk) return;
-
-        tls.chunk->addEvent() = TraceEvent(
-                category, name, type, id,
-                {0, 0},
-                {TraceArgument::Type::is_none, TraceArgument::Type::is_none});
+        cs.sentinel->release();
     };
 
     /**
@@ -153,20 +136,55 @@ public:
 
     bool isEnabled();
 
+    static void registerThread() {
+        thread_chunk.sentinel = new Sentinel;
+    }
+    static void deregisterThread() {
+        delete thread_chunk.sentinel;
+    }
+
 protected:
+    struct ChunkTenant {
+        Sentinel* sentinel = nullptr;
+        TraceBufferChunk* chunk = nullptr;
+    };
+
     void startLogging(BufferMode _buffer_mode,
                       trace_buffer_factory _buffer_factory,
                       size_t _buffer_size);
 
-    void updateChunk();
+    void replaceChunk(ChunkTenant& ct) {
+        ct.sentinel->release();
+        std::lock_guard<std::mutex> lh(mutex);
+        ct.sentinel->acquire();
+        if(!enabled) {
+            ct.chunk = nullptr;
+            return;
+        }
+
+        if(ct.chunk) {
+            buffer->returnChunk(*ct.chunk);
+            ct.chunk = nullptr;
+        }
+        if(buffer && !buffer->isFull()) {
+            ct.chunk = &buffer->getChunk(*ct.sentinel);
+        } else {
+            ct.sentinel->release();
+            stopUNLOCKED();
+        }
+    }
+    void resetChunk(ChunkTenant& ct) {
+        if(ct.sentinel->reopen()) {
+            ct.chunk = nullptr;
+            ct.sentinel->release();
+        }
+    }
+
     void stopUNLOCKED();
 
+    static THREAD_LOCAL ChunkTenant thread_chunk;
+    static ChunkTenant shared_chunk;
 
-    struct TLS {
-        chunk_ptr chunk;
-    };
-
-    TLS tls;
     TraceConfig trace_config;
 
     std::atomic_bool enabled;

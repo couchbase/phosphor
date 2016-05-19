@@ -20,14 +20,14 @@
 /*
  * Sync
  */
-#define TRACE_EVENT_START(category, name, args...) \
-    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncStart, 0, args)
+#define TRACE_EVENT_START(category, name, ...) \
+    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncStart, 0, __VA_ARGS__)
 
 #define TRACE_EVENT_START0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncStart, 0)
 
-#define TRACE_EVENT_END(category, name, args...) \
-    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncEnd, 0, args)
+#define TRACE_EVENT_END(category, name, ...) \
+    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)
 
 #define TRACE_EVENT_END0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncEnd, 0)
@@ -35,14 +35,14 @@
 /**
  * Async
  */
-#define TRACE_ASYNC_START(category, name, id, args...) \
-    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncStart, id, args)
+#define TRACE_ASYNC_START(category, name, id, ...) \
+    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncStart, id, __VA_ARGS__)
 
 #define TRACE_ASYNC_START0(category, name, id) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncStart, id)
 
-#define TRACE_ASYNC_END(category, name, id, args...) \
-    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncEnd, id, args)
+#define TRACE_ASYNC_END(category, name, id, ...) \
+    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)
 
 #define TRACE_ASYNC_END0(category, name, id) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncEnd, id)
@@ -50,8 +50,8 @@
 /**
  * Instant
  */
-#define TRACE_INSTANT(category, name, args...) \
-    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::Instant, 0, args)
+#define TRACE_INSTANT(category, name, ...) \
+    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::Instant, 0, __VA_ARGS__)
 
 #define TRACE_INSTANT0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::Instant, 0)
@@ -59,8 +59,8 @@
 /**
  * Global
  */
-#define TRACE_GINSTANT(category, name, args...) \
-    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0, args)
+#define TRACE_GINSTANT(category, name, ...) \
+    TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)
 
 #define TRACE_GINSTANT0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0)
