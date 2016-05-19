@@ -19,11 +19,8 @@
 
 #include "trace_log.h"
 
+/* Number of bytes in a megabyte */
 constexpr size_t megabyte = 1024 * 1024;
-
-TraceConfig::TraceConfig() {
-}
-
 
 TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
     : buffer_mode(_buffer_mode),
@@ -61,18 +58,6 @@ size_t TraceConfig::getBufferSize() const {
     return buffer_size;
 }
 
-
-tracing_stopped_callback* TraceConfig::getStoppedCallback() const {
-    return stopped_callback;
-}
-
-
-TraceConfig& TraceConfig::setStoppedCallback(
-        tracing_stopped_callback _stopped_callback) {
-    stopped_callback = _stopped_callback;
-    return *this;
-}
-
 TraceLog::TraceLog()
     : enabled(false) {
     shared_chunk.sentinel = new Sentinel;
@@ -94,9 +79,6 @@ void TraceLog::stop() {
 
 void TraceLog::stopUNLOCKED() {
     if(enabled.exchange(false)) {
-        if(trace_config.getStoppedCallback()) {
-            trace_config.getStoppedCallback()(*this);
-        }
         buffer->evictThreads();
     }
 }
@@ -124,6 +106,33 @@ std::unique_ptr<TraceBuffer> TraceLog::getBuffer() {
 
 bool TraceLog::isEnabled() {
     return enabled;
+}
+
+void TraceLog::replaceChunk(ChunkTenant& ct) {
+    ct.sentinel->release();
+    std::lock_guard<std::mutex> lh(mutex);
+    ct.sentinel->acquire();
+    if(!enabled) {
+        ct.chunk = nullptr;
+        return;
+    }
+
+    if(ct.chunk) {
+        buffer->returnChunk(*ct.chunk);
+        ct.chunk = nullptr;
+    }
+    if(buffer && !buffer->isFull()) {
+        ct.chunk = &buffer->getChunk(*ct.sentinel);
+    } else {
+        ct.sentinel->release();
+        stopUNLOCKED();
+    }
+}
+void TraceLog::resetChunk(ChunkTenant& ct) {
+    if(ct.sentinel->reopen()) {
+        ct.chunk = nullptr;
+        ct.sentinel->release();
+    }
 }
 
 THREAD_LOCAL TraceLog::ChunkTenant TraceLog::thread_chunk;

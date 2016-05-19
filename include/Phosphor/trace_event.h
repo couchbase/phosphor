@@ -14,6 +14,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+/** \file
+ * This file is internal to the inner workings of
+ * Phosphor and is not intended for public consumption.
+ */
 
 #pragma once
 
@@ -21,6 +25,7 @@
 #include <chrono>
 #include <iostream>
 #include <string>
+#include <thread>
 
 #include "trace_argument.h"
 
@@ -28,6 +33,9 @@ constexpr auto arg_count = 2;
 
 class TraceEvent {
 public:
+    /**
+     * The enumeration representing the different types of TraceEvents
+     */
     enum class Type: char {
         AsyncStart,
         AsyncEnd,
@@ -38,10 +46,9 @@ public:
     };
 
     /**
-     * Inlined default constructor for efficient
-     * TraceBufferChunk initialisation
+     * Default constructor for efficient TraceBufferChunk initialisation
      */
-    TraceEvent() {};
+    TraceEvent() = default;
 
     /**
      * Constructor for creating new events
@@ -62,20 +69,37 @@ public:
                std::array<TraceArgument::Type, arg_count>&& _arg_types);
 
     /**
-     * Used for debugging purposes to stream the event to e.g. stdout
+     * Used to get a string representation of the TraceEvent
+     *
+     * @return string representation of the TraceEvent
      */
-    friend std::ostream& operator<<(std::ostream& os, const TraceEvent& te);
+    std::string to_string() const;
 
 private:
     const char* name;
     const char* category;
     size_t id;
+    std::thread::id thread_id;
     std::array<TraceArgument, arg_count> args;
 
     std::chrono::steady_clock::duration time;
     std::array<TraceArgument::Type, arg_count> arg_types;
     Type type;
 };
+
+/**
+ * ostream operator overload for TraceEvent
+ *
+ * Adds a representation of a TraceEvent to an ostream.
+ *
+ * Used for debugging purposes to stream a TraceEvent to
+ * an output stream like std::cout.
+ *
+ * @param os Output stream to stream to.
+ * @param trace_event TraceEvent to be streamed
+ * @return Output stream passed in
+ */
+std::ostream& operator<<(std::ostream& os, const TraceEvent& trace_event);
 
 static_assert(sizeof(TraceEvent) <= 64,
               "TraceEvent should fit inside a cacheline "

@@ -1,6 +1,6 @@
 # Roadmap
 
 - Improve iterator to return an object with thread context
-- Refactor TraceBuffer into a vector of chunks /w chunk ownership flag
+- Refactor TraceLog::logEvent to not duplicate code
 - Add chunked JSON export (Which takes an iterator)
 - Add binary dump export

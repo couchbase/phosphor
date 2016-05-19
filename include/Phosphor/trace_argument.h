@@ -14,6 +14,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+/** \file
+ * This file is internal to the inner workings of
+ * Phosphor and is not intended for public consumption.
+ */
 
 #pragma once
 

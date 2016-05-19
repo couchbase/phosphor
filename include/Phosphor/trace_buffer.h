@@ -14,6 +14,10 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
+/** \file
+ * This file is internal to the inner workings of
+ * Phosphor and is not intended for public consumption.
+ */
 
 #pragma once
 
@@ -24,22 +28,6 @@
 
 #include "trace_event.h"
 #include "sentinel.h"
-
-
-/**
- * The mode of a TraceBuffer implementation
- */
-enum class BufferMode : char {
-
-    /* Custom signifies a custom implementation given by the user */
-    custom = 0,
-
-    /* The Fixed mode uses a fixed amount of space and will get full */
-    fixed,
-
-    /* The Ring mode never runs out of space as it will reuse old chunks */
-    ring,
-};
 
 
 /**
@@ -119,11 +107,6 @@ private:
     event_array chunk;
 };
 
-
-/**
- * Type of a chunk pointer
- */
-using chunk_ptr = std::unique_ptr<TraceBufferChunk>;
 
 class TraceEventIterator : public std::iterator<std::bidirectional_iterator_tag, TraceEvent> {
 public:

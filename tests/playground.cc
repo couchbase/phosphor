@@ -17,6 +17,7 @@
 
 #include "phosphor.h"
 
+#include <sstream>
 #include <thread>
 #include <vector>
 
@@ -47,9 +48,9 @@ int main(int argc, char* argv[]) {
         thread.join();
     }
 
-//    for (const auto& event : *buffer) {
-//        std::cout << event << '\n';
-//    }
+    for (const auto& event : *buffer) {
+        printf("%s\n", event.to_string().c_str());
+    }
 
 
 

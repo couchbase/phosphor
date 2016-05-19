@@ -17,8 +17,58 @@
 
 #include "trace_log.h"
 
+/** \file
+ * Phosphor Event Tracing
+ *
+ * Phosphor is an event tracing framework and can be used for tracing
+ * high frequency events. This file describes the instrumentation API
+ * used for adding tracing to a user application.
+ *
+ * The management / configuration API is formed by the TraceLog and
+ * TraceConfig classes listed in trace_log.h
+ *
+ * The instrumentation API is formed by four groups of events:
+ *
+ *  - Synchronous
+ *  - Asynchronous
+ *  - Instant
+ *  - Global
+ *
+ * In addition each group will have events macros in one of two styles,
+ * either with 0 arguments or with multiple arguments. Macros suffixed
+ * with 0, such as TRACE_EVENT_START0, can be used with 0 arguments.
+ *
+ * Macros without the 0 suffix can be given 1 or 2 arguments - they
+ * *might* work with 0 arguments but some compilers will generate
+ * warnings due to 0-argument variadic macros.
+ *
+ * Only a limited set of data-types can be used as arguments, generally
+ * this includes most primitive data-types that are 8-bytes or less in
+ * size. In addition, string-literals or long living cstrings can be
+ * used so long as the pointer remains valid while tracing is enabled.
+ * A non-exhaustive list of these data-types include:
+ *
+ *  - boolean
+ *  - int
+ *  - unsigned int
+ *  - float
+ *  - double
+ *  - char* pointing to a cstring
+ *  - void*
+ */
+
 /*
- * Sync
+ * Synchronous events
+ *
+ * Synchronous events are used for events that are scoped to a single
+ * thread and have a duration.
+ *
+ * Example:
+ *
+ *     TRACE_EVENT_START0('Memcached:Frontend', 'SetKey')
+ *     // Perform some expensive operation
+ *     TRACE_EVENT_END0('Memcached:Frontend', 'SetKey')
+ *
  */
 #define TRACE_EVENT_START(category, name, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncStart, 0, __VA_ARGS__)
@@ -33,7 +83,23 @@
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncEnd, 0)
 
 /**
- * Async
+ * TODO: Scoped events that automatically log
+ * entry/exit from a scope (e.g. a function
+ */
+
+/**
+ * Asynchronous Events
+ *
+ * Asynchronous events are used for events that are not scoped to a
+ * single thread and have duration. They have an additional 'id'
+ * argument which is used to match up the START and END events.
+ *
+ * Example:
+ *     // Thread 1
+ *     TRACE_ASYNC_START0('Memcached:Frontend', 'EWOULDBLOCK', 123)
+ *
+ *     // Thread 2
+ *     TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)
  */
 #define TRACE_ASYNC_START(category, name, id, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncStart, id, __VA_ARGS__)
@@ -48,7 +114,14 @@
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncEnd, id)
 
 /**
- * Instant
+ * Instant Events
+ *
+ * Instant events are used for events that are scoped to a thread but
+ * do not conceptually have a duration.
+ *
+ * Example:
+ *     TRACE_INSTANT0("Memcached:Frontend", "StatsReset")
+ *
  */
 #define TRACE_INSTANT(category, name, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::Instant, 0, __VA_ARGS__)
@@ -57,10 +130,18 @@
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::Instant, 0)
 
 /**
- * Global
+ * Global Events
+ *
+ * Global events are used for events that are not scoped to a thread
+ * and do not conceptually have a duration. Examples of this might include
+ * the initiation of a system shutdown.
+ *
+ * Example:
+ *     TRACE_GLOBAL0("Memcached", "Shutdown")
+ *
  */
-#define TRACE_GINSTANT(category, name, ...) \
+#define TRACE_GLOBAL(category, name, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)
 
-#define TRACE_GINSTANT0(category, name) \
+#define TRACE_GLOBAL0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0)

@@ -35,16 +35,16 @@ TraceEvent::TraceEvent(const char* _category,
           id(_id),
           args(_args),
           time(std::chrono::steady_clock::now().time_since_epoch()),
-          type(_type),
-          arg_types(_arg_types){
+          arg_types(_arg_types),
+          type(_type) {
 }
 
 
-std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
+std::string TraceEvent::to_string() const {
     using namespace std::chrono;
     typedef duration<int, std::ratio_multiply<hours::period, std::ratio<24> >::type> days;
 
-    auto ttime(te.time);
+    auto ttime(time);
     auto d = duration_cast<days>(ttime);
     ttime -= d;
     auto h = duration_cast<hours>(ttime);
@@ -55,13 +55,15 @@ std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
     ttime -= s;
     auto us = duration_cast<nanoseconds>(ttime);
 
-    // Roughly: `TraceEvent<123d 12:34:56.123456789, Category, Name`
-    os << format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, "
-                        "arg1=%s, arg2=%s>",
-                        d.count(), h.count(), m.count(), s.count(), us.count(),
-                        te.category, te.name,
-                        te.args[0].to_string(te.arg_types[0]).c_str(),
-                        te.args[1].to_string(te.arg_types[1]).c_str());
+    return format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, "
+                         "arg1=%s, arg2=%s>",
+                         d.count(), h.count(), m.count(), s.count(), us.count(),
+                         category, name,
+                         args[0].to_string(arg_types[0]).c_str(),
+                         args[1].to_string(arg_types[1]).c_str());
+}
 
+std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
+    os << te.to_string();
     return os;
 }
