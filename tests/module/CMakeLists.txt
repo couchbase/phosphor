@@ -18,3 +18,7 @@ M_ADD_MODULE_GTEST(sentinel_test
 M_ADD_MODULE_GTEST(polyfill_test
         polyfill_test.cc)
 
+
+M_ADD_MODULE_GTEST(string_utils_test
+        string_utils_test.cc
+        ${PROJECT_SOURCE_DIR}/src/string_utils.cc)
