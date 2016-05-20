@@ -163,8 +163,8 @@ namespace phosphor {
          * @param name The name of the event
          * @param type The type of the event
          * @param id The id of the event, primarily used for async events
-         * @param T Argument to be saved with the event
-         * @param U Argument to be saved with the event
+         * @param argA Argument to be saved with the event
+         * @param argB Argument to be saved with the event
          */
         template<typename T, typename U>
         void logEvent(const char *category, const char *name,

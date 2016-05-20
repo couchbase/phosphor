@@ -113,42 +113,35 @@ inline constexpr TraceArgument::Type TraceArgument::getType<src>() { \
 template <> \
 inline TraceArgument::TraceArgument(src arg) : as_ ##dst (arg) {}
 
-    ARGUMENT_CONVERSION(bool, bool);
+    ARGUMENT_CONVERSION(bool, bool)
 
-    ARGUMENT_CONVERSION(char, int);
+    ARGUMENT_CONVERSION(char, int)
 
-    ARGUMENT_CONVERSION(short, int);
+    ARGUMENT_CONVERSION(short, int)
 
-    ARGUMENT_CONVERSION(int, int);
+    ARGUMENT_CONVERSION(int, int)
 
-    ARGUMENT_CONVERSION(long, int);
+    ARGUMENT_CONVERSION(long, int)
 
-    ARGUMENT_CONVERSION(long
-                                long, int);
+    ARGUMENT_CONVERSION(long long, int)
 
-    ARGUMENT_CONVERSION(unsigned
-                                char, uint);
+    ARGUMENT_CONVERSION(unsigned char, uint)
 
-    ARGUMENT_CONVERSION(unsigned
-                                short, uint);
+    ARGUMENT_CONVERSION(unsigned short, uint)
 
-    ARGUMENT_CONVERSION(unsigned
-                                int, uint);
+    ARGUMENT_CONVERSION(unsigned int, uint)
 
-    ARGUMENT_CONVERSION(unsigned
-                                long, uint);
+    ARGUMENT_CONVERSION(unsigned long, uint)
 
-    ARGUMENT_CONVERSION(unsigned
-                                long
-                                long, uint);
+    ARGUMENT_CONVERSION(unsigned long long, uint)
 
-    ARGUMENT_CONVERSION(float, double);
+    ARGUMENT_CONVERSION(float, double)
 
-    ARGUMENT_CONVERSION(double, double);
+    ARGUMENT_CONVERSION(double, double)
 
-    ARGUMENT_CONVERSION(const void*, pointer);
+    ARGUMENT_CONVERSION(const void*, pointer)
 
-    ARGUMENT_CONVERSION(const char*, string);
+    ARGUMENT_CONVERSION(const char*, string)
 
 #undef ARGUMENT_CONVERSION
 
