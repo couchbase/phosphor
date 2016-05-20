@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -117,34 +118,35 @@ $(document).ready(function(){initNavTree('trace__event_8h.html','');});
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &quot;<a class="el" href="trace__argument_8h_source.html">trace_argument.h</a>&quot;</code><br />
+<code>#include &quot;visibility.h&quot;</code><br />
 </div>
 <p><a href="trace__event_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trace_event.html">TraceEvent</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html">phosphor::TraceEvent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a70d84edb118a4be4f99365afff47b822"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace__event_8h.html#a70d84edb118a4be4f99365afff47b822">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_trace_event.html">TraceEvent</a> &amp;trace_event)</td></tr>
-<tr class="separator:a70d84edb118a4be4f99365afff47b822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9770b487b4868e69bb09fff5dd63d5b"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace__event_8h.html#ae9770b487b4868e69bb09fff5dd63d5b">phosphor::operator&lt;&lt;</a> (std::ostream &amp;os, const TraceEvent &amp;trace_event)</td></tr>
+<tr class="separator:ae9770b487b4868e69bb09fff5dd63d5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ab5aad2d95dd8cbd3edc4339f301c2415"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5aad2d95dd8cbd3edc4339f301c2415"></a>
-constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>arg_count</b> = 2</td></tr>
-<tr class="separator:ab5aad2d95dd8cbd3edc4339f301c2415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c2478069af052d402472d9e55d409b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16c2478069af052d402472d9e55d409b"></a>
+constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>phosphor::arg_count</b> = 2</td></tr>
+<tr class="separator:a16c2478069af052d402472d9e55d409b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file is internal to the inner workings of Phosphor and is not intended for public consumption. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a70d84edb118a4be4f99365afff47b822"></a>
+<a class="anchor" id="file_ae9770b487b4868e69bb09fff5dd63d5b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td class="memname">std::ostream &amp; phosphor::operator&lt;&lt; </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>os</em>, </td>
@@ -152,7 +154,7 @@ constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>arg_count</
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="class_trace_event.html">TraceEvent</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classphosphor_1_1_trace_event.html">TraceEvent</a> &amp;&#160;</td>
           <td class="paramname"><em>trace_event</em>&#160;</td>
         </tr>
         <tr>
@@ -162,13 +164,13 @@ constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>arg_count</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ostream operator overload for <a class="el" href="class_trace_event.html">TraceEvent</a></p>
-<p>Adds a representation of a <a class="el" href="class_trace_event.html">TraceEvent</a> to an ostream.</p>
-<p>Used for debugging purposes to stream a <a class="el" href="class_trace_event.html">TraceEvent</a> to an output stream like std::cout.</p>
+<p>ostream operator overload for <a class="el" href="classphosphor_1_1_trace_event.html">TraceEvent</a></p>
+<p>Adds a representation of a <a class="el" href="classphosphor_1_1_trace_event.html">TraceEvent</a> to an ostream.</p>
+<p>Used for debugging purposes to stream a <a class="el" href="classphosphor_1_1_trace_event.html">TraceEvent</a> to an output stream like std::cout.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">os</td><td>Output stream to stream to. </td></tr>
-    <tr><td class="paramname">trace_event</td><td><a class="el" href="class_trace_event.html">TraceEvent</a> to be streamed </td></tr>
+    <tr><td class="paramname">trace_event</td><td><a class="el" href="classphosphor_1_1_trace_event.html">TraceEvent</a> to be streamed </td></tr>
   </table>
   </dd>
 </dl>

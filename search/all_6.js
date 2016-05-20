@@ -1,10 +1,13 @@
 var searchData=
 [
-  ['generation',['generation',['../class_trace_log.html#a74c6e1392c80a8799edf9fbefe98ba77',1,'TraceLog']]],
-  ['getbuffer',['getBuffer',['../class_trace_log.html#a98d084e49b5d6285368343eeb63bdf1f',1,'TraceLog']]],
-  ['getchunk',['getChunk',['../class_trace_buffer.html#a9d0e569f0ed83dce8a34ad41432d6f7c',1,'TraceBuffer::getChunk()'],['../class_fixed_trace_buffer.html#a68583c8b956f3435d311b0139d345e22',1,'FixedTraceBuffer::getChunk()']]],
-  ['getgeneration',['getGeneration',['../class_trace_buffer_chunk.html#a13738f26a5c05f9b7628c4631396dc11',1,'TraceBufferChunk::getGeneration()'],['../class_trace_buffer.html#aa4776a666268e9a72753181f7f22fead',1,'TraceBuffer::getGeneration()'],['../class_fixed_trace_buffer.html#a14d2d7f37e179b8d60102d73fe1ae36b',1,'FixedTraceBuffer::getGeneration()']]],
-  ['getindex',['getIndex',['../class_trace_buffer_chunk.html#a3c501395dc31bd8a80ad5d9bbc0602bb',1,'TraceBufferChunk']]],
-  ['getinstance',['getInstance',['../class_trace_log.html#a5befbb92970f2a34016a21baca3533bb',1,'TraceLog']]],
-  ['gettype',['getType',['../union_trace_argument.html#ab631668fbce2e2616e547afac46bb838',1,'TraceArgument']]]
+  ['generation',['generation',['../classphosphor_1_1_trace_log.html#aaba5b955aca310f4bd5eda20ab7432d0',1,'phosphor::TraceLog']]],
+  ['getbuffer',['getBuffer',['../classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469',1,'phosphor::TraceLog']]],
+  ['getbufferfactory',['getBufferFactory',['../classphosphor_1_1_trace_config.html#a6eb5734b118689f57a3323caf517281b',1,'phosphor::TraceConfig']]],
+  ['getbuffermode',['getBufferMode',['../classphosphor_1_1_trace_config.html#abba19075628eac1d7cb4bb4a0480f879',1,'phosphor::TraceConfig']]],
+  ['getbuffersize',['getBufferSize',['../classphosphor_1_1_trace_config.html#af7cd85da9429af0aa6c2e748519cfb2e',1,'phosphor::TraceConfig']]],
+  ['getchunk',['getChunk',['../classphosphor_1_1_trace_buffer.html#a7be202907f40ba525dc45678bfdc520c',1,'phosphor::TraceBuffer::getChunk()'],['../classphosphor_1_1_fixed_trace_buffer.html#a389033d813835312b35b9100b869baf6',1,'phosphor::FixedTraceBuffer::getChunk()']]],
+  ['getgeneration',['getGeneration',['../classphosphor_1_1_trace_buffer_chunk.html#a476415b1c6b760f556bb286e8c1551ae',1,'phosphor::TraceBufferChunk::getGeneration()'],['../classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55',1,'phosphor::TraceBuffer::getGeneration()'],['../classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6',1,'phosphor::FixedTraceBuffer::getGeneration()']]],
+  ['getindex',['getIndex',['../classphosphor_1_1_trace_buffer_chunk.html#ae83421848cf91b8038785351789ea926',1,'phosphor::TraceBufferChunk']]],
+  ['getinstance',['getInstance',['../classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658',1,'phosphor::TraceLog']]],
+  ['gettype',['getType',['../unionphosphor_1_1_trace_argument.html#a8d4c327c4e1333e812dd03ed2aa7cc76',1,'phosphor::TraceArgument']]]
 ];

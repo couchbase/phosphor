@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -101,7 +102,8 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div class="title">Phosphor </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Phosphor is a high-performance event tracing framework for C++11 applications designed for use in Couchbase Server - specifically KV Engine and ForestDB.</p>
+<div class="textblock"><p><a href="https://travis-ci.org/couchbaselabs/phosphor"></a></p>
+<p>Phosphor is a high-performance event tracing framework for C++11 applications designed for use in Couchbase Server - specifically KV Engine and ForestDB.</p>
 <p>Event tracing is implemented in an application by instrumenting it as described in <a href="include/phosphor/phosphor.h">phosphor.h</a>. You can then enable and manage tracing using the management API described in <a href="include/phosphor/trace_log.h">trace_log.h</a>.</p>
 <h2>Example</h2>
 <p>The following is an example of hypothetical instrumentation in memcached: </p><pre class="fragment">void performSet(ENGINE_HANDLE* engine, const char* key, const char* value) {

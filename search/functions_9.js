@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['to_5fstring',['to_string',['../union_trace_argument.html#a354b11909a40c893bf57fec891f72669',1,'TraceArgument::to_string()'],['../class_trace_event.html#a23e26c9ccb0d3ffe0165cd057e7dd3df',1,'TraceEvent::to_string()']]],
-  ['traceargument',['TraceArgument',['../union_trace_argument.html#aa881a5b9d6697a1972e8efd26b10ca77',1,'TraceArgument::TraceArgument()'],['../union_trace_argument.html#a984fa83737efe9923a17b769e94bfeb2',1,'TraceArgument::TraceArgument(T src)']]],
-  ['tracebufferchunk',['TraceBufferChunk',['../class_trace_buffer_chunk.html#a29ae976a6e1bc43162fe966ccbd65b7a',1,'TraceBufferChunk']]],
-  ['traceconfig',['TraceConfig',['../class_trace_config.html#ab3f44d54554a79a0b5c0e380759c5a9c',1,'TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)'],['../class_trace_config.html#afe7fe93673e11ca1e8f81f7b0dbc282a',1,'TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory, size_t _buffer_size)']]],
-  ['traceevent',['TraceEvent',['../class_trace_event.html#a62c9221f5ed725efb531bda500d6677e',1,'TraceEvent::TraceEvent()=default'],['../class_trace_event.html#a3e4c0d2ec8f4fe491c97509449623cef',1,'TraceEvent::TraceEvent(const char *_category, const char *_name, Type _type, size_t _id, std::array&lt; TraceArgument, arg_count &gt; &amp;&amp;_args, std::array&lt; TraceArgument::Type, arg_count &gt; &amp;&amp;_arg_types)']]],
-  ['tracelog',['TraceLog',['../class_trace_log.html#a1ad9e9ea9b3b14f6883e004e8b74ced8',1,'TraceLog']]]
+  ['registerthread',['registerThread',['../classphosphor_1_1_trace_log.html#ab1fbcb3a1285fd447b4d8df6f6fccd8e',1,'phosphor::TraceLog']]],
+  ['release',['release',['../classphosphor_1_1_sentinel.html#ac72905e7efc8bb93349eef2b394f3551',1,'phosphor::Sentinel']]],
+  ['removesentinel',['removeSentinel',['../classphosphor_1_1_trace_buffer.html#ab2ab6d80b88499bc5ac3333fbf1db525',1,'phosphor::TraceBuffer::removeSentinel()'],['../classphosphor_1_1_fixed_trace_buffer.html#a22004856bb8c6bf344f7a7cd8d075e09',1,'phosphor::FixedTraceBuffer::removeSentinel()']]],
+  ['reopen',['reopen',['../classphosphor_1_1_sentinel.html#a7ead8e098b98397cf731e5e5733a9215',1,'phosphor::Sentinel']]],
+  ['replacechunk',['replaceChunk',['../classphosphor_1_1_trace_log.html#a45bae635204891e31084169815917184',1,'phosphor::TraceLog']]],
+  ['resetchunk',['resetChunk',['../classphosphor_1_1_trace_log.html#a7072d5d2fa370d231b6c93490d2180ca',1,'phosphor::TraceLog']]],
+  ['returnchunk',['returnChunk',['../classphosphor_1_1_trace_buffer.html#a82cc71db6cef94f2ad05f7ac4974dcc1',1,'phosphor::TraceBuffer::returnChunk()'],['../classphosphor_1_1_fixed_trace_buffer.html#a43e44b09ce8e8c8015fc6e8cd78e83f5',1,'phosphor::FixedTraceBuffer::returnChunk()']]]
 ];

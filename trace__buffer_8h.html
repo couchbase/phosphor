@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -115,44 +116,45 @@ $(document).ready(function(){initNavTree('trace__buffer_8h.html','');});
 <code>#include &lt;iterator&gt;</code><br />
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
-<code>#include &quot;<a class="el" href="trace__event_8h_source.html">trace_event.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="sentinel_8h_source.html">sentinel.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="trace__event_8h_source.html">trace_event.h</a>&quot;</code><br />
+<code>#include &quot;visibility.h&quot;</code><br />
 </div>
 <p><a href="trace__buffer_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trace_buffer_chunk.html">TraceBufferChunk</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer_chunk.html">phosphor::TraceBufferChunk</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trace_event_iterator.html">TraceEventIterator</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event_iterator.html">phosphor::TraceEventIterator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_trace_buffer.html">TraceBuffer</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html">phosphor::TraceBuffer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a64e765389a7f1bca3cd916bd6615ee48"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace__buffer_8h.html#a64e765389a7f1bca3cd916bd6615ee48">trace_buffer_factory</a> = std::unique_ptr&lt; <a class="el" href="class_trace_buffer.html">TraceBuffer</a> &gt;(size_t generation, size_t buffer_size)</td></tr>
-<tr class="separator:a64e765389a7f1bca3cd916bd6615ee48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a818081f7425fa19efa33d44e716cdf8b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace__buffer_8h.html#a818081f7425fa19efa33d44e716cdf8b">phosphor::trace_buffer_factory</a> = std::unique_ptr&lt; TraceBuffer &gt;(size_t generation, size_t buffer_size)</td></tr>
+<tr class="separator:a818081f7425fa19efa33d44e716cdf8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa0cecb9e4b3042b643ff684987a63e0c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0cecb9e4b3042b643ff684987a63e0c"></a>
-std::unique_ptr&lt; <a class="el" href="class_trace_buffer.html">TraceBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>make_fixed_buffer</b> (size_t generation, size_t buffer_size)</td></tr>
-<tr class="separator:aa0cecb9e4b3042b643ff684987a63e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace8f0756905495273de33d9465cbdbd9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace8f0756905495273de33d9465cbdbd9"></a>
+std::unique_ptr&lt; TraceBuffer &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>phosphor::make_fixed_buffer</b> (size_t generation, size_t buffer_size)</td></tr>
+<tr class="separator:ace8f0756905495273de33d9465cbdbd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file is internal to the inner workings of Phosphor and is not intended for public consumption. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="a64e765389a7f1bca3cd916bd6615ee48"></a>
+<a class="anchor" id="file_a818081f7425fa19efa33d44e716cdf8b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="trace__buffer_8h.html#a64e765389a7f1bca3cd916bd6615ee48">trace_buffer_factory</a> =  std::unique_ptr&lt;<a class="el" href="class_trace_buffer.html">TraceBuffer</a>&gt;(size_t generation, size_t buffer_size)</td>
+          <td class="memname">using <a class="el" href="trace__buffer_8h.html#a818081f7425fa19efa33d44e716cdf8b">phosphor::trace_buffer_factory</a> = typedef std::unique_ptr&lt;TraceBuffer&gt;( size_t generation, size_t buffer_size)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Interface for a <a class="el" href="class_trace_buffer.html">TraceBuffer</a> factory </p>
+<p>Interface for a <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> factory </p>
 
 </div>
 </div>

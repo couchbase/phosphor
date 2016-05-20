@@ -47,6 +47,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -116,43 +117,46 @@ $(document).ready(function(){initNavTree('phosphor_8h.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a22a8ef705af5aa8d94742d7dadd1d454"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22a8ef705af5aa8d94742d7dadd1d454"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::SyncStart, 0, __VA_ARGS__)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0, __VA_ARGS__)</td></tr>
 <tr class="separator:a22a8ef705af5aa8d94742d7dadd1d454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3630999c3a64adb633e4aeac5e9010f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3630999c3a64adb633e4aeac5e9010f4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::SyncStart, 0)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0)</td></tr>
 <tr class="separator:a3630999c3a64adb633e4aeac5e9010f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5a12ede131162e104e2a40e808dbf9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5a12ede131162e104e2a40e808dbf9b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)</td></tr>
 <tr class="separator:ac5a12ede131162e104e2a40e808dbf9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a2f5406c7e27c3631965359f15d613b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a2f5406c7e27c3631965359f15d613b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::SyncEnd, 0)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0)</td></tr>
 <tr class="separator:a5a2f5406c7e27c3631965359f15d613b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae69017013b7d16cb1292e8458904533c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#ae69017013b7d16cb1292e8458904533c">TRACE_ASYNC_START</a>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::AsyncStart, id, __VA_ARGS__)</td></tr>
-<tr class="separator:ae69017013b7d16cb1292e8458904533c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd52b97219b6f24b7a46d1f7e4992b49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd52b97219b6f24b7a46d1f7e4992b49"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::AsyncStart, id)</td></tr>
-<tr class="separator:afd52b97219b6f24b7a46d1f7e4992b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab682aa4bded65cede078eb2f6e296163"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab682aa4bded65cede078eb2f6e296163"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END</b>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)</td></tr>
-<tr class="separator:ab682aa4bded65cede078eb2f6e296163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9960c4ef14b2c438d4b118b6b07ba14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9960c4ef14b2c438d4b118b6b07ba14"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::AsyncEnd, id)</td></tr>
-<tr class="separator:ad9960c4ef14b2c438d4b118b6b07ba14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5758c1d58df6f680e9fe824d1ec5a850"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#a5758c1d58df6f680e9fe824d1ec5a850">TRACE_INSTANT</a>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::Instant, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:a5758c1d58df6f680e9fe824d1ec5a850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc4e34ecec061e5eeb0e6f14f6513f2b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::Instant, 0)</td></tr>
-<tr class="separator:adc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bec69c464dc6825651df2ae2919452d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#a2bec69c464dc6825651df2ae2919452d">TRACE_GLOBAL</a>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:a2bec69c464dc6825651df2ae2919452d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8c323ca56314bceed791479249cac70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8c323ca56314bceed791479249cac70"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0)</td></tr>
-<tr class="separator:ac8c323ca56314bceed791479249cac70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae69017013b7d16cb1292e8458904533c"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START</b>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id, __VA_ARGS__)</td></tr>
+<tr class="separator:gae69017013b7d16cb1292e8458904533c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id)</td></tr>
+<tr class="separator:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab682aa4bded65cede078eb2f6e296163"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END</b>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)</td></tr>
+<tr class="separator:gab682aa4bded65cede078eb2f6e296163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad9960c4ef14b2c438d4b118b6b07ba14"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id)</td></tr>
+<tr class="separator:gad9960c4ef14b2c438d4b118b6b07ba14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0, __VA_ARGS__)</td></tr>
+<tr class="separator:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0)</td></tr>
+<tr class="separator:gadc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2bec69c464dc6825651df2ae2919452d"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)</td></tr>
+<tr class="separator:ga2bec69c464dc6825651df2ae2919452d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8c323ca56314bceed791479249cac70"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0)</td></tr>
+<tr class="separator:gac8c323ca56314bceed791479249cac70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Phosphor Event Tracing</p>
 <p>Phosphor is an event tracing framework and can be used for tracing high frequency events. This file describes the instrumentation API used for adding tracing to a user application.</p>
-<p>The management / configuration API is formed by the <a class="el" href="class_trace_log.html">TraceLog</a> and <a class="el" href="class_trace_config.html">TraceConfig</a> classes listed in <a class="el" href="trace__log_8h_source.html">trace_log.h</a></p>
+<p>The management / configuration API is formed by the TraceLog and TraceConfig classes listed in <a class="el" href="trace__log_8h_source.html">trace_log.h</a></p>
 <p>The instrumentation API is formed by four groups of events:</p>
 <ul>
 <li>Synchronous</li>
@@ -172,120 +176,7 @@ Macros</h2></td></tr>
 <li>char* pointing to a cstring</li>
 <li>void* </li>
 </ul>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ae69017013b7d16cb1292e8458904533c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TRACE_ASYNC_START</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">id, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::AsyncStart, id, __VA_ARGS__)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TODO: Scoped events that automatically log entry/exit from a scope (e.g. a function Asynchronous Events</p>
-<p>Asynchronous events are used for events that are not scoped to a single thread and have duration. They have an additional 'id' argument which is used to match up the START and END events.</p>
-<p>Example: // Thread 1 TRACE_ASYNC_START0('Memcached:Frontend', 'EWOULDBLOCK', 123)</p>
-<p>// Thread 2 TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123) </p>
-
-</div>
-</div>
-<a class="anchor" id="a2bec69c464dc6825651df2ae2919452d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TRACE_GLOBAL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Global Events</p>
-<p>Global events are used for events that are not scoped to a thread and do not conceptually have a duration. Examples of this might include the initiation of a system shutdown.</p>
-<p>Example: TRACE_GLOBAL0("Memcached", "Shutdown") </p>
-
-</div>
-</div>
-<a class="anchor" id="a5758c1d58df6f680e9fe824d1ec5a850"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TRACE_INSTANT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;<a class="el" href="class_trace_log.html#a5befbb92970f2a34016a21baca3533bb">TraceLog::getInstance</a>().logEvent(category, name, TraceEvent::Type::Instant, 0, __VA_ARGS__)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Instant Events</p>
-<p>Instant events are used for events that are scoped to a thread but do not conceptually have a duration.</p>
-<p>Example: TRACE_INSTANT0("Memcached:Frontend", "StatsReset") </p>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

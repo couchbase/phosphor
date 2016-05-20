@@ -2,6 +2,7 @@ var NAVTREE =
 [
   [ "Phosphor", "index.html", [
     [ "Roadmap", "md_ROADMAP.html", null ],
+    [ "Modules", "modules.html", "modules" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -17,8 +18,6 @@ var NAVTREE =
       [ "File List", "files.html", "files" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
@@ -27,7 +26,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+".html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['chunktenant',['ChunkTenant',['../struct_trace_log_1_1_chunk_tenant.html',1,'TraceLog']]],
-  ['close',['close',['../class_sentinel.html#a8678198ee954107aa6c5eb50b15ece28',1,'Sentinel']]],
-  ['count',['count',['../class_trace_buffer_chunk.html#aa47f318da3c9650004abbb6034fa9a71',1,'TraceBufferChunk']]]
+  ['chunktenant',['ChunkTenant',['../structphosphor_1_1_trace_log_1_1_chunk_tenant.html',1,'phosphor::TraceLog']]],
+  ['close',['close',['../classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877',1,'phosphor::Sentinel']]],
+  ['count',['count',['../classphosphor_1_1_trace_buffer_chunk.html#a6efb0a3fb6b5a7c6b25cc5c9bb474710',1,'phosphor::TraceBufferChunk']]]
 ];

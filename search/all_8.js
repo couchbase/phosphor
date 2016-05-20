@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logevent',['logEvent',['../class_trace_log.html#a9c1721c7148e479b4595b5a93ad9f930',1,'TraceLog']]]
+  ['logevent',['logEvent',['../classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68',1,'phosphor::TraceLog']]]
 ];

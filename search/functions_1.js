@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['close',['close',['../class_sentinel.html#a8678198ee954107aa6c5eb50b15ece28',1,'Sentinel']]],
-  ['count',['count',['../class_trace_buffer_chunk.html#aa47f318da3c9650004abbb6034fa9a71',1,'TraceBufferChunk']]]
+  ['begin',['begin',['../classphosphor_1_1_trace_buffer.html#a20635937c0714b7bb37425733d03a700',1,'phosphor::TraceBuffer::begin()'],['../classphosphor_1_1_fixed_trace_buffer.html#a6afc8ed4150bc9d97f24eba4b7146382',1,'phosphor::FixedTraceBuffer::begin()']]]
 ];

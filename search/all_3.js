@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['deregisterthread',['deregisterThread',['../class_trace_log.html#a898f96a2bc150a3f3a44289fb5ccbcbf',1,'TraceLog']]]
+  ['deregisterthread',['deregisterThread',['../classphosphor_1_1_trace_log.html#ad5456184843a1f01db7614a3053e98b8',1,'phosphor::TraceLog']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type',['Type',['../union_trace_argument.html#a695fbdea59c213914a2de44cd9815a54',1,'TraceArgument::Type()'],['../class_trace_event.html#a28a4149a797aa3e782180b8a400d3a5a',1,'TraceEvent::Type()']]]
+  ['state',['State',['../classphosphor_1_1_sentinel.html#aea8489c4791cec635c0539b91b8e6b5c',1,'phosphor::Sentinel']]]
 ];

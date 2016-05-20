@@ -1,12 +1,14 @@
 var annotated_dup =
 [
-    [ "FixedTraceBuffer", "class_fixed_trace_buffer.html", "class_fixed_trace_buffer" ],
-    [ "Sentinel", "class_sentinel.html", "class_sentinel" ],
-    [ "TraceArgument", "union_trace_argument.html", "union_trace_argument" ],
-    [ "TraceBuffer", "class_trace_buffer.html", "class_trace_buffer" ],
-    [ "TraceBufferChunk", "class_trace_buffer_chunk.html", "class_trace_buffer_chunk" ],
-    [ "TraceConfig", "class_trace_config.html", "class_trace_config" ],
-    [ "TraceEvent", "class_trace_event.html", "class_trace_event" ],
-    [ "TraceEventIterator", "class_trace_event_iterator.html", "class_trace_event_iterator" ],
-    [ "TraceLog", "class_trace_log.html", "class_trace_log" ]
+    [ "phosphor", null, [
+      [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
+      [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ],
+      [ "TraceArgument", "unionphosphor_1_1_trace_argument.html", "unionphosphor_1_1_trace_argument" ],
+      [ "TraceBuffer", "classphosphor_1_1_trace_buffer.html", "classphosphor_1_1_trace_buffer" ],
+      [ "TraceBufferChunk", "classphosphor_1_1_trace_buffer_chunk.html", "classphosphor_1_1_trace_buffer_chunk" ],
+      [ "TraceConfig", "classphosphor_1_1_trace_config.html", "classphosphor_1_1_trace_config" ],
+      [ "TraceEvent", "classphosphor_1_1_trace_event.html", "classphosphor_1_1_trace_event" ],
+      [ "TraceEventIterator", "classphosphor_1_1_trace_event_iterator.html", "classphosphor_1_1_trace_event_iterator" ],
+      [ "TraceLog", "classphosphor_1_1_trace_log.html", "classphosphor_1_1_trace_log" ]
+    ] ]
 ];

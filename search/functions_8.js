@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['start',['start',['../class_trace_log.html#a4d909b79b5029ebb74ec036311d9ca57',1,'TraceLog']]],
-  ['stop',['stop',['../class_trace_log.html#ae2f61d1156cba274ba9c2f692a5d4487',1,'TraceLog']]],
-  ['stopunlocked',['stopUNLOCKED',['../class_trace_log.html#a43f7815e4b04fdddef83924d8aed9bc1',1,'TraceLog']]]
+  ['operator_3c_3c',['operator&lt;&lt;',['../trace__event_8h.html#ae9770b487b4868e69bb09fff5dd63d5b',1,'phosphor']]],
+  ['operator_5b_5d',['operator[]',['../classphosphor_1_1_trace_buffer_chunk.html#a62c6473039e953dc06e060125279af95',1,'phosphor::TraceBufferChunk']]]
 ];

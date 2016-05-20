@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sentinel',['Sentinel',['../class_sentinel.html',1,'']]]
+  ['sentinel',['Sentinel',['../classphosphor_1_1_sentinel.html',1,'phosphor']]]
 ];

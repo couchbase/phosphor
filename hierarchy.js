@@ -1,16 +1,16 @@
 var hierarchy =
 [
-    [ "TraceLog::ChunkTenant", "struct_trace_log_1_1_chunk_tenant.html", null ],
+    [ "phosphor::TraceLog::ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", null ],
     [ "iterator", null, [
-      [ "TraceEventIterator", "class_trace_event_iterator.html", null ]
+      [ "phosphor::TraceEventIterator", "classphosphor_1_1_trace_event_iterator.html", null ]
     ] ],
-    [ "Sentinel", "class_sentinel.html", null ],
-    [ "TraceArgument", "union_trace_argument.html", null ],
-    [ "TraceBuffer", "class_trace_buffer.html", [
-      [ "FixedTraceBuffer", "class_fixed_trace_buffer.html", null ]
+    [ "phosphor::Sentinel", "classphosphor_1_1_sentinel.html", null ],
+    [ "phosphor::TraceArgument", "unionphosphor_1_1_trace_argument.html", null ],
+    [ "phosphor::TraceBuffer", "classphosphor_1_1_trace_buffer.html", [
+      [ "phosphor::FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", null ]
     ] ],
-    [ "TraceBufferChunk", "class_trace_buffer_chunk.html", null ],
-    [ "TraceConfig", "class_trace_config.html", null ],
-    [ "TraceEvent", "class_trace_event.html", null ],
-    [ "TraceLog", "class_trace_log.html", null ]
+    [ "phosphor::TraceBufferChunk", "classphosphor_1_1_trace_buffer_chunk.html", null ],
+    [ "phosphor::TraceConfig", "classphosphor_1_1_trace_config.html", null ],
+    [ "phosphor::TraceEvent", "classphosphor_1_1_trace_event.html", null ],
+    [ "phosphor::TraceLog", "classphosphor_1_1_trace_log.html", null ]
 ];
