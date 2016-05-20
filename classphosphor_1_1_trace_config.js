@@ -1,6 +1,6 @@
 var classphosphor_1_1_trace_config =
 [
-    [ "TraceConfig", "classphosphor_1_1_trace_config.html#ae0dc9d91b5d64a7fb96b4aa5628b9ab3", null ],
+    [ "TraceConfig", "classphosphor_1_1_trace_config.html#a909288a37a984732655d8b00425064d6", null ],
     [ "TraceConfig", "classphosphor_1_1_trace_config.html#ac63adad510f75b0438393cbd87336354", null ],
     [ "TraceConfig", "classphosphor_1_1_trace_config.html#aeb643952f63708283e156943825179e5", null ],
     [ "getBufferFactory", "classphosphor_1_1_trace_config.html#a6eb5734b118689f57a3323caf517281b", null ],
