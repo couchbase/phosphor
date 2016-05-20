@@ -15,6 +15,7 @@
  *   limitations under the License.
  */
 
+#include <atomic>
 #include <thread>
 #include <vector>
 
@@ -24,6 +25,7 @@
 
 class SentinelTest : public testing::Test {
 protected:
+    virtual ~SentinelTest() = default;
     phosphor::Sentinel sentinel;
 };
 
@@ -44,7 +46,33 @@ TEST_F(SentinelTest, CloseReopenRelease) {
 }
 
 class ThreadedSentinelTest : public SentinelTest {
+protected:
+    ThreadedSentinelTest()
+        : step(0) {
 
+    }
+
+    virtual ~ThreadedSentinelTest() {
+        for(auto& thread : threads) {
+            thread.join();
+        }
+    }
+
+    std::vector<std::thread> threads;
+    std::atomic<int> step;
 };
 
+TEST_F(ThreadedSentinelTest, BusySpinAcquire) {
 
+    threads.emplace_back([this]() {
+        sentinel.acquire();
+        ++step;
+        sentinel.release();
+    });
+
+    threads.emplace_back([this]() {
+       while(step.load() != 1);
+        sentinel.acquire();
+        sentinel.release();
+    });
+}
