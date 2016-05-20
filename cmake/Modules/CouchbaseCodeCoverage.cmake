@@ -26,7 +26,7 @@ IF (CB_CODE_COVERAGE)
         MESSAGE(STATUS "gcovr [www.gcovr.com] not found.")
     ENDIF ()
 
-    IF (NOT GCOV_PATH OR NOT GCOVR_PATH)
+    IF (NOT GCOV_PATH)
         MESSAGE(FATAL_ERROR "CB_CODE_COVERAGE enabled but one of more required tools not found - cannot continue.")
     ENDIF()
 ENDIF(CB_CODE_COVERAGE)
