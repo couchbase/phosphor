@@ -58,7 +58,7 @@
  */
 
 /*
- * \defgroup Synchronous events
+ * \defgroup sync Synchronous events
  *
  * Synchronous events are used for events that are scoped to a single
  * thread and have a duration.
@@ -90,7 +90,7 @@
  */
 
 /**
- * \defgroup Asynchronous Events
+ * \defgroup async Asynchronous Events
  *
  * Asynchronous events are used for events that are not scoped to a
  * single thread and have duration. They have an additional 'id'
@@ -120,7 +120,7 @@
 /** @} */
 
 /**
- * \defgroup Instant Events
+ * \defgroup inst Instant Events
  *
  * Instant events are used for events that are scoped to a thread but
  * do not conceptually have a duration.
@@ -139,7 +139,7 @@
 /** @} */
 
 /**
- * \defgroup Global Events
+ * \defgroup glob Global Events
  *
  * Global events are used for events that are not scoped to a thread
  * and do not conceptually have a duration. Examples of this might include
