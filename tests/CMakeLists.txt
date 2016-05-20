@@ -1,2 +1,4 @@
-add_executable(playground playground.cc)
-target_link_libraries(playground event_tracer)
+ADD_SUBDIRECTORY(module)
+
+ADD_EXECUTABLE(playground playground.cc)
+TARGET_LINK_LIBRARIES(playground phosphor)

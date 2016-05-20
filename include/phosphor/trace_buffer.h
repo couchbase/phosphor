@@ -26,8 +26,9 @@
 #include <thread>
 #include <vector>
 
-#include "trace_event.h"
 #include "sentinel.h"
+#include "trace_event.h"
+#include "visibility.h"
 
 namespace phosphor {
 
@@ -37,7 +38,7 @@ namespace phosphor {
      * The TraceBufferChunk should be used from a single thread to
      * store various events.
      */
-    class TraceBufferChunk {
+    class PHOSPHOR_API TraceBufferChunk {
         static constexpr auto chunk_page_count = 1;
         static constexpr auto page_size = 4096;
         static constexpr auto chunk_size = ((page_size * chunk_page_count) /
@@ -125,7 +126,7 @@ namespace phosphor {
      *
      * For resource efficiency TraceEventIterator does not have post-increment
      */
-    class TraceEventIterator
+    class PHOSPHOR_API TraceEventIterator
             : public std::iterator<std::bidirectional_iterator_tag, TraceEvent> {
     public:
         TraceEventIterator() = default;
@@ -153,29 +154,29 @@ namespace phosphor {
         size_t chunk_index = 0;
     };
 
-/**
- * Abstract base-class for a buffer of TraceEvents
- *
- * The TraceBuffer loans out TraceBufferChunks to individual
- * threads to reduce lock-contention on event logging.
- *
- * This class is *not* thread-safe and should only be directly
- * interacted either with the global lock owned by the TraceLog
- * or after tracing has been finished.
- *
- * A trace buffer can be iterated over using C++11 style range
- * iteration:
- *
- *     for(const auto& event : trace_buffer) {
- *         std::cout << event << std::endl;
- *     }
- *
- * Alternatively more complex iteration can be accomplished by
- * using the iterators returned by TraceBuffer::begin() and
- * TraceBuffer::end().
- *
- * Iteration should not be attempted while chunks are loaned out.
- */
+    /**
+     * Abstract base-class for a buffer of TraceEvents
+     *
+     * The TraceBuffer loans out TraceBufferChunks to individual
+     * threads to reduce lock-contention on event logging.
+     *
+     * This class is *not* thread-safe and should only be directly
+     * interacted either with the global lock owned by the TraceLog
+     * or after tracing has been finished.
+     *
+     * A trace buffer can be iterated over using C++11 style range
+     * iteration:
+     *
+     *     for(const auto& event : trace_buffer) {
+     *         std::cout << event << std::endl;
+     *     }
+     *
+     * Alternatively more complex iteration can be accomplished by
+     * using the iterators returned by TraceBuffer::begin() and
+     * TraceBuffer::end().
+     *
+     * Iteration should not be attempted while chunks are loaned out.
+     */
     class TraceBuffer {
         using const_iterator = TraceEventIterator;
     public:

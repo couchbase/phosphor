@@ -23,6 +23,8 @@
 
 #include <atomic>
 
+#include "visibility.h"
+
 namespace phosphor {
 
     /**
@@ -43,7 +45,7 @@ namespace phosphor {
      * - Close   [Open->Close]
      * - Reopen  [Close->Busy]
      */
-    class Sentinel {
+    class PHOSPHOR_API Sentinel {
     public:
         Sentinel();
 

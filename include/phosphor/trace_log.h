@@ -22,6 +22,7 @@
 
 #include "trace_buffer.h"
 #include "trace_event.h"
+#include "visibility.h"
 
 #if __APPLE__
 /* Apple's clang is awkward and disables thread_local keyword support */
@@ -62,7 +63,7 @@ namespace phosphor {
      * All other arguments are optional and may be specified using chainable
      * methods.
      */
-    class TraceConfig {
+    class PHOSPHOR_API TraceConfig {
     public:
         TraceConfig() = default;
 
@@ -121,7 +122,7 @@ namespace phosphor {
      *
      * This class's public interface is *generally* thread-safe.
      */
-    class TraceLog {
+    class PHOSPHOR_API TraceLog {
     public:
         /**
          * Default constructor for TraceLog

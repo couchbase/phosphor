@@ -1,22 +1,35 @@
-cmake_minimum_required(VERSION 2.8)
-project(Phosphor)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(Phosphor)
+
+INCLUDE(CTest)
 
 IF (${CMAKE_MAJOR_VERSION} GREATER 2)
     CMAKE_POLICY(SET CMP0042 NEW)
-ENDIF (${CMAKE_MAJOR_VERSION} GREATER 2)
+ENDIF ()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wpedantic")
+IF(NOT DEFINED COUCHBASE_SERVER_BUILD)
+    INCLUDE(NonServerBuild.cmake)
+ENDIF ()
 
-include_directories(BEFORE
+INCLUDE_DIRECTORIES(BEFORE
         ${CMAKE_CURRENT_SOURCE_DIR}/include/phosphor
         ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-set(SOURCE_FILES
+SET(SOURCE_FILES
         src/sentinel.cc
         src/string_utils.cc
         src/trace_buffer.cc
         src/trace_event.cc
         src/trace_log.cc)
-add_library(event_tracer SHARED ${SOURCE_FILES})
 
-ADD_SUBDIRECTORY(tests)
+ADD_LIBRARY(phosphor SHARED ${SOURCE_FILES})
+
+IF(DEFINED gtest_SOURCE_DIR)
+    INCLUDE_DIRECTORIES(AFTER
+            ${gtest_SOURCE_DIR}/include
+            ${gmock_SOURCE_DIR}/include)
+
+    ADD_SUBDIRECTORY(tests)
+ENDIF ()
+
+ENABLE_CODE_COVERAGE_REPORT()

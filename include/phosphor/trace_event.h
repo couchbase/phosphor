@@ -28,12 +28,13 @@
 #include <thread>
 
 #include "trace_argument.h"
+#include "visibility.h"
 
 namespace phosphor {
 
     constexpr auto arg_count = 2;
 
-    class TraceEvent {
+    class PHOSPHOR_API TraceEvent {
     public:
         /**
          * The enumeration representing the different types of TraceEvents
