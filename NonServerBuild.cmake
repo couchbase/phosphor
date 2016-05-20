@@ -7,8 +7,6 @@ ENDIF ()
 
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wpedantic")
-
 # Include some of the compiler flag modules from couchbase/tlm
 INCLUDE(CouchbaseCompilerOptions)
 INCLUDE(CouchbaseCodeCoverage)
