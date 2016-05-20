@@ -15,6 +15,7 @@
  *   limitations under the License.
  */
 
+#include <cstdarg>
 #include <vector>
 
 #include "string_utils.h"
