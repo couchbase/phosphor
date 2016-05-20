@@ -12,6 +12,7 @@ include_directories(BEFORE
         ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(SOURCE_FILES
+        src/sentinel.cc
         src/string_utils.cc
         src/trace_buffer.cc
         src/trace_event.cc

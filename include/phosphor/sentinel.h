@@ -43,57 +43,48 @@
  */
 class Sentinel {
 public:
-    Sentinel()
-        : state(State::open) {
-
-    }
+    Sentinel();
 
     /**
      * Acquire is used to take the lock from 'Open' to 'Busy'
      *
      * Acquire should be used by the users of a ChunkTenant before
      * using the chunk pointer in the ChunkTenant. Once the lock
-     * is acquired and use of the chunk is finished then the
+     * is acquired and use of the chunk is finished then the sentinel
+     * should be released().
      *
      * @return true if the lock has been acquired, false if the lock
      *         failed to be acquired due to the Sentinel being in the
      *         closed state.
      */
-    bool acquire() {
-        auto expected = State::open;
-        while(!state.compare_exchange_weak(expected, State::busy)) {
-            if(expected == State::closed) {
-                return false;
-            }
-            expected = State::open;
-        }
-        return true;
-    }
+    bool acquire();
 
     /**
      * Release is used to take the lock from 'Busy' to 'Open'
      *
-     * Release may only be used while holding the Busy lock
-     * (the release() call does not verify this).
+     * This operation is used to indicate that the callee no
+     * longer requires access to the ChunkTenant and that
+     * another thread may acquire it or close the ChunkTenant.
+     *
+     * Release should only be used while holding the Busy lock
+     * (the release() call does not verify this for performance).
      */
-    void release() {
-        state.store(State::open, std::memory_order_release);
-    }
+    void release();
 
     /**
      * Close is used to take the lock from 'Open' to 'Closed'
      *
      * The closing process effectively sends a message to the threads
      * using the ChunkTenant that the current chunk pointer should not
-     * be used. Once the Sentinel has transitioned to Closed then the
-     * current ChunkPointer MUST not be used.
+     * be used.
+     *
+     * Once the Sentinel has transitioned to Closed then the current
+     * chunk pointer MUST not be used until it is reopened.
+     *
+     * n.b. It is generally expected that this will be called while
+     *      holding the global lock but is not currently required
      */
-    void close() {
-        auto expected = State::open;
-        while(!state.compare_exchange_weak(expected, State::closed)) {
-            expected = State::open;
-        }
-    }
+    void close();
 
     /**
      * Reopen is used to take the lock from 'Closed' to 'Busy'
@@ -115,20 +106,19 @@ public:
      *         False if it was not taken (Either taken by someone
      *         else or an invalid transition)
      */
-    bool reopen() {
-        auto expected = State::closed;
-        return state.compare_exchange_strong(expected, State::busy);
-    }
+    bool reopen();
 
 protected:
+    /**
+     * Maintains the internal state of the sentinel
+     *
+     * - open: The chunk pointer is valid
+     * - busy: The chunk pointer is being used (and valid)
+     * - closed: The chunk pointer is no longer valid
+     */
     enum class State : char {
-        /* The chunk pointer is valid */
         open,
-
-        /* The chunk pointer is in use */
         busy,
-
-        /* The chunk pointer is invalid */
         closed
     };
 
