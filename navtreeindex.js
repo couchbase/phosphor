@@ -2,9 +2,9 @@ var NAVTREEINDEX =
 {
 "index.html":[],
 "modules.html":[0],
-"group___asynchronous.html":[0,0],
-"group___instant.html":[0,1],
-"group___global.html":[0,2],
+"group__async.html":[0,0],
+"group__inst.html":[0,1],
+"group__glob.html":[0,2],
 "annotated.html":[1,0],
 "structphosphor_1_1_trace_log_1_1_chunk_tenant.html":[1,0,0],
 "classphosphor_1_1_fixed_trace_buffer.html":[1,0,1],

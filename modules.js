@@ -1,6 +1,6 @@
 var modules =
 [
-    [ "Events", "group___asynchronous.html", null ],
-    [ "Events", "group___instant.html", null ],
-    [ "Events", "group___global.html", null ]
+    [ "Asynchronous Events", "group__async.html", null ],
+    [ "Instant Events", "group__inst.html", null ],
+    [ "Global Events", "group__glob.html", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Phosphor: Events</title>
+<title>Phosphor: Asynchronous Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('group___instant.html','');});
+$(document).ready(function(){initNavTree('group__async.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -101,22 +101,32 @@ $(document).ready(function(){initNavTree('group___instant.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Events</div>  </div>
+<div class="title">Asynchronous Events</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5758c1d58df6f680e9fe824d1ec5a850"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadc4e34ecec061e5eeb0e6f14f6513f2b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0)</td></tr>
-<tr class="separator:gadc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae69017013b7d16cb1292e8458904533c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae69017013b7d16cb1292e8458904533c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START</b>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id, __VA_ARGS__)</td></tr>
+<tr class="separator:gae69017013b7d16cb1292e8458904533c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd52b97219b6f24b7a46d1f7e4992b49"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id)</td></tr>
+<tr class="separator:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab682aa4bded65cede078eb2f6e296163"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab682aa4bded65cede078eb2f6e296163"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END</b>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)</td></tr>
+<tr class="separator:gab682aa4bded65cede078eb2f6e296163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad9960c4ef14b2c438d4b118b6b07ba14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad9960c4ef14b2c438d4b118b6b07ba14"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id)</td></tr>
+<tr class="separator:gad9960c4ef14b2c438d4b118b6b07ba14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Instant events are used for events that are scoped to a thread but do not conceptually have a duration.</p>
-<p>Example: </p><pre class="fragment">TRACE_INSTANT0("Memcached:Frontend", "StatsReset")</pre></div><!-- contents -->
+<p>Asynchronous events are used for events that are not scoped to a single thread and have duration. They have an additional 'id' argument which is used to match up the START and END events.</p>
+<p>Example: </p><pre class="fragment">// Thread 1
+TRACE_ASYNC_START0('Memcached:Frontend', 'EWOULDBLOCK', 123)
+
+// Thread 2
+TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)</pre></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

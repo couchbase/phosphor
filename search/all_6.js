@@ -9,5 +9,6 @@ var searchData=
   ['getgeneration',['getGeneration',['../classphosphor_1_1_trace_buffer_chunk.html#a476415b1c6b760f556bb286e8c1551ae',1,'phosphor::TraceBufferChunk::getGeneration()'],['../classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55',1,'phosphor::TraceBuffer::getGeneration()'],['../classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6',1,'phosphor::FixedTraceBuffer::getGeneration()']]],
   ['getindex',['getIndex',['../classphosphor_1_1_trace_buffer_chunk.html#ae83421848cf91b8038785351789ea926',1,'phosphor::TraceBufferChunk']]],
   ['getinstance',['getInstance',['../classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658',1,'phosphor::TraceLog']]],
-  ['gettype',['getType',['../unionphosphor_1_1_trace_argument.html#a8d4c327c4e1333e812dd03ed2aa7cc76',1,'phosphor::TraceArgument']]]
+  ['gettype',['getType',['../unionphosphor_1_1_trace_argument.html#a8d4c327c4e1333e812dd03ed2aa7cc76',1,'phosphor::TraceArgument']]],
+  ['global_20events',['Global Events',['../group__glob.html',1,'']]]
 ];
