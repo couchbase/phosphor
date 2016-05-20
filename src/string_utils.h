@@ -19,12 +19,15 @@
 
 #pragma once
 
-
-/*
- * Rough std::string version of sprintf
- *
- * @param fmt Format string
- * @param args Variable arguments to format into format string
- * @return Formatted string
- */
-std::string format_string(const char* fmt, ...);
+namespace phosphor {
+    namespace utils {
+        /*
+         * Rough std::string version of sprintf
+         *
+         * @param fmt Format string
+         * @param args Variable arguments to format into format string
+         * @return Formatted string
+         */
+        std::string format_string(const char *fmt, ...);
+    }
+}

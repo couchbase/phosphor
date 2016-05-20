@@ -17,34 +17,38 @@
 
 #include "sentinel.h"
 
-Sentinel::Sentinel()
-    : state(State::open) {
+namespace phosphor {
 
-}
+    Sentinel::Sentinel()
+            : state(State::open) {
 
-bool Sentinel::acquire() {
-    auto expected = State::open;
-    while(!state.compare_exchange_weak(expected, State::busy)) {
-        if(expected == State::closed) {
-            return false;
+    }
+
+    bool Sentinel::acquire() {
+        auto expected = State::open;
+        while (!state.compare_exchange_weak(expected, State::busy)) {
+            if (expected == State::closed) {
+                return false;
+            }
+            expected = State::open;
         }
-        expected = State::open;
+        return true;
     }
-    return true;
-}
 
-void Sentinel::release() {
-    state.store(State::open, std::memory_order_release);
-}
-
-void Sentinel::close() {
-    auto expected = State::open;
-    while(!state.compare_exchange_weak(expected, State::closed)) {
-        expected = State::open;
+    void Sentinel::release() {
+        state.store(State::open, std::memory_order_release);
     }
-}
 
-bool Sentinel::reopen() {
-    auto expected = State::closed;
-    return state.compare_exchange_strong(expected, State::busy);
+    void Sentinel::close() {
+        auto expected = State::open;
+        while (!state.compare_exchange_weak(expected, State::closed)) {
+            expected = State::open;
+        }
+    }
+
+    bool Sentinel::reopen() {
+        auto expected = State::closed;
+        return state.compare_exchange_strong(expected, State::busy);
+    }
+
 }

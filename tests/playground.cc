@@ -22,27 +22,27 @@
 #include <vector>
 
 int main(int argc, char* argv[]) {
-    TraceLog::getInstance().start(
-        TraceConfig(BufferMode::fixed, 1)
+    phosphor::TraceLog::getInstance().start(
+            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1)
     );
 
     std::vector<std::thread> threads;
     for(int i = 0; i < 5; i++) {
         threads.emplace_back([i]() {
-            TraceLog::registerThread();
-            while(TraceLog::getInstance().isEnabled()) {
+            phosphor::TraceLog::registerThread();
+            while(phosphor::TraceLog::getInstance().isEnabled()) {
                 TRACE_INSTANT("Child", "Thread #", i, "");
             }
-            TraceLog::deregisterThread();
+            phosphor::TraceLog::deregisterThread();
         });
     }
 
 
-    while(TraceLog::getInstance().isEnabled()) {
+    while(phosphor::TraceLog::getInstance().isEnabled()) {
         TRACE_INSTANT("Main", "Thread", 4, 5);
     }
-    TraceLog::getInstance().stop();
-    auto buffer(TraceLog::getInstance().getBuffer());
+    phosphor::TraceLog::getInstance().stop();
+    auto buffer(phosphor::TraceLog::getInstance().getBuffer());
 
     for(auto& thread : threads) {
         thread.join();

@@ -20,50 +20,54 @@
 #include "string_utils.h"
 #include "trace_event.h"
 
+namespace phosphor {
 
-TraceEvent::TraceEvent(const char* _category,
-                       const char* _name,
-                       Type _type,
-                       size_t _id,
-                       std::array<TraceArgument, arg_count>&& _args,
-                       std::array<TraceArgument::Type, arg_count>&& _arg_types)
-        // Premature optimisation #1:
-        //   Initialise name and category first to avoid copying two registers
-        //   in advance of the steady_clock::now() function call
-        : name(_name),
-          category(_category),
-          id(_id),
-          args(_args),
-          time(std::chrono::steady_clock::now().time_since_epoch()),
-          arg_types(_arg_types),
-          type(_type) {
-}
+    TraceEvent::TraceEvent(const char *_category,
+                           const char *_name,
+                           Type _type,
+                           size_t _id,
+                           std::array<TraceArgument, arg_count> &&_args,
+                           std::array<TraceArgument::Type, arg_count> &&_arg_types)
+            // Premature optimisation #1:
+            //   Initialise name and category first to avoid copying two
+            //   registers in advance of the steady_clock::now() function call
+            : name(_name),
+              category(_category),
+              id(_id),
+              args(_args),
+              time(std::chrono::steady_clock::now().time_since_epoch()),
+              arg_types(_arg_types),
+              type(_type) {
+    }
 
 
-std::string TraceEvent::to_string() const {
-    using namespace std::chrono;
-    typedef duration<int, std::ratio_multiply<hours::period, std::ratio<24> >::type> days;
+    std::string TraceEvent::to_string() const {
+        using namespace std::chrono;
+        typedef duration<int, std::ratio_multiply<hours::period, std::ratio<24> >::type> days;
 
-    auto ttime(time);
-    auto d = duration_cast<days>(ttime);
-    ttime -= d;
-    auto h = duration_cast<hours>(ttime);
-    ttime -= h;
-    auto m = duration_cast<minutes>(ttime);
-    ttime -= m;
-    auto s = duration_cast<seconds>(ttime);
-    ttime -= s;
-    auto us = duration_cast<nanoseconds>(ttime);
+        auto ttime(time);
+        auto d = duration_cast<days>(ttime);
+        ttime -= d;
+        auto h = duration_cast<hours>(ttime);
+        ttime -= h;
+        auto m = duration_cast<minutes>(ttime);
+        ttime -= m;
+        auto s = duration_cast<seconds>(ttime);
+        ttime -= s;
+        auto us = duration_cast<nanoseconds>(ttime);
 
-    return format_string("TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, "
-                         "arg1=%s, arg2=%s>",
-                         d.count(), h.count(), m.count(), s.count(), us.count(),
-                         category, name,
-                         args[0].to_string(arg_types[0]).c_str(),
-                         args[1].to_string(arg_types[1]).c_str());
-}
+        return utils::format_string(
+                "TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, "
+                        "arg1=%s, arg2=%s>",
+                d.count(), h.count(), m.count(), s.count(), us.count(),
+                category, name,
+                args[0].to_string(arg_types[0]).c_str(),
+                args[1].to_string(arg_types[1]).c_str());
+    }
 
-std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
-    os << te.to_string();
-    return os;
+    std::ostream &operator<<(std::ostream &os, const TraceEvent &te) {
+        os << te.to_string();
+        return os;
+    }
+
 }

@@ -24,76 +24,78 @@
 #include <sstream>
 #include <string>
 
-/**
- * A union which represents a single trace argument.
- *
- * Has various methods / constructors for tidily creating
- * and printing the TraceArgument.
- */
-union TraceArgument {
+namespace phosphor {
 
     /**
-     * Enumeration of the possible types of a TraceArgument
+     * A union which represents a single trace argument.
+     *
+     * Has various methods / constructors for tidily creating
+     * and printing the TraceArgument.
      */
-    enum class Type : char {
-        is_bool,
-        is_uint,
-        is_int,
-        is_double,
-        is_pointer,
-        is_string,
-        is_none
+    union TraceArgument {
+
+        /**
+         * Enumeration of the possible types of a TraceArgument
+         */
+        enum class Type : char {
+            is_bool,
+            is_uint,
+            is_int,
+            is_double,
+            is_pointer,
+            is_string,
+            is_none
+        };
+
+        bool as_bool;
+        unsigned long long as_uint;
+        long long as_int;
+        double as_double;
+        const char *as_string;
+        const void *as_pointer;
+
+        /**
+         * Default constructor
+         */
+        TraceArgument() { };
+
+        /**
+         * Templated conversion constructor
+         *
+         * @param src Value to be converted to a TraceArgument
+         *
+         * Usage:
+         *
+         *     TraceArgument trace_arg = TraceArgument(arg);
+         *
+         * Where arg is one of many primitive types, e.g. int.
+         *
+         */
+        template<class T>
+        inline TraceArgument(T src);
+
+        /**
+         * @return The enum used for a given type
+         *
+         * Usage:
+         *
+         *     Type t = TraceArgument::getType<int>()
+         */
+        template<class T>
+        inline static constexpr Type getType();
+
+        /**
+         * Converts the TraceArgument to string
+         *
+         * @param type The enum which describes the type of the TraceArgument
+         * @return String form of the TraceArgument as the given type
+         */
+        inline std::string to_string(TraceArgument::Type type) const;
+
+    private:
+        template<TraceArgument::Type T>
+        inline std::string internal_to_string();
     };
-
-    bool as_bool;
-    unsigned long long as_uint;
-    long long as_int;
-    double as_double;
-    const char* as_string;
-    const void* as_pointer;
-
-    /**
-     * Default constructor
-     */
-    TraceArgument() {};
-
-    /**
-     * Templated conversion constructor
-     *
-     * @param src Value to be converted to a TraceArgument
-     *
-     * Usage:
-     *
-     *     TraceArgument trace_arg = TraceArgument(arg);
-     *
-     * Where arg is one of many primitive types, e.g. int.
-     *
-     */
-    template <class T>
-    inline TraceArgument(T src);
-
-    /**
-     * @return The enum used for a given type
-     *
-     * Usage:
-     *
-     *     Type t = TraceArgument::getType<int>()
-     */
-    template <class T>
-    inline static constexpr Type getType();
-
-    /**
-     * Converts the TraceArgument to string
-     *
-     * @param type The enum which describes the type of the TraceArgument
-     * @return String form of the TraceArgument as the given type
-     */
-    inline std::string to_string(TraceArgument::Type type) const;
-
-private:
-    template<TraceArgument::Type T>
-    inline std::string internal_to_string();
-};
 
 /**
  * Used for defining the constructor and type-to-enum
@@ -104,33 +106,49 @@ private:
  *            suffix) of the argument.
  */
 #define ARGUMENT_CONVERSION(src, dst) \
-    template <> \
-    inline constexpr TraceArgument::Type TraceArgument::getType<src>() { \
-         return Type::is_ ##dst; \
-    } \
-    template <> \
-    inline TraceArgument::TraceArgument(src arg) : as_ ##dst (arg) {}
+template <> \
+inline constexpr TraceArgument::Type TraceArgument::getType<src>() { \
+     return Type::is_ ##dst; \
+} \
+template <> \
+inline TraceArgument::TraceArgument(src arg) : as_ ##dst (arg) {}
 
-ARGUMENT_CONVERSION(bool, bool);
+    ARGUMENT_CONVERSION(bool, bool);
 
-ARGUMENT_CONVERSION(char, int);
-ARGUMENT_CONVERSION(short, int);
-ARGUMENT_CONVERSION(int, int);
-ARGUMENT_CONVERSION(long, int);
-ARGUMENT_CONVERSION(long long, int);
+    ARGUMENT_CONVERSION(char, int);
 
-ARGUMENT_CONVERSION(unsigned char, uint);
-ARGUMENT_CONVERSION(unsigned short, uint);
-ARGUMENT_CONVERSION(unsigned int, uint);
-ARGUMENT_CONVERSION(unsigned long, uint);
-ARGUMENT_CONVERSION(unsigned long long, uint);
+    ARGUMENT_CONVERSION(short, int);
 
-ARGUMENT_CONVERSION(float, double);
-ARGUMENT_CONVERSION(double, double);
+    ARGUMENT_CONVERSION(int, int);
 
-ARGUMENT_CONVERSION(const void*, pointer);
+    ARGUMENT_CONVERSION(long, int);
 
-ARGUMENT_CONVERSION(const char*, string);
+    ARGUMENT_CONVERSION(long
+                                long, int);
+
+    ARGUMENT_CONVERSION(unsigned
+                                char, uint);
+
+    ARGUMENT_CONVERSION(unsigned
+                                short, uint);
+
+    ARGUMENT_CONVERSION(unsigned
+                                int, uint);
+
+    ARGUMENT_CONVERSION(unsigned
+                                long, uint);
+
+    ARGUMENT_CONVERSION(unsigned
+                                long
+                                long, uint);
+
+    ARGUMENT_CONVERSION(float, double);
+
+    ARGUMENT_CONVERSION(double, double);
+
+    ARGUMENT_CONVERSION(const void*, pointer);
+
+    ARGUMENT_CONVERSION(const char*, string);
 
 #undef ARGUMENT_CONVERSION
 
@@ -141,26 +159,29 @@ ARGUMENT_CONVERSION(const char*, string);
  * formatted string.
  */
 #define ADD_CASE(dst) \
-    case Type::is_ ##dst: \
-        return std::to_string(as_ ##dst);
+case Type::is_ ##dst: \
+    return std::to_string(as_ ##dst);
 
-inline std::string TraceArgument::to_string(TraceArgument::Type type) const {
-    std::stringstream ss;
-    switch(type) {
-        ADD_CASE(bool)
-        ADD_CASE(int)
-        ADD_CASE(uint)
-        ADD_CASE(double)
-        case Type::is_pointer:
-            ss << as_pointer;
-            return ss.str();
-        case Type::is_string:
-            return "'" + std::string(as_string) + "'";
-        case Type::is_none:
-            return std::string("NONE");
-        default:
-            throw std::invalid_argument("Invalid TraceArgument type");
+    inline std::string TraceArgument::to_string(
+            TraceArgument::Type type) const {
+        std::stringstream ss;
+        switch (type) {
+            ADD_CASE(bool)
+            ADD_CASE(int)
+            ADD_CASE(uint)
+            ADD_CASE(double)
+            case Type::is_pointer:
+                ss << as_pointer;
+                return ss.str();
+            case Type::is_string:
+                return "'" + std::string(as_string) + "'";
+            case Type::is_none:
+                return std::string("NONE");
+            default:
+                throw std::invalid_argument("Invalid TraceArgument type");
+        }
     }
-}
 
 #undef ADD_CASE
+
+} // namespace phosphor

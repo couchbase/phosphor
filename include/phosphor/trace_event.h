@@ -29,78 +29,82 @@
 
 #include "trace_argument.h"
 
-constexpr auto arg_count = 2;
+namespace phosphor {
 
-class TraceEvent {
-public:
-    /**
-     * The enumeration representing the different types of TraceEvents
-     */
-    enum class Type: char {
-        AsyncStart,
-        AsyncEnd,
-        SyncStart,
-        SyncEnd,
-        Instant,
-        GlobalInstant
+    constexpr auto arg_count = 2;
+
+    class TraceEvent {
+    public:
+        /**
+         * The enumeration representing the different types of TraceEvents
+         */
+        enum class Type : char {
+            AsyncStart,
+            AsyncEnd,
+            SyncStart,
+            SyncEnd,
+            Instant,
+            GlobalInstant
+        };
+
+        /**
+         * Default constructor for efficient TraceBufferChunk initialisation
+         */
+        TraceEvent() = default;
+
+        /**
+         * Constructor for creating new events
+         *
+         * @param _category C-String for the event's category
+         * @param _name C-String for the event's name
+         * @param _type The event type
+         * @param _id A unique identifier for the event for pairing up
+         *            async start/stop events
+         * @param _args An array of `Value`
+         * @param _arg_types An array of argument types
+         */
+        TraceEvent(const char *_category,
+                   const char *_name,
+                   Type _type,
+                   size_t _id,
+                   std::array<TraceArgument, arg_count> &&_args,
+                   std::array<TraceArgument::Type, arg_count> &&_arg_types);
+
+        /**
+         * Used to get a string representation of the TraceEvent
+         *
+         * @return string representation of the TraceEvent
+         */
+        std::string to_string() const;
+
+    private:
+        const char *name;
+        const char *category;
+        size_t id;
+        std::thread::id thread_id;
+        std::array<TraceArgument, arg_count> args;
+
+        std::chrono::steady_clock::duration time;
+        std::array<TraceArgument::Type, arg_count> arg_types;
+        Type type;
     };
 
     /**
-     * Default constructor for efficient TraceBufferChunk initialisation
-     */
-    TraceEvent() = default;
-
-    /**
-     * Constructor for creating new events
+     * ostream operator overload for TraceEvent
      *
-     * @param _category C-String for the event's category
-     * @param _name C-String for the event's name
-     * @param _type The event type
-     * @param _id A unique identifier for the event for pairing up
-     *            async start/stop events
-     * @param _args An array of `Value`
-     * @param _arg_types An array of argument types
-     */
-    TraceEvent(const char* _category,
-               const char* _name,
-               Type _type,
-               size_t _id,
-               std::array<TraceArgument, arg_count>&& _args,
-               std::array<TraceArgument::Type, arg_count>&& _arg_types);
-
-    /**
-     * Used to get a string representation of the TraceEvent
+     * Adds a representation of a TraceEvent to an ostream.
      *
-     * @return string representation of the TraceEvent
+     * Used for debugging purposes to stream a TraceEvent to
+     * an output stream like std::cout.
+     *
+     * @param os Output stream to stream to.
+     * @param trace_event TraceEvent to be streamed
+     * @return Output stream passed in
      */
-    std::string to_string() const;
+    std::ostream &operator<<(std::ostream &os, const TraceEvent &trace_event);
 
-private:
-    const char* name;
-    const char* category;
-    size_t id;
-    std::thread::id thread_id;
-    std::array<TraceArgument, arg_count> args;
+    static_assert(sizeof(TraceEvent) <= 64,
+                  "TraceEvent should fit inside a cacheline "
+                          "for performance reasons");
 
-    std::chrono::steady_clock::duration time;
-    std::array<TraceArgument::Type, arg_count> arg_types;
-    Type type;
-};
-
-/**
- * ostream operator overload for TraceEvent
- *
- * Adds a representation of a TraceEvent to an ostream.
- *
- * Used for debugging purposes to stream a TraceEvent to
- * an output stream like std::cout.
- *
- * @param os Output stream to stream to.
- * @param trace_event TraceEvent to be streamed
- * @return Output stream passed in
- */
-std::ostream& operator<<(std::ostream& os, const TraceEvent& trace_event);
-
-static_assert(sizeof(TraceEvent) <= 64,
-              "TraceEvent should fit inside a cacheline "
-              "for performance reasons");
+}
