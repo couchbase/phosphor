@@ -17,6 +17,7 @@
 *.ilk
 *.lib
 *.pdb
+.profraw
 *.pyc
 *.so
 *.so.*
