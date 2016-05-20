@@ -58,7 +58,7 @@
  */
 
 /*
- * Synchronous events
+ * \defgroup Synchronous events
  *
  * Synchronous events are used for events that are scoped to a single
  * thread and have a duration.
@@ -69,6 +69,7 @@
  *     // Perform some expensive operation
  *     TRACE_EVENT_END0('Memcached:Frontend', 'SetKey')
  *
+ *  @{
  */
 #define TRACE_EVENT_START(category, name, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncStart, 0, __VA_ARGS__)
@@ -81,25 +82,29 @@
 
 #define TRACE_EVENT_END0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::SyncEnd, 0)
+/** @} */
 
-/**
+/*
  * TODO: Scoped events that automatically log
  * entry/exit from a scope (e.g. a function
  */
 
 /**
- * Asynchronous Events
+ * \defgroup Asynchronous Events
  *
  * Asynchronous events are used for events that are not scoped to a
  * single thread and have duration. They have an additional 'id'
  * argument which is used to match up the START and END events.
  *
  * Example:
+ *
  *     // Thread 1
  *     TRACE_ASYNC_START0('Memcached:Frontend', 'EWOULDBLOCK', 123)
  *
  *     // Thread 2
  *     TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)
+ *
+ * @{
  */
 #define TRACE_ASYNC_START(category, name, id, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncStart, id, __VA_ARGS__)
@@ -112,36 +117,43 @@
 
 #define TRACE_ASYNC_END0(category, name, id) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::AsyncEnd, id)
+/** @} */
 
 /**
- * Instant Events
+ * \defgroup Instant Events
  *
  * Instant events are used for events that are scoped to a thread but
  * do not conceptually have a duration.
  *
  * Example:
+ *
  *     TRACE_INSTANT0("Memcached:Frontend", "StatsReset")
  *
+ *  @{
  */
 #define TRACE_INSTANT(category, name, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::Instant, 0, __VA_ARGS__)
 
 #define TRACE_INSTANT0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::Instant, 0)
+/** @} */
 
 /**
- * Global Events
+ * \defgroup Global Events
  *
  * Global events are used for events that are not scoped to a thread
  * and do not conceptually have a duration. Examples of this might include
  * the initiation of a system shutdown.
  *
  * Example:
+ *
  *     TRACE_GLOBAL0("Memcached", "Shutdown")
  *
+ *  @{
  */
 #define TRACE_GLOBAL(category, name, ...) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)
 
 #define TRACE_GLOBAL0(category, name) \
     TraceLog::getInstance().logEvent(category, name, TraceEvent::Type::GlobalInstant, 0)
+/** @} */

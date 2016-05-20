@@ -25,7 +25,7 @@
 #include <string>
 
 /**
- * A union which holds a single TraceArgument.
+ * A union which represents a single trace argument.
  *
  * Has various methods / constructors for tidily creating
  * and printing the TraceArgument.
@@ -61,12 +61,23 @@ union TraceArgument {
      * Templated conversion constructor
      *
      * @param src Value to be converted to a TraceArgument
+     *
+     * Usage:
+     *
+     *     TraceArgument trace_arg = TraceArgument(arg);
+     *
+     * Where arg is one of many primitive types, e.g. int.
+     *
      */
     template <class T>
     inline TraceArgument(T src);
 
     /**
      * @return The enum used for a given type
+     *
+     * Usage:
+     *
+     *     Type t = TraceArgument::getType<int>()
      */
     template <class T>
     inline static constexpr Type getType();

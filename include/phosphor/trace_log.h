@@ -81,8 +81,20 @@ public:
      */
     TraceConfig(trace_buffer_factory _buffer_factory, size_t _buffer_size);
 
+    /**
+     * @return The buffer mode that is selected
+     */
     BufferMode getBufferMode() const;
+
+    /**
+     * @return The size of the buffer in megabytes that will be used
+     */
     size_t getBufferSize() const;
+
+    /**
+     * @return The trace buffer factory that will be used to create a
+     *         TraceBuffer when tracing is enabled.
+     */
     trace_buffer_factory* getBufferFactory() const;
 
 protected:
@@ -104,6 +116,8 @@ protected:
  *
  * Once enabled, tracing will be logged wherever code has been
  * instrumented with the instrumentation API described in phosphor.h.
+ *
+ * This class's public interface is *generally* thread-safe.
  */
 class TraceLog {
 public:
@@ -269,6 +283,10 @@ protected:
 
     /**
      * The thread-specific ChunkTenant used for low contention
+     *
+     * This ChunkTenant is only used when the current thread
+     * has been registered as it requires resources allocated
+     * that are only referred to from thread-local storage.
      */
     static THREAD_LOCAL ChunkTenant thread_chunk;
 
@@ -282,12 +300,21 @@ protected:
     static ChunkTenant shared_chunk;
 
     /**
-     * The current or last-used TraceConfig of the TraceLog
+     * The current or last-used TraceConfig of the TraceLog, this
+     * is only ever set by the start() method.
+     *
+     * This is a full copy of a TraceConfig rather than a reference
+     * to allow reuse / modification of a TraceConfig that was
+     * passed in by a user.
      */
     TraceConfig trace_config;
 
     /**
      * Whether or not tracing is currently enabled
+     *
+     * By transitioning this boolean to false no new trace events
+     * will be logged, but any threads currently in the process
+     * of tracing an event MAY finish tracing the event they're on.
      */
     std::atomic_bool enabled;
 
@@ -306,7 +333,11 @@ protected:
      * buffer is the current buffer that is being used by the TraceLog.
      *
      * While logging is enabled the buffer will have various chunks of
-     * the buffer loaned out
+     * the buffer loaned out.
+     *
+     * This buffer may become NULL once tracing stops if a user asks for
+     * it as movement semantics are used and buffers are only created
+     * when tracing starts.
      */
     std::unique_ptr<TraceBuffer> buffer;
 

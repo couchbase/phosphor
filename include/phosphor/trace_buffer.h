@@ -174,14 +174,17 @@ class TraceBuffer {
 public:
 
     /**
-     * Virtual destructor
+     * Virtual destructor to allow subclasses to be cleaned up
+     * properly.
      */
-    virtual ~TraceBuffer() {}
+    virtual ~TraceBuffer() = default;
 
     /**
      * Used for getting a TraceBufferChunk to add events to
      *
-     * @param Access sentinel for the calling thread
+     *
+     *
+     * @param sentinel Access sentinel for the calling thread
      * @return A reference to a TraceBufferChunk to
      *         insert events into.
      */
@@ -189,6 +192,17 @@ public:
 
     // TODO: Add method for removing sentinel ref (e.g. for thread destruction)
 
+    /**
+     * Used for evicting all ChunkTenants from the buffer
+     *
+     * This will use the set of sentinels established from
+     * calls to the TraceBufferChunk::getChunk method and
+     * call Sentinel::close() on all of them.
+     *
+     * This will effectively send a message to all ChunkTenants
+     * that their current references to chunks in this buffer
+     * are no longer valid.
+     */
     virtual void evictThreads() = 0;
 
     /**
