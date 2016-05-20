@@ -159,7 +159,8 @@ case Type::is_ ##dst: \
             TraceArgument::Type type) const {
         std::stringstream ss;
         switch (type) {
-            ADD_CASE(bool)
+            case Type::is_bool:
+                return as_bool?"true":"false";
             ADD_CASE(int)
             ADD_CASE(uint)
             ADD_CASE(double)

@@ -42,3 +42,23 @@ TEST(TraceArgument, enum_conversions) {
     EXPECT_EQ(TraceArgument::getType<const void*>(), TraceArgument::Type::is_pointer);
     EXPECT_EQ(TraceArgument::getType<const char*>(), TraceArgument::Type::is_string);
 }
+
+template<class T>
+std::string inner_to_string_test(T src) {
+    return TraceArgument(src).to_string(TraceArgument::getType<T>());
+}
+
+TEST(TraceArgument, to_string) {
+    EXPECT_EQ(inner_to_string_test(true),  "true");
+    EXPECT_EQ(inner_to_string_test(false), "false");
+
+    EXPECT_EQ(inner_to_string_test(3), "3");   // Signed positive int
+    EXPECT_EQ(inner_to_string_test(-3), "-3"); // Signed negative int
+
+    EXPECT_EQ(inner_to_string_test(3u), "3");  // Unsigned int
+
+    EXPECT_EQ(inner_to_string_test(3.0), "3.000000"); // Double
+
+    EXPECT_EQ(inner_to_string_test(reinterpret_cast<const void*>(0xFF)), "0xff"); // Pointer
+    EXPECT_EQ(inner_to_string_test("Hello, World"), "'Hello, World'"); // Pointer
+}
