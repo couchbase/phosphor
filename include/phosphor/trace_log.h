@@ -220,9 +220,8 @@ public:
      * this involves acquiring locks that may be under contention
      * this can be expensive.
      */
-    static void registerThread() {
-        thread_chunk.sentinel = new Sentinel;
-    }
+    static void registerThread();
+
     /**
      * De-registers the current thread
      *
@@ -230,20 +229,16 @@ public:
      * This MUST be called from registered threads before they shutdown to
      * prevent memory-leaks as the only reference to resources they allocate
      * are in thread local storage.
+     *
+     * @param instance The TraceLog instance that the sentinel is using
      */
-    static void deregisterThread() {
-        delete thread_chunk.sentinel;
-    }
+    static void deregisterThread(TraceLog& instance = TraceLog::getInstance());
 
 protected:
     struct ChunkTenant {
         Sentinel* sentinel = nullptr;
         TraceBufferChunk* chunk = nullptr;
     };
-
-    void startLogging(BufferMode _buffer_mode,
-                      trace_buffer_factory _buffer_factory,
-                      size_t _buffer_size);
 
     /**
      * Replaces the current chunk held by the ChunkTenant with a new chunk

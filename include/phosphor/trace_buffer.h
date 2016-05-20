@@ -107,61 +107,39 @@ private:
     event_array chunk;
 };
 
-
-class TraceEventIterator : public std::iterator<std::bidirectional_iterator_tag, TraceEvent> {
+/**
+ * Const iterator over a TraceBuffer, implements required methods of
+ * a bi-directional iterator.
+ *
+ * Usage:
+ *
+ *     TraceEventIterator event_iterator = trace_buffer.start()
+ *     std::cout << *event_iterator << std::endl;
+ *     std::cout << *(++event_iterator) << std::endl;
+ *
+ *     for(const auto& event : trace_buffer) {
+ *         std::cout << event << std::endl;
+ *     }
+ *
+ * For resource efficiency TraceEventIterator does not have post-increment
+ */
+class TraceEventIterator
+        : public std::iterator<std::bidirectional_iterator_tag, TraceEvent> {
 public:
-    TraceEventIterator()
-        : chunk_index(0) {
-    }
-
-    TraceEventIterator(std::vector<TraceBufferChunk>::const_iterator chunk_)
-        : chunk(chunk_),
-          chunk_index(0) {
-    }
-
-    TraceEventIterator(std::vector<TraceBufferChunk>::const_iterator chunk_, size_t index)
-            : chunk(chunk_),
-              chunk_index(index) {
-    }
-
-    const value_type& operator* () const {
-        return (*chunk)[chunk_index];
-    }
-
-    const value_type* operator-> () const {
-        return &(*chunk)[chunk_index];
-    }
-
-    TraceEventIterator& operator++() {
-        chunk_index++;
-        if(chunk_index == (*chunk).count()) {
-            chunk_index = 0;
-            chunk++;
-        }
-        return *this;
-    }
-
-    TraceEventIterator& operator--() {
-        if(chunk_index == 0) {
-            chunk--;
-            chunk_index = (*chunk).count();
-        }
-        chunk_index--;
-        return *this;
-    }
-
-    bool operator==(const TraceEventIterator& other) const {
-        return (chunk == other.chunk) && (chunk_index == other.chunk_index);
-    }
-
-    bool operator!=(const TraceEventIterator& other) const {
-        return !(*this == other);
-    }
-
+    TraceEventIterator() = default;
+    TraceEventIterator(std::vector<TraceBufferChunk>::const_iterator chunk_);
+    const value_type& operator* () const;
+    const value_type* operator-> () const;
+    TraceEventIterator& operator++();
+    TraceEventIterator& operator--();
+    bool operator==(const TraceEventIterator& other) const;
+    bool operator!=(const TraceEventIterator& other) const;
 
 protected:
+    TraceEventIterator(std::vector<TraceBufferChunk>::const_iterator chunk_,
+                       size_t index);
     std::vector<TraceBufferChunk>::const_iterator chunk;
-    size_t chunk_index;
+    size_t chunk_index = 0;
 };
 
 /**
@@ -169,8 +147,26 @@ protected:
  *
  * The TraceBuffer loans out TraceBufferChunks to individual
  * threads to reduce lock-contention on event logging.
+ *
+ * This class is *not* thread-safe and should only be directly
+ * interacted either with the global lock owned by the TraceLog
+ * or after tracing has been finished.
+ *
+ * A trace buffer can be iterated over using C++11 style range
+ * iteration:
+ *
+ *     for(const auto& event : trace_buffer) {
+ *         std::cout << event << std::endl;
+ *     }
+ *
+ * Alternatively more complex iteration can be accomplished by
+ * using the iterators returned by TraceBuffer::begin() and
+ * TraceBuffer::end().
+ *
+ * Iteration should not be attempted while chunks are loaned out.
  */
 class TraceBuffer {
+    using const_iterator = TraceEventIterator;
 public:
 
     /**
@@ -182,15 +178,29 @@ public:
     /**
      * Used for getting a TraceBufferChunk to add events to
      *
+     * Implementors should use the sentinel passed in to
+     * create a set of sentinels who have an active reference
+     * to a chunk in the buffer. This is to make it possible
+     * to evict all ChunkTenants when desired.
      *
-     *
-     * @param sentinel Access sentinel for the calling thread
+     * @param sentinel Sentinel for the calling thread
      * @return A reference to a TraceBufferChunk to
      *         insert events into.
      */
     virtual TraceBufferChunk& getChunk(Sentinel& sentinel) = 0;
 
-    // TODO: Add method for removing sentinel ref (e.g. for thread destruction)
+    /**
+     * Used for removing a sentinel from the set of sentinels
+     *
+     * This is generally called when a thread is being
+     * de-registered as it will attempt to delete the
+     * sentinel. This will be used to prevent the TraceBuffer
+     * from de-referencing the freed sentinel when it tries
+     * to evict threads later.
+     *
+     * @param sentinel Sentinel to be removed from the set
+     */
+    virtual void removeSentinel(Sentinel& sentinel) = 0;
 
     /**
      * Used for evicting all ChunkTenants from the buffer
@@ -202,11 +212,23 @@ public:
      * This will effectively send a message to all ChunkTenants
      * that their current references to chunks in this buffer
      * are no longer valid.
+     *
+     * Once this function returns the buffer SHOULD be safe to
+     * be freed / iterated etc.
      */
     virtual void evictThreads() = 0;
 
     /**
      * Used for returning a TraceBufferChunk once full
+     *
+     * For some buffer implementations this *may* be a no-op
+     * but for others which might reuse chunks this can be
+     * used to only reuse chunks that have been finished with.
+     *
+     * TraceBuffer implementations should not use this method
+     * to a sentinel from the maintained set of sentinels as
+     * the calling thread will likely immediately acquire a
+     * new chunk.
      *
      * @param chunk The chunk to be returned
      */
@@ -226,8 +248,15 @@ public:
      */
     virtual size_t getGeneration() const = 0;
 
-    virtual TraceEventIterator begin() const = 0;
-    virtual TraceEventIterator end() const = 0;
+    /**
+     * @return A const_iterator to the start of the TraceBuffer
+     */
+    virtual const_iterator begin() const = 0;
+
+    /**
+     * @return
+     */
+    virtual const_iterator end() const = 0;
 };
 
 

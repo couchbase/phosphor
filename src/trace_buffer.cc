@@ -21,6 +21,10 @@
 #include "polyfill.h"
 #include "trace_buffer.h"
 
+/*
+ * TraceBufferChunk implementation
+ */
+
 TraceBufferChunk::TraceBufferChunk(size_t _generation, size_t _buffer_index)
     : thread_id(std::this_thread::get_id()),
       generation(_generation),
@@ -45,6 +49,7 @@ size_t TraceBufferChunk::getGeneration() const {
     return generation;
 }
 
+
 TraceEvent& TraceBufferChunk::addEvent() {
     if(isFull()) {
         throw std::out_of_range("All events in chunk have been used");
@@ -54,6 +59,56 @@ TraceEvent& TraceBufferChunk::addEvent() {
 
 const TraceEvent& TraceBufferChunk::operator[] (const int index) const {
     return chunk[index];
+}
+
+/*
+ * TraceEventIterator implementation
+ */
+
+TraceEventIterator::TraceEventIterator(
+        std::vector<TraceBufferChunk>::const_iterator chunk_)
+    : chunk(chunk_) {
+}
+
+const TraceEventIterator::value_type& TraceEventIterator::operator* () const {
+    return (*chunk)[chunk_index];
+}
+
+const TraceEventIterator::value_type* TraceEventIterator::operator-> () const {
+    return &(*chunk)[chunk_index];
+}
+
+TraceEventIterator& TraceEventIterator::operator++() {
+    ++chunk_index;
+    if(chunk_index == (*chunk).count()) {
+        chunk_index = 0;
+        ++chunk;
+    }
+    return *this;
+}
+
+TraceEventIterator& TraceEventIterator::operator--() {
+    if(chunk_index == 0) {
+        --chunk;
+        chunk_index = (*chunk).count();
+    }
+    --chunk_index;
+    return *this;
+}
+
+bool TraceEventIterator::operator==(const TraceEventIterator& other) const {
+    return (chunk == other.chunk) && (chunk_index == other.chunk_index);
+}
+
+bool TraceEventIterator::operator!=(const TraceEventIterator& other) const {
+    return !(*this == other);
+}
+
+TraceEventIterator::TraceEventIterator(
+        std::vector<TraceBufferChunk>::const_iterator chunk_,
+        size_t index)
+    : chunk(chunk_),
+    chunk_index(index) {
 }
 
 /**
@@ -82,6 +137,10 @@ public:
         auto index = buffer.size();
         buffer.emplace_back(generation, index);
         return buffer.back();
+    }
+
+    void removeSentinel(Sentinel& sentinel) override {
+        sentinels.erase(&sentinel);
     }
 
     void evictThreads() override {

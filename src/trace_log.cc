@@ -22,6 +22,10 @@
 /* Number of bytes in a megabyte */
 constexpr size_t megabyte = 1024 * 1024;
 
+/*
+ * TraceConfig implementation
+ */
+
 TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
     : buffer_mode(_buffer_mode),
       buffer_size(_buffer_size) {
@@ -40,7 +44,6 @@ TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
     }
 }
 
-
 TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory,
                          size_t _buffer_size)
         : buffer_mode(BufferMode::custom),
@@ -48,21 +51,22 @@ TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory,
           buffer_factory(_buffer_factory) {
 }
 
-
 trace_buffer_factory* TraceConfig::getBufferFactory() const {
     return buffer_factory;
 }
-
 
 size_t TraceConfig::getBufferSize() const {
     return buffer_size;
 }
 
+/*
+ * TraceLog implementation
+ */
+
 TraceLog::TraceLog()
     : enabled(false) {
     shared_chunk.sentinel = new Sentinel;
 }
-
 
 TraceLog& TraceLog::getInstance() {
     // TODO: Not thread-safe on Windows
@@ -70,12 +74,10 @@ TraceLog& TraceLog::getInstance() {
     return log_instance;
 }
 
-
 void TraceLog::stop() {
     std::lock_guard<std::mutex> lh(mutex);
     stopUNLOCKED();
 }
-
 
 void TraceLog::stopUNLOCKED() {
     if(enabled.exchange(false)) {
@@ -83,16 +85,16 @@ void TraceLog::stopUNLOCKED() {
     }
 }
 
-
 void TraceLog::start(const TraceConfig& _trace_config) {
     std::lock_guard<std::mutex> lh(mutex);
     trace_config = _trace_config;
 
-    size_t buffer_size = (trace_config.getBufferSize() * megabyte) / sizeof(TraceBufferChunk);
+    size_t buffer_size = (trace_config.getBufferSize() * megabyte) /
+            sizeof(TraceBufferChunk);
+
     buffer = trace_config.getBufferFactory()(generation++, buffer_size);
     enabled.store(true);
 }
-
 
 std::unique_ptr<TraceBuffer> TraceLog::getBuffer() {
     std::lock_guard<std::mutex> lh(mutex);
@@ -103,9 +105,27 @@ std::unique_ptr<TraceBuffer> TraceLog::getBuffer() {
     return std::move(buffer);
 }
 
-
 bool TraceLog::isEnabled() {
     return enabled;
+}
+
+static void TraceLog::registerThread() {
+    thread_chunk.sentinel = new Sentinel;
+}
+
+static void TraceLog::deregisterThread(TraceLog& instance = TraceLog::getInstance()) {
+    if(!thread_chunk.sentinel) {
+        throw std::logic_error("This thread has not been previously registered");
+    }
+
+    if(thread_chunk.chunk) {
+        std::lock_guard<std::mutex> lh(instance.mutex);
+        if(instance.buffer) {
+            instance.buffer->returnChunk(*thread_chunk.chunk);
+        }
+        instance.buffer->removeSentinel(*thread_chunk.sentinel);
+    }
+    delete thread_chunk.sentinel;
 }
 
 void TraceLog::replaceChunk(ChunkTenant& ct) {
@@ -128,6 +148,7 @@ void TraceLog::replaceChunk(ChunkTenant& ct) {
         stopUNLOCKED();
     }
 }
+
 void TraceLog::resetChunk(ChunkTenant& ct) {
     if(ct.sentinel->reopen()) {
         ct.chunk = nullptr;
