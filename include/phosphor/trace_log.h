@@ -190,7 +190,7 @@ namespace phosphor {
                     {{TraceArgument(argA), TraceArgument(argB)}},
                     {{TraceArgument::getType<T>(), TraceArgument::getType<U>()}});
             cs.sentinel->release();
-        };
+        }
 
         /**
          * Transfers ownership of the current TraceBuffer to the caller
