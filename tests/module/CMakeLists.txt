@@ -3,7 +3,7 @@ MACRO (M_ADD_MODULE_GTEST name)
             ${name}
             ${ARGN}
     )
-    TARGET_LINK_LIBRARIES(sentinel_test
+    TARGET_LINK_LIBRARIES(${name}
             gtest
             gtest_main)
     ADD_TEST(NAME ${name} COMMAND ${name})
@@ -13,3 +13,8 @@ ENDMACRO()
 M_ADD_MODULE_GTEST(sentinel_test
         sentinel_test.cc
         ${PROJECT_SOURCE_DIR}/src/sentinel.cc)
+
+
+M_ADD_MODULE_GTEST(polyfill_test
+        polyfill_test.cc)
+
