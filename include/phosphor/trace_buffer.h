@@ -24,6 +24,7 @@
 #include <array>
 #include <iterator>
 #include <thread>
+#include <type_traits>
 #include <vector>
 
 #include "sentinel.h"
@@ -109,6 +110,11 @@ namespace phosphor {
         u_short next_free;
         event_array chunk;
     };
+
+    static_assert(
+        std::is_trivially_copyable<TraceBufferChunk>::value,
+        "TraceBufferChunk must be trivially copyable to allow for persisting "
+        "to disk in a binary format");
 
     /**
      * Const iterator over a TraceBuffer, implements required methods of

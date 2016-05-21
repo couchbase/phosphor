@@ -24,6 +24,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 
 namespace phosphor {
 
@@ -58,7 +59,7 @@ namespace phosphor {
         /**
          * Default constructor
          */
-        TraceArgument() { };
+        TraceArgument() = default;
 
         /**
          * Templated conversion constructor
@@ -178,5 +179,11 @@ case Type::is_ ##dst: \
     }
 
 #undef ADD_CASE
+
+/* Check for trivial rather than trivially copyable to prevent requirement creep */
+static_assert(
+    std::is_trivial<TraceArgument>::value,
+    "TraceArgument must be trivially copyable to allow for persisting "
+    "to disk in a binary format");
 
 } // namespace phosphor
