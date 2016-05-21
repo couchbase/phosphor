@@ -21,37 +21,49 @@
 #include <thread>
 #include <vector>
 
+#include "gsl_p/dyn_array.h"
+
 int main(int argc, char* argv[]) {
-    phosphor::TraceLog::getInstance().start(
-            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1)
-    );
+//    phosphor::TraceLog::getInstance().start(
+//            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1)
+//    );
+//
+//    std::vector<std::thread> threads;
+//    for(int i = 0; i < 5; i++) {
+//        threads.emplace_back([i]() {
+//            phosphor::TraceLog::registerThread();
+//            while(phosphor::TraceLog::getInstance().isEnabled()) {
+//                TRACE_INSTANT("Child", "Thread #", i, "");
+//            }
+//            phosphor::TraceLog::deregisterThread();
+//        });
+//    }
+//
+//
+//    while(phosphor::TraceLog::getInstance().isEnabled()) {
+//        TRACE_INSTANT("Main", "Thread", 4, 5);
+//    }
+//    phosphor::TraceLog::getInstance().stop();
+//    auto buffer(phosphor::TraceLog::getInstance().getBuffer());
+//
+//    for(auto& thread : threads) {
+//        thread.join();
+//    }
+//
+//    for (const auto& event : *buffer) {
+//        printf("%s\n", event.to_string().c_str());
+//    }
 
-    std::vector<std::thread> threads;
-    for(int i = 0; i < 5; i++) {
-        threads.emplace_back([i]() {
-            phosphor::TraceLog::registerThread();
-            while(phosphor::TraceLog::getInstance().isEnabled()) {
-                TRACE_INSTANT("Child", "Thread #", i, "");
-            }
-            phosphor::TraceLog::deregisterThread();
-        });
+    gsl_p::dyn_array<int> arr(1000);
+    int i = 0;
+    for(int& val : arr) {
+        val = i;
+        ++i;
     }
 
-
-    while(phosphor::TraceLog::getInstance().isEnabled()) {
-        TRACE_INSTANT("Main", "Thread", 4, 5);
+    for(const int& val : arr) {
+        std::cout << val << "\n";
     }
-    phosphor::TraceLog::getInstance().stop();
-    auto buffer(phosphor::TraceLog::getInstance().getBuffer());
-
-    for(auto& thread : threads) {
-        thread.join();
-    }
-
-    for (const auto& event : *buffer) {
-        printf("%s\n", event.to_string().c_str());
-    }
-
 
 
     return 0;
