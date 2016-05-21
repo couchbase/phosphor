@@ -9,6 +9,11 @@ all: test docs
 
 covered: coverage test
 
+coverage-report: covered
+	@-mkdir coverage
+	gcovr --root . --html --html-details -o coverage/index.html --exclude="thirdparty*"
+	open coverage/index.html
+
 build/Makefile:
 	@-mkdir build
 	(cd build && $(CMAKE) $(CMAKE_ARGS) ..)
@@ -17,6 +22,7 @@ compile: build/Makefile
 	(cd build && make)
 
 coverage:
+	find . -name *.gcda -exec rm {} \;
 	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DCB_CODE_COVERAGE=ON)
 
 coverage-html:
@@ -26,7 +32,7 @@ coveralls:
 	coveralls
 
 test: compile
-	(cd build && make test -j8)
+	(cd build && make test)
 
 docs:
 	doxygen > /dev/null
