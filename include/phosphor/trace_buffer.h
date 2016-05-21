@@ -111,11 +111,6 @@ namespace phosphor {
         event_array chunk;
     };
 
-    static_assert(
-        std::is_trivially_copyable<TraceBufferChunk>::value,
-        "TraceBufferChunk must be trivially copyable to allow for persisting "
-        "to disk in a binary format");
-
     /**
      * Const iterator over a TraceBuffer, implements required methods of
      * a bi-directional iterator.
