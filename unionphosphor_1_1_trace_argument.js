@@ -9,7 +9,7 @@ var unionphosphor_1_1_trace_argument =
       [ "is_string", "unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89aa182714dd14bf35d95e60b075ad74aeb", null ],
       [ "is_none", "unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89a7ca8120d0eac07af702e97fa362c99c6", null ]
     ] ],
-    [ "TraceArgument", "unionphosphor_1_1_trace_argument.html#aec8c14029aeb491baf328ea603a8ce0f", null ],
+    [ "TraceArgument", "unionphosphor_1_1_trace_argument.html#ab8a52bc60df5f3fbd7d690aad1e290da", null ],
     [ "TraceArgument", "unionphosphor_1_1_trace_argument.html#af267802600e38ce56590c4781b48bace", null ],
     [ "to_string", "unionphosphor_1_1_trace_argument.html#aa5cb5d9df6a03df39aaa590337e7130d", null ],
     [ "as_bool", "unionphosphor_1_1_trace_argument.html#a2adef26ed2ca6fc7cb1ac76a05ba73dc", null ],
