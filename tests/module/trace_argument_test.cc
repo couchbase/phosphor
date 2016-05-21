@@ -15,7 +15,7 @@
  *   limitations under the License.
  */
 
-#include "trace_argument.h"
+#include "phosphor/trace_argument.h"
 
 #include <gtest/gtest.h>
 

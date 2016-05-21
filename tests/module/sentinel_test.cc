@@ -22,7 +22,7 @@
 
 #include <gtest/gtest.h>
 
-#include "sentinel.h"
+#include "phosphor/sentinel.h"
 
 class SentinelTest : public testing::Test {
 protected:

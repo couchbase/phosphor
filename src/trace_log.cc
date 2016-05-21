@@ -17,7 +17,7 @@
 
 #include <exception>
 
-#include "trace_log.h"
+#include "phosphor/trace_log.h"
 
 namespace phosphor {
 

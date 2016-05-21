@@ -19,7 +19,7 @@
 #include <unordered_set>
 
 #include "polyfill.h"
-#include "trace_buffer.h"
+#include "phosphor/trace_buffer.h"
 
 namespace phosphor {
 

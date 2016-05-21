@@ -15,7 +15,7 @@
  *   limitations under the License.
  */
 
-#include "sentinel.h"
+#include "phosphor/sentinel.h"
 
 namespace phosphor {
 

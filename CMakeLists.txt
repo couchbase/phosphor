@@ -12,7 +12,7 @@ IF(NOT DEFINED COUCHBASE_SERVER_BUILD)
 ENDIF ()
 
 INCLUDE_DIRECTORIES(BEFORE
-        ${phosphor_SOURCE_DIR}/include/phosphor
+        ${phosphor_SOURCE_DIR}/include
         ${phosphor_SOURCE_DIR}/src)
 
 SET(SOURCE_FILES
