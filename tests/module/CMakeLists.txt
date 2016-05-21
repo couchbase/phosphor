@@ -14,11 +14,11 @@ M_ADD_MODULE_GTEST(polyfill_test
 
 M_ADD_MODULE_GTEST(sentinel_test
         sentinel_test.cc
-        ${PROJECT_SOURCE_DIR}/src/sentinel.cc)
+        ${phosphor_SOURCE_DIR}/src/sentinel.cc)
 
 M_ADD_MODULE_GTEST(string_utils_test
         string_utils_test.cc
-        ${PROJECT_SOURCE_DIR}/src/string_utils.cc)
+        ${phosphor_SOURCE_DIR}/src/string_utils.cc)
 
 M_ADD_MODULE_GTEST(trace_argument_test
         trace_argument_test.cc)
