@@ -21,6 +21,7 @@ build/Makefile:
 compile: build/Makefile
 	(cd build && make)
 
+.PHONY: coverage
 coverage:
 	find . -name *.gcda -exec rm {} \;
 	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DCB_CODE_COVERAGE=ON)
@@ -32,7 +33,7 @@ coveralls:
 	coveralls
 
 test: compile
-	(cd build && make test)
+	(cd build && ctest --output-on-failure)
 
 docs:
 	doxygen > /dev/null
