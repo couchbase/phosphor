@@ -16,6 +16,7 @@
  */
 
 #include <atomic>
+#include <chrono>
 #include <thread>
 #include <vector>
 
@@ -67,6 +68,9 @@ TEST_F(ThreadedSentinelTest, BusySpinAcquire) {
     threads.emplace_back([this]() {
         sentinel.acquire();
         ++step;
+        // Need to sleep to ensure the other thread has
+        // started spinning to acquire the lock
+        std::this_thread::sleep_for(std::chrono::microseconds(1));
         sentinel.release();
     });
 
@@ -74,5 +78,22 @@ TEST_F(ThreadedSentinelTest, BusySpinAcquire) {
        while(step.load() != 1);
         sentinel.acquire();
         sentinel.release();
+    });
+}
+
+TEST_F(ThreadedSentinelTest, BusySpinClose) {
+
+    threads.emplace_back([this]() {
+        sentinel.acquire();
+        ++step;
+        // Need to sleep to ensure the other thread has
+        // started spinning to acquire the lock
+        std::this_thread::sleep_for(std::chrono::microseconds(1));
+        sentinel.release();
+    });
+
+    threads.emplace_back([this]() {
+       while(step.load() != 1);
+        sentinel.close();
     });
 }
