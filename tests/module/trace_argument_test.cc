@@ -61,4 +61,11 @@ TEST(TraceArgument, to_string) {
 
     EXPECT_EQ(inner_to_string_test(reinterpret_cast<const void*>(0xFF)), "0xff"); // Pointer
     EXPECT_EQ(inner_to_string_test("Hello, World"), "'Hello, World'"); // Pointer
+
+    EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none), "NONE");
+
+    // This is *extremely* naughty and shouldn't need checking
+    EXPECT_THROW(
+        TraceArgument().to_string(static_cast<TraceArgument::Type>(0xFF)),
+        std::invalid_argument);
 }
