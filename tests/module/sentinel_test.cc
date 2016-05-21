@@ -70,7 +70,7 @@ TEST_F(ThreadedSentinelTest, BusySpinAcquire) {
         ++step;
         // Need to sleep to ensure the other thread has
         // started spinning to acquire the lock
-        std::this_thread::sleep_for(std::chrono::microseconds(1));
+        std::this_thread::sleep_for(std::chrono::microseconds(50));
         sentinel.release();
     });
 
@@ -88,7 +88,7 @@ TEST_F(ThreadedSentinelTest, BusySpinClose) {
         ++step;
         // Need to sleep to ensure the other thread has
         // started spinning to acquire the lock
-        std::this_thread::sleep_for(std::chrono::microseconds(1));
+        std::this_thread::sleep_for(std::chrono::microseconds(50));
         sentinel.release();
     });
 
