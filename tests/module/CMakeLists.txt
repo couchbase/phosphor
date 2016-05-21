@@ -22,3 +22,8 @@ M_ADD_MODULE_GTEST(string_utils_test
 
 M_ADD_MODULE_GTEST(trace_argument_test
         trace_argument_test.cc)
+
+M_ADD_MODULE_GTEST(trace_event_test
+        trace_event_test.cc
+        ${phosphor_SOURCE_DIR}/src/trace_event.cc
+        ${phosphor_SOURCE_DIR}/src/string_utils.cc)

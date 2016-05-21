@@ -15,7 +15,7 @@
  *   limitations under the License.
  */
 
-#include "phosphor.h"
+#include "phosphor/phosphor.h"
 
 #include <sstream>
 #include <thread>

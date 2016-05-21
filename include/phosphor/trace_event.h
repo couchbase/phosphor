@@ -107,7 +107,7 @@ namespace phosphor {
 
     static_assert(
         sizeof(TraceEvent) <= 64,
-        "TraceEvent should fit inside a cacheline for performance reasons");
+        "TraceEvent should fit inside a cache-line for performance reasons");
 
     static_assert(
         std::is_trivial<std::thread::native_handle_type>::value,
