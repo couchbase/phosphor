@@ -124,6 +124,7 @@ public:
 
 */
 
+#include <cstddef>
 #include <iterator>
 #include <stdexcept>
 #include <initializer_list>
