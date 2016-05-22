@@ -1,6 +1,7 @@
 var hierarchy =
 [
     [ "phosphor::TraceLog::ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", null ],
+    [ "gsl_p::dyn_array< _Tp >", "structgsl__p_1_1dyn__array.html", null ],
     [ "iterator", null, [
       [ "phosphor::TraceEventIterator", "classphosphor_1_1_trace_event_iterator.html", null ]
     ] ],

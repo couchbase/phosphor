@@ -1,5 +1,8 @@
 var annotated_dup =
 [
+    [ "gsl_p", null, [
+      [ "dyn_array", "structgsl__p_1_1dyn__array.html", "structgsl__p_1_1dyn__array" ]
+    ] ],
     [ "phosphor", null, [
       [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
       [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ],
