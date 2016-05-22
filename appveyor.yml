@@ -1,0 +1,25 @@
+# http://www.appveyor.com/docs/appveyor-yml
+
+clone_depth: 5
+branches:
+  except:
+    - gh-pages
+
+matrix:
+  fast_finish: false
+
+environment:
+  matrix:
+  - platform: x64
+    configuration: Release
+    arch: "x64"
+    VS_GEN: "Visual Studio 14 2015 Win64"
+
+before_build:
+  - mkdir build
+  - cd build
+  - cmake .. -G "%VS_GEN%"
+build_script:
+  - cmake --build .
+test_script:
+  - ctest --output-on-failure
