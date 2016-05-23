@@ -15,6 +15,8 @@ environment:
     arch: "x64"
     VS_GEN: "Visual Studio 14 2015 Win64"
 
+install:
+  - git submodule update --init --recursive
 before_build:
   - mkdir build
   - cd build
