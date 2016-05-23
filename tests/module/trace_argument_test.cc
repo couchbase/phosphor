@@ -17,6 +17,8 @@
 
 #include "phosphor/trace_argument.h"
 
+#include <sstream>
+
 #include <gtest/gtest.h>
 
 using phosphor::TraceArgument;
@@ -59,7 +61,10 @@ TEST(TraceArgument, to_string) {
 
     EXPECT_EQ(inner_to_string_test(3.0), "3.000000"); // Double
 
-    EXPECT_EQ(inner_to_string_test(reinterpret_cast<const void*>(0xFF)), "0xff"); // Pointer
+    std::stringstream pointer_val;
+    pointer_val << reinterpret_cast<const void*>(0xFF);
+    EXPECT_EQ(inner_to_string_test(reinterpret_cast<const void*>(0xFF)),
+              pointer_val.str()); // Pointer
     EXPECT_EQ(inner_to_string_test("Hello, World"), "'Hello, World'"); // Pointer
 
     EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none), "NONE");
