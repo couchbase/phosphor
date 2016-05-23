@@ -269,7 +269,7 @@ dyn_array<_Tp>::~dyn_array()
 {
     value_type *__data = data () + __size_;
     for ( size_t i = 0; i < __size_; ++i )
-        (--__data)->value_type::~value_type();
+        (--__data)->_Tp::~_Tp();
     __deallocate ( __base_ );
 }
 
