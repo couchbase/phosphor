@@ -22,6 +22,6 @@ before_build:
   - cd build
   - cmake .. -G "%VS_GEN%"
 build_script:
-  - cmake --build .
+  - cmake --build . --config Release
 test_script:
-  - ctest -C RelWithDebInfo --output-on-failure
+  - ctest -C Release --output-on-failure
