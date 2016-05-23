@@ -48,8 +48,13 @@ TEST(TraceEvent, string_check) {
     );
 
     auto event_regex = testing::MatchesRegex(
+#if GTEST_USES_POSIX_RE
             "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
             "category, name, arg1=NONE, arg2=NONE>");
+#else
+            "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
+            "category, name, arg1=NONE, arg2=NONE>");
+#endif
 
     // This should probably require linking against GoogleMock
     // as well but I think we'll get away with it..
