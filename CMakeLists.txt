@@ -22,7 +22,7 @@ SET(SOURCE_FILES
         src/trace_event.cc
         src/trace_log.cc)
 
-ADD_LIBRARY(phosphor SHARED ${SOURCE_FILES})
+ADD_LIBRARY(phosphor STATIC ${SOURCE_FILES})
 
 IF(DEFINED gtest_SOURCE_DIR)
     INCLUDE_DIRECTORIES(AFTER

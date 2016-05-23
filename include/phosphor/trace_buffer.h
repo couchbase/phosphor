@@ -29,7 +29,6 @@
 
 #include "sentinel.h"
 #include "trace_event.h"
-#include "visibility.h"
 
 namespace phosphor {
 
@@ -39,7 +38,7 @@ namespace phosphor {
      * The TraceBufferChunk should be used from a single thread to
      * store various events.
      */
-    class PHOSPHOR_API TraceBufferChunk {
+    class TraceBufferChunk {
         static constexpr auto chunk_page_count = 1;
         static constexpr auto page_size = 4096;
         static constexpr auto chunk_size = ((page_size * chunk_page_count) /
@@ -127,7 +126,7 @@ namespace phosphor {
      *
      * For resource efficiency TraceEventIterator does not have post-increment
      */
-    class PHOSPHOR_API TraceEventIterator
+    class TraceEventIterator
             : public std::iterator<std::bidirectional_iterator_tag, TraceEvent> {
     public:
         TraceEventIterator() = default;
