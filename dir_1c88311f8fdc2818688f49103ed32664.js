@@ -7,6 +7,5 @@ var dir_1c88311f8fdc2818688f49103ed32664 =
     [ "trace_argument.h", "trace__argument_8h.html", "trace__argument_8h" ],
     [ "trace_buffer.h", "trace__buffer_8h.html", "trace__buffer_8h" ],
     [ "trace_event.h", "trace__event_8h.html", "trace__event_8h" ],
-    [ "trace_log.h", "trace__log_8h_source.html", null ],
-    [ "visibility.h", "visibility_8h_source.html", null ]
+    [ "trace_log.h", "trace__log_8h_source.html", null ]
 ];
