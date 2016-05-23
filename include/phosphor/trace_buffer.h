@@ -106,7 +106,7 @@ namespace phosphor {
         size_t generation;
         size_t buffer_index;
 
-        u_short next_free;
+        unsigned short next_free;
         event_array chunk;
     };
 
