@@ -107,6 +107,8 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_buffer.html','
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classphosphor_1_1_trace_buffer-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -125,6 +127,20 @@ Inheritance diagram for phosphor::TraceBuffer:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html">chunk_iterable</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ab29247366b3c3c2d7efa64fe39d000da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab29247366b3c3c2d7efa64fe39d000da"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>chunk_iterator</b> = <a class="el" href="classphosphor_1_1_trace_chunk_iterator.html">TraceChunkIterator</a></td></tr>
+<tr class="separator:ab29247366b3c3c2d7efa64fe39d000da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1377a41a5e91b92094e33c45f49978a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1377a41a5e91b92094e33c45f49978a4"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>event_iterator</b> = <a class="el" href="trace__buffer_8h.html#a29e5b4a93c40fe321175d7e2b9c6a974">TraceEventIterator</a></td></tr>
+<tr class="separator:a1377a41a5e91b92094e33c45f49978a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae63b6808271a1aa37905c3ab286e3e6e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#ae63b6808271a1aa37905c3ab286e3e6e">~TraceBuffer</a> ()=default</td></tr>
@@ -139,12 +155,22 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a82cc71db6cef94f2ad05f7ac4974dcc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed684d9119a5b64ecb295ecb2ef6d209"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#aed684d9119a5b64ecb295ecb2ef6d209">isFull</a> () const  =0</td></tr>
 <tr class="separator:aed684d9119a5b64ecb295ecb2ef6d209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c390636cca3e05fde7e32d231d0bc3e"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html">TraceBufferChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a4c390636cca3e05fde7e32d231d0bc3e">operator[]</a> (const int index) const  =0</td></tr>
+<tr class="separator:a4c390636cca3e05fde7e32d231d0bc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c3bdb8c429f1dc21381ff33a5cd21da"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a9c3bdb8c429f1dc21381ff33a5cd21da">chunk_count</a> () const  =0</td></tr>
+<tr class="separator:a9c3bdb8c429f1dc21381ff33a5cd21da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fe36be1d5fa43a635b6c9369cc3ce55"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55">getGeneration</a> () const  =0</td></tr>
 <tr class="separator:a3fe36be1d5fa43a635b6c9369cc3ce55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20635937c0714b7bb37425733d03a700"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classphosphor_1_1_trace_event_iterator.html">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a20635937c0714b7bb37425733d03a700">begin</a> () const  =0</td></tr>
-<tr class="separator:a20635937c0714b7bb37425733d03a700"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f160203392302f655c51ecf639130ac"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classphosphor_1_1_trace_event_iterator.html">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a4f160203392302f655c51ecf639130ac">end</a> () const  =0</td></tr>
-<tr class="separator:a4f160203392302f655c51ecf639130ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dd0644b1ee4652c0c2ab89f124ed897"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classphosphor_1_1_trace_chunk_iterator.html">chunk_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a9dd0644b1ee4652c0c2ab89f124ed897">chunk_begin</a> () const  =0</td></tr>
+<tr class="separator:a9dd0644b1ee4652c0c2ab89f124ed897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1a0a73f5675c21a610ed69d3bfc6dd3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classphosphor_1_1_trace_chunk_iterator.html">chunk_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#af1a0a73f5675c21a610ed69d3bfc6dd3">chunk_end</a> () const  =0</td></tr>
+<tr class="separator:af1a0a73f5675c21a610ed69d3bfc6dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a5056683d3b757541351d89622e228a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">event_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a6a5056683d3b757541351d89622e228a">begin</a> () const  =0</td></tr>
+<tr class="separator:a6a5056683d3b757541351d89622e228a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21e5fee4516976127d6242b0631f0ae5"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">event_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a21e5fee4516976127d6242b0631f0ae5">end</a> () const  =0</td></tr>
+<tr class="separator:a21e5fee4516976127d6242b0631f0ae5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec1b79c671b69ae839bae6ff3699fd14"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html">chunk_iterable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#aec1b79c671b69ae839bae6ff3699fd14">chunks</a> () const </td></tr>
+<tr class="separator:aec1b79c671b69ae839bae6ff3699fd14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract base-class for a buffer of TraceEvents</p>
@@ -153,7 +179,7 @@ Public Member Functions</h2></td></tr>
 <p>A trace buffer can be iterated over using C++11 style range iteration: </p><pre class="fragment">for(const auto&amp; event : trace_buffer) {
     std::cout &lt;&lt; event &lt;&lt; std::endl;
 }
-</pre><p>Alternatively more complex iteration can be accomplished by using the iterators returned by <a class="el" href="classphosphor_1_1_trace_buffer.html#a20635937c0714b7bb37425733d03a700">TraceBuffer::begin()</a> and <a class="el" href="classphosphor_1_1_trace_buffer.html#a4f160203392302f655c51ecf639130ac">TraceBuffer::end()</a>.</p>
+</pre><p>Alternatively more complex iteration can be accomplished by using the iterators returned by <a class="el" href="classphosphor_1_1_trace_buffer.html#a6a5056683d3b757541351d89622e228a">TraceBuffer::begin()</a> and <a class="el" href="classphosphor_1_1_trace_buffer.html#a21e5fee4516976127d6242b0631f0ae5">TraceBuffer::end()</a>.</p>
 <p>Iteration should not be attempted while chunks are loaned out. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ae63b6808271a1aa37905c3ab286e3e6e"></a>
@@ -181,7 +207,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a20635937c0714b7bb37425733d03a700"></a>
+<a class="anchor" id="a6a5056683d3b757541351d89622e228a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -189,7 +215,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classphosphor_1_1_trace_event_iterator.html">const_iterator</a> phosphor::TraceBuffer::begin </td>
+          <td class="memname">virtual <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">event_iterator</a> phosphor::TraceBuffer::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -201,13 +227,13 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>A const_iterator to the start of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A const iterator to the first event of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a6afc8ed4150bc9d97f24eba4b7146382">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ad7b2fd44da932e52844be76136169d40">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4f160203392302f655c51ecf639130ac"></a>
+<a class="anchor" id="a9dd0644b1ee4652c0c2ab89f124ed897"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -215,7 +241,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classphosphor_1_1_trace_event_iterator.html">const_iterator</a> phosphor::TraceBuffer::end </td>
+          <td class="memname">virtual <a class="el" href="classphosphor_1_1_trace_chunk_iterator.html">chunk_iterator</a> phosphor::TraceBuffer::chunk_begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -227,9 +253,117 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A const iterator to the first chunk of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a58c2be60622606465c4accbbb3a77c59">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ac0061e55d865239f5c9425c3beb9ad5a">phosphor::FixedTraceBuffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9c3bdb8c429f1dc21381ff33a5cd21da"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual size_t phosphor::TraceBuffer::chunk_count </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Used for determining the number of chunks in the buffer</p>
+<dl class="section return"><dt>Returns</dt><dd>Number of chunks currently in the buffer </dd></dl>
+
+<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a51a3b4d26b0937b5ed361dee7b8ccad9">phosphor::FixedTraceBuffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af1a0a73f5675c21a610ed69d3bfc6dd3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classphosphor_1_1_trace_chunk_iterator.html">chunk_iterator</a> phosphor::TraceBuffer::chunk_end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>A const iterator to after the last chunk of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
+
+<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ab4a30635a83fb0e4e85756fa2f811ab5">phosphor::FixedTraceBuffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aec1b79c671b69ae839bae6ff3699fd14"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html">chunk_iterable</a> phosphor::TraceBuffer::chunks </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Helper function for creating a <a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html">chunk_iterable</a> over the buffer </p><pre class="fragment">for(const auto&amp; chunk : buffer.chunks() {
+    // Do something with every chunk
+}
+</pre><dl class="section return"><dt>Returns</dt><dd>An iterable over the class </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ad9f4abff1610cf2cd519de5dd2237913">phosphor::FixedTraceBuffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a21e5fee4516976127d6242b0631f0ae5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">event_iterator</a> phosphor::TraceBuffer::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>A const iterator to after the last event of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
+
+<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a66c2dfdefa2c02172114b4eecd1e6de7">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -347,6 +481,35 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>true if there are no chunks left or false otherwise </dd></dl>
 
 <p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2">phosphor::FixedTraceBuffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4c390636cca3e05fde7e32d231d0bc3e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html">TraceBufferChunk</a>&amp; phosphor::TraceBuffer::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Used for accessing TraceBufferChunks in the buffer</p>
+<p>Valid indexes are from 0 to <code>count()</code>. There is no bounds checking.</p>
+<dl class="section return"><dt>Returns</dt><dd>A const reference to a <a class="el" href="classphosphor_1_1_trace_event.html">TraceEvent</a> in the chunk that can be used to review the event data </dd></dl>
+
+<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ab8ad6be0ffd820674f7df34137ae1111">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>

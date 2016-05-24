@@ -117,6 +117,7 @@ $(document).ready(function(){initNavTree('trace__buffer_8h.html','');});
 <code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;gsl_p/iterator.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="sentinel_8h_source.html">sentinel.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="trace__event_8h_source.html">trace_event.h</a>&quot;</code><br />
 </div>
@@ -126,13 +127,17 @@ $(document).ready(function(){initNavTree('trace__buffer_8h.html','');});
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer_chunk.html">phosphor::TraceBufferChunk</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event_iterator.html">phosphor::TraceEventIterator</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_chunk_iterator.html">phosphor::TraceChunkIterator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html">phosphor::TraceBuffer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html">phosphor::TraceBuffer::chunk_iterable</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a29e5b4a93c40fe321175d7e2b9c6a974"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace__buffer_8h.html#a29e5b4a93c40fe321175d7e2b9c6a974">phosphor::TraceEventIterator</a> = <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">gsl_p::multidimensional_iterator</a>&lt; TraceChunkIterator &gt;</td></tr>
+<tr class="separator:a29e5b4a93c40fe321175d7e2b9c6a974"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a818081f7425fa19efa33d44e716cdf8b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace__buffer_8h.html#a818081f7425fa19efa33d44e716cdf8b">phosphor::trace_buffer_factory</a> = std::unique_ptr&lt; TraceBuffer &gt;(size_t generation, size_t buffer_size)</td></tr>
 <tr class="separator:a818081f7425fa19efa33d44e716cdf8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -155,6 +160,27 @@ std::unique_ptr&lt; TraceBuffer &gt;&#160;</td><td class="memItemRight" valign="
       </table>
 </div><div class="memdoc">
 <p>Interface for a <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> factory </p>
+
+</div>
+</div>
+<a class="anchor" id="file_a29e5b4a93c40fe321175d7e2b9c6a974"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="trace__buffer_8h.html#a29e5b4a93c40fe321175d7e2b9c6a974">phosphor::TraceEventIterator</a> = typedef <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">gsl_p::multidimensional_iterator</a>&lt;TraceChunkIterator&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Const iterator over a <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a>, implements required methods of a bi-directional iterator.</p>
+<p>Usage: </p><pre class="fragment">TraceEventIterator event_iterator = trace_buffer.start();
+std::cout &lt;&lt; *event_iterator &lt;&lt; std::endl;
+std::cout &lt;&lt; *(++event_iterator) &lt;&lt; std::endl;
+
+for(const auto&amp; event : trace_buffer) {
+    std::cout &lt;&lt; event &lt;&lt; std::endl;
+}
+</pre><p>For resource efficiency TraceEventIterator does not have post-increment </p>
 
 </div>
 </div>
