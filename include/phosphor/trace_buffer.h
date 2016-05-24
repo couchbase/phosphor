@@ -27,6 +27,8 @@
 #include <type_traits>
 #include <vector>
 
+#include <gsl_p/iterator.h>
+
 #include "sentinel.h"
 #include "trace_event.h"
 
@@ -44,8 +46,8 @@ namespace phosphor {
         static constexpr auto chunk_size = ((page_size * chunk_page_count) /
                                             sizeof(TraceEvent));
         using event_array = std::array<TraceEvent, chunk_size>;
-        using const_iterator = event_array::const_iterator;
     public:
+        using const_iterator = event_array::const_iterator;
 
         /**
          * Constructor for a TraceBufferChunk
@@ -105,13 +107,50 @@ namespace phosphor {
         event_array chunk;
     };
 
+    // Forward Decl
+    class TraceBuffer;
+
+    /**
+     * Const bi-directional iterator over the TraceBufferChunks in a TraceBuffer
+     *
+     * Usage:
+     *
+     *    TraceChunkIterator chunk_iterator = buffer.chunk_start();
+     *     std::cout << *(chunk_iterator->start()) << std::endl;
+     *
+     *     for(const auto& chunk : buffer.chunks()) {
+     *         for(const auto& event : chunk) {
+     *             std::cout << event << std::endl;
+     *         }
+     *     }
+     */
+    class TraceChunkIterator
+            : public std::iterator<std::bidirectional_iterator_tag, TraceBufferChunk> {
+        using const_reference = const TraceBufferChunk&;
+        using const_pointer = const TraceBufferChunk*;
+    public:
+        TraceChunkIterator() = default;
+        TraceChunkIterator(const TraceBuffer& buffer_);
+        TraceChunkIterator(const TraceBuffer& buffer_, size_t index_);
+        const_reference operator*() const;
+        const_pointer operator->() const;
+        TraceChunkIterator &operator++();
+        TraceChunkIterator &operator--();
+        bool operator==(const TraceChunkIterator &other) const;
+        bool operator!=(const TraceChunkIterator &other) const;
+
+    protected:
+        const TraceBuffer& buffer;
+        size_t index;
+    };
+
     /**
      * Const iterator over a TraceBuffer, implements required methods of
      * a bi-directional iterator.
      *
      * Usage:
      *
-     *     TraceEventIterator event_iterator = trace_buffer.start()
+     *     TraceEventIterator event_iterator = trace_buffer.start();
      *     std::cout << *event_iterator << std::endl;
      *     std::cout << *(++event_iterator) << std::endl;
      *
@@ -121,33 +160,7 @@ namespace phosphor {
      *
      * For resource efficiency TraceEventIterator does not have post-increment
      */
-    class TraceEventIterator
-            : public std::iterator<std::bidirectional_iterator_tag, TraceEvent> {
-    public:
-        TraceEventIterator() = default;
-
-        TraceEventIterator(
-                std::vector<TraceBufferChunk>::const_iterator chunk_);
-
-        const value_type &operator*() const;
-
-        const value_type *operator->() const;
-
-        TraceEventIterator &operator++();
-
-        TraceEventIterator &operator--();
-
-        bool operator==(const TraceEventIterator &other) const;
-
-        bool operator!=(const TraceEventIterator &other) const;
-
-    protected:
-        TraceEventIterator(std::vector<TraceBufferChunk>::const_iterator chunk_,
-                           size_t index);
-
-        std::vector<TraceBufferChunk>::const_iterator chunk;
-        size_t chunk_index = 0;
-    };
+    using TraceEventIterator = gsl_p::multidimensional_iterator<TraceChunkIterator>;
 
     /**
      * Abstract base-class for a buffer of TraceEvents
@@ -173,8 +186,9 @@ namespace phosphor {
      * Iteration should not be attempted while chunks are loaned out.
      */
     class TraceBuffer {
-        using const_iterator = TraceEventIterator;
     public:
+        using chunk_iterator = TraceChunkIterator;
+        using event_iterator = TraceEventIterator;
 
         /**
          * Virtual destructor to allow subclasses to be cleaned up
@@ -251,19 +265,95 @@ namespace phosphor {
         virtual bool isFull() const = 0;
 
         /**
+         * Used for accessing TraceBufferChunks in the buffer
+         *
+         * Valid indexes are from 0 to `count()`. There is no
+         * bounds checking.
+         *
+         * @return A const reference to a TraceEvent in the chunk
+         *         that can be used to review the event data
+         */
+        virtual const TraceBufferChunk& operator[](const int index) const = 0;
+
+        /**
+         * Used for determining the number of chunks in the buffer
+         *
+         * @return Number of chunks currently in the buffer
+         */
+        virtual size_t chunk_count() const = 0;
+
+        /**
          * @return The generation number of the TraceBuffer
          */
         virtual size_t getGeneration() const = 0;
 
         /**
-         * @return A const_iterator to the start of the TraceBuffer
+         * @return A const iterator to the first chunk of the TraceBuffer
          */
-        virtual const_iterator begin() const = 0;
+        virtual chunk_iterator chunk_begin() const = 0;
 
         /**
-         * @return A const_iterator to the end of the TraceBuffer
+         * @return A const iterator to after the last chunk of the TraceBuffer
          */
-        virtual const_iterator end() const = 0;
+        virtual chunk_iterator chunk_end() const = 0;
+
+        /**
+         * @return A const iterator to the first event of the TraceBuffer
+         */
+        virtual event_iterator begin() const = 0;
+
+        /**
+         * @return A const iterator to after the last event of the TraceBuffer
+         */
+        virtual event_iterator end() const = 0;
+
+        /**
+         * Helper class that can be used to create for-range loops over
+         * the chunks of the TraceBuffer
+         *
+         *     for(const auto& chunk : TraceBuffer::chunk_iterable(buffer) {
+         *         // Do something with every chunk
+         *     }
+         */
+        class chunk_iterable {
+        public:
+            /**
+             * @param buffer_ The buffer to iterate over
+             */
+            chunk_iterable(const TraceBuffer& buffer_)
+                    : buffer(buffer_) {
+            }
+
+            /**
+             * @return A const iterator to the first chunk of the buffer
+             */
+            chunk_iterator begin() {
+                return buffer.chunk_begin();
+            }
+
+            /**
+             * @return A const iterator to after the last chunk of the buffer
+             */
+            chunk_iterator end() {
+                return buffer.chunk_end();
+            }
+        private:
+            const TraceBuffer& buffer;
+        };
+
+        /**
+         * Helper function for creating a chunk_iterable over the buffer
+         *
+         *     for(const auto& chunk : buffer.chunks() {
+         *         // Do something with every chunk
+         *     }
+         *
+         * @return An iterable over the class
+         */
+        virtual chunk_iterable chunks() const {
+            return chunk_iterable(*this);
+        }
+
     };
 
 

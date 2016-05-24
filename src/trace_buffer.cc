@@ -60,53 +60,37 @@ namespace phosphor {
     }
 
     /*
-     * TraceEventIterator implementation
+     * TraceChunkIterator implementation
      */
-
-    TraceEventIterator::TraceEventIterator(
-            std::vector<TraceBufferChunk>::const_iterator chunk_)
-            : chunk(chunk_) {
+    TraceChunkIterator::TraceChunkIterator(const TraceBuffer& buffer_,
+                                           size_t index_)
+            : buffer(buffer_),
+              index(index_) {
     }
 
-    const TraceEventIterator::value_type &TraceEventIterator::operator*() const {
-        return (*chunk)[chunk_index];
+    TraceChunkIterator::TraceChunkIterator(const TraceBuffer& buffer_)
+        : TraceChunkIterator(buffer_, 0) {
     }
 
-    const TraceEventIterator::value_type *TraceEventIterator::operator->() const {
-        return &(*chunk)[chunk_index];
+    TraceChunkIterator::const_reference TraceChunkIterator::operator*() const {
+        return buffer[index];
     }
-
-    TraceEventIterator &TraceEventIterator::operator++() {
-        ++chunk_index;
-        if (chunk_index == (*chunk).count()) {
-            chunk_index = 0;
-            ++chunk;
-        }
+    TraceChunkIterator::const_pointer TraceChunkIterator::operator->() const {
+        return &(buffer[index]);
+    }
+    TraceChunkIterator& TraceChunkIterator::operator++() {
+        ++index;
         return *this;
     }
-
-    TraceEventIterator &TraceEventIterator::operator--() {
-        if (chunk_index == 0) {
-            --chunk;
-            chunk_index = (*chunk).count();
-        }
-        --chunk_index;
+    TraceChunkIterator& TraceChunkIterator::operator--() {
+        --index;
         return *this;
     }
-
-    bool TraceEventIterator::operator==(const TraceEventIterator &other) const {
-        return (chunk == other.chunk) && (chunk_index == other.chunk_index);
+    bool TraceChunkIterator::operator==(const TraceChunkIterator &other) const {
+        return &buffer == &(other.buffer) && index == other.index;
     }
-
-    bool TraceEventIterator::operator!=(const TraceEventIterator &other) const {
+    bool TraceChunkIterator::operator!=(const TraceChunkIterator &other) const {
         return !(*this == other);
-    }
-
-    TraceEventIterator::TraceEventIterator(
-            std::vector<TraceBufferChunk>::const_iterator chunk_,
-            size_t index)
-            : chunk(chunk_),
-              chunk_index(index) {
     }
 
     /**
@@ -157,12 +141,32 @@ namespace phosphor {
             return generation;
         }
 
-        TraceEventIterator begin() const override {
-            return TraceEventIterator(buffer.begin());
+        const TraceBufferChunk& operator[](const int index) const override {
+            return buffer[index];
         }
 
-        TraceEventIterator end() const override {
-            return TraceEventIterator(buffer.end());
+        size_t chunk_count() const override {
+            return buffer.size();
+        }
+
+        chunk_iterator chunk_begin() const override {
+            return TraceChunkIterator(*this);
+        }
+
+        chunk_iterator chunk_end() const override {
+            return TraceChunkIterator(*this, chunk_count());
+        }
+
+        event_iterator begin() const override {
+            return event_iterator(chunk_begin());
+        }
+
+        event_iterator end() const override {
+            return event_iterator(chunk_end());
+        }
+
+        chunk_iterable chunks() const override {
+            return chunk_iterable(*this);
         }
 
     protected:

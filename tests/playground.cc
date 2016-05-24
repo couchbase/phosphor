@@ -24,6 +24,19 @@
 #include "gsl_p/dyn_array.h"
 
 int main(int argc, char* argv[]) {
+    std::vector<std::vector<int>> marray;
+    marray.push_back(std::vector<int>({1, 2, 3}));
+    marray.push_back(std::vector<int>({4, 5, 6}));
+
+    gsl_p::multidimensional_iterator<decltype(marray)::iterator> start(marray.begin());
+    gsl_p::multidimensional_iterator<
+            decltype(marray)::iterator> finish(marray.end());
+
+
+    for(auto iter = start; iter != finish; ++iter) {
+        std::cout << *iter << std::endl;
+    }
+
 //    phosphor::TraceLog::getInstance().start(
 //            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1)
 //    );
@@ -50,20 +63,12 @@ int main(int argc, char* argv[]) {
 //        thread.join();
 //    }
 //
-//    for (const auto& event : *buffer) {
-//        printf("%s\n", event.to_string().c_str());
+//    for (const auto& chunk : buffer->chunks()) {
+//        printf("\n\n[NEW CHUNK]\n");
+//        for(const auto& event : chunk) {
+//            printf("%s\n", event.to_string().c_str());
+//        }
 //    }
-
-    gsl_p::dyn_array<int> arr(1000);
-    int i = 0;
-    for(int& val : arr) {
-        val = i;
-        ++i;
-    }
-
-    for(const int& val : arr) {
-        std::cout << val << "\n";
-    }
 
 
     return 0;
