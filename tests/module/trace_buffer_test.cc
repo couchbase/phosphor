@@ -45,6 +45,7 @@ TEST(TraceBufferChunk, fillAndOverfillAndCount) {
     EXPECT_EQ(count, chunk.count());
     EXPECT_THROW(chunk.addEvent(), std::out_of_range);
     EXPECT_EQ(count, chunk.count());
+
 }
 
 TEST(TraceEvent, string_check) {
@@ -70,7 +71,18 @@ TEST(TraceEvent, string_check) {
 #endif
 
     for(int i = 0; i < chunk.count(); ++i) {
-        const TraceEvent& traced = chunk[i];
+        const auto& traced = chunk[i];
+        // This should probably require linking against GoogleMock
+        // as well but I think we'll get away with it..
+        EXPECT_THAT(traced.to_string(), event_regex);
+
+        std::stringstream s;
+        s << traced;
+        EXPECT_THAT(s.str(), event_regex);
+    }
+
+    // Duplicate the above test with iterators to test the iterators
+    for(const auto& traced : chunk) {
         // This should probably require linking against GoogleMock
         // as well but I think we'll get away with it..
         EXPECT_THAT(traced.to_string(), event_regex);

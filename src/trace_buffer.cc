@@ -51,6 +51,14 @@ namespace phosphor {
         return chunk[index];
     }
 
+    TraceBufferChunk::const_iterator TraceBufferChunk::begin() const {
+        return chunk.begin();
+    }
+
+    TraceBufferChunk::const_iterator TraceBufferChunk::end() const {
+        return chunk.begin() + count();
+    }
+
     /*
      * TraceEventIterator implementation
      */

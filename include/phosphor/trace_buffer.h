@@ -44,7 +44,7 @@ namespace phosphor {
         static constexpr auto chunk_size = ((page_size * chunk_page_count) /
                                             sizeof(TraceEvent));
         using event_array = std::array<TraceEvent, chunk_size>;
-
+        using const_iterator = event_array::const_iterator;
     public:
 
         /**
@@ -89,6 +89,16 @@ namespace phosphor {
          * @return The number of initialised events in the chunk
          */
         size_t count() const;
+
+        /**
+         * @return Const iterator to the start of the chunk
+         */
+        const_iterator begin() const;
+
+        /**
+         * @return Const iterator to the last initialised event in the chunk
+         */
+        const_iterator end() const;
 
     private:
         unsigned short next_free;
