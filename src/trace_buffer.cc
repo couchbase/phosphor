@@ -27,11 +27,8 @@ namespace phosphor {
      * TraceBufferChunk implementation
      */
 
-    TraceBufferChunk::TraceBufferChunk(size_t _generation, size_t _buffer_index)
-            : thread_id(std::this_thread::get_id()),
-              generation(_generation),
-              buffer_index(_buffer_index),
-              next_free(0) {
+    TraceBufferChunk::TraceBufferChunk()
+            : next_free(0) {
     }
 
     bool TraceBufferChunk::isFull() const {
@@ -42,15 +39,6 @@ namespace phosphor {
     size_t TraceBufferChunk::count() const {
         return next_free;
     }
-
-    size_t TraceBufferChunk::getIndex() const {
-        return buffer_index;
-    }
-
-    size_t TraceBufferChunk::getGeneration() const {
-        return generation;
-    }
-
 
     TraceEvent &TraceBufferChunk::addEvent() {
         if (isFull()) {
@@ -135,9 +123,7 @@ namespace phosphor {
                 throw std::out_of_range("The TraceBuffer is full");
             }
             sentinels.insert(&sentinel);
-
-            auto index = buffer.size();
-            buffer.emplace_back(generation, index);
+            buffer.emplace_back();
             return buffer.back();
         }
 
@@ -151,10 +137,8 @@ namespace phosphor {
             }
         }
 
-        void returnChunk(TraceBufferChunk &chunk) override {
-            if (chunk.getGeneration() != generation) {
-                throw std::invalid_argument("Chunk is not from this buffer");
-            }
+        void returnChunk(TraceBufferChunk& chunk) override {
+            (void) chunk;
         }
 
         bool isFull() const override {
@@ -178,7 +162,7 @@ namespace phosphor {
         size_t generation;
         size_t buffer_size;
 
-        std::unordered_set<Sentinel *> sentinels;
+        std::unordered_set<Sentinel*> sentinels;
     };
 
     std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,

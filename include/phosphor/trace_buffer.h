@@ -55,7 +55,7 @@ namespace phosphor {
          * @param buffer_index_ Index in the TraceBuffer the chunk
          *                      comes from
          */
-        TraceBufferChunk(size_t generation_, size_t buffer_index_);
+        TraceBufferChunk();
 
         /**
          * Used for adding TraceEvents to the chunk
@@ -90,22 +90,7 @@ namespace phosphor {
          */
         size_t count() const;
 
-        /**
-         * @return The index in the TraceBuffer the chunk comes from
-         */
-        size_t getIndex() const;
-
-        /**
-         * @return The generation number of the TraceBuffer the chunk
-         *         came from
-         */
-        size_t getGeneration() const;
-
     private:
-        std::thread::id thread_id;
-        size_t generation;
-        size_t buffer_index;
-
         unsigned short next_free;
         event_array chunk;
     };
@@ -266,7 +251,7 @@ namespace phosphor {
         virtual const_iterator begin() const = 0;
 
         /**
-         * @return
+         * @return A const_iterator to the end of the TraceBuffer
          */
         virtual const_iterator end() const = 0;
     };
