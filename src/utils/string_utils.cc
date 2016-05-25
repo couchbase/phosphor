@@ -16,6 +16,7 @@
  */
 
 #include <cstdarg>
+#include <cstddef>
 #include <stdexcept>
 #include <vector>
 
