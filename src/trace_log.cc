@@ -30,19 +30,8 @@ namespace phosphor {
 
     TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
             : buffer_mode(_buffer_mode),
-              buffer_size(_buffer_size) {
-
-        switch (buffer_mode) {
-            case BufferMode::fixed:
-                buffer_factory = make_fixed_buffer;
-                break;
-            case BufferMode::ring:
-                throw std::invalid_argument("Ring buffer not yet implemented");
-                break;
-            default:
-                throw std::invalid_argument("Invalid buffer mode");
-                break;
-        }
+              buffer_size(_buffer_size),
+              buffer_factory(modeToFactory(_buffer_mode)){
     }
 
     TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory,
@@ -50,6 +39,19 @@ namespace phosphor {
             : buffer_mode(BufferMode::custom),
               buffer_size(_buffer_size),
               buffer_factory(_buffer_factory) {
+    }
+
+    trace_buffer_factory* TraceConfig::modeToFactory(BufferMode mode) {
+        switch (mode) {
+            case BufferMode::fixed:
+                return make_fixed_buffer;
+            case BufferMode::ring:
+                throw std::invalid_argument("Ring buffer not yet implemented");
+            case BufferMode::custom:
+                throw std::invalid_argument("Cannot get factory for "
+                                            "Custom Mode");
+        }
+        throw std::invalid_argument("Invalid buffer mode");
     }
 
     trace_buffer_factory *TraceConfig::getBufferFactory() const {
