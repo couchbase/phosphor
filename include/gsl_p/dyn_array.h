@@ -1,19 +1,4 @@
 /* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
-/*
- *     Copyright 2016 Couchbase, Inc
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
 /** \file
  * The following is the experimental dyn_array, as described in the C++ core
  * guidelines and early C++14 specs, produced by the LLVM compiler team. It has
@@ -37,6 +22,224 @@
 // Source Licenses. See LICENSE.TXT for details.
 //
 //===----------------------------------------------------------------------===//
+
+/** LICENSE.TXT: **/
+//==============================================================================
+//libc++ License
+//==============================================================================
+//
+//The libc++ library is dual licensed under both the University of Illinois
+//"BSD-Like" license and the MIT license.  As a user of this code you may choose
+//to use it under either license.  As a contributor, you agree to allow your code
+//to be used under both.
+//
+//Full text of the relevant licenses is included below.
+//
+//==============================================================================
+//
+//University of Illinois/NCSA
+//        Open Source License
+//
+//Copyright (c) 2009-2016 by the contributors listed in CREDITS.TXT
+//
+//        All rights reserved.
+//
+//Developed by:
+//
+//LLVM Team
+//
+//University of Illinois at Urbana-Champaign
+//
+//        http://llvm.org
+//
+//Permission is hereby granted, free of charge, to any person obtaining a copy of
+//this software and associated documentation files (the "Software"), to deal with
+//        the Software without restriction, including without limitation the rights to
+//use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+//of the Software, and to permit persons to whom the Software is furnished to do
+//so, subject to the following conditions:
+//
+//* Redistributions of source code must retain the above copyright notice,
+//this list of conditions and the following disclaimers.
+//
+//* Redistributions in binary form must reproduce the above copyright notice,
+//this list of conditions and the following disclaimers in the
+//documentation and/or other materials provided with the distribution.
+//
+//* Neither the names of the LLVM Team, University of Illinois at
+//Urbana-Champaign, nor the names of its contributors may be used to
+//endorse or promote products derived from this Software without specific
+//        prior written permission.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+//        FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+//        CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH THE
+//SOFTWARE.
+//
+//==============================================================================
+//
+//Copyright (c) 2009-2014 by the contributors listed in CREDITS.TXT
+//
+//        Permission is hereby granted, free of charge, to any person obtaining a copy
+//of this software and associated documentation files (the "Software"), to deal
+//in the Software without restriction, including without limitation the rights
+//        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//        copies of the Software, and to permit persons to whom the Software is
+//furnished to do so, subject to the following conditions:
+//
+//        The above copyright notice and this permission notice shall be included in
+//all copies or substantial portions of the Software.
+//
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//        THE SOFTWARE.
+
+/** CREDITS.TXT **/
+//This file is a partial list of people who have contributed to the LLVM/libc++
+//project.  If you have contributed a patch or made some other contribution to
+//        LLVM/libc++, please submit a patch to this file to add yourself, and it will be
+//done!
+//
+//The list is sorted by surname and formatted to allow easy grepping and
+//        beautification by scripts.  The fields are: name (N), email (E), web-address
+//(W), PGP key ID and fingerprint (P), description (D), and snail-mail address
+//        (S).
+//
+//N: Saleem Abdulrasool
+//        E: compnerd@compnerd.org
+//        D: Minor patches and Linux fixes.
+//
+//N: Dan Albert
+//        E: danalbert@google.com
+//        D: Android support and test runner improvements.
+//
+//N: Dimitry Andric
+//        E: dimitry@andric.com
+//        D: Visibility fixes, minor FreeBSD portability patches.
+//
+//N: Holger Arnold
+//        E: holgerar@gmail.com
+//        D: Minor fix.
+//
+//N: Ruben Van Boxem
+//E: vanboxem dot ruben at gmail dot com
+//D: Initial Windows patches.
+//
+//N: David Chisnall
+//        E: theraven at theravensnest dot org
+//        D: FreeBSD and Solaris ports, libcxxrt support, some atomics work.
+//
+//N: Marshall Clow
+//        E: mclow.lists@gmail.com
+//        E: marshall@idio.com
+//        D: C++14 support, patches and bug fixes.
+//
+//N: Eric Fiselier
+//        E: eric@efcs.ca
+//        D: LFTS support, patches and bug fixes.
+//
+//N: Bill Fisher
+//        E: william.w.fisher@gmail.com
+//        D: Regex bug fixes.
+//
+//N: Matthew Dempsky
+//        E: matthew@dempsky.org
+//        D: Minor patches and bug fixes.
+//
+//N: Google Inc.
+//D: Copyright owner and contributor of the CityHash algorithm
+//
+//N: Howard Hinnant
+//        E: hhinnant@apple.com
+//        D: Architect and primary author of libc++
+//
+//N: Hyeon-bin Jeong
+//E: tuhertz@gmail.com
+//        D: Minor patches and bug fixes.
+//
+//N: Argyrios Kyrtzidis
+//        E: kyrtzidis@apple.com
+//        D: Bug fixes.
+//
+//N: Bruce Mitchener, Jr.
+//E: bruce.mitchener@gmail.com
+//        D: Emscripten-related changes.
+//
+//N: Michel Morin
+//        E: mimomorin@gmail.com
+//        D: Minor patches to is_convertible.
+//
+//N: Andrew Morrow
+//        E: andrew.c.morrow@gmail.com
+//        D: Minor patches and Linux fixes.
+//
+//N: Arvid Picciani
+//        E: aep at exys dot org
+//        D: Minor patches and musl port.
+//
+//N: Bjorn Reese
+//        E: breese@users.sourceforge.net
+//        D: Initial regex prototype
+//
+//        N: Nico Rieck
+//E: nico.rieck@gmail.com
+//        D: Windows fixes
+//
+//N: Jon Roelofs
+//        E: jonathan@codesourcery.com
+//        D: Remote testing, Newlib port, baremetal/single-threaded support.
+//
+//N: Jonathan Sauer
+//        D: Minor patches, mostly related to constexpr
+//
+//N: Craig Silverstein
+//        E: csilvers@google.com
+//        D: Implemented Cityhash as the string hash function on 64-bit machines
+//
+//N: Richard Smith
+//        D: Minor patches.
+//
+//N: Joerg Sonnenberger
+//        E: joerg@NetBSD.org
+//        D: NetBSD port.
+//
+//N: Stephan Tolksdorf
+//        E: st@quanttec.com
+//        D: Minor <atomic> fix
+//
+//N: Michael van der Westhuizen
+//        E: r1mikey at gmail dot com
+//
+//        N: Larisse Voufo
+//D: Minor patches.
+//
+//N: Klaas de Vries
+//E: klaas at klaasgaaf dot nl
+//D: Minor bug fix.
+//
+//N: Zhang Xiongpang
+//        E: zhangxiongpang@gmail.com
+//        D: Minor patches and bug fixes.
+//
+//N: Xing Xue
+//        E: xingxue@ca.ibm.com
+//        D: AIX port
+//
+//N: Zhihao Yuan
+//        E: lichray@gmail.com
+//        D: Standard compatibility fixes.
+//
+//N: Jeffrey Yasskin
+//        E: jyasskin@gmail.com
+//        E: jyasskin@google.com
+//        D: Linux fixes.
 
 #ifndef _GSLP_dyn_array
 #define _GSLP_dyn_array
