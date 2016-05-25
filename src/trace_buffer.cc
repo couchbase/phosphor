@@ -42,7 +42,8 @@ namespace phosphor {
 
     TraceEvent &TraceBufferChunk::addEvent() {
         if (isFull()) {
-            throw std::out_of_range("All events in chunk have been used");
+            throw std::out_of_range("phosphor::TraceBufferChunk::addEvent: "
+                                    "All events in chunk have been used");
         }
         return chunk[next_free++];
     }
@@ -112,7 +113,8 @@ namespace phosphor {
 
         TraceBufferChunk &getChunk(Sentinel &sentinel) override {
             if (isFull()) {
-                throw std::out_of_range("The TraceBuffer is full");
+                throw std::out_of_range("phosphor::TraceBufferChunk::getChunk: "
+                                        "The TraceBuffer is full");
             }
             sentinels.insert(&sentinel);
             buffer.emplace_back();
@@ -144,9 +146,9 @@ namespace phosphor {
 
         const TraceBufferChunk& operator[](const int index) const override {
             if(sentinels.size() > 0) {
-                throw std::logic_error("TraceBufferChunk::operator[]: "
-                                       "Cannot read from TraceBuffer while "
-                                        "chunks are loaned out!");
+                throw std::logic_error("phosphor::TraceBufferChunk::operator[]:"
+                                       " Cannot read from TraceBuffer while "
+                                       "chunks are loaned out!");
             }
             return buffer[index];
         }

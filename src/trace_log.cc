@@ -43,12 +43,16 @@ namespace phosphor {
             case BufferMode::fixed:
                 return make_fixed_buffer;
             case BufferMode::ring:
-                throw std::invalid_argument("Ring buffer not yet implemented");
+                throw std::invalid_argument(
+                        "phosphor::TraceConfig::modeToFactory: "
+                        "Ring buffer not yet implemented");
             case BufferMode::custom:
-                throw std::invalid_argument("Cannot get factory for "
-                                            "Custom Mode");
+                throw std::invalid_argument(
+                        "phosphor::TraceConfig::modeToFactory: "
+                        "Cannot get factory for Custom Mode");
         }
-        throw std::invalid_argument("Invalid buffer mode");
+        throw std::invalid_argument(
+                "phosphor::TraceConfig::modeToFactory:Invalid buffer mode");
     }
 
     trace_buffer_factory *TraceConfig::getBufferFactory() const {
@@ -104,8 +108,9 @@ namespace phosphor {
     std::unique_ptr<TraceBuffer> TraceLog::getBuffer() {
         std::lock_guard<std::mutex> lh(mutex);
         if (enabled) {
-            throw std::logic_error("Cannot get the current TraceBuffer while "
-                                           "logging is enabled");
+            throw std::logic_error(
+                    "phosphor::TraceLog::getBuffer: Cannot get the current "
+                    "TraceBuffer while logging is enabled");
         }
         return std::move(buffer);
     }
@@ -121,7 +126,8 @@ namespace phosphor {
     void TraceLog::deregisterThread(TraceLog &instance) {
         if (!thread_chunk.sentinel) {
             throw std::logic_error(
-                    "This thread has not been previously registered");
+                    "phosphor::TraceLog::deregisterThread: This thread has "
+                    "not been previously registered");
         }
 
         if (thread_chunk.chunk) {
