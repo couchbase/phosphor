@@ -16,6 +16,7 @@
  */
 
 #include <cstdarg>
+#include <stdexcept>
 #include <vector>
 
 #include "string_utils.h"
@@ -25,11 +26,24 @@ namespace phosphor {
 
         std::string format_string(const char *fmt...) {
             std::vector<char> buffer;
+
             va_list args, cpy;
             va_start(args, fmt);
             va_copy(cpy, args);
-            buffer.resize(vsnprintf(nullptr, 0, fmt, cpy) + 1);
-            vsnprintf(buffer.data(), buffer.size(), fmt, args);
+
+            ssize_t len = vsnprintf(nullptr, 0, fmt, cpy) + 1;
+            if(len < 0) {
+                throw std::runtime_error("phosphor::utils::format_string "
+                                         "failed: vsnprintf returned < 0");
+            }
+            buffer.resize(len);
+            len = vsnprintf(buffer.data(), buffer.size(), fmt, args);
+            if(len < 0 || len > buffer.size()) {
+                throw std::runtime_error("phosphor::utils::format_string "
+                                         "failed: vsnprintf returned < 0 or "
+                                         "larger than the buffer.");
+            }
+
             va_end(args);
             va_end(cpy);
             return buffer.data();
