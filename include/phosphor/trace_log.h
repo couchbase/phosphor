@@ -193,8 +193,8 @@ namespace phosphor {
             // State is busy
             if (!cs.chunk || cs.chunk->isFull()) {
                 replaceChunk(cs);
+                if (!cs.chunk) return;
             }
-            if (!cs.chunk) return;
 
             cs.chunk->addEvent() = TraceEvent(
                     category, name, type, id,
@@ -250,6 +250,7 @@ namespace phosphor {
          */
         static void deregisterThread(
                 TraceLog &instance = TraceLog::getInstance());
+
 
     protected:
         struct ChunkTenant {
