@@ -15,6 +15,8 @@
  *   limitations under the License.
  */
 
+#include <cassert>
+
 #include "phosphor/sentinel.h"
 
 namespace phosphor {
@@ -36,7 +38,14 @@ namespace phosphor {
     }
 
     void Sentinel::release() {
+#ifdef NDEBUG
         state.store(State::open, std::memory_order_release);
+#else
+        auto expected = State::busy;
+        // Sentinel::release() should only be called while State::busy
+        assert(state.compare_exchange_strong(expected, State::open));
+        (void) expected;
+#endif
     }
 
     void Sentinel::close() {
