@@ -166,7 +166,7 @@ namespace phosphor {
          * Logs an event in the current buffer (if applicable)
          *
          * This method should not be used directly, instead the
-         * macros contained within sentinel.h should be used instead.
+         * macros contained within phosphor.h should be used instead.
          *
          * @param category The category to log the event into. This (and
          *        the name) should usually be a string literal as the
