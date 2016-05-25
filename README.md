@@ -3,7 +3,7 @@
 [![Unix Build Status](https://travis-ci.org/couchbaselabs/phosphor.svg?branch=master)](https://travis-ci.org/couchbaselabs/phosphor)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/gbioajys9fign7kj/branch/master?svg=true)](https://ci.appveyor.com/project/Chippiewill/phosphor-btb32/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/couchbaselabs/phosphor/badge.svg?branch=master)](https://coveralls.io/github/couchbaselabs/phosphor?branch=master)
-[![License](https://img.shields.io/github/license/couchbaselabs/phosphor.svg)](LICENSE)
+[![License](https://img.shields.io/github/license/couchbaselabs/phosphor.svg)](LICENSE.txt)
 
 Phosphor is a high-performance event tracing framework for C++11 applications
 designed for use in Couchbase Server - specifically KV Engine and ForestDB.
