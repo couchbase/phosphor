@@ -147,25 +147,18 @@ inline TraceArgument::TraceArgument(src arg) : as_ ##dst (arg) {}
 
 #undef ARGUMENT_CONVERSION
 
-
-/**
- * Used for quickly defining a case statement for
- * converting the union to an appropriately
- * formatted string.
- */
-#define ADD_CASE(dst) \
-case Type::is_ ##dst: \
-    return std::to_string(as_ ##dst);
-
     inline std::string TraceArgument::to_string(
             TraceArgument::Type type) const {
         std::stringstream ss;
         switch (type) {
             case Type::is_bool:
                 return as_bool?"true":"false";
-            ADD_CASE(int)
-            ADD_CASE(uint)
-            ADD_CASE(double)
+            case Type::is_int: \
+                return std::to_string(as_int);
+            case Type::is_uint: \
+                return std::to_string(as_uint);
+            case Type::is_double: \
+                return std::to_string(as_double);
             case Type::is_pointer:
                 ss << as_pointer;
                 return ss.str();
@@ -177,8 +170,6 @@ case Type::is_ ##dst: \
                 throw std::invalid_argument("Invalid TraceArgument type");
         }
     }
-
-#undef ADD_CASE
 
 
 } // namespace phosphor
