@@ -15,6 +15,11 @@ IF(EXISTS "${phosphor_SOURCE_DIR}/thirdparty/google/googletest/CMakeLists.txt")
     ADD_SUBDIRECTORY(${phosphor_SOURCE_DIR}/thirdparty/google/googletest EXCLUDE_FROM_ALL)
 ENDIF ()
 
+IF(EXISTS "${phosphor_SOURCE_DIR}/thirdparty/google/benchmark/CMakeLists.txt")
+    SET(BENCHMARK_ENABLE_TESTING FALSE)
+    ADD_SUBDIRECTORY(${phosphor_SOURCE_DIR}/thirdparty/google/benchmark EXCLUDE_FROM_ALL)
+ENDIF ()
+
 IF(EXISTS "${phosphor_SOURCE_DIR}/thirdparty/couchbase/tlm/CMakeLists.txt")
     SET(CMAKE_MODULE_PATH
             ${CMAKE_MODULE_PATH}

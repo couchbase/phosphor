@@ -1,4 +1,15 @@
-ADD_SUBDIRECTORY(module)
+IF(DEFINED gtest_SOURCE_DIR)
+    INCLUDE_DIRECTORIES(AFTER
+            ${gtest_SOURCE_DIR}/include
+            ${gmock_SOURCE_DIR}/include)
+    ADD_SUBDIRECTORY(module)
+ENDIF ()
+
+IF(DEFINED benchmark_SOURCE_DIR)
+    INCLUDE_DIRECTORIES(AFTER
+            ${benchmark_SOURCE_DIR}/include)
+    ADD_SUBDIRECTORY(benchmark)
+ENDIF ()
 
 ADD_EXECUTABLE(playground playground.cc)
 TARGET_LINK_LIBRARIES(playground phosphor)
