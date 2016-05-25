@@ -1,5 +1,5 @@
-[submodule "thirdparty/googletest"]
-	path = thirdparty/googletest
+[submodule "thirdparty/google/googletest"]
+	path = thirdparty/google/googletest
 	url = https://github.com/couchbasedeps/googletest.git
 [submodule "thirdparty/couchbase/tlm"]
 	path = thirdparty/couchbase/tlm

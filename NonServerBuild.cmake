@@ -8,14 +8,14 @@ ENDIF (NOT CMAKE_BUILD_TYPE)
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 # If GoogleTest is checked out then include it and we can run some tests
-IF(EXISTS "${PROJECT_SOURCE_DIR}/thirdparty/googletest/CMakeLists.txt")
+IF(EXISTS "${phosphor_SOURCE_DIR}/thirdparty/google/googletest/CMakeLists.txt")
     SET(gtest_force_shared_crt ON CACHE BOOL
         "Use shared (DLL) run-time lib even when Google Test
         is built as static lib.")
-    ADD_SUBDIRECTORY(thirdparty/googletest EXCLUDE_FROM_ALL)
+    ADD_SUBDIRECTORY(${phosphor_SOURCE_DIR}/thirdparty/google/googletest EXCLUDE_FROM_ALL)
 ENDIF ()
 
-IF(EXISTS "${PROJECT_SOURCE_DIR}/thirdparty/couchbase/tlm/CMakeLists.txt")
+IF(EXISTS "${phosphor_SOURCE_DIR}/thirdparty/couchbase/tlm/CMakeLists.txt")
     SET(CMAKE_MODULE_PATH
             ${CMAKE_MODULE_PATH}
             "${phosphor_SOURCE_DIR}/thirdparty/couchbase/tlm/cmake/Modules")
