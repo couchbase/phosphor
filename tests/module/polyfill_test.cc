@@ -19,7 +19,7 @@
 
 #include <gtest/gtest.h>
 
-#include "polyfill.h"
+#include "utils/make_unique.h"
 
 TEST(MakeUnique, succeed) {
     std::unique_ptr<int> unique_int = phosphor::utils::make_unique<int>(5);

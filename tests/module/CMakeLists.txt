@@ -18,19 +18,19 @@ M_ADD_MODULE_GTEST(sentinel_test
 
 M_ADD_MODULE_GTEST(string_utils_test
         string_utils_test.cc
-        ${phosphor_SOURCE_DIR}/src/string_utils.cc)
+        ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
 M_ADD_MODULE_GTEST(trace_argument_test
         trace_argument_test.cc)
 
 M_ADD_MODULE_GTEST(trace_event_test
         trace_event_test.cc
-        ${phosphor_SOURCE_DIR}/src/string_utils.cc
-        ${phosphor_SOURCE_DIR}/src/trace_event.cc)
+        ${phosphor_SOURCE_DIR}/src/trace_event.cc
+        ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
 M_ADD_MODULE_GTEST(trace_buffer_test
         trace_buffer_test.cc
         ${phosphor_SOURCE_DIR}/src/sentinel.cc
-        ${phosphor_SOURCE_DIR}/src/string_utils.cc
         ${phosphor_SOURCE_DIR}/src/trace_event.cc
-        ${phosphor_SOURCE_DIR}/src/trace_buffer.cc)
+        ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
+        ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)

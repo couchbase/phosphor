@@ -18,8 +18,8 @@
 #include <stdexcept>
 #include <unordered_set>
 
-#include "polyfill.h"
 #include "phosphor/trace_buffer.h"
+#include "utils/make_unique.h"
 
 namespace phosphor {
 

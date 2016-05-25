@@ -17,8 +17,8 @@
 
 #include <vector>
 
-#include "string_utils.h"
 #include "phosphor/trace_event.h"
+#include "utils/string_utils.h"
 
 namespace phosphor {
 

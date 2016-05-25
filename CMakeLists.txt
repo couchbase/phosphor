@@ -17,10 +17,10 @@ INCLUDE_DIRECTORIES(BEFORE
 
 SET(SOURCE_FILES
         src/sentinel.cc
-        src/string_utils.cc
         src/trace_buffer.cc
         src/trace_event.cc
-        src/trace_log.cc)
+        src/trace_log.cc
+        src/utils/string_utils.cc)
 
 ADD_LIBRARY(phosphor STATIC ${SOURCE_FILES})
 
@@ -32,4 +32,4 @@ IF(DEFINED gtest_SOURCE_DIR)
     ADD_SUBDIRECTORY(tests)
 ENDIF ()
 
-ENABLE_CODE_COVERAGE_REPORT() 
+ENABLE_CODE_COVERAGE_REPORT()

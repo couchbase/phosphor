@@ -19,7 +19,7 @@
 
 #include <gtest/gtest.h>
 
-#include "string_utils.h"
+#include "utils/string_utils.h"
 
 using phosphor::utils::format_string;
 
