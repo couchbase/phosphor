@@ -48,6 +48,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -108,6 +109,7 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_config.html','
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classphosphor_1_1_trace_config-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -130,6 +132,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6eb5734b118689f57a3323caf517281b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="trace__buffer_8h.html#a818081f7425fa19efa33d44e716cdf8b">trace_buffer_factory</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a6eb5734b118689f57a3323caf517281b">getBufferFactory</a> () const </td></tr>
 <tr class="separator:a6eb5734b118689f57a3323caf517281b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a89b9658a27fe72ab6b1e9d97c313ed98"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="trace__buffer_8h.html#a818081f7425fa19efa33d44e716cdf8b">trace_buffer_factory</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a89b9658a27fe72ab6b1e9d97c313ed98">modeToFactory</a> (BufferMode mode)</td></tr>
+<tr class="separator:a89b9658a27fe72ab6b1e9d97c313ed98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:aacb4572164142479ea8f34746c3396c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aacb4572164142479ea8f34746c3396c3"></a>
@@ -150,7 +157,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 <li>Using a user supplied <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> by supplying a TraceBufferFactory</li>
 </ul>
 <p>The first of these is specified by using the mode enumeration, the second is specified by passing in the TraceBufferFactory.</p>
-<p>The second parameter to both of these is the size in megabytes of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a>.</p>
+<p>The second parameter to both of these is the size in bytes of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a>.</p>
 <p>All other arguments are optional and may be specified using chainable methods. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac63adad510f75b0438393cbd87336354"></a>
@@ -180,7 +187,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_buffer_mode</td><td>Which buffer mode to use. Cannot be BufferMode::Custom. </td></tr>
-    <tr><td class="paramname">_buffer_size</td><td>Maximum size in megabytes of the trace buffer. </td></tr>
+    <tr><td class="paramname">_buffer_size</td><td>Maximum size in bytes of the trace buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -214,7 +221,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">_buffer_factory</td><td>The trace buffer factory to be used. </td></tr>
-    <tr><td class="paramname">_buffer_size</td><td>Maximum size in megabytes of the trace buffer. </td></tr>
+    <tr><td class="paramname">_buffer_size</td><td>Maximum size in bytes of the trace buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -267,6 +274,45 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The size of the buffer in megabytes that will be used </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a89b9658a27fe72ab6b1e9d97c313ed98"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="trace__buffer_8h.html#a818081f7425fa19efa33d44e716cdf8b">trace_buffer_factory</a> * phosphor::TraceConfig::modeToFactory </td>
+          <td>(</td>
+          <td class="paramtype">BufferMode&#160;</td>
+          <td class="paramname"><em>mode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the trace buffer factory for the given mode.</p>
+<p>Cannot be used for the custom mode</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mode</td><td>The trace buffer mode to convert </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The trace buffer factory for </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::invalid</td><td>argument if given mode is invalid </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

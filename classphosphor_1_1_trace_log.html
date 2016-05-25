@@ -48,6 +48,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -183,7 +184,8 @@ Static Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> class is the main public management interface of Phosphor. Generally the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is used as a singleton, this instance is acquired via <a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">TraceLog::getInstance()</a>.</p>
 <p>Logging can be enabled by passing in a <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> object with the desired options to the TraceConfig::start() method: </p><pre class="fragment">// Enable tracing with a fixed buffer, 5 megabytes in size
-TraceLog::getInstance().start(TraceConfig(BufferMode::fixed, 5))
+TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
+                                          5 * 1024 * 1024))
 </pre><p>Once enabled, tracing will be logged wherever code has been instrumented with the instrumentation API described in <a class="el" href="phosphor_8h.html">phosphor.h</a>.</p>
 <p>This class's public interface is <em>generally</em> thread-safe. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -361,7 +363,7 @@ template&lt;typename T , typename U &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Logs an event in the current buffer (if applicable)</p>
-<p>This method should not be used directly, instead the macros contained within <a class="el" href="sentinel_8h.html">sentinel.h</a> should be used instead.</p>
+<p>This method should not be used directly, instead the macros contained within <a class="el" href="phosphor_8h.html">phosphor.h</a> should be used instead.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">category</td><td>The category to log the event into. This (and the name) should usually be a string literal as the pointer should remain valid until the buffer is freed. </td></tr>

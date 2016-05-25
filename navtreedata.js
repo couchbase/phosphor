@@ -3,6 +3,9 @@ var NAVTREE =
   [ "Phosphor", "index.html", [
     [ "Roadmap", "md_ROADMAP.html", null ],
     [ "Modules", "modules.html", "modules" ],
+    [ "Namespaces", null, [
+      [ "Namespace List", "namespaces.html", "namespaces" ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
