@@ -21,9 +21,6 @@
 
 namespace phosphor {
 
-    /* Number of bytes in a megabyte */
-    constexpr size_t megabyte = 1024 * 1024;
-
     /*
      * TraceConfig implementation
      */
@@ -92,8 +89,13 @@ namespace phosphor {
         std::lock_guard<std::mutex> lh(mutex);
         trace_config = _trace_config;
 
-        size_t buffer_size = (trace_config.getBufferSize() * megabyte) /
-                             sizeof(TraceBufferChunk);
+        size_t buffer_size =
+                trace_config.getBufferSize() / sizeof(TraceBufferChunk);
+        if(buffer_size == 0) {
+            throw std::invalid_argument(
+                    "Cannot specify a buffer size less than a single chunk (" +
+                    std::to_string(sizeof(TraceBufferChunk)) + " bytes)");
+        }
 
         buffer = trace_config.getBufferFactory()(generation++, buffer_size);
         enabled.store(true);

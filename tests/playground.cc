@@ -24,51 +24,38 @@
 #include "gsl_p/dyn_array.h"
 
 int main(int argc, char* argv[]) {
-    std::vector<std::vector<int>> marray;
-    marray.push_back(std::vector<int>({1, 2, 3}));
-    marray.push_back(std::vector<int>({4, 5, 6}));
+    phosphor::TraceLog::getInstance().start(
+            phosphor::TraceConfig(phosphor::BufferMode::fixed, 25000)
+    );
 
-    gsl_p::multidimensional_iterator<decltype(marray)::iterator> start(marray.begin());
-    gsl_p::multidimensional_iterator<
-            decltype(marray)::iterator> finish(marray.end());
-
-
-    for(auto iter = start; iter != finish; ++iter) {
-        std::cout << *iter << std::endl;
+    std::vector<std::thread> threads;
+    for(int i = 0; i < 5; i++) {
+        threads.emplace_back([i]() {
+            phosphor::TraceLog::registerThread();
+            while(phosphor::TraceLog::getInstance().isEnabled()) {
+                TRACE_INSTANT("Child", "Thread #", i, "");
+            }
+            phosphor::TraceLog::deregisterThread();
+        });
     }
 
-//    phosphor::TraceLog::getInstance().start(
-//            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1)
-//    );
-//
-//    std::vector<std::thread> threads;
-//    for(int i = 0; i < 5; i++) {
-//        threads.emplace_back([i]() {
-//            phosphor::TraceLog::registerThread();
-//            while(phosphor::TraceLog::getInstance().isEnabled()) {
-//                TRACE_INSTANT("Child", "Thread #", i, "");
-//            }
-//            phosphor::TraceLog::deregisterThread();
-//        });
-//    }
-//
-//
-//    while(phosphor::TraceLog::getInstance().isEnabled()) {
-//        TRACE_INSTANT("Main", "Thread", 4, 5);
-//    }
-//    phosphor::TraceLog::getInstance().stop();
-//    auto buffer(phosphor::TraceLog::getInstance().getBuffer());
-//
-//    for(auto& thread : threads) {
-//        thread.join();
-//    }
-//
-//    for (const auto& chunk : buffer->chunks()) {
-//        printf("\n\n[NEW CHUNK]\n");
-//        for(const auto& event : chunk) {
-//            printf("%s\n", event.to_string().c_str());
-//        }
-//    }
+
+    while(phosphor::TraceLog::getInstance().isEnabled()) {
+        TRACE_INSTANT("Main", "Thread", 4, 5);
+    }
+    phosphor::TraceLog::getInstance().stop();
+    auto buffer(phosphor::TraceLog::getInstance().getBuffer());
+
+    for(auto& thread : threads) {
+        thread.join();
+    }
+
+    for (const auto& chunk : buffer->chunks()) {
+        printf("\n\n[NEW CHUNK]\n");
+        for(const auto& event : chunk) {
+            printf("%s\n", event.to_string().c_str());
+        }
+    }
 
 
     return 0;

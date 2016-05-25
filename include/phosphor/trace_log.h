@@ -56,7 +56,7 @@ namespace phosphor {
      * The first of these is specified by using the mode enumeration, the
      * second is specified by passing in the TraceBufferFactory.
      *
-     * The second parameter to both of these is the size in megabytes of the
+     * The second parameter to both of these is the size in bytes of the
      * TraceBuffer.
      *
      * All other arguments are optional and may be specified using chainable
@@ -71,7 +71,7 @@ namespace phosphor {
          *
          * @param _buffer_mode Which buffer mode to use. Cannot be
          *                    BufferMode::Custom.
-         * @param _buffer_size Maximum size in megabytes of the trace buffer.
+         * @param _buffer_size Maximum size in bytes of the trace buffer.
          */
         TraceConfig(BufferMode _buffer_mode, size_t _buffer_size);
 
@@ -79,7 +79,7 @@ namespace phosphor {
          * Constructor used when supplying a custom TraceBuffer implementation
          *
          * @param _buffer_factory The trace buffer factory to be used.
-         * @param _buffer_size Maximum size in megabytes of the trace buffer.
+         * @param _buffer_size Maximum size in bytes of the trace buffer.
          */
         TraceConfig(trace_buffer_factory _buffer_factory, size_t _buffer_size);
 
@@ -125,7 +125,8 @@ namespace phosphor {
      * the desired options to the TraceConfig::start() method:
      *
      *     // Enable tracing with a fixed buffer, 5 megabytes in size
-     *     TraceLog::getInstance().start(TraceConfig(BufferMode::fixed, 5))
+     *     TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
+     *                                               5 * 1024 * 1024))
      *
      * Once enabled, tracing will be logged wherever code has been
      * instrumented with the instrumentation API described in phosphor.h.
