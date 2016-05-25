@@ -15,7 +15,15 @@ IF(EXISTS "${PROJECT_SOURCE_DIR}/thirdparty/googletest/CMakeLists.txt")
     ADD_SUBDIRECTORY(thirdparty/googletest EXCLUDE_FROM_ALL)
 ENDIF ()
 
-SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
+IF(EXISTS "${PROJECT_SOURCE_DIR}/thirdparty/couchbase/tlm/CMakeLists.txt")
+    SET(CMAKE_MODULE_PATH
+            ${CMAKE_MODULE_PATH}
+            "${phosphor_SOURCE_DIR}/thirdparty/couchbase/tlm/cmake/Modules")
+ELSE()
+    MESSAGE(FATAL_ERROR
+            "couchbase/tlm is required to be checked out for non-server builds"
+            " (Try: `git submodule update thirdparty/couchbase/tlm`)")
+ENDIF()
 
 # Include some of the compiler flag modules from couchbase/tlm
 INCLUDE(CouchbaseCompilerOptions)

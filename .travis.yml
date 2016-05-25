@@ -12,16 +12,14 @@ addons:
     - clang
     - doxygen
 before_install:
-  - pip install --user cpp-coveralls
+  - pip install --user cpp-coveralls gcovr
 install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8" GCC="true"; fi
-- ln -fs /usr/bin/gcov-4.8 "$HOME/.local/bin/gcov"
+ - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8" GCC="true"; fi
+ - ln -fs /usr/bin/gcov-4.8 "$HOME/.local/bin/gcov"
 script:
   - if [ "$GCC" = "true" ]; then make covered; else make test; fi
 after_success:
-  - if [ "$GCC" = "true" ]; then coveralls --exclude thirdparty --exclude build/CMakeFiles; fi
-  - if [ "$GCC" = "true" ]; then make docs; fi
-  - if [ "$GCC" = "true" ]; then scripts/doxygen-to-gh-pages.sh; fi
+  - if [ "$GCC" = "true" ]; then coveralls --exclude thirdparty --exclude build/CMakeFiles; scripts/doxygen-to-gh-pages.sh; fi
 notifications:
   email: false
 sudo: false
