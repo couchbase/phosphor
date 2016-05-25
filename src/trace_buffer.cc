@@ -127,6 +127,7 @@ namespace phosphor {
             for (auto &sentinel : sentinels) {
                 sentinel->close();
             }
+            sentinels.clear();
         }
 
         void returnChunk(TraceBufferChunk& chunk) override {
@@ -142,6 +143,11 @@ namespace phosphor {
         }
 
         const TraceBufferChunk& operator[](const int index) const override {
+            if(sentinels.size() > 0) {
+                throw std::logic_error("TraceBufferChunk::operator[]: "
+                                       "Cannot read from TraceBuffer while "
+                                        "chunks are loaned out!");
+            }
             return buffer[index];
         }
 
