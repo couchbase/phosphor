@@ -51,11 +51,6 @@ namespace phosphor {
 
         /**
          * Constructor for a TraceBufferChunk
-         *
-         * @param generation_ Generation number of the TraceBuffer
-         *                    the chunk comes from
-         * @param buffer_index_ Index in the TraceBuffer the chunk
-         *                      comes from
          */
         TraceBufferChunk();
 
