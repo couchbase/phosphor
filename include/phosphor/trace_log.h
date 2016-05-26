@@ -97,7 +97,7 @@ namespace phosphor {
          * @return The trace buffer factory that will be used to create a
          *         TraceBuffer when tracing is enabled.
          */
-        trace_buffer_factory* getBufferFactory() const;
+        trace_buffer_factory getBufferFactory() const;
 
     protected:
         /**
@@ -109,11 +109,11 @@ namespace phosphor {
          * @return The trace buffer factory for
          * @throw std::invalid argument if given mode is invalid
          */
-        static trace_buffer_factory* modeToFactory(BufferMode mode);
+        static trace_buffer_factory modeToFactory(BufferMode mode);
 
         BufferMode buffer_mode;
         size_t buffer_size;
-        trace_buffer_factory *buffer_factory;
+        trace_buffer_factory buffer_factory;
     };
 
     /**

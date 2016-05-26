@@ -351,20 +351,14 @@ namespace phosphor {
 
     };
 
+    using buffer_ptr = std::unique_ptr<TraceBuffer>;
 
     /**
      * Interface for a TraceBuffer factory
      */
-    using trace_buffer_factory = std::unique_ptr<TraceBuffer>(
-            size_t generation,
-            size_t buffer_size);
+    using trace_buffer_factory =
+        std::function<buffer_ptr(size_t generation, size_t buffer_size)>;
 
-    std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,
-                                                   size_t buffer_size);
-
-    static_assert(
-            std::is_same<
-                    decltype(make_fixed_buffer), trace_buffer_factory>::value,
-            "make_fixed_buffer should be the same type as trace_buffer_factory");
+    buffer_ptr make_fixed_buffer(size_t generation, size_t buffer_size);
 
 }

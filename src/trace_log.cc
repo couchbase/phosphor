@@ -38,10 +38,10 @@ namespace phosphor {
               buffer_factory(_buffer_factory) {
     }
 
-    trace_buffer_factory* TraceConfig::modeToFactory(BufferMode mode) {
+    trace_buffer_factory TraceConfig::modeToFactory(BufferMode mode) {
         switch (mode) {
             case BufferMode::fixed:
-                return make_fixed_buffer;
+                return trace_buffer_factory(make_fixed_buffer);
             case BufferMode::ring:
                 throw std::invalid_argument(
                         "phosphor::TraceConfig::modeToFactory: "
@@ -55,7 +55,7 @@ namespace phosphor {
                 "phosphor::TraceConfig::modeToFactory:Invalid buffer mode");
     }
 
-    trace_buffer_factory *TraceConfig::getBufferFactory() const {
+    trace_buffer_factory TraceConfig::getBufferFactory() const {
         return buffer_factory;
     }
 
