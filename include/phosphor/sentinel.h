@@ -43,7 +43,7 @@ namespace phosphor {
      * - Close   [Open->Close]
      * - Reopen  [Close->Busy]
      */
-    class Sentinel {
+    class alignas(64) Sentinel {
     public:
         Sentinel();
 
@@ -118,7 +118,7 @@ namespace phosphor {
          * - busy: The chunk pointer is being used (and valid)
          * - closed: The chunk pointer is no longer valid
          */
-        enum class State : char {
+        enum class State {
             open,
             busy,
             closed

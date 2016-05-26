@@ -14,3 +14,5 @@ currently premature:
 - Try avoiding the conditional branch caused by the ternary expression in
 TraceLog::logEvent
 - Use \__builtin_expect where useful
+- Sentinel benchmarking suggests that double the number of logical cores
+is the sweet-spot for the size of a shared array of ChunkTenants.
