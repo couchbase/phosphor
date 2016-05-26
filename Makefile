@@ -19,7 +19,7 @@ build/Makefile:
 	(cd build && $(CMAKE) $(CMAKE_ARGS) ..)
 
 compile: build/Makefile
-	(cd build && make)
+	(cd build && $(CMAKE) --build .)
 
 .PHONY: coverage
 coverage:
