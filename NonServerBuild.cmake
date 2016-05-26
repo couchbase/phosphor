@@ -16,7 +16,7 @@ IF(EXISTS "${phosphor_SOURCE_DIR}/thirdparty/google/googletest/CMakeLists.txt")
 ENDIF ()
 
 IF(EXISTS "${phosphor_SOURCE_DIR}/thirdparty/google/benchmark/CMakeLists.txt")
-    SET(BENCHMARK_ENABLE_TESTING FALSE)
+    option(BENCHMARK_ENABLE_TESTING "Enable testing of the benchmark library." OFF)
     ADD_SUBDIRECTORY(${phosphor_SOURCE_DIR}/thirdparty/google/benchmark EXCLUDE_FROM_ALL)
 ENDIF ()
 
