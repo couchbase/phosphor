@@ -75,7 +75,7 @@ TEST_F(ThreadedSentinelTest, BusySpinAcquire) {
     });
 
     threads.emplace_back([this]() {
-       while(step.load() != 1);
+       while(step.load() != 1) {}
         sentinel.acquire();
         sentinel.release();
     });
@@ -93,7 +93,7 @@ TEST_F(ThreadedSentinelTest, BusySpinClose) {
     });
 
     threads.emplace_back([this]() {
-       while(step.load() != 1);
+       while(step.load() != 1) {}
         sentinel.close();
     });
 }
