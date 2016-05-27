@@ -5,7 +5,8 @@ IF(DEFINED gtest_SOURCE_DIR)
     ADD_SUBDIRECTORY(module)
 ENDIF ()
 
-IF(DEFINED benchmark_SOURCE_DIR)
+option(PHOSPHOR_ENABLE_BENCHMARKING "Enable benchmarking of Phosphor." OFF)
+IF(DEFINED benchmark_SOURCE_DIR AND PHOSPHOR_ENABLE_BENCHMARKING)
     INCLUDE_DIRECTORIES(AFTER
             ${benchmark_SOURCE_DIR}/include)
     ADD_SUBDIRECTORY(benchmark)

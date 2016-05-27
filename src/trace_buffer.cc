@@ -83,10 +83,6 @@ namespace phosphor {
         ++index;
         return *this;
     }
-    TraceBuffer::chunk_iterator& TraceBuffer::chunk_iterator::operator--() {
-        --index;
-        return *this;
-    }
     bool TraceBuffer::chunk_iterator::operator==(
             const TraceBuffer::chunk_iterator &other) const {
         return &buffer == &(other.buffer) && index == other.index;
@@ -109,9 +105,7 @@ namespace phosphor {
             buffer.reserve(buffer_size);
         }
 
-        ~FixedTraceBuffer() override {
-
-        }
+        ~FixedTraceBuffer() override = default;
 
         TraceChunk &getChunk(Sentinel &sentinel) override {
             if (isFull()) {
@@ -148,8 +142,8 @@ namespace phosphor {
 
         const TraceChunk& operator[](const int index) const override {
             if(sentinels.size() > 0) {
-                throw std::logic_error("phosphor::TraceChunk::operator[]:"
-                                       " Cannot read from TraceBuffer while "
+                throw std::logic_error("phosphor::TraceChunk::operator[]: "
+                                       "Cannot read from TraceBuffer while "
                                        "chunks are loaned out!");
             }
             return buffer[index];
@@ -160,23 +154,29 @@ namespace phosphor {
         }
 
         chunk_iterator chunk_begin() const override {
+            if(sentinels.size() > 0) {
+                throw std::logic_error("phosphor::TraceChunk::chunk_begin: "
+                                       " Cannot read from TraceBuffer while "
+                                       "chunks are loaned out!");
+            }
             return chunk_iterator(*this);
         }
 
         chunk_iterator chunk_end() const override {
+            if(sentinels.size() > 0) {
+                throw std::logic_error("phosphor::TraceChunk::chunk_end: "
+                                       "Cannot read from TraceBuffer while "
+                                       "chunks are loaned out!");
+            }
             return chunk_iterator(*this, chunk_count());
         }
 
         event_iterator begin() const override {
-            return event_iterator(chunk_begin());
+            return event_iterator(chunk_begin(), chunk_end());
         }
 
         event_iterator end() const override {
-            return event_iterator(chunk_end());
-        }
-
-        chunk_iterable chunks() const override {
-            return chunk_iterable(*this);
+            return event_iterator(chunk_end(), chunk_end());
         }
 
     protected:

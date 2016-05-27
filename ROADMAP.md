@@ -4,7 +4,7 @@ accomplished.
 
 ### WEEK COMMENCING 2016/05/23
 
-- Finish test coverage of trace buffer
+- <strike>Finish test coverage of trace buffer</strike> Done 2016/05/27
 - Add tests for Trace log
 - Add tests for gsl_p::dyn_array
 - Add tests for gsl_p::multidimensional_pointer

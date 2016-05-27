@@ -50,10 +50,11 @@ namespace gsl_p {
         using U = decltype((*((T*)nullptr))->begin());
         using child_value_type = typename std::iterator_traits<U>::value_type;
     public:
-        multidimensional_iterator(T parent_)
+        multidimensional_iterator(T parent_, T parent_end_)
             : parent(parent_),
+              parent_end(parent_end_),
               child(parent->begin()) {
-
+            seekChildForward(); // Move forward until a valid child is found
         }
 
         const child_value_type& operator*() const {
@@ -66,32 +67,38 @@ namespace gsl_p {
 
         __self& operator++() {
             ++child;
-            if(child == parent->end()) {
-                ++parent;
-                child = parent->begin();
-            }
-            return *this;
-        }
-
-        __self& operator--() {
-            --child;
-            if(child == parent->begin()) {
-                --parent--;
-                child = --(parent->end());
-            }
+            seekChildForward(); // Move forward until a valid child is found
             return *this;
         }
 
         bool operator==(const __self& other) const {
+            // Special case if we're at the end as the child might
+            // not be valid
+            if(parent == parent_end && parent == other.parent) {
+                return true;
+            }
             return (parent == other.parent) && (child == other.child);
         }
 
         bool operator!=(const __self& other) const {
             return !(*this == other);
         }
-
+    protected:
+        void seekChildForward() {
+            if(parent == parent_end) {
+                return; // Already reached the last parent
+            }
+            while(child == parent->end()) {
+                ++parent;
+                if(parent == parent_end) {
+                    break; // Reached the last parent
+                }
+                child = parent->begin();
+            }
+        }
     private:
         T parent;
+        T parent_end;
         U child;
     };
 

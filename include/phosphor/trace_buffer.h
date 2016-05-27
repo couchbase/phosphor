@@ -209,6 +209,8 @@ namespace phosphor {
          *
          * @return A const reference to a TraceEvent in the chunk
          *         that can be used to review the event data
+         * @throw std::logic_error if chunks are currently loaned
+         *        out to chunk tenants.
          */
         virtual const TraceChunk& operator[](const int index) const = 0;
 
@@ -251,7 +253,6 @@ namespace phosphor {
             const_reference operator*() const;
             const_pointer operator->() const;
             chunk_iterator &operator++();
-            chunk_iterator &operator--();
             bool operator==(const chunk_iterator &other) const;
             bool operator!=(const chunk_iterator &other) const;
 
@@ -342,7 +343,7 @@ namespace phosphor {
          *
          * @return An iterable over the class
          */
-        virtual chunk_iterable chunks() const {
+        chunk_iterable chunks() const {
             return chunk_iterable(*this);
         }
 
