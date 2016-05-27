@@ -63,34 +63,36 @@ namespace phosphor {
     /*
      * TraceBufferChunkIterator implementation
      */
-    TraceBufferChunkIterator::TraceBufferChunkIterator(const TraceBuffer& buffer_,
+    TraceBuffer::chunk_iterator::chunk_iterator(const TraceBuffer& buffer_,
                                            size_t index_)
             : buffer(buffer_),
               index(index_) {
     }
 
-    TraceBufferChunkIterator::TraceBufferChunkIterator(const TraceBuffer& buffer_)
-        : TraceBufferChunkIterator(buffer_, 0) {
+    TraceBuffer::chunk_iterator::chunk_iterator(const TraceBuffer& buffer_)
+        : chunk_iterator(buffer_, 0) {
     }
 
-    TraceBufferChunkIterator::const_reference TraceBufferChunkIterator::operator*() const {
+    const TraceChunk& TraceBuffer::chunk_iterator::operator*() const {
         return buffer[index];
     }
-    TraceBufferChunkIterator::const_pointer TraceBufferChunkIterator::operator->() const {
+    const TraceChunk* TraceBuffer::chunk_iterator::operator->() const {
         return &(buffer[index]);
     }
-    TraceBufferChunkIterator& TraceBufferChunkIterator::operator++() {
+    TraceBuffer::chunk_iterator& TraceBuffer::chunk_iterator::operator++() {
         ++index;
         return *this;
     }
-    TraceBufferChunkIterator& TraceBufferChunkIterator::operator--() {
+    TraceBuffer::chunk_iterator& TraceBuffer::chunk_iterator::operator--() {
         --index;
         return *this;
     }
-    bool TraceBufferChunkIterator::operator==(const TraceBufferChunkIterator &other) const {
+    bool TraceBuffer::chunk_iterator::operator==(
+            const TraceBuffer::chunk_iterator &other) const {
         return &buffer == &(other.buffer) && index == other.index;
     }
-    bool TraceBufferChunkIterator::operator!=(const TraceBufferChunkIterator &other) const {
+    bool TraceBuffer::chunk_iterator::operator!=(
+            const TraceBuffer::chunk_iterator &other) const {
         return !(*this == other);
     }
 
@@ -158,11 +160,11 @@ namespace phosphor {
         }
 
         chunk_iterator chunk_begin() const override {
-            return TraceBufferChunkIterator(*this);
+            return chunk_iterator(*this);
         }
 
         chunk_iterator chunk_end() const override {
-            return TraceBufferChunkIterator(*this, chunk_count());
+            return chunk_iterator(*this, chunk_count());
         }
 
         event_iterator begin() const override {

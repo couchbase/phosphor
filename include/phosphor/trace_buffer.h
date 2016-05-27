@@ -102,62 +102,6 @@ namespace phosphor {
         event_array chunk;
     };
 
-    // Forward Decl
-    class TraceBuffer;
-
-    /**
-     * Const bi-directional iterator over the TraceChunks in a TraceBuffer
-     *
-     * Usage:
-     *
-     *    TraceBufferChunkIterator chunk_iterator = buffer.chunk_start();
-     *     std::cout << *(chunk_iterator->start()) << std::endl;
-     *
-     *     for(const auto& chunk : buffer.chunks()) {
-     *         for(const auto& event : chunk) {
-     *             std::cout << event << std::endl;
-     *         }
-     *     }
-     */
-    class TraceBufferChunkIterator
-            : public std::iterator<std::bidirectional_iterator_tag, TraceChunk> {
-        using const_reference = const TraceChunk&;
-        using const_pointer = const TraceChunk*;
-    public:
-        TraceBufferChunkIterator() = default;
-        TraceBufferChunkIterator(const TraceBuffer& buffer_);
-        TraceBufferChunkIterator(const TraceBuffer& buffer_, size_t index_);
-        const_reference operator*() const;
-        const_pointer operator->() const;
-        TraceBufferChunkIterator &operator++();
-        TraceBufferChunkIterator &operator--();
-        bool operator==(const TraceBufferChunkIterator &other) const;
-        bool operator!=(const TraceBufferChunkIterator &other) const;
-
-    protected:
-        const TraceBuffer& buffer;
-        size_t index;
-    };
-
-    /**
-     * Const iterator over a TraceBuffer, implements required methods of
-     * a bi-directional iterator.
-     *
-     * Usage:
-     *
-     *     TraceBufferEventIterator event_iterator = trace_buffer.start();
-     *     std::cout << *event_iterator << std::endl;
-     *     std::cout << *(++event_iterator) << std::endl;
-     *
-     *     for(const auto& event : trace_buffer) {
-     *         std::cout << event << std::endl;
-     *     }
-     *
-     * For resource efficiency TraceBufferEventIterator does not have post-increment
-     */
-    using TraceBufferEventIterator =
-                gsl_p::multidimensional_iterator<TraceBufferChunkIterator>;
-
     /**
      * Abstract base-class for a buffer of TraceEvents
      *
@@ -183,9 +127,6 @@ namespace phosphor {
      */
     class TraceBuffer {
     public:
-        using chunk_iterator = TraceBufferChunkIterator;
-        using event_iterator = TraceBufferEventIterator;
-
         /**
          * Virtual destructor to allow subclasses to be cleaned up
          * properly.
@@ -284,6 +225,42 @@ namespace phosphor {
         virtual size_t getGeneration() const = 0;
 
         /**
+         * Const bi-directional iterator over the TraceChunks in a TraceBuffer
+         *
+         * Usage:
+         *
+         *    chunk_iterator it = buffer.chunk_start();
+         *     std::cout << *(it->start()) << std::endl;
+         *
+         *     for(const auto& chunk : buffer.chunks()) {
+         *         for(const auto& event : chunk) {
+         *             std::cout << event << std::endl;
+         *         }
+         *     }
+         */
+        class chunk_iterator
+                : public
+                  std::iterator<std::bidirectional_iterator_tag, TraceChunk> {
+            using const_reference = const TraceChunk&;
+            using const_pointer = const TraceChunk*;
+            using _self = chunk_iterator;
+        public:
+            chunk_iterator() = default;
+            chunk_iterator(const TraceBuffer& buffer_);
+            chunk_iterator(const TraceBuffer& buffer_, size_t index_);
+            const_reference operator*() const;
+            const_pointer operator->() const;
+            chunk_iterator &operator++();
+            chunk_iterator &operator--();
+            bool operator==(const chunk_iterator &other) const;
+            bool operator!=(const chunk_iterator &other) const;
+
+        protected:
+            const TraceBuffer& buffer;
+            size_t index;
+        };
+
+        /**
          * @return A const iterator to the first chunk of the TraceBuffer
          */
         virtual chunk_iterator chunk_begin() const = 0;
@@ -292,6 +269,25 @@ namespace phosphor {
          * @return A const iterator to after the last chunk of the TraceBuffer
          */
         virtual chunk_iterator chunk_end() const = 0;
+
+        /**
+         * Const iterator over a TraceBuffer, implements required methods of
+         * a bi-directional iterator.
+         *
+         * Usage:
+         *
+         *     event_iterator it = trace_buffer.start();
+         *     std::cout << *it << std::endl;
+         *     std::cout << *(++it) << std::endl;
+         *
+         *     for(const auto& event : trace_buffer) {
+         *         std::cout << event << std::endl;
+         *     }
+         *
+         * For resource efficiency event_iterator does not have
+         * post-increment
+         */
+        using event_iterator = gsl_p::multidimensional_iterator<chunk_iterator>;
 
         /**
          * @return A const iterator to the first event of the TraceBuffer
