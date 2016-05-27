@@ -26,3 +26,14 @@ TEST(MakeUnique, succeed) {
     ASSERT_NE(unique_int.get(), nullptr);
     EXPECT_EQ(*unique_int, 5);
 }
+
+/* Used for full branch/line coverage of make_unique */
+struct AlwaysThrow {
+    AlwaysThrow() {
+        throw std::runtime_error("AlwaysThrow::AlwaysThrow: Fake exception");
+    }
+};
+
+TEST(MakeUnique, fail) {
+    EXPECT_THROW(phosphor::utils::make_unique<AlwaysThrow>(), std::runtime_error);
+}
