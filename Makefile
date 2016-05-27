@@ -11,7 +11,7 @@ covered: coverage test
 
 coverage-report: covered
 	@-mkdir coverage
-	gcovr --root . --html --html-details -o coverage/index.html --exclude="thirdparty*"
+	gcovr --root . --html --html-details -o coverage/index.html --exclude="thirdparty*" --exclude="tests*"
 	open coverage/index.html
 
 build/Makefile:
