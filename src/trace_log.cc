@@ -147,7 +147,10 @@ namespace phosphor {
     void TraceLog::replaceChunk(ChunkTenant &ct) {
         ct.sentinel->release();
         std::lock_guard<std::mutex> lh(mutex);
-        ct.sentinel->acquire();
+        if (!ct.sentinel->acquire()) {
+            resetChunk(ct);
+            return;
+        }
         if (!enabled) {
             ct.chunk = nullptr;
             ct.sentinel->release();
