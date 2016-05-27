@@ -55,6 +55,10 @@ namespace phosphor {
                 "phosphor::TraceConfig::modeToFactory:Invalid buffer mode");
     }
 
+    BufferMode TraceConfig::getBufferMode() const {
+        return buffer_mode;
+    }
+
     trace_buffer_factory TraceConfig::getBufferFactory() const {
         return buffer_factory;
     }
@@ -146,6 +150,7 @@ namespace phosphor {
         ct.sentinel->acquire();
         if (!enabled) {
             ct.chunk = nullptr;
+            ct.sentinel->release();
             return;
         }
 
