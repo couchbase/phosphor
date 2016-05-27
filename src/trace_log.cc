@@ -94,11 +94,11 @@ namespace phosphor {
         trace_config = _trace_config;
 
         size_t buffer_size =
-                trace_config.getBufferSize() / sizeof(TraceBufferChunk);
+                trace_config.getBufferSize() / sizeof(TraceChunk);
         if(buffer_size == 0) {
             throw std::invalid_argument(
                     "Cannot specify a buffer size less than a single chunk (" +
-                    std::to_string(sizeof(TraceBufferChunk)) + " bytes)");
+                    std::to_string(sizeof(TraceChunk)) + " bytes)");
         }
 
         buffer = trace_config.getBufferFactory()(generation++, buffer_size);

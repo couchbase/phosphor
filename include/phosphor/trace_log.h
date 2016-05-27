@@ -255,7 +255,7 @@ namespace phosphor {
     protected:
         struct ChunkTenant {
             Sentinel *sentinel = nullptr;
-            TraceBufferChunk *chunk = nullptr;
+            TraceChunk *chunk = nullptr;
         };
 
         /**
@@ -337,7 +337,7 @@ namespace phosphor {
          * TraceBuffer.
          *
          * It is not required to be acquired when modifying a loaned out
-         * TraceBufferChunk contained within a ChunkTenant, this is
+         * TraceChunk contained within a ChunkTenant, this is
          * protected by the ChunkTenant's sentinel lock instead.
          */
         std::mutex mutex;

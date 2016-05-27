@@ -24,73 +24,73 @@
 namespace phosphor {
 
     /*
-     * TraceBufferChunk implementation
+     * TraceChunk implementation
      */
 
-    TraceBufferChunk::TraceBufferChunk()
+    TraceChunk::TraceChunk()
             : next_free(0) {
     }
 
-    bool TraceBufferChunk::isFull() const {
+    bool TraceChunk::isFull() const {
         return next_free == chunk.max_size();
     }
 
 
-    size_t TraceBufferChunk::count() const {
+    size_t TraceChunk::count() const {
         return next_free;
     }
 
-    TraceEvent &TraceBufferChunk::addEvent() {
+    TraceEvent &TraceChunk::addEvent() {
         if (isFull()) {
-            throw std::out_of_range("phosphor::TraceBufferChunk::addEvent: "
+            throw std::out_of_range("phosphor::TraceChunk::addEvent: "
                                     "All events in chunk have been used");
         }
         return chunk[next_free++];
     }
 
-    const TraceEvent &TraceBufferChunk::operator[](const int index) const {
+    const TraceEvent &TraceChunk::operator[](const int index) const {
         return chunk[index];
     }
 
-    TraceBufferChunk::const_iterator TraceBufferChunk::begin() const {
+    TraceChunk::const_iterator TraceChunk::begin() const {
         return chunk.begin();
     }
 
-    TraceBufferChunk::const_iterator TraceBufferChunk::end() const {
+    TraceChunk::const_iterator TraceChunk::end() const {
         return chunk.begin() + count();
     }
 
     /*
-     * TraceChunkIterator implementation
+     * TraceBufferChunkIterator implementation
      */
-    TraceChunkIterator::TraceChunkIterator(const TraceBuffer& buffer_,
+    TraceBufferChunkIterator::TraceBufferChunkIterator(const TraceBuffer& buffer_,
                                            size_t index_)
             : buffer(buffer_),
               index(index_) {
     }
 
-    TraceChunkIterator::TraceChunkIterator(const TraceBuffer& buffer_)
-        : TraceChunkIterator(buffer_, 0) {
+    TraceBufferChunkIterator::TraceBufferChunkIterator(const TraceBuffer& buffer_)
+        : TraceBufferChunkIterator(buffer_, 0) {
     }
 
-    TraceChunkIterator::const_reference TraceChunkIterator::operator*() const {
+    TraceBufferChunkIterator::const_reference TraceBufferChunkIterator::operator*() const {
         return buffer[index];
     }
-    TraceChunkIterator::const_pointer TraceChunkIterator::operator->() const {
+    TraceBufferChunkIterator::const_pointer TraceBufferChunkIterator::operator->() const {
         return &(buffer[index]);
     }
-    TraceChunkIterator& TraceChunkIterator::operator++() {
+    TraceBufferChunkIterator& TraceBufferChunkIterator::operator++() {
         ++index;
         return *this;
     }
-    TraceChunkIterator& TraceChunkIterator::operator--() {
+    TraceBufferChunkIterator& TraceBufferChunkIterator::operator--() {
         --index;
         return *this;
     }
-    bool TraceChunkIterator::operator==(const TraceChunkIterator &other) const {
+    bool TraceBufferChunkIterator::operator==(const TraceBufferChunkIterator &other) const {
         return &buffer == &(other.buffer) && index == other.index;
     }
-    bool TraceChunkIterator::operator!=(const TraceChunkIterator &other) const {
+    bool TraceBufferChunkIterator::operator!=(const TraceBufferChunkIterator &other) const {
         return !(*this == other);
     }
 
@@ -111,9 +111,9 @@ namespace phosphor {
 
         }
 
-        TraceBufferChunk &getChunk(Sentinel &sentinel) override {
+        TraceChunk &getChunk(Sentinel &sentinel) override {
             if (isFull()) {
-                throw std::out_of_range("phosphor::TraceBufferChunk::getChunk: "
+                throw std::out_of_range("phosphor::TraceChunk::getChunk: "
                                         "The TraceBuffer is full");
             }
             sentinels.insert(&sentinel);
@@ -132,7 +132,7 @@ namespace phosphor {
             sentinels.clear();
         }
 
-        void returnChunk(TraceBufferChunk& chunk) override {
+        void returnChunk(TraceChunk& chunk) override {
             (void) chunk;
         }
 
@@ -144,9 +144,9 @@ namespace phosphor {
             return generation;
         }
 
-        const TraceBufferChunk& operator[](const int index) const override {
+        const TraceChunk& operator[](const int index) const override {
             if(sentinels.size() > 0) {
-                throw std::logic_error("phosphor::TraceBufferChunk::operator[]:"
+                throw std::logic_error("phosphor::TraceChunk::operator[]:"
                                        " Cannot read from TraceBuffer while "
                                        "chunks are loaned out!");
             }
@@ -158,11 +158,11 @@ namespace phosphor {
         }
 
         chunk_iterator chunk_begin() const override {
-            return TraceChunkIterator(*this);
+            return TraceBufferChunkIterator(*this);
         }
 
         chunk_iterator chunk_end() const override {
-            return TraceChunkIterator(*this, chunk_count());
+            return TraceBufferChunkIterator(*this, chunk_count());
         }
 
         event_iterator begin() const override {
@@ -178,7 +178,7 @@ namespace phosphor {
         }
 
     protected:
-        std::vector<TraceBufferChunk> buffer;
+        std::vector<TraceChunk> buffer;
         size_t generation;
         size_t buffer_size;
 

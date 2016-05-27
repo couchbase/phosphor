@@ -49,7 +49,7 @@ namespace phosphor {
         };
 
         /**
-         * Default constructor for efficient TraceBufferChunk initialisation
+         * Default constructor for efficient TraceChunk initialisation
          */
         TraceEvent() = default;
 

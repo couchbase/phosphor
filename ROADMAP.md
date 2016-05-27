@@ -8,7 +8,7 @@ accomplished.
 - Add tests for Trace log
 - Add tests for gsl_p::dyn_array
 - Add tests for gsl_p::multidimensional_pointer
-- Add benchmarking for chunk sizes (By templating the TraceBufferChunk on the
+- Add benchmarking for chunk sizes (By templating the TraceChunk on the
 base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
 - Add benchmarking for tracing speed
 
@@ -19,9 +19,9 @@ n/a @will.gardner is away
 ### WEEK COMMENCING 2016/06/06
 
 - Add platform abstraction for thread ids
-- Make TraceBufferChunk/TraceEvent/TraceArgument a trivial type (If possible) to
+- Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to
 avoid pre-allocation.
-- Move TraceBufferChunk constructor to a reset method
+- Move TraceChunk constructor to a reset method
 - Add a circular buffer implementation
 - Refactor TraceLog::logEvent to not duplicate code
 

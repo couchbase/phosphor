@@ -22,12 +22,12 @@
 
 #include "phosphor/trace_buffer.h"
 
-using phosphor::TraceBufferChunk;
+using phosphor::TraceChunk;
 using phosphor::TraceEvent;
 using phosphor::TraceArgument;
 
 TEST(TraceBufferChunk, fillAndOverfillAndCount) {
-    TraceBufferChunk chunk;
+    TraceChunk chunk;
 
     int count = 0;
     while(!chunk.isFull()) {
@@ -49,7 +49,7 @@ TEST(TraceBufferChunk, fillAndOverfillAndCount) {
 }
 
 TEST(TraceEvent, string_check) {
-    TraceBufferChunk chunk;
+    TraceChunk chunk;
 
     while(!chunk.isFull()) {
         chunk.addEvent() = TraceEvent(

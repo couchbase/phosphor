@@ -35,12 +35,12 @@
 namespace phosphor {
 
     /**
-     * TraceBufferChunk represents an array of TraceEvents
+     * TraceChunk represents an array of TraceEvents
      *
-     * The TraceBufferChunk should be used from a single thread to
+     * The TraceChunk should be used from a single thread to
      * store various events.
      */
-    class TraceBufferChunk {
+    class TraceChunk {
         static constexpr auto chunk_page_count = 1;
         static constexpr auto page_size = 4096;
         static constexpr auto chunk_size = ((page_size * chunk_page_count) /
@@ -50,9 +50,9 @@ namespace phosphor {
         using const_iterator = event_array::const_iterator;
 
         /**
-         * Constructor for a TraceBufferChunk
+         * Constructor for a TraceChunk
          */
-        TraceBufferChunk();
+        TraceChunk();
 
         /**
          * Used for adding TraceEvents to the chunk
@@ -106,11 +106,11 @@ namespace phosphor {
     class TraceBuffer;
 
     /**
-     * Const bi-directional iterator over the TraceBufferChunks in a TraceBuffer
+     * Const bi-directional iterator over the TraceChunks in a TraceBuffer
      *
      * Usage:
      *
-     *    TraceChunkIterator chunk_iterator = buffer.chunk_start();
+     *    TraceBufferChunkIterator chunk_iterator = buffer.chunk_start();
      *     std::cout << *(chunk_iterator->start()) << std::endl;
      *
      *     for(const auto& chunk : buffer.chunks()) {
@@ -119,20 +119,20 @@ namespace phosphor {
      *         }
      *     }
      */
-    class TraceChunkIterator
-            : public std::iterator<std::bidirectional_iterator_tag, TraceBufferChunk> {
-        using const_reference = const TraceBufferChunk&;
-        using const_pointer = const TraceBufferChunk*;
+    class TraceBufferChunkIterator
+            : public std::iterator<std::bidirectional_iterator_tag, TraceChunk> {
+        using const_reference = const TraceChunk&;
+        using const_pointer = const TraceChunk*;
     public:
-        TraceChunkIterator() = default;
-        TraceChunkIterator(const TraceBuffer& buffer_);
-        TraceChunkIterator(const TraceBuffer& buffer_, size_t index_);
+        TraceBufferChunkIterator() = default;
+        TraceBufferChunkIterator(const TraceBuffer& buffer_);
+        TraceBufferChunkIterator(const TraceBuffer& buffer_, size_t index_);
         const_reference operator*() const;
         const_pointer operator->() const;
-        TraceChunkIterator &operator++();
-        TraceChunkIterator &operator--();
-        bool operator==(const TraceChunkIterator &other) const;
-        bool operator!=(const TraceChunkIterator &other) const;
+        TraceBufferChunkIterator &operator++();
+        TraceBufferChunkIterator &operator--();
+        bool operator==(const TraceBufferChunkIterator &other) const;
+        bool operator!=(const TraceBufferChunkIterator &other) const;
 
     protected:
         const TraceBuffer& buffer;
@@ -145,7 +145,7 @@ namespace phosphor {
      *
      * Usage:
      *
-     *     TraceEventIterator event_iterator = trace_buffer.start();
+     *     TraceBufferEventIterator event_iterator = trace_buffer.start();
      *     std::cout << *event_iterator << std::endl;
      *     std::cout << *(++event_iterator) << std::endl;
      *
@@ -153,14 +153,15 @@ namespace phosphor {
      *         std::cout << event << std::endl;
      *     }
      *
-     * For resource efficiency TraceEventIterator does not have post-increment
+     * For resource efficiency TraceBufferEventIterator does not have post-increment
      */
-    using TraceEventIterator = gsl_p::multidimensional_iterator<TraceChunkIterator>;
+    using TraceBufferEventIterator =
+                gsl_p::multidimensional_iterator<TraceBufferChunkIterator>;
 
     /**
      * Abstract base-class for a buffer of TraceEvents
      *
-     * The TraceBuffer loans out TraceBufferChunks to individual
+     * The TraceBuffer loans out TraceChunks to individual
      * threads to reduce lock-contention on event logging.
      *
      * This class is *not* thread-safe and should only be directly
@@ -182,8 +183,8 @@ namespace phosphor {
      */
     class TraceBuffer {
     public:
-        using chunk_iterator = TraceChunkIterator;
-        using event_iterator = TraceEventIterator;
+        using chunk_iterator = TraceBufferChunkIterator;
+        using event_iterator = TraceBufferEventIterator;
 
         /**
          * Virtual destructor to allow subclasses to be cleaned up
@@ -192,7 +193,7 @@ namespace phosphor {
         virtual ~TraceBuffer() = default;
 
         /**
-         * Used for getting a TraceBufferChunk to add events to
+         * Used for getting a TraceChunk to add events to
          *
          * Implementors should use the sentinel passed in to
          * create a set of sentinels who have an active reference
@@ -200,10 +201,10 @@ namespace phosphor {
          * to evict all ChunkTenants when desired.
          *
          * @param sentinel Sentinel for the calling thread
-         * @return A reference to a TraceBufferChunk to
+         * @return A reference to a TraceChunk to
          *         insert events into.
          */
-        virtual TraceBufferChunk &getChunk(Sentinel &sentinel) = 0;
+        virtual TraceChunk &getChunk(Sentinel &sentinel) = 0;
 
         /**
          * Used for removing a sentinel from the set of sentinels
@@ -222,7 +223,7 @@ namespace phosphor {
          * Used for evicting all ChunkTenants from the buffer
          *
          * This will use the set of sentinels established from
-         * calls to the TraceBufferChunk::getChunk method and
+         * calls to the TraceChunk::getChunk method and
          * call Sentinel::close() on all of them.
          *
          * This will effectively send a message to all ChunkTenants
@@ -235,7 +236,7 @@ namespace phosphor {
         virtual void evictThreads() = 0;
 
         /**
-         * Used for returning a TraceBufferChunk once full
+         * Used for returning a TraceChunk once full
          *
          * For some buffer implementations this *may* be a no-op
          * but for others which might reuse chunks this can be
@@ -248,7 +249,7 @@ namespace phosphor {
          *
          * @param chunk The chunk to be returned
          */
-        virtual void returnChunk(TraceBufferChunk &chunk) = 0;
+        virtual void returnChunk(TraceChunk &chunk) = 0;
 
         /**
          * Determine if there are no remaining chunks left to be
@@ -260,7 +261,7 @@ namespace phosphor {
         virtual bool isFull() const = 0;
 
         /**
-         * Used for accessing TraceBufferChunks in the buffer
+         * Used for accessing TraceChunks in the buffer
          *
          * Valid indexes are from 0 to `count()`. There is no
          * bounds checking.
@@ -268,7 +269,7 @@ namespace phosphor {
          * @return A const reference to a TraceEvent in the chunk
          *         that can be used to review the event data
          */
-        virtual const TraceBufferChunk& operator[](const int index) const = 0;
+        virtual const TraceChunk& operator[](const int index) const = 0;
 
         /**
          * Used for determining the number of chunks in the buffer
