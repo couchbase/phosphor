@@ -5,7 +5,7 @@ accomplished.
 ### WEEK COMMENCING 2016/05/23
 
 - <strike>Finish test coverage of trace buffer</strike> Done 2016/05/27
-- Add tests for Trace log
+- <strike>Add tests for Trace log</strike> Done 2016/05/27
 - Add benchmarking for chunk sizes (By templating the TraceChunk on the
 base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
 - Add benchmarking for tracing speed
