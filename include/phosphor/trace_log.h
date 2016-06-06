@@ -176,26 +176,74 @@ namespace phosphor {
                       TraceEvent::Type type,
                       size_t id, T argA, U argB) {
             if (!enabled) return;
+            ChunkTenant* cs = getChunkTenant();
+            if (cs == nullptr) return;
 
-            ChunkTenant &cs = (thread_chunk.sentinel) ? thread_chunk
-                                                      : shared_chunk;
-
-            if (!cs.sentinel->acquire()) {
-                resetChunk(cs);
-                return;
-            }
-            // State is busy
-            if (!cs.chunk || cs.chunk->isFull()) {
-                replaceChunk(cs);
-                if (!cs.chunk) return;
-            }
-
-            cs.chunk->addEvent() = TraceEvent(
+            cs->chunk->addEvent() = TraceEvent(
                     category, name, type, id,
                     platform::getCurrentThreadIDCached(),
                     {{TraceArgument(argA), TraceArgument(argB)}},
                     {{TraceArgument::getType<T>(), TraceArgument::getType<U>()}});
-            cs.sentinel->release();
+            cs->sentinel->release();
+        }
+
+        /**
+         * Logs an event in the current buffer (if applicable)
+         *
+         * This method should not be used directly, instead the
+         * macros contained within phosphor.h should be used instead.
+         *
+         * @param category The category to log the event into. This (and
+         *        the name) should usually be a string literal as the
+         *        pointer should remain valid until the buffer is freed.
+         * @param name The name of the event
+         * @param type The type of the event
+         * @param id The id of the event, primarily used for async events
+         * @param argA Argument to be saved with the event
+         */
+        template<typename T>
+        void logEvent(const char *category, const char *name,
+                      TraceEvent::Type type,
+                      size_t id, T argA) {
+            if (!enabled) return;
+            ChunkTenant* cs = getChunkTenant();
+            if (cs == nullptr) return;
+
+            cs->chunk->addEvent() = TraceEvent(
+                    category, name, type, id,
+                    platform::getCurrentThreadIDCached(),
+                    {{TraceArgument(argA), 0}},
+                    {{TraceArgument::getType<T>(),
+                      TraceArgument::Type::is_none}});
+            cs->sentinel->release();
+        }
+
+        /**
+         * Logs an event in the current buffer (if applicable)
+         *
+         * This method should not be used directly, instead the
+         * macros contained within phosphor.h should be used instead.
+         *
+         * @param category The category to log the event into. This (and
+         *        the name) should usually be a string literal as the
+         *        pointer should remain valid until the buffer is freed.
+         * @param name The name of the event
+         * @param type The type of the event
+         * @param id The id of the event, primarily used for async events
+         */
+        void logEvent(const char *category, const char *name,
+                      TraceEvent::Type type, size_t id) {
+            if (!enabled) return;
+            ChunkTenant* cs = getChunkTenant();
+            if (cs == nullptr) return;
+
+            cs->chunk->addEvent() = TraceEvent(
+                    category, name, type, id,
+                    platform::getCurrentThreadIDCached(),
+                    {{0, 0}},
+                    {{TraceArgument::Type::is_none,
+                      TraceArgument::Type::is_none}});
+            cs->sentinel->release();
         }
 
         /**
@@ -252,6 +300,32 @@ namespace phosphor {
             Sentinel *sentinel = nullptr;
             TraceChunk *chunk = nullptr;
         };
+
+        /**
+         * Gets a pointer to the appropriate ChunkTenant (or nullptr)
+         * with the lock acquired.
+         *
+         * @return A valid ChunkTenant with available events or a
+         *         nullptr if a valid ChunkTenant could not be acquired.
+         */
+        inline ChunkTenant* getChunkTenant() {
+            ChunkTenant &cs = (thread_chunk.sentinel) ? thread_chunk
+                                                      : shared_chunk;
+
+            if (!cs.sentinel->acquire()) {
+                resetChunk(cs);
+                return nullptr;
+            }
+            // State is busy
+            if (!cs.chunk || cs.chunk->isFull()) {
+                replaceChunk(cs);
+                if (!cs.chunk) {
+                    return nullptr;
+                }
+            }
+
+            return &cs;
+        }
 
         /**
          * Replaces the current chunk held by the ChunkTenant with a new chunk
