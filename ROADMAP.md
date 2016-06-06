@@ -13,19 +13,20 @@ n/a @will.gardner is away
 
 ### WEEK COMMENCING 2016/06/06
 
+- <strike>Add string conversion for TraceEvent::Type</strike> Done 2016/06/06
 - Add platform abstraction for thread ids
-- Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to
-avoid pre-allocation.
-- Move TraceChunk constructor to a reset method
 - Add a circular buffer implementation
 - Refactor TraceLog::logEvent to not duplicate code
+- Add chunked JSON export (Which takes an iterator)
 - Add benchmarking for chunk sizes (By templating the TraceChunk on the
 base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
 - Add benchmarking for tracing speed
 
 ### WEEK COMMENCING 2016/06/13
 
-- Add chunked JSON export (Which takes an iterator)
+- Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to
+avoid pre-allocation.
+- Move TraceChunk constructor to a reset method
 - Add binary dump export (Including tool to convert binary dump to JSON)
   - Write buffer to file
   - Write thread / pointer info to file

@@ -78,6 +78,13 @@ namespace phosphor {
          */
         std::string to_string() const;
 
+        /**
+         * Converts a TraceEvent::Type to a cstring
+         *
+         * @return cstring representing the given event type
+         */
+        static const char* typeToString(Type type);
+
     private:
         const char *name;
         const char *category;

@@ -57,13 +57,34 @@ namespace phosphor {
         auto us = duration_cast<nanoseconds>(ttime);
 
         return utils::format_string(
-                "TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, "
+                "TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, type=%s "
                         "arg1=%s, arg2=%s>",
                 d.count(), h.count(), m.count(), s.count(), us.count(),
-                category, name,
+                category, name, typeToString(type),
                 args[0].to_string(arg_types[0]).c_str(),
                 args[1].to_string(arg_types[1]).c_str());
     }
+
+
+    const char* TraceEvent::typeToString(Type type) {
+        switch (type) {
+            case Type::AsyncStart:
+                return "AsyncStart";
+            case Type::AsyncEnd:
+                return "AsyncEnd";
+            case Type::SyncStart:
+                return "SyncStart";
+            case Type::SyncEnd:
+                return "SyncEnd";
+            case Type::Instant:
+                return "Instant";
+            case Type::GlobalInstant:
+                return "GlobalInstant";
+            default:
+                throw std::invalid_argument("Invalid TraceArgument type");
+        }
+    }
+
 
     std::ostream &operator<<(std::ostream &os, const TraceEvent &te) {
         os << te.to_string();

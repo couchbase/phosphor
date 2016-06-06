@@ -50,7 +50,7 @@ TEST(TraceEvent, string_check) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
             "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-            "category, name, arg1=NONE, arg2=NONE>");
+            "category, name, type=Instant arg1=NONE, arg2=NONE>");
 #else
             "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
             "category, name, arg1=NONE, arg2=NONE>");
@@ -63,4 +63,21 @@ TEST(TraceEvent, string_check) {
     std::stringstream s;
     s << event;
     EXPECT_THAT(s.str(), event_regex);
+}
+
+TEST(TraceEvent, typeToString) {
+    EXPECT_EQ("AsyncStart",
+              TraceEvent::typeToString(TraceEvent::Type::AsyncStart));
+    EXPECT_EQ("AsyncEnd",
+              TraceEvent::typeToString(TraceEvent::Type::AsyncEnd));
+    EXPECT_EQ("SyncStart",
+              TraceEvent::typeToString(TraceEvent::Type::SyncStart));
+    EXPECT_EQ("SyncEnd",
+              TraceEvent::typeToString(TraceEvent::Type::SyncEnd));
+    EXPECT_EQ("Instant",
+              TraceEvent::typeToString(TraceEvent::Type::Instant));
+    EXPECT_EQ("GlobalInstant",
+              TraceEvent::typeToString(TraceEvent::Type::GlobalInstant));
+    EXPECT_THROW(TraceEvent::typeToString(static_cast<TraceEvent::Type>(0xFF)),
+                 std::invalid_argument);
 }
