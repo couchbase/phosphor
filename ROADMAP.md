@@ -6,9 +6,6 @@ accomplished.
 
 - <strike>Finish test coverage of trace buffer</strike> Done 2016/05/27
 - <strike>Add tests for Trace log</strike> Done 2016/05/27
-- Add benchmarking for chunk sizes (By templating the TraceChunk on the
-base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
-- Add benchmarking for tracing speed
 
 ### WEEK COMMENCING 2016/05/30
 
@@ -22,6 +19,9 @@ avoid pre-allocation.
 - Move TraceChunk constructor to a reset method
 - Add a circular buffer implementation
 - Refactor TraceLog::logEvent to not duplicate code
+- Add benchmarking for chunk sizes (By templating the TraceChunk on the
+base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
+- Add benchmarking for tracing speed
 
 ### WEEK COMMENCING 2016/06/13
 
