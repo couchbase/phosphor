@@ -19,6 +19,8 @@
 
 #include <cstdint>
 
+#include "core.h"
+
 #if __APPLE__
 /* Apple's clang is awkward and disables thread_local keyword support */
 #define THREAD_LOCAL __thread
@@ -56,7 +58,7 @@ namespace phosphor {
          * @return thread id for the calling thread
          */
         inline uint64_t getCurrentThreadIDCached() {
-            if(!thread_id) {
+            if(unlikely(!thread_id)) {
                 thread_id = getCurrentThreadID();
             }
 
