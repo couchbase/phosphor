@@ -31,7 +31,7 @@ script:
     fi
 after_success:
   - if [ "$GCC" = "true" ]; then
-        coveralls --exclude thirdparty --exclude build/CMakeFiles;
+        coveralls --exclude="thirdparty" --exclude="tests" --exclude build/CMakeFiles;
         scripts/doxygen-to-gh-pages.sh;
     fi
 notifications:
