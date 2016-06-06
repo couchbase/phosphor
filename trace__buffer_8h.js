@@ -1,10 +1,10 @@
 var trace__buffer_8h =
 [
-    [ "TraceBufferChunk", "classphosphor_1_1_trace_buffer_chunk.html", "classphosphor_1_1_trace_buffer_chunk" ],
-    [ "TraceChunkIterator", "classphosphor_1_1_trace_chunk_iterator.html", "classphosphor_1_1_trace_chunk_iterator" ],
+    [ "TraceChunk", "classphosphor_1_1_trace_chunk.html", "classphosphor_1_1_trace_chunk" ],
     [ "TraceBuffer", "classphosphor_1_1_trace_buffer.html", "classphosphor_1_1_trace_buffer" ],
+    [ "chunk_iterator", "classphosphor_1_1_trace_buffer_1_1chunk__iterator.html", "classphosphor_1_1_trace_buffer_1_1chunk__iterator" ],
     [ "chunk_iterable", "classphosphor_1_1_trace_buffer_1_1chunk__iterable.html", "classphosphor_1_1_trace_buffer_1_1chunk__iterable" ],
-    [ "trace_buffer_factory", "trace__buffer_8h.html#a818081f7425fa19efa33d44e716cdf8b", null ],
-    [ "TraceEventIterator", "trace__buffer_8h.html#a29e5b4a93c40fe321175d7e2b9c6a974", null ],
+    [ "buffer_ptr", "trace__buffer_8h.html#a5e627da6737b88f5818f75b681a01cd4", null ],
+    [ "trace_buffer_factory", "trace__buffer_8h.html#a6324e6b9fb1544fc8a1cc46e81473aa2", null ],
     [ "make_fixed_buffer", "trace__buffer_8h.html#ace8f0756905495273de33d9465cbdbd9", null ]
 ];

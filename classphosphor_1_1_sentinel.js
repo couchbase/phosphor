@@ -1,9 +1,9 @@
 var classphosphor_1_1_sentinel =
 [
-    [ "State", "classphosphor_1_1_sentinel.html#aea8489c4791cec635c0539b91b8e6b5c", [
-      [ "open", "classphosphor_1_1_sentinel.html#aea8489c4791cec635c0539b91b8e6b5ca7cef8a734855777c2a9d0caf42666e69", null ],
-      [ "busy", "classphosphor_1_1_sentinel.html#aea8489c4791cec635c0539b91b8e6b5ca8bc1b2f84252c3df4edd53e4aad097a7", null ],
-      [ "closed", "classphosphor_1_1_sentinel.html#aea8489c4791cec635c0539b91b8e6b5ca349e686330723975502e9ef4f939a5ac", null ]
+    [ "State", "classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707", [
+      [ "open", "classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707a7cef8a734855777c2a9d0caf42666e69", null ],
+      [ "busy", "classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707a8bc1b2f84252c3df4edd53e4aad097a7", null ],
+      [ "closed", "classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707a349e686330723975502e9ef4f939a5ac", null ]
     ] ],
     [ "Sentinel", "classphosphor_1_1_sentinel.html#a26ca58399a50cd3f6f78b82487db3aa6", null ],
     [ "acquire", "classphosphor_1_1_sentinel.html#ae63eab2f17eec6b5530bfa56da1b27eb", null ],

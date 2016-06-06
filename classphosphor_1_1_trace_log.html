@@ -611,7 +611,7 @@ template&lt;typename T , typename U &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>mutex is the 'global' lock for the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> and should be acquired when modifying the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> itself or the current <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a>.</p>
-<p>It is not required to be acquired when modifying a loaned out <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html">TraceBufferChunk</a> contained within a <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>, this is protected by the <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>'s sentinel lock instead. </p>
+<p>It is not required to be acquired when modifying a loaned out <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> contained within a <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>, this is protected by the <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>'s sentinel lock instead. </p>
 
 </div>
 </div>

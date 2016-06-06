@@ -7,5 +7,5 @@ var searchData=
   ['reopen',['reopen',['../classphosphor_1_1_sentinel.html#a7ead8e098b98397cf731e5e5733a9215',1,'phosphor::Sentinel']]],
   ['replacechunk',['replaceChunk',['../classphosphor_1_1_trace_log.html#a45bae635204891e31084169815917184',1,'phosphor::TraceLog']]],
   ['resetchunk',['resetChunk',['../classphosphor_1_1_trace_log.html#a7072d5d2fa370d231b6c93490d2180ca',1,'phosphor::TraceLog']]],
-  ['returnchunk',['returnChunk',['../classphosphor_1_1_trace_buffer.html#a82cc71db6cef94f2ad05f7ac4974dcc1',1,'phosphor::TraceBuffer::returnChunk()'],['../classphosphor_1_1_fixed_trace_buffer.html#a43e44b09ce8e8c8015fc6e8cd78e83f5',1,'phosphor::FixedTraceBuffer::returnChunk()']]]
+  ['returnchunk',['returnChunk',['../classphosphor_1_1_trace_buffer.html#a46459969a3c87d2b756a00bbd3184305',1,'phosphor::TraceBuffer::returnChunk()'],['../classphosphor_1_1_fixed_trace_buffer.html#afc9b66b570050686a4072d1cd1d03113',1,'phosphor::FixedTraceBuffer::returnChunk()']]]
 ];

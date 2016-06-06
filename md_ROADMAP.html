@@ -103,11 +103,49 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <div class="title">Roadmap </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><ul>
-<li>Improve iterator to return an object with thread context</li>
+<div class="textblock"><p>The following is a rough road-map and a plan for which weeks they will be accomplished.</p>
+<h3>WEEK COMMENCING 2016/05/23</h3>
+<ul>
+<li>&lt;strike&gt;Finish test coverage of trace buffer&lt;/strike&gt; Done 2016/05/27</li>
+<li>&lt;strike&gt;Add tests for Trace log&lt;/strike&gt; Done 2016/05/27</li>
+<li>Add benchmarking for chunk sizes (By templating the TraceChunk on the base type of the chunk itself, ie. std::array vs <a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>)</li>
+<li>Add benchmarking for tracing speed</li>
+</ul>
+<h3>WEEK COMMENCING 2016/05/30</h3>
+<p>n/a .gardner is away</p>
+<h3>WEEK COMMENCING 2016/06/06</h3>
+<ul>
+<li>Add platform abstraction for thread ids</li>
+<li>Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to avoid pre-allocation.</li>
+<li>Move TraceChunk constructor to a reset method</li>
+<li>Add a circular buffer implementation</li>
 <li>Refactor TraceLog::logEvent to not duplicate code</li>
+</ul>
+<h3>WEEK COMMENCING 2016/06/13</h3>
+<ul>
 <li>Add chunked JSON export (Which takes an iterator)</li>
-<li>Add binary dump export </li>
+<li>Add binary dump export (Including tool to convert binary dump to JSON)<ul>
+<li>Write buffer to file</li>
+<li>Write thread / pointer info to file</li>
+</ul>
+</li>
+</ul>
+<h2>Performance Idea List</h2>
+<p>For performance improvements that have been suggested or considered but are currently premature:</p>
+<ul>
+<li>Check enabled flag with relaxed atomic</li>
+<li>Try avoiding the conditional branch caused by the ternary expression in TraceLog::logEvent</li>
+<li>Use __builtin_expect where useful</li>
+<li>Sentinel benchmarking suggests that double the number of logical cores is the sweet-spot for the size of a shared array of ChunkTenants.</li>
+</ul>
+<h2>MMap compatibility</h2>
+<p>Since the trace buffer has been refactored to be contiguous again an MMap is technically possible. By switching to std::function based buffer factories it is possible for an end-user (Or even a sample implementation) to create a buffer which uses placement-new to allocate into a buffer.</p>
+<p>Additional stuff to make this practical:</p>
+<ul>
+<li>Add allocator to support dyn_array</li>
+<li>Create an MMap platform abstraction</li>
+<li>Create an MMap based buffer with a factory-factory for specifying filename</li>
+<li>Add callback for new events / categories to write their pointers/values to an info file at runtime. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

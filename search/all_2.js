@@ -5,8 +5,9 @@ var searchData=
   ['chunk_5fend',['chunk_end',['../classphosphor_1_1_trace_buffer.html#af1a0a73f5675c21a610ed69d3bfc6dd3',1,'phosphor::TraceBuffer::chunk_end()'],['../classphosphor_1_1_fixed_trace_buffer.html#ab4a30635a83fb0e4e85756fa2f811ab5',1,'phosphor::FixedTraceBuffer::chunk_end()']]],
   ['chunk_5fiterable',['chunk_iterable',['../classphosphor_1_1_trace_buffer_1_1chunk__iterable.html',1,'phosphor::TraceBuffer']]],
   ['chunk_5fiterable',['chunk_iterable',['../classphosphor_1_1_trace_buffer_1_1chunk__iterable.html#a6f2c81c929538a03dce5cd8da66d2adc',1,'phosphor::TraceBuffer::chunk_iterable']]],
-  ['chunks',['chunks',['../classphosphor_1_1_trace_buffer.html#aec1b79c671b69ae839bae6ff3699fd14',1,'phosphor::TraceBuffer::chunks()'],['../classphosphor_1_1_fixed_trace_buffer.html#ad9f4abff1610cf2cd519de5dd2237913',1,'phosphor::FixedTraceBuffer::chunks()']]],
+  ['chunk_5fiterator',['chunk_iterator',['../classphosphor_1_1_trace_buffer_1_1chunk__iterator.html',1,'phosphor::TraceBuffer']]],
+  ['chunks',['chunks',['../classphosphor_1_1_trace_buffer.html#aa8b82981d2e7bdc3d3b07d2ef153abe0',1,'phosphor::TraceBuffer']]],
   ['chunktenant',['ChunkTenant',['../structphosphor_1_1_trace_log_1_1_chunk_tenant.html',1,'phosphor::TraceLog']]],
   ['close',['close',['../classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877',1,'phosphor::Sentinel']]],
-  ['count',['count',['../classphosphor_1_1_trace_buffer_chunk.html#a6efb0a3fb6b5a7c6b25cc5c9bb474710',1,'phosphor::TraceBufferChunk']]]
+  ['count',['count',['../classphosphor_1_1_trace_chunk.html#a6e9c65c386a136891d269a314ae6b694',1,'phosphor::TraceChunk']]]
 ];

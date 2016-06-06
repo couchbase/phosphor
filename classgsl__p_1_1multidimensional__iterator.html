@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('classgsl__p_1_1multidimensional__itera
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classgsl__p_1_1multidimensional__iterator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">gsl_p::multidimensional_iterator&lt; T &gt; Class Template Reference</div>  </div>
@@ -119,9 +120,9 @@ $(document).ready(function(){initNavTree('classgsl__p_1_1multidimensional__itera
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9db513f0edfbc71499cde48797179072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9db513f0edfbc71499cde48797179072"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>multidimensional_iterator</b> (T parent_)</td></tr>
-<tr class="separator:a9db513f0edfbc71499cde48797179072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa68d1ddb20d0234d36575e410087f127"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa68d1ddb20d0234d36575e410087f127"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>multidimensional_iterator</b> (T parent_, T parent_end_)</td></tr>
+<tr class="separator:aa68d1ddb20d0234d36575e410087f127"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e308e558bcbf235143a1526c61c5bf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e308e558bcbf235143a1526c61c5bf3"></a>
 const child_value_type &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> () const </td></tr>
 <tr class="separator:a7e308e558bcbf235143a1526c61c5bf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,15 +132,18 @@ const child_value_type *&#160;</td><td class="memItemRight" valign="bottom"><b>o
 <tr class="memitem:a4303922411ec3408e25c9df5b07cd3e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4303922411ec3408e25c9df5b07cd3e5"></a>
 <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">__self</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator++</b> ()</td></tr>
 <tr class="separator:a4303922411ec3408e25c9df5b07cd3e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44d2e8023bb4b3aaec8cca3a0b8fce6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44d2e8023bb4b3aaec8cca3a0b8fce6a"></a>
-<a class="el" href="classgsl__p_1_1multidimensional__iterator.html">__self</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator--</b> ()</td></tr>
-<tr class="separator:a44d2e8023bb4b3aaec8cca3a0b8fce6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a862661eb2223c5a28acc0d1d2f44e2b5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a862661eb2223c5a28acc0d1d2f44e2b5"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">__self</a> &amp;other) const </td></tr>
 <tr class="separator:a862661eb2223c5a28acc0d1d2f44e2b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff5dac198c8c028aded9f7c23b772bbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff5dac198c8c028aded9f7c23b772bbd"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="classgsl__p_1_1multidimensional__iterator.html">__self</a> &amp;other) const </td></tr>
 <tr class="separator:aff5dac198c8c028aded9f7c23b772bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:afe8f8535abd9abd15d6432f15a66b0c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe8f8535abd9abd15d6432f15a66b0c8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>seekChildForward</b> ()</td></tr>
+<tr class="separator:afe8f8535abd9abd15d6432f15a66b0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />

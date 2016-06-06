@@ -82,6 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
     </ul>
   </div>
@@ -140,7 +141,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_sentinel.html#ae63eab2f17eec6b5530bfa56da1b27eb">phosphor::Sentinel</a>
 </li>
 <li>addEvent()
-: <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html#a1ea9d34eaa3a2de930031d0821fd00b0">phosphor::TraceBufferChunk</a>
+: <a class="el" href="classphosphor_1_1_trace_chunk.html#a7c08f938911ee5197a8682428bc6135e">phosphor::TraceChunk</a>
 </li>
 </ul>
 
@@ -150,7 +151,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ad7b2fd44da932e52844be76136169d40">phosphor::FixedTraceBuffer</a>
 , <a class="el" href="classphosphor_1_1_trace_buffer.html#a6a5056683d3b757541351d89622e228a">phosphor::TraceBuffer</a>
 , <a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html#ad55ba7e62ac0721201246c69349043b6">phosphor::TraceBuffer::chunk_iterable</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html#a6469c881def4c9ed07b274b21cfda795">phosphor::TraceBufferChunk</a>
+, <a class="el" href="classphosphor_1_1_trace_chunk.html#a55c422822822a5ca3b119510ca75921b">phosphor::TraceChunk</a>
 </li>
 <li>buffer
 : <a class="el" href="classphosphor_1_1_trace_log.html#a7c26730cdfcd9a5006933bb3440253c2">phosphor::TraceLog</a>
@@ -175,14 +176,13 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html#a6f2c81c929538a03dce5cd8da66d2adc">phosphor::TraceBuffer::chunk_iterable</a>
 </li>
 <li>chunks()
-: <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ad9f4abff1610cf2cd519de5dd2237913">phosphor::FixedTraceBuffer</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer.html#aec1b79c671b69ae839bae6ff3699fd14">phosphor::TraceBuffer</a>
+: <a class="el" href="classphosphor_1_1_trace_buffer.html#aa8b82981d2e7bdc3d3b07d2ef153abe0">phosphor::TraceBuffer</a>
 </li>
 <li>close()
 : <a class="el" href="classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877">phosphor::Sentinel</a>
 </li>
 <li>count()
-: <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html#a6efb0a3fb6b5a7c6b25cc5c9bb474710">phosphor::TraceBufferChunk</a>
+: <a class="el" href="classphosphor_1_1_trace_chunk.html#a6e9c65c386a136891d269a314ae6b694">phosphor::TraceChunk</a>
 </li>
 </ul>
 
@@ -202,7 +202,10 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a66c2dfdefa2c02172114b4eecd1e6de7">phosphor::FixedTraceBuffer</a>
 , <a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterable.html#aee7a0cf53a26417e7a32875a0f671aaf">phosphor::TraceBuffer::chunk_iterable</a>
 , <a class="el" href="classphosphor_1_1_trace_buffer.html#a21e5fee4516976127d6242b0631f0ae5">phosphor::TraceBuffer</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html#a62b51b1d6d5f39732fe0e19fd866808a">phosphor::TraceBufferChunk</a>
+, <a class="el" href="classphosphor_1_1_trace_chunk.html#af249c76173f96baa7269392d5f7e2ac8">phosphor::TraceChunk</a>
+</li>
+<li>event_iterator
+: <a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">phosphor::TraceBuffer</a>
 </li>
 <li>evictThreads()
 : <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2e1dd4770aada8df05bdedebd4ff2362">phosphor::FixedTraceBuffer</a>
@@ -219,7 +222,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469">phosphor::TraceLog</a>
 </li>
 <li>getBufferFactory()
-: <a class="el" href="classphosphor_1_1_trace_config.html#a6eb5734b118689f57a3323caf517281b">phosphor::TraceConfig</a>
+: <a class="el" href="classphosphor_1_1_trace_config.html#a523337e5124c4ba7d6f95e9d7db3ad0b">phosphor::TraceConfig</a>
 </li>
 <li>getBufferMode()
 : <a class="el" href="classphosphor_1_1_trace_config.html#abba19075628eac1d7cb4bb4a0480f879">phosphor::TraceConfig</a>
@@ -228,8 +231,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_trace_config.html#af7cd85da9429af0aa6c2e748519cfb2e">phosphor::TraceConfig</a>
 </li>
 <li>getChunk()
-: <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a389033d813835312b35b9100b869baf6">phosphor::FixedTraceBuffer</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer.html#a7be202907f40ba525dc45678bfdc520c">phosphor::TraceBuffer</a>
+: <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a7469dafbdebea2c958172d1ed05cad69">phosphor::FixedTraceBuffer</a>
+, <a class="el" href="classphosphor_1_1_trace_buffer.html#a046bc151498a98248b732c441848a5f7">phosphor::TraceBuffer</a>
 </li>
 <li>getGeneration()
 : <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6">phosphor::FixedTraceBuffer</a>
@@ -251,7 +254,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>isFull()
 : <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2">phosphor::FixedTraceBuffer</a>
 , <a class="el" href="classphosphor_1_1_trace_buffer.html#aed684d9119a5b64ecb295ecb2ef6d209">phosphor::TraceBuffer</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html#accfdc876f76f9b7595ba64f394c78ff3">phosphor::TraceBufferChunk</a>
+, <a class="el" href="classphosphor_1_1_trace_chunk.html#a599b75005f4e7b8e62ce9d05c11d1ad1">phosphor::TraceChunk</a>
 </li>
 </ul>
 
@@ -265,7 +268,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>modeToFactory()
-: <a class="el" href="classphosphor_1_1_trace_config.html#a89b9658a27fe72ab6b1e9d97c313ed98">phosphor::TraceConfig</a>
+: <a class="el" href="classphosphor_1_1_trace_config.html#a2aa163d06533e57718e60558917207f5">phosphor::TraceConfig</a>
 </li>
 <li>mutex
 : <a class="el" href="classphosphor_1_1_trace_log.html#a51a113a9a75825d65aa7d235eeefd4fb">phosphor::TraceLog</a>
@@ -275,9 +278,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 
 <h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
 <li>operator[]()
-: <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ab8ad6be0ffd820674f7df34137ae1111">phosphor::FixedTraceBuffer</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer.html#a4c390636cca3e05fde7e32d231d0bc3e">phosphor::TraceBuffer</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html#a62c6473039e953dc06e060125279af95">phosphor::TraceBufferChunk</a>
+: <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a9b0a3721d99140d9cd4d94fc3f0737e3">phosphor::FixedTraceBuffer</a>
+, <a class="el" href="classphosphor_1_1_trace_buffer.html#a0536e48a01e77d96fed8376186a34449">phosphor::TraceBuffer</a>
+, <a class="el" href="classphosphor_1_1_trace_chunk.html#a5bd0c7464c14d0372c8681a1ab0ba4a0">phosphor::TraceChunk</a>
 </li>
 </ul>
 
@@ -303,8 +306,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_trace_log.html#a7072d5d2fa370d231b6c93490d2180ca">phosphor::TraceLog</a>
 </li>
 <li>returnChunk()
-: <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a43e44b09ce8e8c8015fc6e8cd78e83f5">phosphor::FixedTraceBuffer</a>
-, <a class="el" href="classphosphor_1_1_trace_buffer.html#a82cc71db6cef94f2ad05f7ac4974dcc1">phosphor::TraceBuffer</a>
+: <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#afc9b66b570050686a4072d1cd1d03113">phosphor::FixedTraceBuffer</a>
+, <a class="el" href="classphosphor_1_1_trace_buffer.html#a46459969a3c87d2b756a00bbd3184305">phosphor::TraceBuffer</a>
 </li>
 </ul>
 
@@ -317,7 +320,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_trace_log.html#a22fde18331507432721f09e70f35822e">phosphor::TraceLog</a>
 </li>
 <li>State
-: <a class="el" href="classphosphor_1_1_sentinel.html#aea8489c4791cec635c0539b91b8e6b5c">phosphor::Sentinel</a>
+: <a class="el" href="classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707">phosphor::Sentinel</a>
 </li>
 <li>stop()
 : <a class="el" href="classphosphor_1_1_trace_log.html#ad61c9956ecb142c03260ab9a430914a2">phosphor::TraceLog</a>
@@ -342,8 +345,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>TraceArgument()
 : <a class="el" href="unionphosphor_1_1_trace_argument.html#ab8a52bc60df5f3fbd7d690aad1e290da">phosphor::TraceArgument</a>
 </li>
-<li>TraceBufferChunk()
-: <a class="el" href="classphosphor_1_1_trace_buffer_chunk.html#a5c4681d53028d3cf450808bdae24bd72">phosphor::TraceBufferChunk</a>
+<li>TraceChunk()
+: <a class="el" href="classphosphor_1_1_trace_chunk.html#a3e573ac634d45bfd390e2c473dfdf4d7">phosphor::TraceChunk</a>
 </li>
 <li>TraceConfig()
 : <a class="el" href="classphosphor_1_1_trace_config.html#ac63adad510f75b0438393cbd87336354">phosphor::TraceConfig</a>
