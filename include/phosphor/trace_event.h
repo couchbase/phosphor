@@ -23,6 +23,7 @@
 
 #include <array>
 #include <chrono>
+#include <cstdint>
 #include <iostream>
 #include <string>
 #include <thread>
@@ -68,6 +69,7 @@ namespace phosphor {
                    const char *_name,
                    Type _type,
                    size_t _id,
+                   uint64_t _thread_id,
                    std::array<TraceArgument, arg_count> &&_args,
                    std::array<TraceArgument::Type, arg_count> &&_arg_types);
 
@@ -89,10 +91,10 @@ namespace phosphor {
         const char *name;
         const char *category;
         size_t id;
-        std::thread::id thread_id;
+        uint64_t thread_id;
         std::array<TraceArgument, arg_count> args;
 
-        std::chrono::steady_clock::duration time;
+        int64_t time = 0;
         std::array<TraceArgument::Type, arg_count> arg_types;
         Type type;
     };

@@ -14,7 +14,8 @@ n/a @will.gardner is away
 ### WEEK COMMENCING 2016/06/06
 
 - <strike>Add string conversion for TraceEvent::Type</strike> Done 2016/06/06
-- Add platform abstraction for thread ids
+- <strike>Add platform abstraction for thread ids</strike> Done 2016/06/06
+- <strike>Switch to simpler time representation</strike> Done 2016/06/06
 - Add a circular buffer implementation
 - Refactor TraceLog::logEvent to not duplicate code
 - Add chunked JSON export (Which takes an iterator)

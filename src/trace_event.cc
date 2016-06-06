@@ -22,10 +22,13 @@
 
 namespace phosphor {
 
+    using namespace std::chrono;
+
     TraceEvent::TraceEvent(const char *_category,
                            const char *_name,
                            Type _type,
                            size_t _id,
+                           uint64_t _thread_id,
                            std::array<TraceArgument, arg_count> &&_args,
                            std::array<TraceArgument::Type, arg_count> &&_arg_types)
             // Premature optimisation #1:
@@ -34,18 +37,19 @@ namespace phosphor {
             : name(_name),
               category(_category),
               id(_id),
+              thread_id(_thread_id),
               args(_args),
-              time(std::chrono::steady_clock::now().time_since_epoch()),
+              time(duration_cast<nanoseconds>(
+                      steady_clock::now().time_since_epoch()).count()),
               arg_types(_arg_types),
               type(_type) {
     }
 
 
     std::string TraceEvent::to_string() const {
-        using namespace std::chrono;
         typedef duration<int, std::ratio_multiply<hours::period, std::ratio<24> >::type> days;
 
-        auto ttime(time);
+        nanoseconds ttime(time);
         auto d = duration_cast<days>(ttime);
         ttime -= d;
         auto h = duration_cast<hours>(ttime);
@@ -57,10 +61,10 @@ namespace phosphor {
         auto us = duration_cast<nanoseconds>(ttime);
 
         return utils::format_string(
-                "TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, type=%s "
-                        "arg1=%s, arg2=%s>",
+                "TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, type=%s, "
+                        "thread_id=%d, arg1=%s, arg2=%s>",
                 d.count(), h.count(), m.count(), s.count(), us.count(),
-                category, name, typeToString(type),
+                category, name, typeToString(type), thread_id,
                 args[0].to_string(arg_types[0]).c_str(),
                 args[1].to_string(arg_types[1]).c_str());
     }

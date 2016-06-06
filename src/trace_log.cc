@@ -18,6 +18,7 @@
 #include <exception>
 
 #include "phosphor/trace_log.h"
+#include "phosphor/platform/thread.h"
 
 namespace phosphor {
 

@@ -20,15 +20,9 @@
 #include <atomic>
 #include <mutex>
 
+#include "platform/thread.h"
 #include "trace_buffer.h"
 #include "trace_event.h"
-
-#if __APPLE__
-/* Apple's clang is awkward and disables thread_local keyword support */
-#define THREAD_LOCAL __thread
-#else
-#define THREAD_LOCAL thread_local
-#endif
 
 namespace phosphor {
 
@@ -198,6 +192,7 @@ namespace phosphor {
 
             cs.chunk->addEvent() = TraceEvent(
                     category, name, type, id,
+                    platform::getCurrentThreadIDCached(),
                     {{TraceArgument(argA), TraceArgument(argB)}},
                     {{TraceArgument::getType<T>(), TraceArgument::getType<U>()}});
             cs.sentinel->release();

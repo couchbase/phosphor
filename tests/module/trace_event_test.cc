@@ -32,6 +32,7 @@ TEST(TraceEvent, create) {
              "name",
              TraceEvent::Type::Instant,
              0,
+             0,
              {{0, 0}},
              {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
     );
@@ -43,6 +44,7 @@ TEST(TraceEvent, string_check) {
             "name",
             TraceEvent::Type::Instant,
             0,
+            0,
             {{0, 0}},
             {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
     );
@@ -50,10 +52,10 @@ TEST(TraceEvent, string_check) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
             "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-            "category, name, type=Instant arg1=NONE, arg2=NONE>");
+            "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
 #else
             "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-            "category, name, arg1=NONE, arg2=NONE>");
+            "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
 #endif
 
     // This should probably require linking against GoogleMock

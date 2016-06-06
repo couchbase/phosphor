@@ -37,6 +37,7 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
                 "name",
                 TraceEvent::Type::Instant,
                 0,
+                0,
                 {{0, 0}},
                 {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
         count++;
@@ -56,6 +57,7 @@ TEST(TraceChunkTest, string_check) {
                 "name",
                 TraceEvent::Type::Instant,
                 0,
+                0,
                 {{0, 0}},
                 {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     }
@@ -63,10 +65,10 @@ TEST(TraceChunkTest, string_check) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
             "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-                    "category, name, arg1=NONE, arg2=NONE>");
+                    "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
 #else
     "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-            "category, name, arg1=NONE, arg2=NONE>");
+            "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
 #endif
 
     for(int i = 0; i < chunk.count(); ++i) {
