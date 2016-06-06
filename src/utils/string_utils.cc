@@ -32,7 +32,7 @@ namespace phosphor {
             va_start(args, fmt);
             va_copy(cpy, args);
 
-            ssize_t len = vsnprintf(nullptr, 0, fmt, cpy) + 1;
+            int len = vsnprintf(nullptr, 0, fmt, cpy) + 1;
             if(len < 0) {
                 throw std::runtime_error("phosphor::utils::format_string "
                                          "failed: vsnprintf returned < 0");
