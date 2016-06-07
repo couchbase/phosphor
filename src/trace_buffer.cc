@@ -27,8 +27,8 @@ namespace phosphor {
      * TraceChunk implementation
      */
 
-    TraceChunk::TraceChunk()
-            : next_free(0) {
+    void TraceChunk::reset() {
+        next_free = 0;
     }
 
     bool TraceChunk::isFull() const {
@@ -114,6 +114,7 @@ namespace phosphor {
             }
             sentinels.insert(&sentinel);
             buffer.emplace_back();
+            buffer.back().reset();
             return buffer.back();
         }
 

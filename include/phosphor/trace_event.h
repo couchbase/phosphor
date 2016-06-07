@@ -94,7 +94,7 @@ namespace phosphor {
         uint64_t thread_id;
         std::array<TraceArgument, arg_count> args;
 
-        int64_t time = 0;
+        int64_t time;
         std::array<TraceArgument::Type, arg_count> arg_types;
         Type type;
     };

@@ -52,7 +52,15 @@ namespace phosphor {
         /**
          * Constructor for a TraceChunk
          */
-        TraceChunk();
+        TraceChunk() = default;
+
+        /**
+         * Reset the state of the TraceChunk
+         *
+         * This should be called before the TraceChunk is first used
+         * as TraceChunk is a trivial type and requires initialisation.
+         */
+        void reset();
 
         /**
          * Used for adding TraceEvents to the chunk
