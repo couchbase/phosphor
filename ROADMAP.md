@@ -43,6 +43,14 @@ TraceLog::logEvent
 - Use \__builtin_expect where useful
 - Sentinel benchmarking suggests that double the number of logical cores
 is the sweet-spot for the size of a shared array of ChunkTenants.
+- Reduce size of trace event by reducing to 24 bits of microseconds (~16 seconds
+from 2^64 nanoseconds and storing a further 16 bits of resolution in the chunk
+header. (Saves ~4 bytes since type can be combined into timestamp)
+- Reduce size of trace event by combining trace category and trace name pointers
+(Saves 8 bytes as its one less pointer)
+- Assume one less argument on Async events and use id as one of the arguments
+(Saves 8 bytes as there's no need for separate id property)
+- Add a duration property (Costs 24 bits)
 
 ## MMap compatibility
 
