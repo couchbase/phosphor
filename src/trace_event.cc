@@ -15,8 +15,6 @@
  *   limitations under the License.
  */
 
-#include <vector>
-
 #include "phosphor/trace_event.h"
 #include "utils/string_utils.h"
 
@@ -69,6 +67,22 @@ namespace phosphor {
                 args[1].to_string(arg_types[1]).c_str());
     }
 
+    std::string TraceEvent::to_json() const {
+        std::string output;
+        output += "{\"name\":" + utils::to_json(name);
+        output += ",\"cat\":" + utils::to_json(category);
+
+        auto type_converted = typeToJSON();
+        output += ",\"ph\":\"" + std::string(type_converted.first) + "\"";
+        output += type_converted.second;
+
+        output += ",\"ts\":" + std::to_string(time/1000);
+        output += ",\"pid\":0";
+        output += ",\"tid\":" + std::to_string(thread_id);
+
+        output += "}";
+        return output;
+    }
 
     const char* TraceEvent::typeToString(Type type) {
         switch (type) {
@@ -84,9 +98,28 @@ namespace phosphor {
                 return "Instant";
             case Type::GlobalInstant:
                 return "GlobalInstant";
-            default:
-                throw std::invalid_argument("Invalid TraceArgument type");
         }
+        throw std::invalid_argument("TraceEvent::typeToString: "
+                                    "Invalid TraceEvent type");
+    }
+
+    std::pair<const char*, std::string> TraceEvent::typeToJSON() const {
+        switch (type) {
+            case Type::AsyncStart:
+                return {"b", utils::format_string(",\"id\": \"0x%X\"", id)};
+            case Type::AsyncEnd:
+                return {"e", utils::format_string(",\"id\": \"0x%x\"", id)};
+            case Type::SyncStart:
+                return {"B", ""};
+            case Type::SyncEnd:
+                return {"E", ""};
+            case Type::Instant:
+                return {"i", ",\"s\":\"t\""};
+            case Type::GlobalInstant:
+                return {"i", ",\"s\":\"g\""};
+        }
+        throw std::invalid_argument("TraceEvent::typeToJSON: "
+                                    "Invalid TraceArgument type");
     }
 
 

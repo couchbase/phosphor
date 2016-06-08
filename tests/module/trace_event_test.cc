@@ -83,3 +83,18 @@ TEST(TraceEvent, typeToString) {
     EXPECT_THROW(TraceEvent::typeToString(static_cast<TraceEvent::Type>(0xFF)),
                  std::invalid_argument);
 }
+
+TEST(TraceEvent, toJSON) {
+    TraceEvent event(
+            "category",
+            "name",
+            TraceEvent::Type::Instant,
+            0,
+            0,
+            {{0, 0}},
+            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    );
+
+    std::cerr << event.to_json() << std::endl;
+    EXPECT_EQ("", event.to_json());
+}

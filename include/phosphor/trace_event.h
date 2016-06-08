@@ -80,6 +80,14 @@ namespace phosphor {
          */
         std::string to_string() const;
 
+
+        /**
+         * Used to get a JSON object representation of the TraceEvent
+         *
+         * @return JSON object representing the TraceEvent
+         */
+        std::string to_json() const;
+
         /**
          * Converts a TraceEvent::Type to a cstring
          *
@@ -88,6 +96,16 @@ namespace phosphor {
         static const char* typeToString(Type type);
 
     private:
+        /**
+         * Get the required JSON parts for the type of the
+         * object. i.e. the event type character and any
+         * bonus strings.
+         *
+         * @return pair where first is the type character and
+         *         the second is any bonus parts of the JSON row
+         */
+        std::pair<const char*, std::string> typeToJSON() const;
+
         const char *name;
         const char *category;
         size_t id;

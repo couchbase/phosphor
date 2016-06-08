@@ -17,6 +17,7 @@
 
 #include "phosphor/phosphor.h"
 
+#include <fstream>
 #include <sstream>
 #include <thread>
 #include <vector>
@@ -25,23 +26,30 @@
 
 int main(int argc, char* argv[]) {
     phosphor::TraceLog::getInstance().start(
-            phosphor::TraceConfig(phosphor::BufferMode::fixed, 25000)
+            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1000000)
     );
 
     std::vector<std::thread> threads;
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 16; i++) {
         threads.emplace_back([i]() {
-            phosphor::TraceLog::registerThread();
+            //phosphor::TraceLog::registerThread();
             while(phosphor::TraceLog::getInstance().isEnabled()) {
-                TRACE_INSTANT("Child", "Thread #", i, "");
+                TRACE_EVENT_START("child", "thread", i, "");
+                TRACE_EVENT_START("child", "inner", i, "");
+                TRACE_EVENT_START("child", "reallyinn", i, "");
+                std::this_thread::yield();
+                TRACE_EVENT_END("child", "reallyinn", i, "");
+                TRACE_EVENT_END("child", "inner", i, "");
+                TRACE_EVENT_END("child", "thread", i, "");
             }
-            phosphor::TraceLog::deregisterThread();
+            //phosphor::TraceLog::deregisterThread();
         });
     }
 
 
     while(phosphor::TraceLog::getInstance().isEnabled()) {
-        TRACE_INSTANT("Main", "Thread", 4, 5);
+        TRACE_EVENT_START("main", "thread", 4, 5);
+        TRACE_EVENT_END("main", "thread", 4, 5);
     }
     phosphor::TraceLog::getInstance().stop();
     auto buffer(phosphor::TraceLog::getInstance().getBuffer());
@@ -50,13 +58,18 @@ int main(int argc, char* argv[]) {
         thread.join();
     }
 
+    std::fstream fs;
+    fs.open("/Users/will/output.json", std::fstream::out | std::fstream::trunc);
+
+    fs << "[";
+    bool first = true;
     for (const auto& chunk : buffer->chunks()) {
-        printf("\n\n[NEW CHUNK]\n");
+        //printf("\n\n[NEW CHUNK]\n");
         for(const auto& event : chunk) {
-            printf("%s\n", event.to_string().c_str());
+            fs << event.to_json() << ",\n";
+            //printf("%s\n", event.to_string().c_str());
         }
     }
-
 
     return 0;
 }
