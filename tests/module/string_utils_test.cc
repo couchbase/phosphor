@@ -38,3 +38,11 @@ TEST(FormatStringTest, substitution) {
 TEST(FormatStringTest, numbers) {
     EXPECT_EQ(format_string("%d", 33), "33");
 }
+
+using phosphor::utils::to_json;
+
+TEST(ToJSONTest, test) {
+    // TODO: More extensive testing of escaping
+    EXPECT_EQ("\"Hello, World\"", to_json("Hello, World"));
+    EXPECT_EQ("\"\\b\\f\\n\\r\\t\\\\\\/\\\"\"", to_json("\b\f\n\r\t\\/\""));
+}

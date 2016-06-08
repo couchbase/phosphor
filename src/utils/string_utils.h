@@ -29,5 +29,13 @@ namespace phosphor {
          * @return Formatted string
          */
         std::string format_string(const char *fmt, ...);
+
+        /**
+         * Converts a string into a valid JSON string
+         *
+         * @param str String to be converted
+         * @return Converted string
+         */
+        std::string to_json(const std::string& str);
     }
 }
