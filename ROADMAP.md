@@ -16,21 +16,27 @@ n/a @will.gardner is away
 - <strike>Add string conversion for TraceEvent::Type</strike> Done 2016/06/06
 - <strike>Add platform abstraction for thread ids</strike> Done 2016/06/06
 - <strike>Switch to simpler time representation</strike> Done 2016/06/06
-- Add a circular buffer implementation
-- Refactor TraceLog::logEvent to not duplicate code
+- <strike>Refactor TraceLog::logEvent to not duplicate code</strike>
+- <strike>Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to
+avoid pre-allocation.</strike> Done 2016/06/07
+Done 2016/06/07
+- <strike>Move TraceChunk constructor to a reset method</strike> Done 2016/06/07
 - Add chunked JSON export (Which takes an iterator)
-- Add benchmarking for chunk sizes (By templating the TraceChunk on the
-base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
-- Add benchmarking for tracing speed
 
 ### WEEK COMMENCING 2016/06/13
 
-- Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to
-avoid pre-allocation.
-- Move TraceChunk constructor to a reset method
+- Add a circular buffer implementation
+- Add benchmarking for chunk sizes (By templating the TraceChunk on the
+base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
+- Add benchmarking for tracing speed
 - Add binary dump export (Including tool to convert binary dump to JSON)
   - Write buffer to file
   - Write thread / pointer info to file
+
+## Misc Feature List (Not allocated)
+
+- Buffer filled callback
+- Environment variable based global config
 
 ## Performance Idea List
 
@@ -57,7 +63,7 @@ header. (Saves ~4 bytes since type can be combined into timestamp)
 Since the trace buffer has been refactored to be contiguous again an MMap is
 technically possible. By switching to std::function based buffer factories it
 is possible for an end-user (Or even a sample implementation) to create a buffer
-which uses placement-new to allocate into a buffer. 
+which uses placement-new to allocate into a buffer.
 
 Additional stuff to make this practical:
 
@@ -74,7 +80,7 @@ Additional stuff to make this practical:
   - Handling of a binary protocol request (i.e. equivilent to what mctimings currently measures). See `mcbp_collect_timings`. Arguments: Will be hard/costly to record much of most requests, but for example where there's a finite set (e.g. `stats` command sub-command) we should record them.
   - statemachine changes for connections (`conn_XXX` functions). Note these will be very frequent so probably want a explicit trace for each function (`conn_new_cmd`, `conn_nread` etc) as the cost of calling getTaskName each time may be costly.
   - engine API functions (function pointers defined in _engine.h_, wrapper functions for common cases in _memcached.h_ (`bucket_get`, `bucket_store` etc). We probably need to expand the wrappers so all engine API functions are traced - see for example `add_set_replace_executor` which directly calls `allocate` method. Arguments:Specifically of interest will be any functions returning EWOULDBLOCK - and recording when that happens.
-  
+
 * ep-engine
   - Acquire / release of (expensive) locks. Examples: `CheckpointManager::queueLock`
   - VBucket state changes (active/replica/dead).
