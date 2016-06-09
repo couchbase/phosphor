@@ -66,3 +66,24 @@ Additional stuff to make this practical:
  - Create an MMap based buffer with a factory-factory for specifying filename
  - Add callback for new events / categories to write their pointers/values to
  an info file at runtime.
+
+## Candidate events tracing locations
+
+* memcached
+  - libevent callbacks being invoked (look for calls to `event_assign` / `event_add` for where callbacks are registered). Arguments: `fd`, `which` and the void* `argument` ideally, although I belive only 2 are currently supported.
+  - Handling of a binary protocol request (i.e. equivilent to what mctimings currently measures). See `mcbp_collect_timings`. Arguments: Will be hard/costly to record much of most requests, but for example where there's a finite set (e.g. `stats` command sub-command) we should record them.
+  - statemachine changes for connections (`conn_XXX` functions). Note these will be very frequent so probably want a explicit trace for each function (`conn_new_cmd`, `conn_nread` etc) as the cost of calling getTaskName each time may be costly.
+  - engine API functions (function pointers defined in _engine.h_, wrapper functions for common cases in _memcached.h_ (`bucket_get`, `bucket_store` etc). We probably need to expand the wrappers so all engine API functions are traced - see for example `add_set_replace_executor` which directly calls `allocate` method. Arguments:Specifically of interest will be any functions returning EWOULDBLOCK - and recording when that happens.
+  
+* ep-engine
+  - Acquire / release of (expensive) locks. Examples: `CheckpointManager::queueLock`
+  - VBucket state changes (active/replica/dead).
+  - DCP
+    - Stream start (Arguments: vbucket, start, end)
+    - Stream end (Arguments: reason for finish).
+    - Event per checkpoint marker? (if not too expensive).
+  - KVStore
+    - committing a new checkpoint (`KVStore::commit`)
+    - rollback
+    - compaction
+    - snapshotVBucket
