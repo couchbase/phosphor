@@ -17,6 +17,10 @@
 
 #if defined(__APPLE__)
 #include <pthread.h>
+#elif defined(__linux__)
+#include <linux/unistd.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 #elif defined(_WIN32)
 #include <windows.h>
 #endif
