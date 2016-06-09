@@ -151,7 +151,35 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <li>Add allocator to support dyn_array</li>
 <li>Create an MMap platform abstraction</li>
 <li>Create an MMap based buffer with a factory-factory for specifying filename</li>
-<li>Add callback for new events / categories to write their pointers/values to an info file at runtime. </li>
+<li>Add callback for new events / categories to write their pointers/values to an info file at runtime.</li>
+</ul>
+<h2>Candidate events tracing locations</h2>
+<ul>
+<li>memcached<ul>
+<li>libevent callbacks being invoked (look for calls to <code>event_assign</code> / <code>event_add</code> for where callbacks are registered). Arguments: <code>fd</code>, <code>which</code> and the void* <code>argument</code> ideally, although I belive only 2 are currently supported.</li>
+<li>Handling of a binary protocol request (i.e. equivilent to what mctimings currently measures). See <code>mcbp_collect_timings</code>. Arguments: Will be hard/costly to record much of most requests, but for example where there's a finite set (e.g. <code>stats</code> command sub-command) we should record them.</li>
+<li>statemachine changes for connections (<code>conn_XXX</code> functions). Note these will be very frequent so probably want a explicit trace for each function (<code>conn_new_cmd</code>, <code>conn_nread</code> etc) as the cost of calling getTaskName each time may be costly.</li>
+<li>engine API functions (function pointers defined in <em>engine.h</em>, wrapper functions for common cases in <em>memcached.h</em> (<code>bucket_get</code>, <code>bucket_store</code> etc). We probably need to expand the wrappers so all engine API functions are traced - see for example <code>add_set_replace_executor</code> which directly calls <code>allocate</code> method. Arguments:Specifically of interest will be any functions returning EWOULDBLOCK - and recording when that happens.</li>
+</ul>
+</li>
+<li>ep-engine<ul>
+<li>Acquire / release of (expensive) locks. Examples: <code>CheckpointManager::queueLock</code></li>
+<li>VBucket state changes (active/replica/dead).</li>
+<li>DCP<ul>
+<li>Stream start (Arguments: vbucket, start, end)</li>
+<li>Stream end (Arguments: reason for finish).</li>
+<li>Event per checkpoint marker? (if not too expensive).</li>
+</ul>
+</li>
+<li>KVStore<ul>
+<li>committing a new checkpoint (<code>KVStore::commit</code>)</li>
+<li>rollback</li>
+<li>compaction</li>
+<li>snapshotVBucket </li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
