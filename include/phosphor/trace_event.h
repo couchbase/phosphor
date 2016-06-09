@@ -95,7 +95,7 @@ namespace phosphor {
          */
         static const char* typeToString(Type type);
 
-    private:
+    protected:
         /**
          * Get the required JSON parts for the type of the
          * object. i.e. the event type character and any
@@ -106,6 +106,7 @@ namespace phosphor {
          */
         std::pair<const char*, std::string> typeToJSON() const;
 
+    private:
         const char *name;
         const char *category;
         size_t id;
