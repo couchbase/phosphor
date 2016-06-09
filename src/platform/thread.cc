@@ -37,7 +37,7 @@ namespace phosphor {
 #elif defined(__linux__)
             return syscall(__NR_gettid);
 #elif defined(_WIN32)
-            return GetCurrentThreadId(void);
+            return GetCurrentThreadId();
 #else
 #error Unsupported platform, no way to get threadid
 #endif
