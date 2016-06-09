@@ -20,6 +20,7 @@
 
 #include "phosphor/trace_log.h"
 #include "phosphor/platform/thread.h"
+#include "utils/string_utils.h"
 
 namespace phosphor {
 
@@ -117,6 +118,47 @@ namespace phosphor {
 
     size_t TraceConfig::getBufferSize() const {
         return buffer_size;
+    }
+
+    TraceConfig TraceConfig::fromString(const std::string& config) {
+        auto arguments(phosphor::utils::split_string(config, ','));
+
+        BufferMode mode = BufferMode::fixed;
+        int buffer_size = 1024 * 1024 * 8;
+
+        for(const std::string& argument : arguments) {
+            auto kv(phosphor::utils::split_string(argument, ':'));
+            std::string key(kv[0]);
+            std::string value(kv[1]);
+
+            if(key == "buffer-mode") {
+                if(value == "fixed") {
+                    mode = BufferMode::fixed;
+                } else {
+                    throw std::invalid_argument("TraceConfig::fromString: "
+                                                "Invalid buffer mode given");
+                }
+            } else if(key == "buffer-size") {
+                try {
+                    buffer_size = std::stoi(value);
+                } catch (std::invalid_argument& e) {
+                    throw std::invalid_argument(
+                            "TraceConfig::fromString: "
+                            "buffer size was not a valid integer");
+                } catch (std::out_of_range& e) {
+                    throw std::invalid_argument(
+                            "TraceConfig::fromString: "
+                            "buffer size was too large");
+                }
+
+                if(buffer_size < 0) {
+                    throw std::invalid_argument(
+                            "TraceConfig::fromString: "
+                            "buffer size cannot be negative");
+                }
+            }
+        }
+        return TraceConfig(mode, static_cast<size_t>(buffer_size));
     }
 
     /*

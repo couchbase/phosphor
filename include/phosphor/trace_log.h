@@ -144,7 +144,14 @@ namespace phosphor {
          */
         trace_buffer_factory getBufferFactory() const;
 
-
+        /**
+         * Generate a TraceConfig from a config string (Usually set from
+         * an environment variable).
+         *
+         * @param config Config string to be used to generate the TraceConfig
+         * @return Generated TraceConfig
+         */
+        static TraceConfig fromString(const std::string& config);
 
     protected:
         /**

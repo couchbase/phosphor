@@ -85,6 +85,23 @@ TEST(TraceConfigTest, createModeErrors) {
                  std::invalid_argument);
 }
 
+TEST(TraceConfigTest, fromString) {
+    TraceConfig config = TraceConfig::fromString("buffer-mode:fixed,"
+                                                 "buffer-size:1024");
+
+    EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
+    EXPECT_EQ(1024, config.getBufferSize());
+
+    EXPECT_THROW(TraceConfig::fromString("buffer-mode:other"),
+                 std::invalid_argument);
+    EXPECT_THROW(TraceConfig::fromString("buffer-size:-1"),
+                 std::invalid_argument);
+    EXPECT_THROW(TraceConfig::fromString("buffer-size:999999999999999999"),
+                 std::invalid_argument);
+    EXPECT_THROW(TraceConfig::fromString("buffer-size:abcd"),
+                 std::invalid_argument);
+}
+
 class MockTraceLog : public TraceLog {
     friend class TraceLogTest;
 };
