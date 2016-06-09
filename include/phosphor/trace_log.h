@@ -75,7 +75,7 @@ namespace phosphor {
         /**
          * @return The number of sentinels to be created
          */
-        unsigned getSentinelCount();
+        unsigned getSentinelCount() const;
 
         /**
          * Factory method which sets up a TraceLogConfig from the
@@ -193,6 +193,21 @@ namespace phosphor {
          * Default constructor for TraceLog
          */
         TraceLog();
+
+        /**
+         * Constructor for creating a TraceLog with a specific log
+         * config
+         *
+         * @param _config The TraceLogConfig to be used by the TraceLog
+         */
+        TraceLog(const TraceLogConfig& _config);
+
+        /**
+         * Used to perform a one-time configuration of the TraceLog
+         *
+         * @param _config The TraceLogConfig to be used by the TraceLog
+         */
+        void configure(const TraceLogConfig &_config);
 
         /**
          * Singleton static method to get the TraceLog instance
@@ -369,8 +384,11 @@ namespace phosphor {
          *         nullptr if a valid ChunkTenant could not be acquired.
          */
         inline ChunkTenant* getChunkTenant() {
+            auto shared_index = platform::getCurrentThreadIDCached()
+                                % shared_chunks.size();
+
             ChunkTenant &cs = (thread_chunk.sentinel) ? thread_chunk
-                                                      : shared_chunk;
+                                                      : shared_chunks[shared_index];
 
             if (!cs.sentinel->acquire()) {
                 resetChunk(cs);
@@ -433,13 +451,13 @@ namespace phosphor {
         static THREAD_LOCAL ChunkTenant thread_chunk;
 
         /**
-         * The shared ChunkTenant which is used be default when a thread
+         * The shared ChunkTenants which are used by default when a thread
          * has not been registered.
          *
          * This is because we need to guarantee that the resources in the
          * thread-specific chunk will be at some point freed up.
          */
-        static ChunkTenant shared_chunk;
+        std::vector<ChunkTenant> shared_chunks;
 
         /**
          * The current or last-used TraceConfig of the TraceLog, this

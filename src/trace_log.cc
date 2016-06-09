@@ -39,7 +39,7 @@ namespace phosphor {
         return *this;
     }
 
-    unsigned TraceLogConfig::getSentinelCount() {
+    unsigned TraceLogConfig::getSentinelCount() const {
         return sentinel_count;
     }
 
@@ -166,8 +166,19 @@ namespace phosphor {
      */
 
     TraceLog::TraceLog()
-            : enabled(false) {
-        shared_chunk.sentinel = new Sentinel;
+            : TraceLog(TraceLogConfig()) {
+    }
+
+    TraceLog::TraceLog(const TraceLogConfig &_config)
+        : enabled(false) {
+        configure(_config);
+    }
+
+    void TraceLog::configure(const TraceLogConfig &_config) {
+        shared_chunks.resize(_config.getSentinelCount());
+        for(auto& chunk : shared_chunks) {
+            chunk.sentinel = new Sentinel();
+        }
     }
 
     TraceLog &TraceLog::getInstance() {
@@ -271,6 +282,5 @@ namespace phosphor {
     }
 
     THREAD_LOCAL TraceLog::ChunkTenant TraceLog::thread_chunk;
-    TraceLog::ChunkTenant TraceLog::shared_chunk;
 
 }
