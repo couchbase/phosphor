@@ -1,5 +1,6 @@
 var dir_1c88311f8fdc2818688f49103ed32664 =
 [
+    [ "platform", "dir_41ff3fdb09ce7a4503d9494e23506ca2.html", "dir_41ff3fdb09ce7a4503d9494e23506ca2" ],
     [ "phosphor.h", "phosphor_8h.html", "phosphor_8h" ],
     [ "sentinel.h", "sentinel_8h.html", [
       [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ]

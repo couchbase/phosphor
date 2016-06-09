@@ -108,22 +108,24 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <ul>
 <li>&lt;strike&gt;Finish test coverage of trace buffer&lt;/strike&gt; Done 2016/05/27</li>
 <li>&lt;strike&gt;Add tests for Trace log&lt;/strike&gt; Done 2016/05/27</li>
-<li>Add benchmarking for chunk sizes (By templating the TraceChunk on the base type of the chunk itself, ie. std::array vs <a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>)</li>
-<li>Add benchmarking for tracing speed</li>
 </ul>
 <h3>WEEK COMMENCING 2016/05/30</h3>
 <p>n/a .gardner is away</p>
 <h3>WEEK COMMENCING 2016/06/06</h3>
 <ul>
-<li>Add platform abstraction for thread ids</li>
-<li>Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to avoid pre-allocation.</li>
-<li>Move TraceChunk constructor to a reset method</li>
+<li>&lt;strike&gt;Add string conversion for TraceEvent::Type&lt;/strike&gt; Done 2016/06/06</li>
+<li>&lt;strike&gt;Add platform abstraction for thread ids&lt;/strike&gt; Done 2016/06/06</li>
+<li>&lt;strike&gt;Switch to simpler time representation&lt;/strike&gt; Done 2016/06/06</li>
 <li>Add a circular buffer implementation</li>
 <li>Refactor TraceLog::logEvent to not duplicate code</li>
+<li>Add chunked JSON export (Which takes an iterator)</li>
+<li>Add benchmarking for chunk sizes (By templating the TraceChunk on the base type of the chunk itself, ie. std::array vs <a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>)</li>
+<li>Add benchmarking for tracing speed</li>
 </ul>
 <h3>WEEK COMMENCING 2016/06/13</h3>
 <ul>
-<li>Add chunked JSON export (Which takes an iterator)</li>
+<li>Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to avoid pre-allocation.</li>
+<li>Move TraceChunk constructor to a reset method</li>
 <li>Add binary dump export (Including tool to convert binary dump to JSON)<ul>
 <li>Write buffer to file</li>
 <li>Write thread / pointer info to file</li>
@@ -137,6 +139,10 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <li>Try avoiding the conditional branch caused by the ternary expression in TraceLog::logEvent</li>
 <li>Use __builtin_expect where useful</li>
 <li>Sentinel benchmarking suggests that double the number of logical cores is the sweet-spot for the size of a shared array of ChunkTenants.</li>
+<li>Reduce size of trace event by reducing to 24 bits of microseconds (~16 seconds from 2^64 nanoseconds and storing a further 16 bits of resolution in the chunk header. (Saves ~4 bytes since type can be combined into timestamp)</li>
+<li>Reduce size of trace event by combining trace category and trace name pointers (Saves 8 bytes as its one less pointer)</li>
+<li>Assume one less argument on Async events and use id as one of the arguments (Saves 8 bytes as there's no need for separate id property)</li>
+<li>Add a duration property (Costs 24 bits)</li>
 </ul>
 <h2>MMap compatibility</h2>
 <p>Since the trace buffer has been refactored to be contiguous again an MMap is technically possible. By switching to std::function based buffer factories it is possible for an end-user (Or even a sample implementation) to create a buffer which uses placement-new to allocate into a buffer.</p>
