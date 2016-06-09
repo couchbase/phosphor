@@ -27,6 +27,7 @@ using namespace phosphor;
 
 TEST(TraceChunkTest, fillAndOverfillAndCount) {
     TraceChunk chunk;
+    chunk.reset();
 
     int count = 0;
     while(!chunk.isFull()) {
@@ -50,6 +51,7 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
 
 TEST(TraceChunkTest, string_check) {
     TraceChunk chunk;
+    chunk.reset();
 
     while(!chunk.isFull()) {
         chunk.addEvent() = TraceEvent(
