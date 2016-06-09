@@ -110,10 +110,7 @@ TEST(TraceEvent, toJSON) {
 class MockTraceEvent : public TraceEvent {
 public:
     using TraceEvent::TraceEvent;
-
-    std::pair<const char*, std::string> typeToJSON() const {
-        return TraceEvent::typeToJSON();
-    };
+    using TraceEvent::typeToJSON;
 };
 
 TEST(TraceEventTypeToJSON, Instant) {
