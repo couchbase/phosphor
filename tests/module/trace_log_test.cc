@@ -25,6 +25,24 @@
 
 using namespace phosphor;
 
+TEST(TraceLogConfigTest, sentinel_count) {
+    TraceLogConfig config;
+    EXPECT_EQ(88, config.setSentinelCount(88).getSentinelCount());
+    EXPECT_EQ(33, config.setSentinelCount(33).getSentinelCount());
+}
+
+TEST(TraceLogConfigTest, from_environment) {
+    setenv("PHOSPHOR_SENTINEL_COUNT", "5", true);
+    TraceLogConfig config = TraceLogConfig::fromEnvironment();
+    EXPECT_EQ(5, config.getSentinelCount());
+
+    for(const auto& str : {"abdc", "", "99999999999999999", "-1"}) {
+        setenv("PHOSPHOR_SENTINEL_COUNT", str, true);
+        EXPECT_THROW(TraceLogConfig::fromEnvironment(),
+                     std::invalid_argument);
+    }
+}
+
 TEST(TraceConfigTest, defaultConstructor) {
     TraceConfig config;
 }

@@ -16,11 +16,62 @@
  */
 
 #include <exception>
+#include <string>
 
 #include "phosphor/trace_log.h"
 #include "phosphor/platform/thread.h"
 
 namespace phosphor {
+
+    /*
+     * TraceLogConfig implementation
+     */
+    TraceLogConfig::TraceLogConfig()
+          // Benchmarking suggests that 4x the number of logical
+          // cores is the sweetspot for the number to share.
+        : sentinel_count(std::thread::hardware_concurrency() * 4) {
+
+    }
+
+    TraceLogConfig& TraceLogConfig::setSentinelCount(unsigned _sentinel_count) {
+        sentinel_count = _sentinel_count;
+        return *this;
+    }
+
+    unsigned TraceLogConfig::getSentinelCount() {
+        return sentinel_count;
+    }
+
+    TraceLogConfig TraceLogConfig::fromEnvironment() {
+        TraceLogConfig config;
+
+        const char* sentinel_count_s = std::getenv("PHOSPHOR_SENTINEL_COUNT");
+        if(sentinel_count_s) {
+
+            int sentinel_count;
+            try {
+                sentinel_count = std::stoi(sentinel_count_s);
+            } catch (std::invalid_argument& e) {
+                throw std::invalid_argument(
+                        "TraceLogConfig::fromEnviroment: "
+                        "PHOSPHOR_SENTINEL_COUNT was not a valid integer");
+            } catch (std::out_of_range& e) {
+                throw std::invalid_argument(
+                        "TraceLogConfig::fromEnviroment: "
+                        "PHOSPHOR_SENTINEL_COUNT was too large");
+            }
+
+            if(sentinel_count < 0) {
+                throw std::invalid_argument(
+                        "TraceLogConfig::fromEnviroment: "
+                        "PHOSPHOR_SENTINEL_COUNT cannot be negative");
+            }
+
+            config.setSentinelCount(static_cast<unsigned>(sentinel_count));
+        }
+
+        return config;
+    }
 
     /*
      * TraceConfig implementation

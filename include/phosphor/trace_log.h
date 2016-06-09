@@ -40,7 +40,58 @@ namespace phosphor {
     };
 
     /**
-     * The TraceConfig is used to configure a TraceLog when it is enabled
+     * The TraceLogConfig is used to perform a one-time config of a
+     * TraceLog for anything that must be set only once e.g. the number
+     * of shared sentinels to create.
+     *
+     * The TraceLogConfig can either be passed in when the TraceLog is
+     * created, or by using the TraceLog::configure() method *prior* to
+     * the first time the TraceLog is started.
+     */
+    class TraceLogConfig {
+    public:
+
+        /**
+         * Default constructor establishes sensible default values for
+         * one-time config.
+         *
+         *  Sentinel Count: x4 number of logical cores
+         */
+        TraceLogConfig();
+
+        /**
+         * Set the number of sentinels to create to be shared by
+         * threads when they do not register.
+         *
+         * Example use:
+         *
+         *     TraceLogConfig()->setSentinelCount(48);
+         *
+         * @param _sentinel_count The number of sentinels
+         * @return A reference to this config (For chaining)
+         */
+        TraceLogConfig& setSentinelCount(unsigned _sentinel_count);
+
+        /**
+         * @return The number of sentinels to be created
+         */
+        unsigned getSentinelCount();
+
+        /**
+         * Factory method which sets up a TraceLogConfig from the
+         * environment variables
+         *
+         * @return the new TraceLogConfig
+         */
+        static TraceLogConfig fromEnvironment();
+
+    protected:
+        unsigned sentinel_count;
+    };
+
+    /**
+     * The TraceConfig is used to configure a TraceLog for starting Trace
+     * when it is enabled.
      *
      * The TraceConfig has two constructors with two different aims in mind
      *
@@ -92,6 +143,8 @@ namespace phosphor {
          *         TraceBuffer when tracing is enabled.
          */
         trace_buffer_factory getBufferFactory() const;
+
+
 
     protected:
         /**
