@@ -98,11 +98,11 @@ TEST(TraceEvent, toJSON) {
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-            "{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-            "\"ts\":[0-9]+,\"pid\":0,\"tid\":0}");
+            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
+            "\"ts\":[0-9]+,\"pid\":0,\"tid\":0\\}");
 #else
-            "{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-             "\"ts\":\\d+,\"pid\":0,\"tid\":0}");
+            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
+             "\"ts\":\\d+,\"pid\":0,\"tid\":0\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);
 }
