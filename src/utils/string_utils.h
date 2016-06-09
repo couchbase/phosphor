@@ -16,6 +16,7 @@
  */
 
 #include <string>
+#include <vector>
 
 #pragma once
 
@@ -37,5 +38,16 @@ namespace phosphor {
          * @return Converted string
          */
         std::string to_json(const std::string& str);
+
+        /**
+         * Splits a string based on a delimiter
+         *
+         * @param str String to be split up
+         * @param delim Delimiter to split the string on (Defaults to
+         *              a space)
+         * @return str split up by delim
+         */
+        std::vector<std::string> split_string(const std::string& str,
+                                              char delim = ' ');
     }
 }

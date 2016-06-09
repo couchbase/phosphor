@@ -4,6 +4,7 @@ MACRO (M_ADD_MODULE_GTEST name)
             ${ARGN}
     )
     TARGET_LINK_LIBRARIES(${name}
+            gmock
             gtest
             gtest_main)
     ADD_TEST(NAME ${name} COMMAND ${name})

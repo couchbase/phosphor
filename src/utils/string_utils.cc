@@ -18,7 +18,7 @@
 #include <cstdarg>
 #include <cstddef>
 #include <stdexcept>
-#include <vector>
+#include <sstream>
 
 #include "string_utils.h"
 
@@ -94,6 +94,20 @@ namespace phosphor {
 
         std::string to_json(const std::string& str) {
             return "\"" + escape_json(str) + "\"";
+        }
+
+        std::vector<std::string> split_string(const std::string& str,
+                                              const char delim) {
+            if(str == "") {
+                return {""};
+            }
+            std::vector<std::string> elems;
+            std::stringstream ss(str);
+            std::string item;
+            while (std::getline(ss, item, delim)) {
+                elems.push_back(item);
+            }
+            return elems;
         }
     }
 }
