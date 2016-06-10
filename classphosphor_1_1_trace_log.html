@@ -137,8 +137,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ab61da1a235de557b8321bf542defae32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22fde18331507432721f09e70f35822e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a22fde18331507432721f09e70f35822e">start</a> (const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;_trace_config)</td></tr>
 <tr class="separator:a22fde18331507432721f09e70f35822e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad39c97c1cc03aac3d7ebd2294ae46a1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ad39c97c1cc03aac3d7ebd2294ae46a1a">start</a> (std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;, const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;_trace_config)</td></tr>
+<tr class="separator:ad39c97c1cc03aac3d7ebd2294ae46a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad61c9956ecb142c03260ab9a430914a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ad61c9956ecb142c03260ab9a430914a2">stop</a> ()</td></tr>
 <tr class="separator:ad61c9956ecb142c03260ab9a430914a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace0a0b3c1c672bb54843d02aa38e2182"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ace0a0b3c1c672bb54843d02aa38e2182">stop</a> (std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;)</td></tr>
+<tr class="separator:ace0a0b3c1c672bb54843d02aa38e2182"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac17965235daaff2cb2ecf38040549c68"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U &gt; </td></tr>
 <tr class="memitem:ac17965235daaff2cb2ecf38040549c68"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">logEvent</a> (const char *category, const char *name, <a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">TraceEvent::Type</a> type, size_t id, T argA, U argB)</td></tr>
 <tr class="separator:ac17965235daaff2cb2ecf38040549c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,8 +153,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a145e95d17de9bd037e9ed4cb81e98f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47bd45e0cec58a6315aeab78a0562469"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469">getBuffer</a> ()</td></tr>
 <tr class="separator:a47bd45e0cec58a6315aeab78a0562469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5041e833872a887191ec8ca8ef95d6d"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae5041e833872a887191ec8ca8ef95d6d">getBuffer</a> (std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;)</td></tr>
+<tr class="separator:ae5041e833872a887191ec8ca8ef95d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f">isEnabled</a> ()</td></tr>
 <tr class="separator:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2df1c20bf288ee486ad043dc61c3b09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#af2df1c20bf288ee486ad043dc61c3b09">lock</a> ()</td></tr>
+<tr class="separator:af2df1c20bf288ee486ad043dc61c3b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaa2902b02d5327ffe23301c7cf92a82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#afaa2902b02d5327ffe23301c7cf92a82">unlock</a> ()</td></tr>
+<tr class="separator:afaa2902b02d5327ffe23301c7cf92a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -169,8 +179,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a45bae635204891e31084169815917184"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7072d5d2fa370d231b6c93490d2180ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a7072d5d2fa370d231b6c93490d2180ca">resetChunk</a> (<a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> &amp;ct)</td></tr>
 <tr class="separator:a7072d5d2fa370d231b6c93490d2180ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b46069e80adb1d3deedb32074953119"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a9b46069e80adb1d3deedb32074953119">stopUNLOCKED</a> ()</td></tr>
-<tr class="separator:a9b46069e80adb1d3deedb32074953119"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -319,6 +327,36 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 
 </div>
 </div>
+<a class="anchor" id="ae5041e833872a887191ec8ca8ef95d6d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt; phosphor::TraceLog::getBuffer </td>
+          <td>(</td>
+          <td class="paramtype">std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Same as <a class="el" href="classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469">TraceLog::getBuffer()</a> except with external locking</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Lock</td><td>guard holding the external lock </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::logic_error</td><td>if tracing is currently enabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="aeea8aa36e859190f94f516ba25b4077d"></a>
 <div class="memitem">
 <div class="memproto">
@@ -384,6 +422,31 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 </div><div class="memdoc">
 <p>Get the current state of tracing of this <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a></p>
 <dl class="section return"><dt>Returns</dt><dd>True if tracing is enabled, False if tracing is disabled </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af2df1c20bf288ee486ad043dc61c3b09"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::TraceLog::lock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Lock the trace log externally</p>
+<p>Note: Prefer the internal locking on the methods </p>
 
 </div>
 </div>
@@ -691,6 +754,40 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="ad39c97c1cc03aac3d7ebd2294ae46a1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::TraceLog::start </td>
+          <td>(</td>
+          <td class="paramtype">std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>_trace_config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Start tracing with the specified config and using an external lock</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lock</td><td>guard holding the external lock </td></tr>
+    <tr><td class="paramname">_trace_config</td><td><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> to use for this tracing run </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ad61c9956ecb142c03260ab9a430914a2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -707,7 +804,30 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a9b46069e80adb1d3deedb32074953119"></a>
+<a class="anchor" id="ace0a0b3c1c672bb54843d02aa38e2182"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::TraceLog::stop </td>
+          <td>(</td>
+          <td class="paramtype">std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>lh</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Immediately stops tracing (With external locking)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Lock</td><td>guard holding the external lock </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afaa2902b02d5327ffe23301c7cf92a82"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -715,7 +835,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void phosphor::TraceLog::stopUNLOCKED </td>
+          <td class="memname">void phosphor::TraceLog::unlock </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -723,11 +843,12 @@ template&lt;typename T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Immediately stops tracing while the global lock is held. </p>
+<p>Unlock the trace log externally</p>
+<p>Note: Prefer the internal locking on the methods </p>
 
 </div>
 </div>

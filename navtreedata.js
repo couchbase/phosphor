@@ -31,7 +31,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89a7ca8120d0eac07af702e97fa362c99c6"
+"trace__log_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

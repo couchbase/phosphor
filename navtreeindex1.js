@@ -1,5 +1,12 @@
 var NAVTREEINDEX1 =
 {
+"trace__log_8h_source.html":[4,0,0,1,6],
+"unionphosphor_1_1_trace_argument.html":[3,0,1,2],
+"unionphosphor_1_1_trace_argument.html#a17fcf32b625b4e0a254390abc631cba2":[3,0,1,2,8],
+"unionphosphor_1_1_trace_argument.html#a2adef26ed2ca6fc7cb1ac76a05ba73dc":[3,0,1,2,4],
+"unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89":[3,0,1,2,0],
+"unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89a1965677c4ea7acc5d9c14cf0d4d7e637":[3,0,1,2,0,1],
+"unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89a561ed54c25c436bd61acd81c827db905":[3,0,1,2,0,0],
 "unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89a7ca8120d0eac07af702e97fa362c99c6":[3,0,1,2,0,6],
 "unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89a87b60665fe30dbd85a4dcdd51302a923":[3,0,1,2,0,3],
 "unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89aa182714dd14bf35d95e60b075ad74aeb":[3,0,1,2,0,5],

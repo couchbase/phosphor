@@ -132,6 +132,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af7cd85da9429af0aa6c2e748519cfb2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a523337e5124c4ba7d6f95e9d7db3ad0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="trace__buffer_8h.html#a6324e6b9fb1544fc8a1cc46e81473aa2">trace_buffer_factory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a523337e5124c4ba7d6f95e9d7db3ad0b">getBufferFactory</a> () const </td></tr>
 <tr class="separator:a523337e5124c4ba7d6f95e9d7db3ad0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeb649565b79d61e54fcf2d8dcb348c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#aeeb649565b79d61e54fcf2d8dcb348c1">setStoppedCallback</a> (TracingStoppedCallback _tracing_stopped_callback)</td></tr>
+<tr class="separator:aeeb649565b79d61e54fcf2d8dcb348c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab156b18aa5f8d7e623a6d5f55710a2af"><td class="memItemLeft" align="right" valign="top">TracingStoppedCallback&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#ab156b18aa5f8d7e623a6d5f55710a2af">getStoppedCallback</a> () const </td></tr>
+<tr class="separator:ab156b18aa5f8d7e623a6d5f55710a2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -154,6 +158,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 <tr class="memitem:ae76d1955c51c9f02c72d22ca1ccb8d07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae76d1955c51c9f02c72d22ca1ccb8d07"></a>
 <a class="el" href="trace__buffer_8h.html#a6324e6b9fb1544fc8a1cc46e81473aa2">trace_buffer_factory</a>&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_factory</b></td></tr>
 <tr class="separator:ae76d1955c51c9f02c72d22ca1ccb8d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed60fd97c1c69c4b0c3971669e02bd41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed60fd97c1c69c4b0c3971669e02bd41"></a>
+TracingStoppedCallback&#160;</td><td class="memItemRight" valign="bottom"><b>tracing_stopped_callback</b></td></tr>
+<tr class="separator:aed60fd97c1c69c4b0c3971669e02bd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> is used to configure a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> for starting Trace when it is enabled.</p>
@@ -315,6 +322,22 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 
 </div>
 </div>
+<a class="anchor" id="ab156b18aa5f8d7e623a6d5f55710a2af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TracingStoppedCallback phosphor::TraceConfig::getStoppedCallback </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>The tracing_stopped_callback to be invoked when tracing stops. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a2aa163d06533e57718e60558917207f5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -351,6 +374,30 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="aeeb649565b79d61e54fcf2d8dcb348c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp; phosphor::TraceConfig::setStoppedCallback </td>
+          <td>(</td>
+          <td class="paramtype">TracingStoppedCallback&#160;</td>
+          <td class="paramname"><em>_tracing_stopped_callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the tracing_stopped_callback to be invoked when tracing stops.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_tracing_stopped_callback</td><td>Callback to be used </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>reference to the <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> be configured </dd></dl>
 
 </div>
 </div>
