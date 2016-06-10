@@ -120,6 +120,16 @@ namespace phosphor {
         return buffer_size;
     }
 
+    TraceConfig& TraceConfig::setStoppedCallback(
+            TracingStoppedCallback _tracing_stopped_callback) {
+        tracing_stopped_callback = _tracing_stopped_callback;
+        return *this;
+    }
+
+    TracingStoppedCallback TraceConfig::getStoppedCallback() const {
+        return tracing_stopped_callback;
+    }
+
     TraceConfig TraceConfig::fromString(const std::string& config) {
         auto arguments(phosphor::utils::split_string(config, ','));
 
@@ -194,9 +204,12 @@ namespace phosphor {
         stop(lh);
     }
 
-    void TraceLog::stop(std::lock_guard<TraceLog>&) {
+    void TraceLog::stop(std::lock_guard<TraceLog>& lh) {
         if (enabled.exchange(false)) {
             buffer->evictThreads();
+            if(auto cb = trace_config.getStoppedCallback()) {
+                cb(*this, lh);
+            }
         }
     }
 
@@ -222,11 +235,16 @@ namespace phosphor {
     }
 
     std::unique_ptr<TraceBuffer> TraceLog::getBuffer() {
-        std::lock_guard<std::mutex> lh(mutex);
+        std::lock_guard<TraceLog> lh(*this);
+        return getBuffer(lh);
+    }
+
+    std::unique_ptr<TraceBuffer> TraceLog::getBuffer(
+            std::lock_guard<TraceLog>&) {
         if (enabled) {
             throw std::logic_error(
                     "phosphor::TraceLog::getBuffer: Cannot get the current "
-                    "TraceBuffer while logging is enabled");
+                            "TraceBuffer while logging is enabled");
         }
         return std::move(buffer);
     }

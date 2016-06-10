@@ -256,3 +256,21 @@ TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
     trace_log.logEvent("category", "name", TraceEvent::Type::Instant, 0, 0, 0);
     EXPECT_NO_THROW(TraceLog::deregisterThread(trace_log));
 }
+
+TEST_F(TraceLogTest, testDoneCallback) {
+    bool callback_invoked = false;
+    trace_log.start(
+            TraceConfig(BufferMode::fixed, min_buffer_size * 4)
+                        .setStoppedCallback([&callback_invoked](TraceLog& log,
+                                               std::lock_guard<TraceLog>& lh) {
+                            callback_invoked = true;
+                            EXPECT_NE(nullptr, log.getBuffer(lh).get());
+                        }));
+
+    while(trace_log.isEnabled()) {
+        log_event();
+    }
+    // TraceLog should already be null
+    EXPECT_EQ(nullptr, trace_log.getBuffer().get());
+    EXPECT_TRUE(callback_invoked);
+}

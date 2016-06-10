@@ -26,6 +26,38 @@
 
 namespace phosphor {
 
+    class TraceLog; // Forward declare
+
+    /**
+     * Functor type for a callback to be used when a TraceLog stops
+     * tracing. This can be given to a TraceConfig before tracing
+     * starts in order to detect when it ends.
+     *
+     * The functor will receive a reference to the TraceLog and a
+     * reference to the external lock that was held when the functor
+     * was invoked which can be used to access restricted methods
+     * even while the TraceLog is locked.
+     *
+     * Example Functor:
+     *
+     *     void(TraceLog& log, std::lock_guard<TraceLog>& lh) {
+     *         for(const auto& event : *log.getBuffer(lh)) {
+     *             std::cerr << event << "\n";
+     *         }
+     *         log.start(lh, TraceConfig(BufferMode::fixed, 2000000));
+     *     }
+     *
+     * It is worth bearing in mind that this callback will be run in
+     * the thread that stopped tracing which *could* be a thread which
+     * was in the middle of tracing an event if the buffer became full.
+     *
+     * Therefore it might be sensible to create a new thread to process
+     * the buffer (Which can take a comparatively long time) or to stash
+     * it somewhere that another thread can access.
+     */
+    using TracingStoppedCallback =
+                std::function<void(TraceLog&, std::lock_guard<TraceLog>&)>;
+
     /**
      * The mode of a TraceBuffer implementation
      *
@@ -145,6 +177,22 @@ namespace phosphor {
         trace_buffer_factory getBufferFactory() const;
 
         /**
+         * Set the tracing_stopped_callback to be invoked when tracing
+         * stops.
+         *
+         * @param _tracing_stopped_callback Callback to be used
+         * @return reference to the TraceConfig be configured
+         */
+        TraceConfig& setStoppedCallback(
+                TracingStoppedCallback _tracing_stopped_callback);
+
+        /**
+         * @return The tracing_stopped_callback to be invoked when tracing
+         * stops.
+         */
+        TracingStoppedCallback getStoppedCallback() const;
+
+        /**
          * Generate a TraceConfig from a config string (Usually set from
          * an environment variable).
          *
@@ -168,6 +216,7 @@ namespace phosphor {
         BufferMode buffer_mode;
         size_t buffer_size;
         trace_buffer_factory buffer_factory;
+        TracingStoppedCallback tracing_stopped_callback;
     };
 
     /**
