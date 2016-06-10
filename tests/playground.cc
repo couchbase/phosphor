@@ -34,13 +34,7 @@ int main(int argc, char* argv[]) {
         threads.emplace_back([i]() {
             //phosphor::TraceLog::registerThread();
             while(phosphor::TraceLog::getInstance().isEnabled()) {
-                TRACE_EVENT_START("child", "thread", i, "");
-                TRACE_EVENT_START("child", "inner", i, "");
-                TRACE_EVENT_START("child", "reallyinn", i, "");
-                std::this_thread::yield();
-                TRACE_EVENT_END("child", "reallyinn", i, "");
-                TRACE_EVENT_END("child", "inner", i, "");
-                TRACE_EVENT_END("child", "thread", i, "");
+                TRACE_EVENT("child", "thread", 4, 5);
             }
             //phosphor::TraceLog::deregisterThread();
         });
@@ -48,8 +42,7 @@ int main(int argc, char* argv[]) {
 
 
     while(phosphor::TraceLog::getInstance().isEnabled()) {
-        TRACE_EVENT_START("main", "thread", 4, 5);
-        TRACE_EVENT_END("main", "thread", 4, 5);
+        TRACE_EVENT("main", "thread", 4, 5);
     }
     phosphor::TraceLog::getInstance().stop();
     auto buffer(phosphor::TraceLog::getInstance().getBuffer());
@@ -62,12 +55,11 @@ int main(int argc, char* argv[]) {
     fs.open("/Users/will/output.json", std::fstream::out | std::fstream::trunc);
 
     fs << "[";
-    bool first = true;
     for (const auto& chunk : buffer->chunks()) {
-        //printf("\n\n[NEW CHUNK]\n");
+        printf("\n\n[NEW CHUNK]\n");
         for(const auto& event : chunk) {
             fs << event.to_json() << ",\n";
-            //printf("%s\n", event.to_string().c_str());
+            printf("%s\n", event.to_string().c_str());
         }
     }
 

@@ -57,7 +57,7 @@
  *  - void*
  */
 
-/*
+/**
  * \defgroup sync Synchronous events
  *
  * Synchronous events are used for events that are scoped to a single
@@ -69,7 +69,7 @@
  *     // Perform some expensive operation
  *     TRACE_EVENT_END0('Memcached:Frontend', 'SetKey')
  *
- *  @{
+ * @{
  */
 #define TRACE_EVENT_START(category, name, ...) \
     phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0, __VA_ARGS__)
@@ -84,10 +84,46 @@
     phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0)
 /** @} */
 
-/*
- * TODO: Scoped events that automatically log
- * entry/exit from a scope (e.g. a function
+/**
+ * \defgroup scoped Scoped Events
+ *
+ * Scoped events are used for events that should log synchronously both
+ * a start and an end event automatically according to a scope.
+ *
+ * Example:
+ *
+ *     void defragment_part(int vbucket) {
+ *         // Set up a scoped event and log the start event
+ *         TRACE_EVENT("ep-engine:vbucket", "defragment_part", vbucket);
+ *
+ *         // Perform the de-fragmentation and take some time doing it
+ *         ...
+ *
+ *     } // Automatically log a synchronous end event on function exit
+ *       // (Through return or exception)
+ *
+ * @{
  */
+#define TRACE_EVENT(category, name, ...) \
+    TRACE_EVENT_START(category, name, __VA_ARGS__); \
+    struct scoped_trace_t_ ##__LINE__ ##__FILE__ { \
+        ~scoped_trace_t_ ##__LINE__ ##__FILE__() { \
+            phosphor::TraceLog::getInstance().logEvent(category, name, \
+                                                       phosphor::TraceEvent::Type::SyncEnd, \
+                                                       0); \
+            } \
+    } scoped_trace_inst_  ##__LINE__ ##__FILE__;
+
+#define TRACE_EVENT0(category, name) \
+    TRACE_EVENT_START(category, name); \
+    struct scoped_trace_t_ ##__LINE__ ##__FILE__ { \
+        ~scoped_trace_t_ ##__LINE__ ##__FILE__() { \
+            phosphor::TraceLog::getInstance().logEvent(category, name, \
+                                                       phosphor::TraceEvent::Type::SyncEnd, \
+                                                       0); \
+            } \
+    } scoped_trace_inst_  ##__LINE__ ##__FILE__;
+/** @} */
 
 /**
  * \defgroup async Asynchronous Events
