@@ -21,10 +21,15 @@ n/a @will.gardner is away
 avoid pre-allocation.</strike> Done 2016/06/07
 Done 2016/06/07
 - <strike>Move TraceChunk constructor to a reset method</strike> Done 2016/06/07
-- Add chunked JSON export (Which takes an iterator)
+- <strike>Switch from single shared sentinel to multiple ~4x logical cores
+</strike> Done 2016/06/09
+- <strike>Add basic event->JSON converson</strike> Done 2016/06/09
+- <strike>Initial Server build integration efforts</strike>Done 2016/06/08
+- <strike>Environment variable based global config</strike> Done 2016/06/10
 
 ### WEEK COMMENCING 2016/06/13
 
+- Add chunked JSON export (Which takes an iterator)
 - Add a circular buffer implementation
 - Add benchmarking for chunk sizes (By templating the TraceChunk on the
 base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
@@ -35,8 +40,10 @@ base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
 
 ## Misc Feature List (Not allocated)
 
-- Buffer filled callback
-- Environment variable based global config
+- Buffer filled callback and buffer cycling (Useful for FDB usecase)
+    - Buffer cycling callback
+    - Tracing Stopped adapter so buffer cycling callback could be given
+-
 
 ## Performance Idea List
 
