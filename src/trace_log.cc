@@ -47,7 +47,7 @@ namespace phosphor {
         TraceLogConfig config;
 
         const char* sentinel_count_s = std::getenv("PHOSPHOR_SENTINEL_COUNT");
-        if(sentinel_count_s) {
+        if(sentinel_count_s && strlen(sentinel_count_s)) {
 
             int sentinel_count;
             try {
@@ -184,6 +184,13 @@ namespace phosphor {
         configure(_config);
     }
 
+    TraceLog::TraceLog(FromEnvironment)
+        : TraceLog(TraceLogConfig::fromEnvironment()) {
+        if(auto config = getenv("PHOSPHOR_TRACING_START")) {
+            start(TraceConfig::fromString(config));
+        }
+    }
+
     void TraceLog::configure(const TraceLogConfig &_config) {
         std::lock_guard<TraceLog> lh(*this);
 
@@ -195,7 +202,7 @@ namespace phosphor {
 
     TraceLog &TraceLog::getInstance() {
         // TODO: Not thread-safe on Windows
-        static TraceLog log_instance;
+        static TraceLog log_instance{FromEnvironment()};
         return log_instance;
     }
 

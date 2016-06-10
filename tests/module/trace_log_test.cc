@@ -53,11 +53,13 @@ TEST(TraceLogConfigTest, from_environment) {
     TraceLogConfig config = TraceLogConfig::fromEnvironment();
     EXPECT_EQ(5, config.getSentinelCount());
 
-    for(const auto& str : {"abdc", "", "99999999999999999", "-1"}) {
+    for(const auto& str : {"abdc", "99999999999999999", "-1"}) {
         setenv("PHOSPHOR_SENTINEL_COUNT", str, true);
         EXPECT_THROW(TraceLogConfig::fromEnvironment(),
                      std::invalid_argument);
     }
+    setenv("PHOSPHOR_SENTINEL_COUNT", "", true);
+    EXPECT_NO_THROW(TraceLogConfig::fromEnvironment());
 }
 
 TEST(TraceConfigTest, defaultConstructor) {
@@ -121,6 +123,7 @@ TEST(TraceConfigTest, fromString) {
 
 class MockTraceLog : public TraceLog {
     friend class TraceLogTest;
+    using TraceLog::TraceLog;
 };
 
 class TraceLogTest : public testing::Test {
@@ -274,3 +277,9 @@ TEST_F(TraceLogTest, testDoneCallback) {
     EXPECT_EQ(nullptr, trace_log.getBuffer().get());
     EXPECT_TRUE(callback_invoked);
 }
+
+TEST(TraceLogAltTest, FromEnvironmentConstrictor) {
+    setenv("PHOSPHOR_TRACING_START", "buffer-mode:fixed,buffer-size:80000", 1);
+    TraceLog trace_log{phosphor::FromEnvironment()};
+}
+

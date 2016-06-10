@@ -196,6 +196,10 @@ namespace phosphor {
          * Generate a TraceConfig from a config string (Usually set from
          * an environment variable).
          *
+         * Example:
+         *
+         *     TraceConfig::fromString("buffer-mode:fixed,buffer-size:1024");
+         *
          * @param config Config string to be used to generate the TraceConfig
          * @return Generated TraceConfig
          */
@@ -218,6 +222,12 @@ namespace phosphor {
         trace_buffer_factory buffer_factory;
         TracingStoppedCallback tracing_stopped_callback;
     };
+
+    /**
+     * Special type used to force selection of a specific constructor
+     * on the TraceLog class
+     */
+    struct FromEnvironment {};
 
     /**
      * The TraceLog class is the main public management interface
@@ -251,6 +261,25 @@ namespace phosphor {
          * @param _config The TraceLogConfig to be used by the TraceLog
          */
         TraceLog(const TraceLogConfig& _config);
+
+        /**
+         * Constructor for generating a TraceLog from the current
+         * environment according to the rules set out in TraceLogConfig.
+         *
+         * Will additionally start tracing if the `PHOSPHOR_TRACING_START`
+         * environment variable is appropriately configured according to
+         * the rules for TraceConfig::fromString
+         *
+         * This constructor can be invoked by using the special
+         * `FromEnvironment` parameter.
+         *
+         * Example:
+         *
+         *     TraceLog trace_log{FromEnvironment()};
+         *
+         * @return The configured TraceLog
+         */
+        TraceLog(FromEnvironment);
 
         /**
          * Used to perform a one-time configuration of the TraceLog

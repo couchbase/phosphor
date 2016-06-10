@@ -24,10 +24,28 @@
 
 #include "gsl_p/dyn_array.h"
 
+#ifdef _WIN32
+// Windows doesn't have setenv so emulate it
+
+// StackOverflow @bill-weinman - http://stackoverflow.com/a/23616164/5467841
+int setenv(const char *name, const char *value, int overwrite)
+{
+    int errcode = 0;
+    if(!overwrite) {
+        size_t envsize = 0;
+        errcode = getenv_s(&envsize, NULL, 0, name);
+        if(errcode || envsize) return errcode;
+    }
+    return _putenv_s(name, value);
+}
+#endif
+
 int main(int argc, char* argv[]) {
-    phosphor::TraceLog::getInstance().start(
-            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1000000)
-    );
+    setenv("PHOSPHOR_TRACING_START", "buffer-mode:fixed,buffer-size:10241024", 1);
+
+//    phosphor::TraceLog::getInstance().start(
+//            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1000000)
+//    );
 
     std::vector<std::thread> threads;
     for(int i = 0; i < 16; i++) {
