@@ -141,6 +141,15 @@ public:
         trace_log.logEvent("category", "name", TraceEvent::Type::Instant,
                            0, 0, 0);
     }
+
+    void log_event_all_types() {
+        trace_log.logEvent("category", "2arg", TraceEvent::Type::Instant,
+                           0, 0, 0);
+        trace_log.logEvent("category", "1arg", TraceEvent::Type::Instant,
+                           0, 0);
+        trace_log.logEvent("category", "0arg", TraceEvent::Type::Instant,
+                           0);
+    }
 protected:
     MockTraceLog trace_log;
 };
@@ -184,7 +193,7 @@ TEST_F(TraceLogTest, logTillFullAndEvenThen) {
                                 min_buffer_size * 4));
 
     while(trace_log.isEnabled()) {
-        log_event();
+        log_event_all_types();
     }
     log_event();
 }

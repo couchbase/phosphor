@@ -175,6 +175,8 @@ namespace phosphor {
     }
 
     void TraceLog::configure(const TraceLogConfig &_config) {
+        std::lock_guard<TraceLog> lh(*this);
+
         shared_chunks.resize(_config.getSentinelCount());
         for(auto& chunk : shared_chunks) {
             chunk.sentinel = new Sentinel();
@@ -188,18 +190,23 @@ namespace phosphor {
     }
 
     void TraceLog::stop() {
-        std::lock_guard<std::mutex> lh(mutex);
-        stopUNLOCKED();
+        std::lock_guard<TraceLog> lh(*this);
+        stop(lh);
     }
 
-    void TraceLog::stopUNLOCKED() {
+    void TraceLog::stop(std::lock_guard<TraceLog>&) {
         if (enabled.exchange(false)) {
             buffer->evictThreads();
         }
     }
 
-    void TraceLog::start(const TraceConfig &_trace_config) {
-        std::lock_guard<std::mutex> lh(mutex);
+    void TraceLog::start(const TraceConfig& _trace_config) {
+        std::lock_guard<TraceLog> lh(*this);
+        start(lh, _trace_config);
+    }
+
+    void TraceLog::start(std::lock_guard<TraceLog>&,
+                         const TraceConfig& _trace_config) {
         trace_config = _trace_config;
 
         size_t buffer_size =
@@ -251,7 +258,7 @@ namespace phosphor {
 
     void TraceLog::replaceChunk(ChunkTenant &ct) {
         ct.sentinel->release();
-        std::lock_guard<std::mutex> lh(mutex);
+        std::lock_guard<TraceLog> lh(*this);
         if (!ct.sentinel->acquire()) {
             resetChunk(ct);
             return;
@@ -270,7 +277,7 @@ namespace phosphor {
             ct.chunk = &buffer->getChunk(*ct.sentinel);
         } else {
             ct.sentinel->release();
-            stopUNLOCKED();
+            stop(lh);
         }
     }
 

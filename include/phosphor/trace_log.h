@@ -189,6 +189,7 @@ namespace phosphor {
      */
     class TraceLog {
     public:
+
         /**
          * Default constructor for TraceLog
          */
@@ -227,9 +228,25 @@ namespace phosphor {
         void start(const TraceConfig &_trace_config);
 
         /**
+         * Start tracing with the specified config and using an external lock
+         *
+         * @param lock guard holding the external lock
+         * @param _trace_config TraceConfig to use for this tracing run
+         */
+        void start(std::lock_guard<TraceLog>&,
+                   const TraceConfig &_trace_config);
+
+        /**
          * Immediately stops tracing
          */
         void stop();
+
+        /**
+         * Immediately stops tracing (With external locking)
+         *
+         * @param Lock guard holding the external lock
+         */
+        void stop(std::lock_guard<TraceLog>&);
 
         /**
          * Logs an event in the current buffer (if applicable)
@@ -334,6 +351,15 @@ namespace phosphor {
         std::unique_ptr<TraceBuffer> getBuffer();
 
         /**
+         * Same as TraceLog::getBuffer() except with external locking
+         *
+         * @param Lock guard holding the external lock
+         * @return TraceBuffer
+         * @throw std::logic_error if tracing is currently enabled
+         */
+        std::unique_ptr<TraceBuffer> getBuffer(std::lock_guard<TraceLog>&);
+
+        /**
          * Get the current state of tracing of this TraceLog
          *
          * @return True if tracing is enabled, False if tracing is disabled
@@ -369,8 +395,26 @@ namespace phosphor {
         static void deregisterThread(
                 TraceLog &instance = TraceLog::getInstance());
 
+        /**
+         * Lock the trace log externally
+         *
+         * Note: Prefer the internal locking on the methods
+         */
+        void lock() {
+            mutex.lock();
+        }
+
+        /**
+         * Unlock the trace log externally
+         *
+         * Note: Prefer the internal locking on the methods
+         */
+        void unlock() {
+            mutex.unlock();
+        }
 
     protected:
+
         struct ChunkTenant {
             Sentinel *sentinel = nullptr;
             TraceChunk *chunk = nullptr;
@@ -435,11 +479,6 @@ namespace phosphor {
          * state.
          */
         void resetChunk(ChunkTenant &ct);
-
-        /**
-         * Immediately stops tracing while the global lock is held.
-         */
-        void stopUNLOCKED();
 
         /**
          * The thread-specific ChunkTenant used for low contention
