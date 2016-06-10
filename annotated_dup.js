@@ -9,6 +9,7 @@ var annotated_dup =
       [ "TraceChunk", "classphosphor_1_1_trace_chunk.html", "classphosphor_1_1_trace_chunk" ],
       [ "TraceConfig", "classphosphor_1_1_trace_config.html", "classphosphor_1_1_trace_config" ],
       [ "TraceEvent", "classphosphor_1_1_trace_event.html", "classphosphor_1_1_trace_event" ],
-      [ "TraceLog", "classphosphor_1_1_trace_log.html", "classphosphor_1_1_trace_log" ]
+      [ "TraceLog", "classphosphor_1_1_trace_log.html", "classphosphor_1_1_trace_log" ],
+      [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html", "classphosphor_1_1_trace_log_config" ]
     ] ]
 ];

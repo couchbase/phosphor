@@ -2,6 +2,8 @@ var classphosphor_1_1_trace_log =
 [
     [ "ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", "structphosphor_1_1_trace_log_1_1_chunk_tenant" ],
     [ "TraceLog", "classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231", null ],
+    [ "TraceLog", "classphosphor_1_1_trace_log.html#a9084ab48cd9916adfea0420c6962e40c", null ],
+    [ "configure", "classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32", null ],
     [ "getBuffer", "classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469", null ],
     [ "getChunkTenant", "classphosphor_1_1_trace_log.html#aeea8aa36e859190f94f516ba25b4077d", null ],
     [ "isEnabled", "classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f", null ],
@@ -17,5 +19,6 @@ var classphosphor_1_1_trace_log =
     [ "enabled", "classphosphor_1_1_trace_log.html#a433797901dd0c7b1015f13ef729e34b4", null ],
     [ "generation", "classphosphor_1_1_trace_log.html#aaba5b955aca310f4bd5eda20ab7432d0", null ],
     [ "mutex", "classphosphor_1_1_trace_log.html#a51a113a9a75825d65aa7d235eeefd4fb", null ],
+    [ "shared_chunks", "classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5", null ],
     [ "trace_config", "classphosphor_1_1_trace_log.html#a366b267a03ceffcc9aaa4daf2561cbaf", null ]
 ];

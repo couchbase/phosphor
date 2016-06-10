@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_config.html','
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classphosphor_1_1_trace_config-members.html">List of all members</a>  </div>
@@ -132,6 +133,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a523337e5124c4ba7d6f95e9d7db3ad0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="trace__buffer_8h.html#a6324e6b9fb1544fc8a1cc46e81473aa2">trace_buffer_factory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a523337e5124c4ba7d6f95e9d7db3ad0b">getBufferFactory</a> () const </td></tr>
 <tr class="separator:a523337e5124c4ba7d6f95e9d7db3ad0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a10b69a4104619f471af06ab44bc2bf7e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a10b69a4104619f471af06ab44bc2bf7e">fromString</a> (const std::string &amp;config)</td></tr>
+<tr class="separator:a10b69a4104619f471af06ab44bc2bf7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
 Static Protected Member Functions</h2></td></tr>
 <tr class="memitem:a2aa163d06533e57718e60558917207f5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="trace__buffer_8h.html#a6324e6b9fb1544fc8a1cc46e81473aa2">trace_buffer_factory</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a2aa163d06533e57718e60558917207f5">modeToFactory</a> (BufferMode mode)</td></tr>
@@ -150,7 +156,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 <tr class="separator:ae76d1955c51c9f02c72d22ca1ccb8d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> is used to configure a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> when it is enabled</p>
+<div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> is used to configure a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> for starting Trace when it is enabled.</p>
 <p>The <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> has two constructors with two different aims in mind</p>
 <ul>
 <li>Using a built-in <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> type, either ring or fixed</li>
@@ -229,6 +235,38 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a10b69a4104619f471af06ab44bc2bf7e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> phosphor::TraceConfig::fromString </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Generate a <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> from a config string (Usually set from an environment variable).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Config string to be used to generate the <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Generated <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a523337e5124c4ba7d6f95e9d7db3ad0b"></a>
 <div class="memitem">
 <div class="memproto">

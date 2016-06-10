@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['logevent',['logEvent',['../classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68',1,'phosphor::TraceLog::logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA, U argB)'],['../classphosphor_1_1_trace_log.html#adabed763f07e5fe0e0f8481effc241c8',1,'phosphor::TraceLog::logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA)'],['../classphosphor_1_1_trace_log.html#a145e95d17de9bd037e9ed4cb81e98f17',1,'phosphor::TraceLog::logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id)']]]
+  ['isenabled',['isEnabled',['../classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f',1,'phosphor::TraceLog']]],
+  ['isfull',['isFull',['../classphosphor_1_1_trace_chunk.html#a599b75005f4e7b8e62ce9d05c11d1ad1',1,'phosphor::TraceChunk::isFull()'],['../classphosphor_1_1_trace_buffer.html#aed684d9119a5b64ecb295ecb2ef6d209',1,'phosphor::TraceBuffer::isFull()'],['../classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2',1,'phosphor::FixedTraceBuffer::isFull()']]]
 ];

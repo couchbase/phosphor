@@ -116,21 +116,26 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <li>&lt;strike&gt;Add string conversion for TraceEvent::Type&lt;/strike&gt; Done 2016/06/06</li>
 <li>&lt;strike&gt;Add platform abstraction for thread ids&lt;/strike&gt; Done 2016/06/06</li>
 <li>&lt;strike&gt;Switch to simpler time representation&lt;/strike&gt; Done 2016/06/06</li>
-<li>Add a circular buffer implementation</li>
-<li>Refactor TraceLog::logEvent to not duplicate code</li>
+<li>&lt;strike&gt;Refactor TraceLog::logEvent to not duplicate code&lt;/strike&gt;</li>
+<li>&lt;strike&gt;Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to avoid pre-allocation.&lt;/strike&gt; Done 2016/06/07 Done 2016/06/07</li>
+<li>&lt;strike&gt;Move TraceChunk constructor to a reset method&lt;/strike&gt; Done 2016/06/07</li>
 <li>Add chunked JSON export (Which takes an iterator)</li>
-<li>Add benchmarking for chunk sizes (By templating the TraceChunk on the base type of the chunk itself, ie. std::array vs <a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>)</li>
-<li>Add benchmarking for tracing speed</li>
 </ul>
 <h3>WEEK COMMENCING 2016/06/13</h3>
 <ul>
-<li>Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to avoid pre-allocation.</li>
-<li>Move TraceChunk constructor to a reset method</li>
+<li>Add a circular buffer implementation</li>
+<li>Add benchmarking for chunk sizes (By templating the TraceChunk on the base type of the chunk itself, ie. std::array vs <a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>)</li>
+<li>Add benchmarking for tracing speed</li>
 <li>Add binary dump export (Including tool to convert binary dump to JSON)<ul>
 <li>Write buffer to file</li>
 <li>Write thread / pointer info to file</li>
 </ul>
 </li>
+</ul>
+<h2>Misc Feature List (Not allocated)</h2>
+<ul>
+<li>Buffer filled callback</li>
+<li>Environment variable based global config</li>
 </ul>
 <h2>Performance Idea List</h2>
 <p>For performance improvements that have been suggested or considered but are currently premature:</p>

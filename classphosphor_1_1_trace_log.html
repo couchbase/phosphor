@@ -131,6 +131,10 @@ Classes</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae86d34004e257bd6a45442a634370231"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231">TraceLog</a> ()</td></tr>
 <tr class="separator:ae86d34004e257bd6a45442a634370231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9084ab48cd9916adfea0420c6962e40c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a9084ab48cd9916adfea0420c6962e40c">TraceLog</a> (const <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;_config)</td></tr>
+<tr class="separator:a9084ab48cd9916adfea0420c6962e40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61da1a235de557b8321bf542defae32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32">configure</a> (const <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;_config)</td></tr>
+<tr class="separator:ab61da1a235de557b8321bf542defae32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22fde18331507432721f09e70f35822e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a22fde18331507432721f09e70f35822e">start</a> (const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;_trace_config)</td></tr>
 <tr class="separator:a22fde18331507432721f09e70f35822e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad61c9956ecb142c03260ab9a430914a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ad61c9956ecb142c03260ab9a430914a2">stop</a> ()</td></tr>
@@ -170,6 +174,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:ad628d76546aac802f047e8ee786e6ab5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5">shared_chunks</a></td></tr>
+<tr class="separator:ad628d76546aac802f047e8ee786e6ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a366b267a03ceffcc9aaa4daf2561cbaf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a366b267a03ceffcc9aaa4daf2561cbaf">trace_config</a></td></tr>
 <tr class="separator:a366b267a03ceffcc9aaa4daf2561cbaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a433797901dd0c7b1015f13ef729e34b4"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a433797901dd0c7b1015f13ef729e34b4">enabled</a></td></tr>
@@ -185,8 +191,6 @@ Protected Attributes</h2></td></tr>
 Static Protected Attributes</h2></td></tr>
 <tr class="memitem:a05712ecaf10a3183c16c8f44c5c7b092"><td class="memItemLeft" align="right" valign="top">static THREAD_LOCAL <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a05712ecaf10a3183c16c8f44c5c7b092">thread_chunk</a></td></tr>
 <tr class="separator:a05712ecaf10a3183c16c8f44c5c7b092"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13b3cedfe336d3c66e8acdcae92c81d1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a13b3cedfe336d3c66e8acdcae92c81d1">shared_chunk</a></td></tr>
-<tr class="separator:a13b3cedfe336d3c66e8acdcae92c81d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> class is the main public management interface of Phosphor. Generally the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is used as a singleton, this instance is acquired via <a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">TraceLog::getInstance()</a>.</p>
@@ -212,7 +216,53 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 
 </div>
 </div>
+<a class="anchor" id="a9084ab48cd9916adfea0420c6962e40c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">phosphor::TraceLog::TraceLog </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>_config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor for creating a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> with a specific log config</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_config</td><td>The <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> to be used by the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ab61da1a235de557b8321bf542defae32"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::TraceLog::configure </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>_config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Used to perform a one-time configuration of the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_config</td><td>The <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> to be used by the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ad5456184843a1f01db7614a3053e98b8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -770,7 +820,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a13b3cedfe336d3c66e8acdcae92c81d1"></a>
+<a class="anchor" id="ad628d76546aac802f047e8ee786e6ab5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -778,16 +828,16 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">TraceLog::ChunkTenant</a> phosphor::TraceLog::shared_chunk</td>
+          <td class="memname">std::vector&lt;<a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>&gt; phosphor::TraceLog::shared_chunks</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The shared <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> which is used be default when a thread has not been registered.</p>
+<p>The shared ChunkTenants which are used by default when a thread has not been registered.</p>
 <p>This is because we need to guarantee that the resources in the thread-specific chunk will be at some point freed up. </p>
 
 </div>
