@@ -100,3 +100,12 @@ Additional stuff to make this practical:
     - rollback
     - compaction
     - snapshotVBucket
+
+## Documentation Goals
+
+- High-level architectural overview
+- TraceLog configuration
+  - Programmatic API
+  - Environment variable API
+- Export handling
+- Threading concerns
