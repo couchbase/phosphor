@@ -9,6 +9,7 @@ var searchData=
   ['getgeneration',['getGeneration',['../classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55',1,'phosphor::TraceBuffer::getGeneration()'],['../classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6',1,'phosphor::FixedTraceBuffer::getGeneration()']]],
   ['getinstance',['getInstance',['../classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658',1,'phosphor::TraceLog']]],
   ['getsentinelcount',['getSentinelCount',['../classphosphor_1_1_trace_log_config.html#afe2aa44ad93032be982e2058bf62923e',1,'phosphor::TraceLogConfig']]],
+  ['getstartuptrace',['getStartupTrace',['../classphosphor_1_1_trace_log_config.html#aac73090f040e5abc80f024b8ecc016fc',1,'phosphor::TraceLogConfig']]],
   ['getstoppedcallback',['getStoppedCallback',['../classphosphor_1_1_trace_config.html#ab156b18aa5f8d7e623a6d5f55710a2af',1,'phosphor::TraceConfig']]],
   ['gettype',['getType',['../unionphosphor_1_1_trace_argument.html#a8d4c327c4e1333e812dd03ed2aa7cc76',1,'phosphor::TraceArgument']]]
 ];

@@ -127,6 +127,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae24069f60fd6d7323ee898a65b87fe26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe2aa44ad93032be982e2058bf62923e"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#afe2aa44ad93032be982e2058bf62923e">getSentinelCount</a> () const </td></tr>
 <tr class="separator:afe2aa44ad93032be982e2058bf62923e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac1cd06b2988348c7d9d0cc4d7db121a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#aac1cd06b2988348c7d9d0cc4d7db121a">setStartupTrace</a> (const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;_startup_trace)</td></tr>
+<tr class="separator:aac1cd06b2988348c7d9d0cc4d7db121a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cd0bca300b9e640e35e0551b5ba2f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#a0cd0bca300b9e640e35e0551b5ba2f5f">clearStartupTrace</a> ()</td></tr>
+<tr class="separator:a0cd0bca300b9e640e35e0551b5ba2f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac73090f040e5abc80f024b8ecc016fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#aac73090f040e5abc80f024b8ecc016fc">getStartupTrace</a> () const </td></tr>
+<tr class="separator:aac73090f040e5abc80f024b8ecc016fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -138,6 +144,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:afde204061366e2abdc49f142038a70ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afde204061366e2abdc49f142038a70ab"></a>
 unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>sentinel_count</b></td></tr>
 <tr class="separator:afde204061366e2abdc49f142038a70ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d4138f27a03523f3ff3533b98bafbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17d4138f27a03523f3ff3533b98bafbf"></a>
+std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>startup_trace</b></td></tr>
+<tr class="separator:a17d4138f27a03523f3ff3533b98bafbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> is used to perform a one-time config of a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> for anything that must be set only once e.g. the number of shared sentinels to create.</p>
@@ -161,6 +170,23 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>sentinel_count</b
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0cd0bca300b9e640e35e0551b5ba2f5f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp; phosphor::TraceLogConfig::clearStartupTrace </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clears the startup trace config that has previously been stored so that tracing on startup can be disabled.</p>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this config </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="adf1527070cc09e0220fb5b3a3bd6a055"></a>
 <div class="memitem">
 <div class="memproto">
@@ -202,6 +228,22 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>sentinel_count</b
 
 </div>
 </div>
+<a class="anchor" id="aac73090f040e5abc80f024b8ecc016fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> * phosphor::TraceLogConfig::getStartupTrace </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> (Because it is potentially null, i.e. tracing should not start) </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ae24069f60fd6d7323ee898a65b87fe26"></a>
 <div class="memitem">
 <div class="memproto">
@@ -224,6 +266,30 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>sentinel_count</b
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to this config (For chaining) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aac1cd06b2988348c7d9d0cc4d7db121a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp; phosphor::TraceLogConfig::setStartupTrace </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>_startup_trace</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> to start tracing immediately on construction with a particular config</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_startup_trace</td><td>A reference to a preexisting config that will be copied for internal storage. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to this config </dd></dl>
 
 </div>
 </div>

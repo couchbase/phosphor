@@ -129,10 +129,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae86d34004e257bd6a45442a634370231"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231">TraceLog</a> ()</td></tr>
-<tr class="separator:ae86d34004e257bd6a45442a634370231"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9084ab48cd9916adfea0420c6962e40c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a9084ab48cd9916adfea0420c6962e40c">TraceLog</a> (const <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;_config)</td></tr>
 <tr class="separator:a9084ab48cd9916adfea0420c6962e40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae86d34004e257bd6a45442a634370231"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231">TraceLog</a> ()</td></tr>
+<tr class="separator:ae86d34004e257bd6a45442a634370231"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab61da1a235de557b8321bf542defae32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32">configure</a> (const <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;_config)</td></tr>
 <tr class="separator:ab61da1a235de557b8321bf542defae32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22fde18331507432721f09e70f35822e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a22fde18331507432721f09e70f35822e">start</a> (const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;_trace_config)</td></tr>
@@ -208,22 +208,6 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 </pre><p>Once enabled, tracing will be logged wherever code has been instrumented with the instrumentation API described in <a class="el" href="phosphor_8h.html">phosphor.h</a>.</p>
 <p>This class's public interface is <em>generally</em> thread-safe. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae86d34004e257bd6a45442a634370231"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">phosphor::TraceLog::TraceLog </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Default constructor for <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> </p>
-
-</div>
-</div>
 <a class="anchor" id="a9084ab48cd9916adfea0420c6962e40c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -244,6 +228,24 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ae86d34004e257bd6a45442a634370231"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">phosphor::TraceLog::TraceLog </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor for generating a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> from the current environment according to the rules set out in <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a>.</p>
+<p>Will additionally start tracing if the <code>PHOSPHOR_TRACING_START</code> environment variable is appropriately configured according to the rules for <a class="el" href="classphosphor_1_1_trace_config.html#a10b69a4104619f471af06ab44bc2bf7e">TraceConfig::fromString</a></p>
+<dl class="section return"><dt>Returns</dt><dd>The configured <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> </dd></dl>
 
 </div>
 </div>

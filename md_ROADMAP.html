@@ -119,10 +119,14 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <li>&lt;strike&gt;Refactor TraceLog::logEvent to not duplicate code&lt;/strike&gt;</li>
 <li>&lt;strike&gt;Make TraceChunk/TraceEvent/TraceArgument a trivial type (If possible) to avoid pre-allocation.&lt;/strike&gt; Done 2016/06/07 Done 2016/06/07</li>
 <li>&lt;strike&gt;Move TraceChunk constructor to a reset method&lt;/strike&gt; Done 2016/06/07</li>
-<li>Add chunked JSON export (Which takes an iterator)</li>
+<li>&lt;strike&gt;Switch from single shared sentinel to multiple ~4x logical cores &lt;/strike&gt; Done 2016/06/09</li>
+<li>&lt;strike&gt;Add basic event-&gt;JSON converson&lt;/strike&gt; Done 2016/06/09</li>
+<li>&lt;strike&gt;Initial Server build integration efforts&lt;/strike&gt;Done 2016/06/08</li>
+<li>&lt;strike&gt;Environment variable based global config&lt;/strike&gt; Done 2016/06/10</li>
 </ul>
 <h3>WEEK COMMENCING 2016/06/13</h3>
 <ul>
+<li>Add chunked JSON export (Which takes an iterator)</li>
 <li>Add a circular buffer implementation</li>
 <li>Add benchmarking for chunk sizes (By templating the TraceChunk on the base type of the chunk itself, ie. std::array vs <a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>)</li>
 <li>Add benchmarking for tracing speed</li>
@@ -134,10 +138,14 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 </ul>
 <h2>Misc Feature List (Not allocated)</h2>
 <ul>
-<li>Buffer filled callback</li>
-<li>Environment variable based global config</li>
+<li>Buffer filled callback and buffer cycling (Useful for FDB usecase)<ul>
+<li>Buffer cycling callback</li>
+<li>Tracing Stopped adapter so buffer cycling callback could be given</li>
 </ul>
-<h2>Performance Idea List</h2>
+</li>
+<li><h2>Performance Idea List</h2>
+</li>
+</ul>
 <p>For performance improvements that have been suggested or considered but are currently premature:</p>
 <ul>
 <li>Check enabled flag with relaxed atomic</li>
@@ -180,11 +188,22 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <li>committing a new checkpoint (<code>KVStore::commit</code>)</li>
 <li>rollback</li>
 <li>compaction</li>
-<li>snapshotVBucket </li>
+<li>snapshotVBucket</li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<h2>Documentation Goals</h2>
+<ul>
+<li>High-level architectural overview</li>
+<li>TraceLog configuration<ul>
+<li>Programmatic API</li>
+<li>Environment variable API</li>
+</ul>
+</li>
+<li>Export handling</li>
+<li>Threading concerns </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
