@@ -15,12 +15,14 @@
  *   limitations under the License.
  */
 
+#include <cstring>
 #include <exception>
 #include <string>
 
 #include "phosphor/trace_log.h"
 #include "phosphor/platform/thread.h"
 #include "utils/string_utils.h"
+#include "utils/make_unique.h"
 
 namespace phosphor {
 
@@ -41,6 +43,21 @@ namespace phosphor {
 
     unsigned TraceLogConfig::getSentinelCount() const {
         return sentinel_count;
+    }
+
+    TraceLogConfig& TraceLogConfig::setStartupTrace(
+            const TraceConfig& _startup_trace) {
+        startup_trace = utils::make_unique<TraceConfig>(_startup_trace);
+        return *this;
+    }
+
+    TraceLogConfig& TraceLogConfig::clearStartupTrace() {
+        startup_trace.release();
+        return *this;
+    }
+
+    TraceConfig* TraceLogConfig::getStartupTrace() const {
+        return startup_trace.get();
     }
 
     TraceLogConfig TraceLogConfig::fromEnvironment() {
@@ -69,6 +86,11 @@ namespace phosphor {
             }
 
             config.setSentinelCount(static_cast<unsigned>(sentinel_count));
+        }
+
+        const char* startup_config = std::getenv("PHOSPHOR_TRACING_START");
+        if(startup_config && strlen(startup_config)) {
+            config.setStartupTrace(TraceConfig::fromString(startup_config));
         }
 
         return config;
@@ -175,20 +197,13 @@ namespace phosphor {
      * TraceLog implementation
      */
 
-    TraceLog::TraceLog()
-            : TraceLog(TraceLogConfig()) {
-    }
-
     TraceLog::TraceLog(const TraceLogConfig &_config)
         : enabled(false) {
         configure(_config);
     }
 
-    TraceLog::TraceLog(FromEnvironment)
+    TraceLog::TraceLog()
         : TraceLog(TraceLogConfig::fromEnvironment()) {
-        if(auto config = getenv("PHOSPHOR_TRACING_START")) {
-            start(TraceConfig::fromString(config));
-        }
     }
 
     void TraceLog::configure(const TraceLogConfig &_config) {
@@ -198,11 +213,15 @@ namespace phosphor {
         for(auto& chunk : shared_chunks) {
             chunk.sentinel = new Sentinel();
         }
+
+        if(auto* startup_trace = _config.getStartupTrace()) {
+            start(lh, *startup_trace);
+        }
     }
 
     TraceLog &TraceLog::getInstance() {
         // TODO: Not thread-safe on Windows
-        static TraceLog log_instance{FromEnvironment()};
+        static TraceLog log_instance;
         return log_instance;
     }
 

@@ -26,7 +26,9 @@
 
 namespace phosphor {
 
-    class TraceLog; // Forward declare
+    // Forward declare
+    class TraceLog;
+    class TraceConfig;
 
     /**
      * Functor type for a callback to be used when a TraceLog stops
@@ -110,6 +112,30 @@ namespace phosphor {
         unsigned getSentinelCount() const;
 
         /**
+         * Sets the TraceLog to start tracing immediately on construction
+         * with a particular config
+         *
+         * @param _startup_trace A reference to a preexisting config that
+         *                       will be copied for internal storage.
+         * @return A reference to this config
+         */
+        TraceLogConfig& setStartupTrace(const TraceConfig& _startup_trace);
+
+        /**
+         * Clears the startup trace config that has previously been stored
+         * so that tracing on startup can be disabled.
+         *
+         * @return A reference to this config
+         */
+        TraceLogConfig& clearStartupTrace();
+
+        /**
+         * @return a pointer to the TraceConfig (Because it is potentially null,
+         *         i.e. tracing should not start)
+         */
+        TraceConfig* getStartupTrace() const;
+
+        /**
          * Factory method which sets up a TraceLogConfig from the
          * environment variables
          *
@@ -119,6 +145,7 @@ namespace phosphor {
 
     protected:
         unsigned sentinel_count;
+        std::unique_ptr<TraceConfig> startup_trace;
     };
 
     /**
@@ -248,12 +275,6 @@ namespace phosphor {
      */
     class TraceLog {
     public:
-
-        /**
-         * Default constructor for TraceLog
-         */
-        TraceLog();
-
         /**
          * Constructor for creating a TraceLog with a specific log
          * config
@@ -270,16 +291,9 @@ namespace phosphor {
          * environment variable is appropriately configured according to
          * the rules for TraceConfig::fromString
          *
-         * This constructor can be invoked by using the special
-         * `FromEnvironment` parameter.
-         *
-         * Example:
-         *
-         *     TraceLog trace_log{FromEnvironment()};
-         *
          * @return The configured TraceLog
          */
-        TraceLog(FromEnvironment);
+        TraceLog();
 
         /**
          * Used to perform a one-time configuration of the TraceLog

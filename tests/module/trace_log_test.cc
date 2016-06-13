@@ -48,6 +48,15 @@ TEST(TraceLogConfigTest, sentinel_count) {
     EXPECT_EQ(33, config.setSentinelCount(33).getSentinelCount());
 }
 
+TEST(TraceLogConfigTest, startup_trace) {
+    TraceLogConfig config;
+    TraceConfig trace_config(BufferMode::fixed, 10000);
+    EXPECT_EQ(10000, config.setStartupTrace(trace_config)
+            .getStartupTrace()->getBufferSize());
+    EXPECT_EQ(nullptr, config.setStartupTrace(trace_config)
+            .clearStartupTrace().getStartupTrace());
+}
+
 TEST(TraceLogConfigTest, from_environment) {
     setenv("PHOSPHOR_SENTINEL_COUNT", "5", true);
     TraceLogConfig config = TraceLogConfig::fromEnvironment();
@@ -278,8 +287,8 @@ TEST_F(TraceLogTest, testDoneCallback) {
     EXPECT_TRUE(callback_invoked);
 }
 
-TEST(TraceLogAltTest, FromEnvironmentConstrictor) {
+TEST(TraceLogAltTest, FromEnvironmentConstructor) {
     setenv("PHOSPHOR_TRACING_START", "buffer-mode:fixed,buffer-size:80000", 1);
-    TraceLog trace_log{phosphor::FromEnvironment()};
+    TraceLog trace_log;
 }
 
