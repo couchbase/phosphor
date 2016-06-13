@@ -21,7 +21,7 @@ SET(SOURCE_FILES
         src/trace_event.cc
         src/trace_log.cc
         src/platform/thread.cc
-        src/utils/string_utils.cc)
+        src/utils/string_utils.cc src/tools/export.cc)
 
 ADD_LIBRARY(phosphor STATIC ${SOURCE_FILES})
 

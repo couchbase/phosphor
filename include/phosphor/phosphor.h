@@ -15,6 +15,8 @@
  *   limitations under the License.
  */
 
+#pragma once
+
 #include "trace_log.h"
 
 /** \file

@@ -10,6 +10,14 @@ MACRO (M_ADD_MODULE_GTEST name)
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()
 
+M_ADD_MODULE_GTEST(export_test
+        export_test.cc
+        ${phosphor_SOURCE_DIR}/src/sentinel.cc
+        ${phosphor_SOURCE_DIR}/src/tools/export.cc
+        ${phosphor_SOURCE_DIR}/src/trace_event.cc
+        ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
+        ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
+
 M_ADD_MODULE_GTEST(polyfill_test
         polyfill_test.cc)
 
