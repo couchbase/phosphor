@@ -152,6 +152,15 @@ namespace phosphor {
         return tracing_stopped_callback;
     }
 
+    TraceConfig& TraceConfig::setStopTracingOnDestruct(bool _stop_tracing) {
+        stop_tracing = _stop_tracing;
+        return *this;
+    }
+
+    bool TraceConfig::getStopTracingOnDestruct() const {
+        return stop_tracing;
+    }
+
     TraceConfig TraceConfig::fromString(const std::string& config) {
         auto arguments(phosphor::utils::split_string(config, ','));
 
@@ -204,6 +213,12 @@ namespace phosphor {
 
     TraceLog::TraceLog()
         : TraceLog(TraceLogConfig::fromEnvironment()) {
+    }
+
+    TraceLog::~TraceLog() {
+        if(trace_config.getStopTracingOnDestruct()) {
+            stop();
+        }
     }
 
     void TraceLog::configure(const TraceLogConfig &_config) {

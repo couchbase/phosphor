@@ -290,5 +290,30 @@ TEST_F(TraceLogTest, testDoneCallback) {
 TEST(TraceLogAltTest, FromEnvironmentConstructor) {
     setenv("PHOSPHOR_TRACING_START", "buffer-mode:fixed,buffer-size:80000", 1);
     TraceLog trace_log;
+    setenv("PHOSPHOR_TRACING_START", "", true);
+}
+
+TEST(TraceLogAltTest, stopOnDestruct) {
+    bool callback_invoked = false;
+    {
+        TraceLog trace_log;
+        trace_log.start(TraceConfig(BufferMode::fixed, 80000)
+                        .setStoppedCallback([&callback_invoked](TraceLog& log,
+                                               std::lock_guard<TraceLog>& lh) {
+                            callback_invoked = true;
+                        })
+                        .setStopTracingOnDestruct(true));
+    }
+    EXPECT_TRUE(callback_invoked);
+    callback_invoked = false;
+    {
+        TraceLog trace_log;
+        trace_log.start(TraceConfig(BufferMode::fixed, 80000)
+                        .setStoppedCallback([&callback_invoked](TraceLog& log,
+                                                                std::lock_guard<TraceLog>& lh) {
+                            callback_invoked = true;
+                        }));
+    }
+    EXPECT_FALSE(callback_invoked);
 }
 

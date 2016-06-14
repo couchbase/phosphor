@@ -219,6 +219,22 @@ namespace phosphor {
          */
         TracingStoppedCallback getStoppedCallback() const;
 
+
+        /**
+         * Sets whether or not the tracing shutdown (and therefore callbacks)
+         * should be run when the TraceLog is destroyed. Defaults to false.
+         *
+         * @param _stop_tracing Stop tracing on shutdown
+         * @return reference to the TraceConfig being configured
+         */
+        TraceConfig& setStopTracingOnDestruct(bool _stop_tracing);
+
+        /**
+         * @return Whether or not the tracing shutdown (and therefore callbacks)
+         *         should be run when the TraceLog is destroyed.
+         */
+        bool getStopTracingOnDestruct() const;
+
         /**
          * Generate a TraceConfig from a config string (Usually set from
          * an environment variable).
@@ -248,6 +264,7 @@ namespace phosphor {
         size_t buffer_size;
         trace_buffer_factory buffer_factory;
         TracingStoppedCallback tracing_stopped_callback;
+        bool stop_tracing = false;
     };
 
     /**
@@ -294,6 +311,8 @@ namespace phosphor {
          * @return The configured TraceLog
          */
         TraceLog();
+
+        ~TraceLog();
 
         /**
          * Used to perform a one-time configuration of the TraceLog
