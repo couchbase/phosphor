@@ -57,8 +57,8 @@ TEST(TraceEvent, string_check) {
             "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
             "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-            "category, name, type=Instant, thread_id=0,
-            arg1="Type::is_none", arg2="Type::is_none">");
+            "category, name, type=Instant, thread_id=0, "
+            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 
     // This should probably require linking against GoogleMock
