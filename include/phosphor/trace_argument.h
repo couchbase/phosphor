@@ -161,15 +161,13 @@ inline TraceArgument::TraceArgument(src arg) : as_ ##dst (arg) {}
                 return std::to_string(as_double);
             case Type::is_pointer:
                 ss << as_pointer;
-                return ss.str();
+                return "\"" + ss.str() + "\"";
             case Type::is_string:
-                return "'" + std::string(as_string) + "'";
+                return "\"" + std::string(as_string) + "\"";
             case Type::is_none:
-                return std::string("NONE");
+                return std::string("\"Type::is_none\"");
             default:
                 throw std::invalid_argument("Invalid TraceArgument type");
         }
     }
-
-
 } // namespace phosphor

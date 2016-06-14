@@ -80,6 +80,24 @@ namespace phosphor {
         output += ",\"pid\":0";
         output += ",\"tid\":" + std::to_string(thread_id);
 
+        output += ",\"args\":{";
+        for(int i = 0; i < arg_count; ++i) {
+            if(arg_types[i] == TraceArgument::Type::is_none) {
+                break;
+            }
+            if(i != 0) {
+                output += ",";
+            }
+
+            std::string arg_name(std::to_string(i));
+            if(type == Type::AsyncEnd || type == Type::SyncEnd) {
+                arg_name += "_end";
+            }
+            output += utils::to_json(arg_name) + ":";
+            output += args[i].to_string(arg_types[i]);
+        }
+        output += "}";
+
         output += "}";
         return output;
     }

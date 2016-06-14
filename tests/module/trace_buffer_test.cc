@@ -67,10 +67,12 @@ TEST(TraceChunkTest, string_check) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
             "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-                    "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
+            "category, name, type=Instant, thread_id=0, "
+            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
     "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-            "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
+    "category, name, type=Instant, thread_id=0, "
+    "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 
     for(int i = 0; i < chunk.count(); ++i) {

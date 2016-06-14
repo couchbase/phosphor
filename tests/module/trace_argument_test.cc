@@ -64,10 +64,10 @@ TEST(TraceArgument, to_string) {
     std::stringstream pointer_val;
     pointer_val << reinterpret_cast<const void*>(0xFF);
     EXPECT_EQ(inner_to_string_test(reinterpret_cast<const void*>(0xFF)),
-              pointer_val.str()); // Pointer
-    EXPECT_EQ(inner_to_string_test("Hello, World"), "'Hello, World'"); // Pointer
+              "\"" + pointer_val.str() + "\""); // Pointer
+    EXPECT_EQ(inner_to_string_test("Hello, World"), "\"Hello, World\""); // Pointer
 
-    EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none), "NONE");
+    EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none), "\"Type::is_none\"");
 
     // This is *extremely* naughty and shouldn't need checking
     EXPECT_THROW(

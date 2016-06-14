@@ -53,10 +53,12 @@ TEST(TraceEvent, string_check) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
             "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-            "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
+            "category, name, type=Instant, thread_id=0, "
+            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
             "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-            "category, name, type=Instant, thread_id=0, arg1=NONE, arg2=NONE>");
+            "category, name, type=Instant, thread_id=0,
+            arg1="Type::is_none", arg2="Type::is_none">");
 #endif
 
     // This should probably require linking against GoogleMock
@@ -93,16 +95,42 @@ TEST(TraceEvent, toJSON) {
             0,
             0,
             {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+            {{TraceArgument::Type::is_bool, TraceArgument::Type::is_none}}
     );
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
             "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-            "\"ts\":[0-9]+,\"pid\":0,\"tid\":0\\}");
+            "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
+            "\"args\":\\{\"0\":false\\}\\}");
 #else
             "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-             "\"ts\":\\d+,\"pid\":0,\"tid\":0\\}");
+            "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
+            "\"args\":\\{\"0\":false\\}\\}");
+#endif
+    EXPECT_THAT(event.to_json(), event_regex);
+}
+
+TEST(TraceEvent, toJSONAlt) {
+    TraceEvent event(
+            "category",
+            "name",
+            TraceEvent::Type::SyncEnd,
+            0,
+            0,
+            {{0, 0}},
+            {{TraceArgument::Type::is_bool, TraceArgument::Type::is_bool}}
+    );
+
+    auto event_regex = testing::MatchesRegex(
+#if GTEST_USES_POSIX_RE
+            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
+            "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
+            "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
+#else
+    "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\",\"s\":\"t\","
+    "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
+    "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);
 }
