@@ -50,8 +50,9 @@ TEST_F(ExportTest, test) {
     JSONExport exporter(*buffer);
     std::string p;
     do {
-        p = exporter.read(4096);
-        std::cerr << p << std::endl;
+        p = exporter.read(80);
+        EXPECT_LE(p.size(), 80);
+        std::cerr << p;
     }  while(p.size());
     EXPECT_EQ("", exporter.read(4096));
 }

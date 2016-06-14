@@ -24,41 +24,54 @@ namespace phosphor {
               it(_buffer.begin()) {
         }
 
-        std::string JSONExport::read(size_t length) {
+        size_t JSONExport::read(char* out, size_t length) {
             std::string event_json;
-            std::string out;
-            out.reserve(length);
+            size_t cursor = 0;
 
-            while(out.size() < length && state != State::dead) {
+            while(cursor < length && !(state == State::dead && cache.size() == 0)) {
+                if(cache.size() > 0) {
+                    size_t copied = cache.copy((out + cursor),
+                                               length - cursor);
+                    cache.erase(0, copied);
+                    cursor += copied;
+
+                    if(cursor >= length) {
+                        break;
+                    }
+                }
                 switch (state) {
                     case State::opening:
-                        out += "{\n"
-                               "  \"traceEvents\": [";
+                        cache = "{\n"
+                                "  \"traceEvents\": [\n";
                         state = State::first_event;
                         break;
                     case State::other_events:
-                        out += ",";
-                        if(out.size() >= length) {
-                            break;
-                        }
+                        cache += ",\n";
                     case State::first_event:
                         event_json = it->to_json();
                         ++it;
-                        out += event_json;
+                        cache += event_json;
                         state = State::other_events;
                         if(it == buffer.end()) {
                             state = State::footer;
                         }
                         break;
                     case State::footer:
-                        out += "]\n"
-                               "}";
+                        cache = "\n    ]\n"
+                                "}\n";
                         state = State::dead;
                         break;
                     case State::dead:
                         break;
                 }
             }
+            return cursor;
+        }
+
+        std::string JSONExport::read(size_t length) {
+            std::string out;
+            out.resize(length, '\0');
+            out.resize(read(&out[0], length));
             return out;
         }
     }
