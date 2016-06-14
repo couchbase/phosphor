@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Phosphor: Related Pages</title>
+<title>Phosphor: Couchbase Event Tracing Functional Requirements</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('pages.html','');});
+$(document).ready(function(){initNavTree('md_docs_design_Requirements.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -100,19 +100,44 @@ $(document).ready(function(){initNavTree('pages.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Related Pages</div>  </div>
+<div class="title">Couchbase Event Tracing Functional Requirements </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_docs_Architecture.html" target="_self">Phosphor Architecture</a></td><td class="desc"></td></tr>
-<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_docs_design_Instrumentation-API.html" target="_self">Event Tracing Instrumentation API Spec</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_docs_design_One-pager.html" target="_self">One-pager: Tracing in KV-Engine</a></td><td class="desc"></td></tr>
-<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_docs_design_Requirements.html" target="_self">Couchbase Event Tracing Functional Requirements</a></td><td class="desc"></td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_ROADMAP.html" target="_self">Roadmap</a></td><td class="desc"></td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><p><em>Date: 2016-04-26</em></p>
+<h2>Introduction</h2>
+<p>This document details the functional requirements for the proposed Couchbase Event Tracing API outlined in the Couchbase Event Tracing One Pager.</p>
+<p>At a high level, an Application will make use of the proposed event tracing Library to record events of interest, via the Tracing API. These events will then be exported to a format compatible with the Chrome Event Viewer, so they can be viewed and analysed by users.</p>
+<h2>Event Recording</h2>
+<h3>Minimal Functional Requirements</h3>
+<p>The following requirements are considered to be the minimal set for the event tracing library to record events.</p>
+<p>Where performance metrics are expressed, these are assumed to be measured on a modern (SandyBridge upwards ) 64bit Intel processor running at least 1.9GHz.</p>
+<p>M.1: ✓ The API will allow the Application to record application-defined events by making an appropriate Tracing API call at from code.</p>
+<p>M.2: ✓ An Event consists of (at a minimum):</p><ul>
+<li>A timestamp</li>
+<li>A name</li>
+<li>A category</li>
+<li>A thread ID</li>
+</ul>
+<p>M.3: ✓ Event timestamps must have precision of at least 1 microsecond. (Chromium JSON format only supports microsecond resolution)</p>
+<p>M.4: ✓ Events can optionally have up to two user-defined 8Byte fields associated with them (in addition to the name, category and timestamp. These fields will have a limited set of types. Exact types TBD, but for example: bool, int, float, string, pointer.</p>
+<p>M.5: ~ Event Tracing can be enabled / disabled globally. When event tracing is globally disabled, the CPU overhead should be minimal (i.e. of the order of ASM-level load, compare &amp; branch instructions).</p>
+<p>M.6: ✓ The Library must record events into a RAM data structure (Event Log), and allow retrieval of all recorded events.</p>
+<p>M.7: ✓ The size of the Event Log must be Application-configurable. It must at least allow a range of 1MB to 1GB.</p>
+<p>M.8: ~ The amount of RAM used by the Event Tracer must not exceed 110% of the configured log size when event tracing is enabled.</p>
+<p>M.9: ✓ The event log can be cleared (all events discarded) when tracing is not running.</p>
+<p>M.10: ~ When the event log is empty (after clearing, or before it is enabled) the amount of RAM used by the Event Tracer must be less than 100KB.</p>
+<p>M.11: ~ When tracing is enabled, the cost of recording of a single event with two user-defined fields to the in-memory Event Log (measured from before calling the Event API to it returning) must be 1 microsecond or less.</p>
+<p>M.12: ✗ The Library must facilitate the use of a memory-mapped file for the Event Log (so the log can be directly persisted to disk by the OS). Note: The Library does not need to handle the disk writing itself.</p>
+<h3>Extended Functional Requirements</h3>
+<p>The following requirements describe desirable functionality, which increases the utility and functionality of the event tracing feature - they are nice to have, although the event tracing library.</p>
+<p>E.1: ✗ Events can be enabled / disabled at a category level.</p>
+<p>E.2: ✗ Events can be retrieved at a category level.</p>
+<p>E.3: ✗ Events can be retrieved by specifying a timestamp start / end (i.e. "give me all events which fall between these two timestamps").</p>
+<h2>Event Analysis</h2>
+<h3>Minimal Functional Requirements</h3>
+<p>The following requirements are considered the minimum for the analysis component, which allows the recorded events to be viewed and analyzed by users.</p>
+<p>M.100: ✓ The event log can be exported to a format which can be read by the Chrome Event Viewer (chrome://tracing). </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

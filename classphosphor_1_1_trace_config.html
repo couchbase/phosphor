@@ -136,6 +136,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aeeb649565b79d61e54fcf2d8dcb348c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab156b18aa5f8d7e623a6d5f55710a2af"><td class="memItemLeft" align="right" valign="top">TracingStoppedCallback&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#ab156b18aa5f8d7e623a6d5f55710a2af">getStoppedCallback</a> () const </td></tr>
 <tr class="separator:ab156b18aa5f8d7e623a6d5f55710a2af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a2af9e6a5fe7e09a82032b9dce0b56e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a8a2af9e6a5fe7e09a82032b9dce0b56e">setStopTracingOnDestruct</a> (bool _stop_tracing)</td></tr>
+<tr class="separator:a8a2af9e6a5fe7e09a82032b9dce0b56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bbe0fd70283d3c621b8f37da6aa8269"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_config.html#a7bbe0fd70283d3c621b8f37da6aa8269">getStopTracingOnDestruct</a> () const </td></tr>
+<tr class="separator:a7bbe0fd70283d3c621b8f37da6aa8269"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -161,6 +165,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td
 <tr class="memitem:aed60fd97c1c69c4b0c3971669e02bd41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aed60fd97c1c69c4b0c3971669e02bd41"></a>
 TracingStoppedCallback&#160;</td><td class="memItemRight" valign="bottom"><b>tracing_stopped_callback</b></td></tr>
 <tr class="separator:aed60fd97c1c69c4b0c3971669e02bd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30ef552eef872a40e7b129cc6557f009"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30ef552eef872a40e7b129cc6557f009"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>stop_tracing</b> = false</td></tr>
+<tr class="separator:a30ef552eef872a40e7b129cc6557f009"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> is used to configure a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> for starting Trace when it is enabled.</p>
@@ -339,6 +346,22 @@ TracingStoppedCallback&#160;</td><td class="memItemRight" valign="bottom"><b>tra
 
 </div>
 </div>
+<a class="anchor" id="a7bbe0fd70283d3c621b8f37da6aa8269"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool phosphor::TraceConfig::getStopTracingOnDestruct </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Whether or not the tracing shutdown (and therefore callbacks) should be run when the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is destroyed. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a2aa163d06533e57718e60558917207f5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -399,6 +422,30 @@ TracingStoppedCallback&#160;</td><td class="memItemRight" valign="bottom"><b>tra
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>reference to the <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> be configured </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8a2af9e6a5fe7e09a82032b9dce0b56e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp; phosphor::TraceConfig::setStopTracingOnDestruct </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>_stop_tracing</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets whether or not the tracing shutdown (and therefore callbacks) should be run when the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is destroyed. Defaults to false.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">_stop_tracing</td><td>Stop tracing on shutdown </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>reference to the <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> being configured </dd></dl>
 
 </div>
 </div>

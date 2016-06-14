@@ -11,5 +11,6 @@ var searchData=
   ['clearstartuptrace',['clearStartupTrace',['../classphosphor_1_1_trace_log_config.html#a0cd0bca300b9e640e35e0551b5ba2f5f',1,'phosphor::TraceLogConfig']]],
   ['close',['close',['../classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877',1,'phosphor::Sentinel']]],
   ['configure',['configure',['../classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32',1,'phosphor::TraceLog']]],
-  ['count',['count',['../classphosphor_1_1_trace_chunk.html#a6e9c65c386a136891d269a314ae6b694',1,'phosphor::TraceChunk']]]
+  ['count',['count',['../classphosphor_1_1_trace_chunk.html#a6e9c65c386a136891d269a314ae6b694',1,'phosphor::TraceChunk']]],
+  ['couchbase_20event_20tracing_20functional_20requirements',['Couchbase Event Tracing Functional Requirements',['../md_docs_design_Requirements.html',1,'']]]
 ];

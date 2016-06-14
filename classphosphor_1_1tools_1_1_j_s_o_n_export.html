@@ -116,14 +116,16 @@ $(document).ready(function(){initNavTree('classphosphor_1_1tools_1_1_j_s_o_n_exp
 <div class="title">phosphor::tools::JSONExport Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="export_8h_source.html">export.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a93ec7c9aa116c74ad58404270c4c1512"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93ec7c9aa116c74ad58404270c4c1512"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>JSONExport</b> (const <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &amp;_buffer)</td></tr>
+<tr class="memitem:a93ec7c9aa116c74ad58404270c4c1512"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#a93ec7c9aa116c74ad58404270c4c1512">JSONExport</a> (const <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &amp;_buffer)</td></tr>
 <tr class="separator:a93ec7c9aa116c74ad58404270c4c1512"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c882ca178ecc739ca8ff9d0f67a222c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c882ca178ecc739ca8ff9d0f67a222c"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>read</b> (size_t length)</td></tr>
+<tr class="memitem:aee5e3bbc1e2ff24a9a35799da2fe4f69"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#aee5e3bbc1e2ff24a9a35799da2fe4f69">read</a> (char *out, size_t length)</td></tr>
+<tr class="separator:aee5e3bbc1e2ff24a9a35799da2fe4f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c882ca178ecc739ca8ff9d0f67a222c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#a6c882ca178ecc739ca8ff9d0f67a222c">read</a> (size_t length)</td></tr>
 <tr class="separator:a6c882ca178ecc739ca8ff9d0f67a222c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
@@ -154,6 +156,88 @@ State&#160;</td><td class="memItemRight" valign="bottom"><b>state</b> = State::o
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>cache</b></td></tr>
 <tr class="separator:a9c8d1bd03eb38808d0291c5eae7bc614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">JSONExport</a> class is a tool provided to allow exporting a <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> in the Chromium Tracing JSON format in a chunked manner (e.g. for over the network).</p>
+<p>Usage: </p><pre class="fragment">auto buffer = phosphor::TraceLog::instance().getBuffer();
+JSONExport exporter(*buffer);
+
+do {
+    p = exporter.read(80);
+    std::cerr &lt;&lt; p;
+}  while(p.size());
+</pre><p>The above will write the JSON to stderr. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a93ec7c9aa116c74ad58404270c4c1512"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">phosphor::tools::JSONExport::JSONExport </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &amp;&#160;</td>
+          <td class="paramname"><em>_buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates the export object </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="aee5e3bbc1e2ff24a9a35799da2fe4f69"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t phosphor::tools::JSONExport::read </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read 'length' worth of JSON</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>roughly 'length' bytes of the JSON starting from the point that was previously left off. This will return less than 'length' at the end of the buffer. </td></tr>
+    <tr><td class="paramname">length</td><td>Max size in bytes of the JSON to put into out </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes written to out </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6c882ca178ecc739ca8ff9d0f67a222c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string phosphor::tools::JSONExport::read </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read 'length' worth of JSON</p>
+<dl class="section return"><dt>Returns</dt><dd>roughly 'length' bytes of the JSON starting from the point that was previously left off. This will return less than 'length' at the end of the buffer. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/phosphor/tools/<a class="el" href="export_8h_source.html">export.h</a></li>
 <li>src/tools/export.cc</li>

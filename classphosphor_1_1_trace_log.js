@@ -3,6 +3,7 @@ var classphosphor_1_1_trace_log =
     [ "ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", "structphosphor_1_1_trace_log_1_1_chunk_tenant" ],
     [ "TraceLog", "classphosphor_1_1_trace_log.html#a9084ab48cd9916adfea0420c6962e40c", null ],
     [ "TraceLog", "classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231", null ],
+    [ "~TraceLog", "classphosphor_1_1_trace_log.html#a73b5bd190085f7133b32ee172fed699d", null ],
     [ "configure", "classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32", null ],
     [ "getBuffer", "classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469", null ],
     [ "getBuffer", "classphosphor_1_1_trace_log.html#ae5041e833872a887191ec8ca8ef95d6d", null ],

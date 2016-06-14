@@ -1,6 +1,7 @@
 var searchData=
 [
   ['roadmap',['Roadmap',['../md_ROADMAP.html',1,'']]],
+  ['read',['read',['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#aee5e3bbc1e2ff24a9a35799da2fe4f69',1,'phosphor::tools::JSONExport::read(char *out, size_t length)'],['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#a6c882ca178ecc739ca8ff9d0f67a222c',1,'phosphor::tools::JSONExport::read(size_t length)']]],
   ['registerthread',['registerThread',['../classphosphor_1_1_trace_log.html#ab1fbcb3a1285fd447b4d8df6f6fccd8e',1,'phosphor::TraceLog']]],
   ['release',['release',['../classphosphor_1_1_sentinel.html#ac72905e7efc8bb93349eef2b394f3551',1,'phosphor::Sentinel']]],
   ['removesentinel',['removeSentinel',['../classphosphor_1_1_trace_buffer.html#ab2ab6d80b88499bc5ac3333fbf1db525',1,'phosphor::TraceBuffer::removeSentinel()'],['../classphosphor_1_1_fixed_trace_buffer.html#a22004856bb8c6bf344f7a7cd8d075e09',1,'phosphor::FixedTraceBuffer::removeSentinel()']]],
