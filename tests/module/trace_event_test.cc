@@ -128,7 +128,7 @@ TEST(TraceEvent, toJSONAlt) {
             "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
             "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
 #else
-    "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\",\"s\":\"t\","
+    "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
     "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
     "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
 #endif
