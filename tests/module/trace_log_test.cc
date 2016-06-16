@@ -115,10 +115,16 @@ TEST(TraceConfigTest, createModeErrors) {
 
 TEST(TraceConfigTest, fromString) {
     TraceConfig config = TraceConfig::fromString("buffer-mode:fixed,"
-                                                 "buffer-size:1024");
+                                                 "buffer-size:1024,"
+                                                 "save-on-stop:out.json");
 
     EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
     EXPECT_EQ(1024, config.getBufferSize());
+    EXPECT_TRUE(config.getStoppedCallback());
+    EXPECT_TRUE(config.getStopTracingOnDestruct());
+    EXPECT_FALSE(TraceConfig::fromString("buffer-mode:fixed,"
+                                         "buffer-size:1024,")
+                         .getStopTracingOnDestruct());
 
     EXPECT_THROW(TraceConfig::fromString("buffer-mode:other"),
                  std::invalid_argument);

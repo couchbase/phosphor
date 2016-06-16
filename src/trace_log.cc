@@ -21,6 +21,7 @@
 
 #include "phosphor/trace_log.h"
 #include "phosphor/platform/thread.h"
+#include "phosphor/tools/export.h"
 #include "utils/string_utils.h"
 #include "utils/memory.h"
 
@@ -166,6 +167,7 @@ namespace phosphor {
 
         BufferMode mode = BufferMode::fixed;
         int buffer_size = 1024 * 1024 * 8;
+        std::string filename = "";
 
         for(const std::string& argument : arguments) {
             auto kv(phosphor::utils::split_string(argument, ':'));
@@ -197,9 +199,17 @@ namespace phosphor {
                             "TraceConfig::fromString: "
                             "buffer size cannot be negative");
                 }
+            } else if (key == "save-on-stop") {
+                filename = value;
             }
         }
-        return TraceConfig(mode, static_cast<size_t>(buffer_size));
+
+        TraceConfig config_obj(mode, static_cast<size_t>(buffer_size));
+        if (filename != "") {
+            config_obj.setStoppedCallback(tools::FileStopCallback(filename));
+            config_obj.setStopTracingOnDestruct(true);
+        }
+        return config_obj;
     }
 
     /*
