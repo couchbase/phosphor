@@ -23,6 +23,7 @@
 #include <sys/syscall.h>
 #include <unistd.h>
 #elif defined(_WIN32)
+#include <process.h>
 #include <windows.h>
 #endif
 

@@ -16,6 +16,7 @@
  */
 
 #include <chrono>
+#include <ctime>
 
 #include "phosphor/platform/thread.h"
 #include "phosphor/tools/export.h"
@@ -116,13 +117,13 @@ namespace phosphor {
             std::time_t now = std::chrono::system_clock::to_time_t(
                 std::chrono::system_clock::now());
             std::string timestamp;
-            timestamp.resize(sizeof("YYYY-MM-DDTHH:MM:SSZ") - 1);
+            timestamp.resize(sizeof("YYYY-MM-DDTHH:MM:SSZ"));
             strftime(&timestamp[0],
                      timestamp.size(),
                      "%Y.%m.%dT%H.%M.%SZ",
                      gmtime(&now));
+            timestamp.resize(timestamp.size() - 1);
             utils::string_replace(target, "%d", timestamp);
-            std::cerr << target << std::endl;
             return target;
         }
     }
