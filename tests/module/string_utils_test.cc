@@ -63,3 +63,12 @@ TEST(SplitStringTest, test) {
 
     EXPECT_THAT(split_string(",,,", ','), testing::ElementsAre("", "", ""));
 }
+
+using phosphor::utils::string_replace;
+
+TEST(SplitReplaceTest, test) {
+    std::string target("Hello, World!");
+    EXPECT_EQ("Hello, Will!", string_replace(target, "World", "Will"));
+    EXPECT_EQ("Hello, Will!", string_replace(target, "Phosphor", "BruceWayne"));
+    EXPECT_EQ("Hello, Will!", string_replace(target, "", "Oswald"));
+}
