@@ -15,8 +15,8 @@
  *   limitations under the License.
  */
 
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "phosphor/tools/export.h"
 
@@ -25,23 +25,23 @@ using phosphor::tools::FileStopCallback;
 
 class ExportTest : public testing::Test {
 public:
-    ExportTest()
-        : buffer(phosphor::make_fixed_buffer(0, 1)) {
+    ExportTest() : buffer(phosphor::make_fixed_buffer(0, 1)) {
         while (!buffer->isFull()) {
             auto& chunk = buffer->getChunk(sentinel);
-            while(!chunk.isFull()) {
+            while (!chunk.isFull()) {
                 chunk.addEvent() = phosphor::TraceEvent(
-                        "category",
-                        "name",
-                        phosphor::TraceEvent::Type::Instant,
-                        0, 0, {{0, 0}},
-                        {{phosphor::TraceArgument::Type::is_none,
-                         phosphor::TraceArgument::Type::is_none}});
+                    "category",
+                    "name",
+                    phosphor::TraceEvent::Type::Instant,
+                    0,
+                    0,
+                    {{0, 0}},
+                    {{phosphor::TraceArgument::Type::is_none,
+                      phosphor::TraceArgument::Type::is_none}});
             }
         }
         buffer->evictThreads();
     }
-
 
 protected:
     phosphor::buffer_ptr buffer;
@@ -55,7 +55,7 @@ TEST_F(ExportTest, test) {
         p = exporter.read(80);
         EXPECT_LE(p.size(), 80);
         std::cerr << p;
-    }  while(p.size());
+    } while (p.size());
     EXPECT_EQ("", exporter.read(4096));
 }
 
@@ -75,9 +75,9 @@ TEST(MockFileStopCallbackTest, valid_name) {
     callback = MockFileStopCallback("test.%p.json");
     auto filename_pid_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-            "test.[0-9]+.json");
+        "test.[0-9]+.json");
 #else
-            "test.\\d+.json");
+        "test.\\d+.json");
 #endif
 
     EXPECT_THAT(callback.generateFilePath(), filename_pid_regex);
@@ -85,9 +85,9 @@ TEST(MockFileStopCallbackTest, valid_name) {
     callback = MockFileStopCallback("test.%d.json");
     auto filename_date_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-            "test.[0-9]{4}.[0-9]{2}.[0-9]{2}T[0-9]{2}.[0-9]{2}.[0-9]{2}Z.json");
+        "test.[0-9]{4}.[0-9]{2}.[0-9]{2}T[0-9]{2}.[0-9]{2}.[0-9]{2}Z.json");
 #else
-            "test.\\d+.\\d+.\\d+T\\d+.\\d+.\\d+Z.json");
+        "test.\\d+.\\d+.\\d+T\\d+.\\d+.\\d+Z.json");
 #endif
 
     EXPECT_THAT(callback.generateFilePath(), filename_date_regex);
@@ -97,7 +97,7 @@ class FileStopCallbackTest : public testing::Test {
 public:
     FileStopCallbackTest() = default;
     ~FileStopCallbackTest() {
-        if(filename != "") {
+        if (filename != "") {
             std::remove(filename.c_str());
         }
     }
@@ -110,19 +110,18 @@ TEST_F(FileStopCallbackTest, test_to_file) {
     phosphor::TraceLog log;
     filename = "filecallbacktest.json";
 
-    log.start(phosphor::TraceConfig(
-            phosphor::BufferMode::fixed, 80000)
-                .setStoppedCallback(FileStopCallback(filename)));
-    while(log.isEnabled()) {
-        log.logEvent("category", "name", phosphor::TraceEvent::Type::Instant, 0);
+    log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 80000)
+                  .setStoppedCallback(FileStopCallback(filename)));
+    while (log.isEnabled()) {
+        log.logEvent(
+            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
     }
 }
 
 TEST_F(FileStopCallbackTest, file_open_fail) {
     phosphor::TraceLog log;
     filename = "";
-    log.start(phosphor::TraceConfig(
-            phosphor::BufferMode::fixed, 80000)
-                      .setStoppedCallback(FileStopCallback(filename)));
+    log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 80000)
+                  .setStoppedCallback(FileStopCallback(filename)));
     EXPECT_THROW(log.stop(), std::runtime_error);
 }

@@ -118,13 +118,9 @@ namespace phosphor {
          * - busy: The chunk pointer is being used (and valid)
          * - closed: The chunk pointer is no longer valid
          */
-        enum class State {
-            open,
-            busy,
-            closed
-        };
+        enum class State { open, busy, closed };
 
         std::atomic<State> state;
     };
 
-} // namespace phosphor
+}  // namespace phosphor

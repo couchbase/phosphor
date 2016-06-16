@@ -17,15 +17,15 @@
 
 #include <cstdarg>
 #include <cstddef>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 
 #include "string_utils.h"
 
 namespace phosphor {
     namespace utils {
 
-        std::string format_string(const char *fmt...) {
+        std::string format_string(const char* fmt...) {
             std::vector<char> buffer;
 
             va_list args, cpy;
@@ -33,16 +33,18 @@ namespace phosphor {
             va_copy(cpy, args);
 
             int len = vsnprintf(nullptr, 0, fmt, cpy) + 1;
-            if(len < 0) {
-                throw std::runtime_error("phosphor::utils::format_string "
-                                         "failed: vsnprintf returned < 0");
+            if (len < 0) {
+                throw std::runtime_error(
+                    "phosphor::utils::format_string "
+                    "failed: vsnprintf returned < 0");
             }
             buffer.resize(len);
             len = vsnprintf(buffer.data(), buffer.size(), fmt, args);
-            if(len < 0 || len > buffer.size()) {
-                throw std::runtime_error("phosphor::utils::format_string "
-                                         "failed: vsnprintf returned < 0 or "
-                                         "larger than the buffer.");
+            if (len < 0 || len > buffer.size()) {
+                throw std::runtime_error(
+                    "phosphor::utils::format_string "
+                    "failed: vsnprintf returned < 0 or "
+                    "larger than the buffer.");
             }
 
             va_end(args);
@@ -50,43 +52,40 @@ namespace phosphor {
             return buffer.data();
         }
 
-        std::string escape_json(const std::string& input)
-        {
+        std::string escape_json(const std::string& input) {
             std::string output;
             output.reserve(input.length());
 
-            for (std::string::size_type i = 0; i < input.length(); ++i)
-            {
+            for (std::string::size_type i = 0; i < input.length(); ++i) {
                 switch (input[i]) {
-                    case '"':
-                        output += "\\\"";
-                        break;
-                    case '/':
-                        output += "\\/";
-                        break;
-                    case '\b':
-                        output += "\\b";
-                        break;
-                    case '\f':
-                        output += "\\f";
-                        break;
-                    case '\n':
-                        output += "\\n";
-                        break;
-                    case '\r':
-                        output += "\\r";
-                        break;
-                    case '\t':
-                        output += "\\t";
-                        break;
-                    case '\\':
-                        output += "\\\\";
-                        break;
-                    default:
-                        output += input[i];
-                        break;
+                case '"':
+                    output += "\\\"";
+                    break;
+                case '/':
+                    output += "\\/";
+                    break;
+                case '\b':
+                    output += "\\b";
+                    break;
+                case '\f':
+                    output += "\\f";
+                    break;
+                case '\n':
+                    output += "\\n";
+                    break;
+                case '\r':
+                    output += "\\r";
+                    break;
+                case '\t':
+                    output += "\\t";
+                    break;
+                case '\\':
+                    output += "\\\\";
+                    break;
+                default:
+                    output += input[i];
+                    break;
                 }
-
             }
 
             return output;
@@ -98,7 +97,7 @@ namespace phosphor {
 
         std::vector<std::string> split_string(const std::string& str,
                                               const char delim) {
-            if(str == "") {
+            if (str == "") {
                 return {""};
             }
             std::vector<std::string> elems;
@@ -111,13 +110,13 @@ namespace phosphor {
         }
 
         bool string_replace(std::string& str,
-                            const std::string& from, const std::string& to) {
+                            const std::string& from,
+                            const std::string& to) {
             size_t start_pos = str.find(from);
-            if(start_pos == std::string::npos)
+            if (start_pos == std::string::npos)
                 return false;
             str.replace(start_pos, from.length(), to);
             return true;
         }
-
     }
 }

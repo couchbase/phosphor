@@ -18,8 +18,8 @@
 #include <sstream>
 #include <utility>
 
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "phosphor/trace_buffer.h"
 
@@ -30,52 +30,50 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
     chunk.reset();
 
     int count = 0;
-    while(!chunk.isFull()) {
+    while (!chunk.isFull()) {
         EXPECT_EQ(count, chunk.count());
-        chunk.addEvent() =
-            TraceEvent(
-                "category",
-                "name",
-                TraceEvent::Type::Instant,
-                0,
-                0,
-                {{0, 0}},
-                {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        chunk.addEvent() = TraceEvent(
+            "category",
+            "name",
+            TraceEvent::Type::Instant,
+            0,
+            0,
+            {{0, 0}},
+            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
         count++;
     }
     EXPECT_EQ(count, chunk.count());
     EXPECT_THROW(chunk.addEvent(), std::out_of_range);
     EXPECT_EQ(count, chunk.count());
-
 }
 
 TEST(TraceChunkTest, string_check) {
     TraceChunk chunk;
     chunk.reset();
 
-    while(!chunk.isFull()) {
+    while (!chunk.isFull()) {
         chunk.addEvent() = TraceEvent(
-                "category",
-                "name",
-                TraceEvent::Type::Instant,
-                0,
-                0,
-                {{0, 0}},
-                {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+            "category",
+            "name",
+            TraceEvent::Type::Instant,
+            0,
+            0,
+            {{0, 0}},
+            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     }
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-            "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-            "category, name, type=Instant, thread_id=0, "
-            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
+        "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
+        "category, name, type=Instant, thread_id=0, "
+        "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
-    "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-    "category, name, type=Instant, thread_id=0, "
-    "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
+        "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
+        "category, name, type=Instant, thread_id=0, "
+        "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 
-    for(int i = 0; i < chunk.count(); ++i) {
+    for (int i = 0; i < chunk.count(); ++i) {
         const auto& traced = chunk[i];
         // This should probably require linking against GoogleMock
         // as well but I think we'll get away with it..
@@ -87,7 +85,7 @@ TEST(TraceChunkTest, string_check) {
     }
 
     // Duplicate the above test with iterators to test the iterators
-    for(const auto& traced : chunk) {
+    for (const auto& traced : chunk) {
         // This should probably require linking against GoogleMock
         // as well but I think we'll get away with it..
         EXPECT_THAT(traced.to_string(), event_regex);
@@ -98,9 +96,9 @@ TEST(TraceChunkTest, string_check) {
     }
 }
 
-class TraceBufferTest : public testing::TestWithParam<std::pair<trace_buffer_factory, std::string>> {
+class TraceBufferTest : public testing::TestWithParam<
+                            std::pair<trace_buffer_factory, std::string>> {
 public:
-
     TraceBufferTest() {
         factory = GetParam().first;
     }
@@ -110,12 +108,12 @@ public:
     }
 
     void populate_chunk(TraceChunk& chunk, size_t event_count) {
-        for(int i = 0; i < event_count; ++i) {
+        for (int i = 0; i < event_count; ++i) {
             chunk.addEvent();
         }
     }
     void fill_chunk(TraceChunk& chunk) {
-        while(!chunk.isFull()) {
+        while (!chunk.isFull()) {
             chunk.addEvent();
         }
     }
@@ -150,7 +148,6 @@ TEST_P(TraceBufferTest, GetChunk) {
     /* Expect chunks recieved from buffer are empty */
     EXPECT_EQ(0, chunk.count());
 }
-
 
 TEST_P(TraceBufferTest, CheckEviction) {
     /* Get a chunk */
@@ -236,15 +233,15 @@ TEST_P(TraceBufferTest, iteratorChunksOccasionallyEmpty) {
     populate_chunk(buffer->getChunk(sentinel), 3);
     buffer->evictThreads();
     int i = 0;
-    for(const auto& event : *buffer) {
-        (void) event;
+    for (const auto& event : *buffer) {
+        (void)event;
         i++;
     }
     EXPECT_EQ(6, i);
 
     i = 0;
-    for(const auto& chunk: buffer->chunks()) {
-        (void) chunk;
+    for (const auto& chunk : buffer->chunks()) {
+        (void)chunk;
         i++;
     }
     EXPECT_EQ(5, i);
@@ -260,15 +257,15 @@ TEST_P(TraceBufferTest, fullChunks) {
     buffer->evictThreads();
     int event_count = 0;
     int i = 0;
-    for(const auto& chunk: buffer->chunks()) {
+    for (const auto& chunk : buffer->chunks()) {
         i += 1;
         event_count += chunk.count();
     }
     EXPECT_EQ(5, i);
 
     i = 0;
-    for(const auto& event : *buffer) {
-        (void) event;
+    for (const auto& event : *buffer) {
+        (void)event;
         i++;
     }
     EXPECT_EQ(event_count, i);
@@ -277,10 +274,8 @@ TEST_P(TraceBufferTest, fullChunks) {
 INSTANTIATE_TEST_CASE_P(
     BuiltIn,
     TraceBufferTest,
-    testing::Values(
-        TraceBufferTest::ParamType(make_fixed_buffer, "FixedBuffer")
-    ),
+    testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
+                                               "FixedBuffer")),
     [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
         return info.param.second;
     });
-

@@ -32,42 +32,51 @@ TEST(TraceArgument, enum_conversions) {
     EXPECT_EQ(TraceArgument::getType<long>(), TraceArgument::Type::is_int);
     EXPECT_EQ(TraceArgument::getType<long long>(), TraceArgument::Type::is_int);
 
-    EXPECT_EQ(TraceArgument::getType<unsigned char>(), TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned short>(), TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned int>(), TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned long>(), TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned long long>(), TraceArgument::Type::is_uint);
+    EXPECT_EQ(TraceArgument::getType<unsigned char>(),
+              TraceArgument::Type::is_uint);
+    EXPECT_EQ(TraceArgument::getType<unsigned short>(),
+              TraceArgument::Type::is_uint);
+    EXPECT_EQ(TraceArgument::getType<unsigned int>(),
+              TraceArgument::Type::is_uint);
+    EXPECT_EQ(TraceArgument::getType<unsigned long>(),
+              TraceArgument::Type::is_uint);
+    EXPECT_EQ(TraceArgument::getType<unsigned long long>(),
+              TraceArgument::Type::is_uint);
 
     EXPECT_EQ(TraceArgument::getType<float>(), TraceArgument::Type::is_double);
     EXPECT_EQ(TraceArgument::getType<double>(), TraceArgument::Type::is_double);
 
-    EXPECT_EQ(TraceArgument::getType<const void*>(), TraceArgument::Type::is_pointer);
-    EXPECT_EQ(TraceArgument::getType<const char*>(), TraceArgument::Type::is_string);
+    EXPECT_EQ(TraceArgument::getType<const void*>(),
+              TraceArgument::Type::is_pointer);
+    EXPECT_EQ(TraceArgument::getType<const char*>(),
+              TraceArgument::Type::is_string);
 }
 
-template<class T>
+template <class T>
 std::string inner_to_string_test(T src) {
     return TraceArgument(src).to_string(TraceArgument::getType<T>());
 }
 
 TEST(TraceArgument, to_string) {
-    EXPECT_EQ(inner_to_string_test(true),  "true");
+    EXPECT_EQ(inner_to_string_test(true), "true");
     EXPECT_EQ(inner_to_string_test(false), "false");
 
-    EXPECT_EQ(inner_to_string_test(3), "3");   // Signed positive int
-    EXPECT_EQ(inner_to_string_test(-3), "-3"); // Signed negative int
+    EXPECT_EQ(inner_to_string_test(3), "3");    // Signed positive int
+    EXPECT_EQ(inner_to_string_test(-3), "-3");  // Signed negative int
 
     EXPECT_EQ(inner_to_string_test(3u), "3");  // Unsigned int
 
-    EXPECT_EQ(inner_to_string_test(3.0), "3.000000"); // Double
+    EXPECT_EQ(inner_to_string_test(3.0), "3.000000");  // Double
 
     std::stringstream pointer_val;
     pointer_val << reinterpret_cast<const void*>(0xFF);
     EXPECT_EQ(inner_to_string_test(reinterpret_cast<const void*>(0xFF)),
-              "\"" + pointer_val.str() + "\""); // Pointer
-    EXPECT_EQ(inner_to_string_test("Hello, World"), "\"Hello, World\""); // Pointer
+              "\"" + pointer_val.str() + "\"");  // Pointer
+    EXPECT_EQ(inner_to_string_test("Hello, World"),
+              "\"Hello, World\"");  // Pointer
 
-    EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none), "\"Type::is_none\"");
+    EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none),
+              "\"Type::is_none\"");
 
     // This is *extremely* naughty and shouldn't need checking
     EXPECT_THROW(

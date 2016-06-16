@@ -37,3 +37,6 @@ docs:
 
 clean:
 	rm -rf build
+
+format:
+	clang-format -style=file -i $$(git ls-files | grep -v thirdparty | grep -v dyn_array.h | grep -E "\.cc|\.h");

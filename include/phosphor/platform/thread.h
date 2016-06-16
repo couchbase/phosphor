@@ -28,7 +28,6 @@
 #define THREAD_LOCAL thread_local
 #endif
 
-
 namespace phosphor {
     namespace platform {
         extern THREAD_LOCAL uint64_t thread_id;
@@ -69,7 +68,7 @@ namespace phosphor {
          * @return thread id for the calling thread
          */
         inline uint64_t getCurrentThreadIDCached() {
-            if(unlikely(!thread_id)) {
+            if (unlikely(!thread_id)) {
                 thread_id = getCurrentThreadID();
             }
 

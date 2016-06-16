@@ -19,11 +19,11 @@
 #include <exception>
 #include <string>
 
-#include "phosphor/trace_log.h"
 #include "phosphor/platform/thread.h"
 #include "phosphor/tools/export.h"
-#include "utils/string_utils.h"
+#include "phosphor/trace_log.h"
 #include "utils/memory.h"
+#include "utils/string_utils.h"
 
 namespace phosphor {
 
@@ -31,11 +31,9 @@ namespace phosphor {
      * TraceLogConfig implementation
      */
     TraceLogConfig::TraceLogConfig()
-          // Benchmarking suggests that 4x the number of logical
-          // cores is the sweetspot for the number to share.
-        : sentinel_count(std::thread::hardware_concurrency() * 4) {
-
-    }
+        // Benchmarking suggests that 4x the number of logical
+        // cores is the sweetspot for the number to share.
+        : sentinel_count(std::thread::hardware_concurrency() * 4) {}
 
     TraceLogConfig& TraceLogConfig::setSentinelCount(unsigned _sentinel_count) {
         sentinel_count = _sentinel_count;
@@ -47,7 +45,7 @@ namespace phosphor {
     }
 
     TraceLogConfig& TraceLogConfig::setStartupTrace(
-            const TraceConfig& _startup_trace) {
+        const TraceConfig& _startup_trace) {
         startup_trace = utils::make_unique<TraceConfig>(_startup_trace);
         return *this;
     }
@@ -65,32 +63,31 @@ namespace phosphor {
         TraceLogConfig config;
 
         const char* sentinel_count_s = std::getenv("PHOSPHOR_SENTINEL_COUNT");
-        if(sentinel_count_s && strlen(sentinel_count_s)) {
-
+        if (sentinel_count_s && strlen(sentinel_count_s)) {
             int sentinel_count;
             try {
                 sentinel_count = std::stoi(sentinel_count_s);
             } catch (std::invalid_argument& e) {
                 throw std::invalid_argument(
-                        "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_SENTINEL_COUNT was not a valid integer");
+                    "TraceLogConfig::fromEnviroment: "
+                    "PHOSPHOR_SENTINEL_COUNT was not a valid integer");
             } catch (std::out_of_range& e) {
                 throw std::invalid_argument(
-                        "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_SENTINEL_COUNT was too large");
+                    "TraceLogConfig::fromEnviroment: "
+                    "PHOSPHOR_SENTINEL_COUNT was too large");
             }
 
-            if(sentinel_count < 0) {
+            if (sentinel_count < 0) {
                 throw std::invalid_argument(
-                        "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_SENTINEL_COUNT cannot be negative");
+                    "TraceLogConfig::fromEnviroment: "
+                    "PHOSPHOR_SENTINEL_COUNT cannot be negative");
             }
 
             config.setSentinelCount(static_cast<unsigned>(sentinel_count));
         }
 
         const char* startup_config = std::getenv("PHOSPHOR_TRACING_START");
-        if(startup_config && strlen(startup_config)) {
+        if (startup_config && strlen(startup_config)) {
             config.setStartupTrace(TraceConfig::fromString(startup_config));
         }
 
@@ -102,33 +99,31 @@ namespace phosphor {
      */
 
     TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
-            : buffer_mode(_buffer_mode),
-              buffer_size(_buffer_size),
-              buffer_factory(modeToFactory(_buffer_mode)){
-    }
+        : buffer_mode(_buffer_mode),
+          buffer_size(_buffer_size),
+          buffer_factory(modeToFactory(_buffer_mode)) {}
 
     TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory,
                              size_t _buffer_size)
-            : buffer_mode(BufferMode::custom),
-              buffer_size(_buffer_size),
-              buffer_factory(_buffer_factory) {
-    }
+        : buffer_mode(BufferMode::custom),
+          buffer_size(_buffer_size),
+          buffer_factory(_buffer_factory) {}
 
     trace_buffer_factory TraceConfig::modeToFactory(BufferMode mode) {
         switch (mode) {
-            case BufferMode::fixed:
-                return trace_buffer_factory(make_fixed_buffer);
-            case BufferMode::ring:
-                throw std::invalid_argument(
-                        "phosphor::TraceConfig::modeToFactory: "
-                        "Ring buffer not yet implemented");
-            case BufferMode::custom:
-                throw std::invalid_argument(
-                        "phosphor::TraceConfig::modeToFactory: "
-                        "Cannot get factory for Custom Mode");
+        case BufferMode::fixed:
+            return trace_buffer_factory(make_fixed_buffer);
+        case BufferMode::ring:
+            throw std::invalid_argument(
+                "phosphor::TraceConfig::modeToFactory: "
+                "Ring buffer not yet implemented");
+        case BufferMode::custom:
+            throw std::invalid_argument(
+                "phosphor::TraceConfig::modeToFactory: "
+                "Cannot get factory for Custom Mode");
         }
         throw std::invalid_argument(
-                "phosphor::TraceConfig::modeToFactory:Invalid buffer mode");
+            "phosphor::TraceConfig::modeToFactory:Invalid buffer mode");
     }
 
     BufferMode TraceConfig::getBufferMode() const {
@@ -144,7 +139,7 @@ namespace phosphor {
     }
 
     TraceConfig& TraceConfig::setStoppedCallback(
-            TracingStoppedCallback _tracing_stopped_callback) {
+        TracingStoppedCallback _tracing_stopped_callback) {
         tracing_stopped_callback = _tracing_stopped_callback;
         return *this;
     }
@@ -169,35 +164,36 @@ namespace phosphor {
         int buffer_size = 1024 * 1024 * 8;
         std::string filename = "";
 
-        for(const std::string& argument : arguments) {
+        for (const std::string& argument : arguments) {
             auto kv(phosphor::utils::split_string(argument, ':'));
             std::string key(kv[0]);
             std::string value(kv[1]);
 
-            if(key == "buffer-mode") {
-                if(value == "fixed") {
+            if (key == "buffer-mode") {
+                if (value == "fixed") {
                     mode = BufferMode::fixed;
                 } else {
-                    throw std::invalid_argument("TraceConfig::fromString: "
-                                                "Invalid buffer mode given");
+                    throw std::invalid_argument(
+                        "TraceConfig::fromString: "
+                        "Invalid buffer mode given");
                 }
-            } else if(key == "buffer-size") {
+            } else if (key == "buffer-size") {
                 try {
                     buffer_size = std::stoi(value);
                 } catch (std::invalid_argument& e) {
                     throw std::invalid_argument(
-                            "TraceConfig::fromString: "
-                            "buffer size was not a valid integer");
+                        "TraceConfig::fromString: "
+                        "buffer size was not a valid integer");
                 } catch (std::out_of_range& e) {
                     throw std::invalid_argument(
-                            "TraceConfig::fromString: "
-                            "buffer size was too large");
+                        "TraceConfig::fromString: "
+                        "buffer size was too large");
                 }
 
-                if(buffer_size < 0) {
+                if (buffer_size < 0) {
                     throw std::invalid_argument(
-                            "TraceConfig::fromString: "
-                            "buffer size cannot be negative");
+                        "TraceConfig::fromString: "
+                        "buffer size cannot be negative");
                 }
             } else if (key == "save-on-stop") {
                 filename = value;
@@ -216,35 +212,32 @@ namespace phosphor {
      * TraceLog implementation
      */
 
-    TraceLog::TraceLog(const TraceLogConfig &_config)
-        : enabled(false) {
+    TraceLog::TraceLog(const TraceLogConfig& _config) : enabled(false) {
         configure(_config);
     }
 
-    TraceLog::TraceLog()
-        : TraceLog(TraceLogConfig::fromEnvironment()) {
-    }
+    TraceLog::TraceLog() : TraceLog(TraceLogConfig::fromEnvironment()) {}
 
     TraceLog::~TraceLog() {
-        if(trace_config.getStopTracingOnDestruct()) {
+        if (trace_config.getStopTracingOnDestruct()) {
             stop();
         }
     }
 
-    void TraceLog::configure(const TraceLogConfig &_config) {
+    void TraceLog::configure(const TraceLogConfig& _config) {
         std::lock_guard<TraceLog> lh(*this);
 
         shared_chunks.resize(_config.getSentinelCount());
-        for(auto& chunk : shared_chunks) {
+        for (auto& chunk : shared_chunks) {
             chunk.sentinel = new Sentinel();
         }
 
-        if(auto* startup_trace = _config.getStartupTrace()) {
+        if (auto* startup_trace = _config.getStartupTrace()) {
             start(lh, *startup_trace);
         }
     }
 
-    TraceLog &TraceLog::getInstance() {
+    TraceLog& TraceLog::getInstance() {
         // TODO: Not thread-safe on Windows
         static TraceLog log_instance;
         return log_instance;
@@ -258,7 +251,7 @@ namespace phosphor {
     void TraceLog::stop(std::lock_guard<TraceLog>& lh) {
         if (enabled.exchange(false)) {
             buffer->evictThreads();
-            if(auto cb = trace_config.getStoppedCallback()) {
+            if (auto cb = trace_config.getStoppedCallback()) {
                 cb(*this, lh);
             }
         }
@@ -273,12 +266,11 @@ namespace phosphor {
                          const TraceConfig& _trace_config) {
         trace_config = _trace_config;
 
-        size_t buffer_size =
-                trace_config.getBufferSize() / sizeof(TraceChunk);
-        if(buffer_size == 0) {
+        size_t buffer_size = trace_config.getBufferSize() / sizeof(TraceChunk);
+        if (buffer_size == 0) {
             throw std::invalid_argument(
-                    "Cannot specify a buffer size less than a single chunk (" +
-                    std::to_string(sizeof(TraceChunk)) + " bytes)");
+                "Cannot specify a buffer size less than a single chunk (" +
+                std::to_string(sizeof(TraceChunk)) + " bytes)");
         }
 
         buffer = trace_config.getBufferFactory()(generation++, buffer_size);
@@ -291,11 +283,11 @@ namespace phosphor {
     }
 
     std::unique_ptr<TraceBuffer> TraceLog::getBuffer(
-            std::lock_guard<TraceLog>&) {
+        std::lock_guard<TraceLog>&) {
         if (enabled) {
             throw std::logic_error(
-                    "phosphor::TraceLog::getBuffer: Cannot get the current "
-                            "TraceBuffer while logging is enabled");
+                "phosphor::TraceLog::getBuffer: Cannot get the current "
+                "TraceBuffer while logging is enabled");
         }
         return std::move(buffer);
     }
@@ -308,11 +300,11 @@ namespace phosphor {
         thread_chunk.sentinel = new Sentinel;
     }
 
-    void TraceLog::deregisterThread(TraceLog &instance) {
+    void TraceLog::deregisterThread(TraceLog& instance) {
         if (!thread_chunk.sentinel) {
             throw std::logic_error(
-                    "phosphor::TraceLog::deregisterThread: This thread has "
-                    "not been previously registered");
+                "phosphor::TraceLog::deregisterThread: This thread has "
+                "not been previously registered");
         }
 
         if (thread_chunk.chunk) {
@@ -325,7 +317,7 @@ namespace phosphor {
         delete thread_chunk.sentinel;
     }
 
-    void TraceLog::replaceChunk(ChunkTenant &ct) {
+    void TraceLog::replaceChunk(ChunkTenant& ct) {
         ct.sentinel->release();
         std::lock_guard<TraceLog> lh(*this);
         if (!ct.sentinel->acquire()) {
@@ -350,7 +342,7 @@ namespace phosphor {
         }
     }
 
-    void TraceLog::resetChunk(ChunkTenant &ct) {
+    void TraceLog::resetChunk(ChunkTenant& ct) {
         if (ct.sentinel->reopen()) {
             ct.chunk = nullptr;
             ct.sentinel->release();
@@ -358,5 +350,4 @@ namespace phosphor {
     }
 
     THREAD_LOCAL TraceLog::ChunkTenant TraceLog::thread_chunk;
-
 }

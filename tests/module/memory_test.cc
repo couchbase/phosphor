@@ -35,5 +35,6 @@ struct AlwaysThrow {
 };
 
 TEST(MakeUnique, fail) {
-    EXPECT_THROW(phosphor::utils::make_unique<AlwaysThrow>(), std::runtime_error);
+    EXPECT_THROW(phosphor::utils::make_unique<AlwaysThrow>(),
+                 std::runtime_error);
 }

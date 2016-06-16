@@ -21,10 +21,7 @@
 
 namespace phosphor {
 
-    Sentinel::Sentinel()
-            : state(State::open) {
-
-    }
+    Sentinel::Sentinel() : state(State::open) {}
 
     bool Sentinel::acquire() {
         auto expected = State::open;
@@ -44,7 +41,7 @@ namespace phosphor {
         auto expected = State::busy;
         // Sentinel::release() should only be called while State::busy
         assert(state.compare_exchange_strong(expected, State::open));
-        (void) expected;
+        (void)expected;
 #endif
     }
 
@@ -59,5 +56,4 @@ namespace phosphor {
         auto expected = State::closed;
         return state.compare_exchange_strong(expected, State::busy);
     }
-
 }

@@ -35,7 +35,6 @@ namespace phosphor {
      * and printing the TraceArgument.
      */
     union TraceArgument {
-
         /**
          * Enumeration of the possible types of a TraceArgument
          */
@@ -73,7 +72,7 @@ namespace phosphor {
          * Where arg is one of many primitive types, e.g. int.
          *
          */
-        template<class T>
+        template <class T>
         inline TraceArgument(T src);
 
         /**
@@ -83,7 +82,7 @@ namespace phosphor {
          *
          *     Type t = TraceArgument::getType<int>()
          */
-        template<class T>
+        template <class T>
         inline static constexpr Type getType();
 
         /**
@@ -95,7 +94,7 @@ namespace phosphor {
         inline std::string to_string(TraceArgument::Type type) const;
 
     private:
-        template<TraceArgument::Type T>
+        template <TraceArgument::Type T>
         inline std::string internal_to_string();
     };
 
@@ -107,13 +106,13 @@ namespace phosphor {
  * @param dst The destination 'type' (aka the appropriate is_/as_
  *            suffix) of the argument.
  */
-#define ARGUMENT_CONVERSION(src, dst) \
-template <> \
-inline constexpr TraceArgument::Type TraceArgument::getType<src>() { \
-     return Type::is_ ##dst; \
-} \
-template <> \
-inline TraceArgument::TraceArgument(src arg) : as_ ##dst (arg) {}
+#define ARGUMENT_CONVERSION(src, dst)                                    \
+    template <>                                                          \
+    inline constexpr TraceArgument::Type TraceArgument::getType<src>() { \
+        return Type::is_##dst;                                           \
+    }                                                                    \
+    template <>                                                          \
+    inline TraceArgument::TraceArgument(src arg) : as_##dst(arg) {}
 
     ARGUMENT_CONVERSION(bool, bool)
 
@@ -141,33 +140,33 @@ inline TraceArgument::TraceArgument(src arg) : as_ ##dst (arg) {}
 
     ARGUMENT_CONVERSION(double, double)
 
-    ARGUMENT_CONVERSION(const void*, pointer)
+    ARGUMENT_CONVERSION(const void *, pointer)
 
-    ARGUMENT_CONVERSION(const char*, string)
+    ARGUMENT_CONVERSION(const char *, string)
 
 #undef ARGUMENT_CONVERSION
 
     inline std::string TraceArgument::to_string(
-            TraceArgument::Type type) const {
+        TraceArgument::Type type) const {
         std::stringstream ss;
         switch (type) {
-            case Type::is_bool:
-                return as_bool?"true":"false";
-            case Type::is_int: \
-                return std::to_string(as_int);
-            case Type::is_uint: \
-                return std::to_string(as_uint);
-            case Type::is_double: \
-                return std::to_string(as_double);
-            case Type::is_pointer:
-                ss << as_pointer;
-                return "\"" + ss.str() + "\"";
-            case Type::is_string:
-                return "\"" + std::string(as_string) + "\"";
-            case Type::is_none:
-                return std::string("\"Type::is_none\"");
-            default:
-                throw std::invalid_argument("Invalid TraceArgument type");
+        case Type::is_bool:
+            return as_bool ? "true" : "false";
+        case Type::is_int:
+            return std::to_string(as_int);
+        case Type::is_uint:
+            return std::to_string(as_uint);
+        case Type::is_double:
+            return std::to_string(as_double);
+        case Type::is_pointer:
+            ss << as_pointer;
+            return "\"" + ss.str() + "\"";
+        case Type::is_string:
+            return "\"" + std::string(as_string) + "\"";
+        case Type::is_none:
+            return std::string("\"Type::is_none\"");
+        default:
+            throw std::invalid_argument("Invalid TraceArgument type");
         }
     }
-} // namespace phosphor
+}  // namespace phosphor

@@ -17,8 +17,8 @@
 
 #include <sstream>
 
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "phosphor/trace_event.h"
 
@@ -27,38 +27,36 @@ using phosphor::TraceArgument;
 
 TEST(TraceEvent, create) {
     TraceEvent def;
-    (void) def;
+    (void)def;
     TraceEvent event(
-            "category",
-             "name",
-             TraceEvent::Type::Instant,
-             0,
-             0,
-             {{0, 0}},
-             {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
 }
 
 TEST(TraceEvent, string_check) {
     TraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::Instant,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-            "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-            "category, name, type=Instant, thread_id=0, "
-            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
+        "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
+        "category, name, type=Instant, thread_id=0, "
+        "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
-            "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-            "category, name, type=Instant, thread_id=0, "
-            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
+        "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
+        "category, name, type=Instant, thread_id=0, "
+        "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 
     // This should probably require linking against GoogleMock
@@ -73,14 +71,11 @@ TEST(TraceEvent, string_check) {
 TEST(TraceEvent, typeToString) {
     EXPECT_EQ("AsyncStart",
               TraceEvent::typeToString(TraceEvent::Type::AsyncStart));
-    EXPECT_EQ("AsyncEnd",
-              TraceEvent::typeToString(TraceEvent::Type::AsyncEnd));
+    EXPECT_EQ("AsyncEnd", TraceEvent::typeToString(TraceEvent::Type::AsyncEnd));
     EXPECT_EQ("SyncStart",
               TraceEvent::typeToString(TraceEvent::Type::SyncStart));
-    EXPECT_EQ("SyncEnd",
-              TraceEvent::typeToString(TraceEvent::Type::SyncEnd));
-    EXPECT_EQ("Instant",
-              TraceEvent::typeToString(TraceEvent::Type::Instant));
+    EXPECT_EQ("SyncEnd", TraceEvent::typeToString(TraceEvent::Type::SyncEnd));
+    EXPECT_EQ("Instant", TraceEvent::typeToString(TraceEvent::Type::Instant));
     EXPECT_EQ("GlobalInstant",
               TraceEvent::typeToString(TraceEvent::Type::GlobalInstant));
     EXPECT_THROW(TraceEvent::typeToString(static_cast<TraceEvent::Type>(0xFF)),
@@ -89,48 +84,46 @@ TEST(TraceEvent, typeToString) {
 
 TEST(TraceEvent, toJSON) {
     TraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::Instant,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_bool, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_bool, TraceArgument::Type::is_none}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-            "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
-            "\"args\":\\{\"0\":false\\}\\}");
+        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
+        "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
+        "\"args\":\\{\"0\":false\\}\\}");
 #else
-            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-            "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
-            "\"args\":\\{\"0\":false\\}\\}");
+        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
+        "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
+        "\"args\":\\{\"0\":false\\}\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);
 }
 
 TEST(TraceEvent, toJSONAlt) {
     TraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::SyncEnd,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_bool, TraceArgument::Type::is_bool}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::SyncEnd,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_bool, TraceArgument::Type::is_bool}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-            "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
-            "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
+        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
+        "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
+        "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
 #else
-    "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-    "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
-    "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
+        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
+        "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
+        "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);
 }
@@ -143,14 +136,13 @@ public:
 
 TEST(TraceEventTypeToJSON, Instant) {
     MockTraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::Instant,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.first));
     EXPECT_EQ(",\"s\":\"t\"", res.second);
@@ -158,14 +150,13 @@ TEST(TraceEventTypeToJSON, Instant) {
 
 TEST(TraceEventTypeToJSON, SyncStart) {
     MockTraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::SyncStart,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::SyncStart,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
     EXPECT_EQ("B", std::string(res.first));
     EXPECT_EQ("", res.second);
@@ -173,14 +164,13 @@ TEST(TraceEventTypeToJSON, SyncStart) {
 
 TEST(TraceEventTypeToJSON, SyncEnd) {
     MockTraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::SyncEnd,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::SyncEnd,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
     EXPECT_EQ("E", std::string(res.first));
     EXPECT_EQ("", res.second);
@@ -188,14 +178,13 @@ TEST(TraceEventTypeToJSON, SyncEnd) {
 
 TEST(TraceEventTypeToJSON, AsyncStart) {
     MockTraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::AsyncStart,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::AsyncStart,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
     EXPECT_EQ("b", std::string(res.first));
     EXPECT_EQ(",\"id\": \"0x0\"", res.second);
@@ -203,14 +192,13 @@ TEST(TraceEventTypeToJSON, AsyncStart) {
 
 TEST(TraceEventTypeToJSON, AsyncEnd) {
     MockTraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::AsyncEnd,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::AsyncEnd,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
     EXPECT_EQ("e", std::string(res.first));
     EXPECT_EQ(",\"id\": \"0x0\"", res.second);
@@ -218,14 +206,13 @@ TEST(TraceEventTypeToJSON, AsyncEnd) {
 
 TEST(TraceEventTypeToJSON, GlobalInstant) {
     MockTraceEvent event(
-            "category",
-            "name",
-            TraceEvent::Type::GlobalInstant,
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        TraceEvent::Type::GlobalInstant,
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.first));
     EXPECT_EQ(",\"s\":\"g\"", res.second);
@@ -233,13 +220,12 @@ TEST(TraceEventTypeToJSON, GlobalInstant) {
 
 TEST(TraceEventTypeToJSON, Invalid) {
     MockTraceEvent event(
-            "category",
-            "name",
-            static_cast<TraceEvent::Type>(0xFF),
-            0,
-            0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    );
+        "category",
+        "name",
+        static_cast<TraceEvent::Type>(0xFF),
+        0,
+        0,
+        {{0, 0}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     EXPECT_THROW(event.typeToJSON(), std::invalid_argument);
 }

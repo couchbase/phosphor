@@ -26,8 +26,8 @@ namespace phosphor {
         /**
          * C++11 polyfill for C++14's std::make_unique
          */
-        template<typename T, typename ...Args>
-        std::unique_ptr<T> make_unique(Args &&...args) {
+        template <typename T, typename... Args>
+        std::unique_ptr<T> make_unique(Args&&... args) {
             return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
         }
 
@@ -36,7 +36,7 @@ namespace phosphor {
          * a file when it goes out of scope.
          */
         struct FILEDeleter {
-            void operator() (FILE* ptr) const {
+            void operator()(FILE* ptr) const {
                 std::fclose(ptr);
             }
         };
@@ -50,7 +50,6 @@ namespace phosphor {
          * make_unique equivalant for a FILE* that will ensure the file is
          * closed properly when the unique_ptr goes out of scope.
          */
-        unique_FILE make_unique_FILE(const char * filename, const char * flags);
-
+        unique_FILE make_unique_FILE(const char* filename, const char* flags);
     }
 }

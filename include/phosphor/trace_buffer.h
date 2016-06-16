@@ -43,9 +43,10 @@ namespace phosphor {
     class TraceChunk {
         static constexpr auto chunk_page_count = 1;
         static constexpr auto page_size = 4096;
-        static constexpr auto chunk_size = ((page_size * chunk_page_count) /
-                                            sizeof(TraceEvent));
+        static constexpr auto chunk_size =
+            ((page_size * chunk_page_count) / sizeof(TraceEvent));
         using event_array = std::array<TraceEvent, chunk_size>;
+
     public:
         using const_iterator = event_array::const_iterator;
 
@@ -220,7 +221,7 @@ namespace phosphor {
          * @throw std::logic_error if chunks are currently loaned
          *        out to chunk tenants.
          */
-        virtual const TraceChunk& operator[](const int index) const = 0;
+        virtual const TraceChunk &operator[](const int index) const = 0;
 
         /**
          * Used for determining the number of chunks in the buffer
@@ -249,15 +250,16 @@ namespace phosphor {
          *     }
          */
         class chunk_iterator
-                : public
-                  std::iterator<std::bidirectional_iterator_tag, TraceChunk> {
-            using const_reference = const TraceChunk&;
-            using const_pointer = const TraceChunk*;
+            : public std::iterator<std::bidirectional_iterator_tag,
+                                   TraceChunk> {
+            using const_reference = const TraceChunk &;
+            using const_pointer = const TraceChunk *;
             using _self = chunk_iterator;
+
         public:
             chunk_iterator() = default;
-            chunk_iterator(const TraceBuffer& buffer_);
-            chunk_iterator(const TraceBuffer& buffer_, size_t index_);
+            chunk_iterator(const TraceBuffer &buffer_);
+            chunk_iterator(const TraceBuffer &buffer_, size_t index_);
             const_reference operator*() const;
             const_pointer operator->() const;
             chunk_iterator &operator++();
@@ -265,7 +267,7 @@ namespace phosphor {
             bool operator!=(const chunk_iterator &other) const;
 
         protected:
-            const TraceBuffer& buffer;
+            const TraceBuffer &buffer;
             size_t index;
         };
 
@@ -321,9 +323,7 @@ namespace phosphor {
             /**
              * @param buffer_ The buffer to iterate over
              */
-            chunk_iterable(const TraceBuffer& buffer_)
-                    : buffer(buffer_) {
-            }
+            chunk_iterable(const TraceBuffer &buffer_) : buffer(buffer_) {}
 
             /**
              * @return A const iterator to the first chunk of the buffer
@@ -338,8 +338,9 @@ namespace phosphor {
             chunk_iterator end() {
                 return buffer.chunk_end();
             }
+
         private:
-            const TraceBuffer& buffer;
+            const TraceBuffer &buffer;
         };
 
         /**
@@ -354,7 +355,6 @@ namespace phosphor {
         chunk_iterable chunks() const {
             return chunk_iterable(*this);
         }
-
     };
 
     using buffer_ptr = std::unique_ptr<TraceBuffer>;
@@ -366,5 +366,4 @@ namespace phosphor {
         std::function<buffer_ptr(size_t generation, size_t buffer_size)>;
 
     buffer_ptr make_fixed_buffer(size_t generation, size_t buffer_size);
-
 }

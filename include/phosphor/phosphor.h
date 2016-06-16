@@ -73,17 +73,21 @@
  *
  * @{
  */
-#define TRACE_EVENT_START(category, name, ...) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0, __VA_ARGS__)
+#define TRACE_EVENT_START(category, name, ...)  \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::SyncStart, 0, __VA_ARGS__)
 
-#define TRACE_EVENT_START0(category, name) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0)
+#define TRACE_EVENT_START0(category, name)      \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::SyncStart, 0)
 
-#define TRACE_EVENT_END(category, name, ...) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)
+#define TRACE_EVENT_END(category, name, ...)    \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)
 
-#define TRACE_EVENT_END0(category, name) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0)
+#define TRACE_EVENT_END0(category, name)        \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::SyncEnd, 0)
 /** @} */
 
 /**
@@ -106,25 +110,23 @@
  *
  * @{
  */
-#define TRACE_EVENT(category, name, ...) \
-    TRACE_EVENT_START(category, name, __VA_ARGS__); \
-    struct scoped_trace_t_ ##__LINE__ ##__FILE__ { \
-        ~scoped_trace_t_ ##__LINE__ ##__FILE__() { \
-            phosphor::TraceLog::getInstance().logEvent(category, name, \
-                                                       phosphor::TraceEvent::Type::SyncEnd, \
-                                                       0); \
-            } \
-    } scoped_trace_inst_  ##__LINE__ ##__FILE__;
+#define TRACE_EVENT(category, name, ...)                                 \
+    TRACE_EVENT_START(category, name, __VA_ARGS__);                      \
+    struct scoped_trace_t_##__LINE__##__FILE__ {                         \
+        ~scoped_trace_t_##__LINE__##__FILE__() {                         \
+            phosphor::TraceLog::getInstance().logEvent(                  \
+                category, name, phosphor::TraceEvent::Type::SyncEnd, 0); \
+        }                                                                \
+    } scoped_trace_inst_##__LINE__##__FILE__;
 
-#define TRACE_EVENT0(category, name) \
-    TRACE_EVENT_START(category, name); \
-    struct scoped_trace_t_ ##__LINE__ ##__FILE__ { \
-        ~scoped_trace_t_ ##__LINE__ ##__FILE__() { \
-            phosphor::TraceLog::getInstance().logEvent(category, name, \
-                                                       phosphor::TraceEvent::Type::SyncEnd, \
-                                                       0); \
-            } \
-    } scoped_trace_inst_  ##__LINE__ ##__FILE__;
+#define TRACE_EVENT0(category, name)                                     \
+    TRACE_EVENT_START(category, name);                                   \
+    struct scoped_trace_t_##__LINE__##__FILE__ {                         \
+        ~scoped_trace_t_##__LINE__##__FILE__() {                         \
+            phosphor::TraceLog::getInstance().logEvent(                  \
+                category, name, phosphor::TraceEvent::Type::SyncEnd, 0); \
+        }                                                                \
+    } scoped_trace_inst_##__LINE__##__FILE__;
 /** @} */
 
 /**
@@ -145,16 +147,24 @@
  * @{
  */
 #define TRACE_ASYNC_START(category, name, id, ...) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id, __VA_ARGS__)
+    phosphor::TraceLog::getInstance().logEvent(    \
+        category,                                  \
+        name,                                      \
+        phosphor::TraceEvent::Type::AsyncStart,    \
+        id,                                        \
+        __VA_ARGS__)
 
-#define TRACE_ASYNC_START0(category, name, id) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id)
+#define TRACE_ASYNC_START0(category, name, id)  \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::AsyncStart, id)
 
 #define TRACE_ASYNC_END(category, name, id, ...) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)
+    phosphor::TraceLog::getInstance().logEvent(  \
+        category, name, phosphor::TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)
 
-#define TRACE_ASYNC_END0(category, name, id) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id)
+#define TRACE_ASYNC_END0(category, name, id)    \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::AsyncEnd, id)
 /** @} */
 
 /**
@@ -169,11 +179,13 @@
  *
  *  @{
  */
-#define TRACE_INSTANT(category, name, ...) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0, __VA_ARGS__)
+#define TRACE_INSTANT(category, name, ...)      \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::Instant, 0, __VA_ARGS__)
 
-#define TRACE_INSTANT0(category, name) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0)
+#define TRACE_INSTANT0(category, name)          \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::Instant, 0)
 /** @} */
 
 /**
@@ -189,9 +201,15 @@
  *
  *  @{
  */
-#define TRACE_GLOBAL(category, name, ...) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)
+#define TRACE_GLOBAL(category, name, ...)          \
+    phosphor::TraceLog::getInstance().logEvent(    \
+        category,                                  \
+        name,                                      \
+        phosphor::TraceEvent::Type::GlobalInstant, \
+        0,                                         \
+        __VA_ARGS__)
 
-#define TRACE_GLOBAL0(category, name) \
-    phosphor::TraceLog::getInstance().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0)
+#define TRACE_GLOBAL0(category, name)           \
+    phosphor::TraceLog::getInstance().logEvent( \
+        category, name, phosphor::TraceEvent::Type::GlobalInstant, 0)
 /** @} */

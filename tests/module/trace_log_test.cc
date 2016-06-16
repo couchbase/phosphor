@@ -20,23 +20,22 @@
 
 #include <gtest/gtest.h>
 
-#include "phosphor/trace_log.h"
 #include "phosphor/trace_buffer.h"
+#include "phosphor/trace_log.h"
 
 using namespace phosphor;
-
 
 #ifdef _WIN32
 // Windows doesn't have setenv so emulate it
 
 // StackOverflow @bill-weinman - http://stackoverflow.com/a/23616164/5467841
-int setenv(const char *name, const char *value, int overwrite)
-{
+int setenv(const char* name, const char* value, int overwrite) {
     int errcode = 0;
-    if(!overwrite) {
+    if (!overwrite) {
         size_t envsize = 0;
         errcode = getenv_s(&envsize, NULL, 0, name);
-        if(errcode || envsize) return errcode;
+        if (errcode || envsize)
+            return errcode;
     }
     return _putenv_s(name, value);
 }
@@ -51,10 +50,14 @@ TEST(TraceLogConfigTest, sentinel_count) {
 TEST(TraceLogConfigTest, startup_trace) {
     TraceLogConfig config;
     TraceConfig trace_config(BufferMode::fixed, 10000);
-    EXPECT_EQ(10000, config.setStartupTrace(trace_config)
-            .getStartupTrace()->getBufferSize());
-    EXPECT_EQ(nullptr, config.setStartupTrace(trace_config)
-            .clearStartupTrace().getStartupTrace());
+    EXPECT_EQ(10000,
+              config.setStartupTrace(trace_config)
+                  .getStartupTrace()
+                  ->getBufferSize());
+    EXPECT_EQ(nullptr,
+              config.setStartupTrace(trace_config)
+                  .clearStartupTrace()
+                  .getStartupTrace());
 }
 
 TEST(TraceLogConfigTest, from_environment) {
@@ -62,10 +65,9 @@ TEST(TraceLogConfigTest, from_environment) {
     TraceLogConfig config = TraceLogConfig::fromEnvironment();
     EXPECT_EQ(5, config.getSentinelCount());
 
-    for(const auto& str : {"abdc", "99999999999999999", "-1"}) {
+    for (const auto& str : {"abdc", "99999999999999999", "-1"}) {
         setenv("PHOSPHOR_SENTINEL_COUNT", str, true);
-        EXPECT_THROW(TraceLogConfig::fromEnvironment(),
-                     std::invalid_argument);
+        EXPECT_THROW(TraceLogConfig::fromEnvironment(), std::invalid_argument);
     }
     setenv("PHOSPHOR_SENTINEL_COUNT", "", true);
     EXPECT_NO_THROW(TraceLogConfig::fromEnvironment());
@@ -84,8 +86,7 @@ TEST(TraceConfigTest, createFixed) {
     auto bufferB = config.getBufferFactory()(0, 0);
     auto& bufferBRef = *bufferB;
 
-    EXPECT_EQ(typeid(bufferARef),
-              typeid(bufferBRef));
+    EXPECT_EQ(typeid(bufferARef), typeid(bufferBRef));
 
     EXPECT_EQ(1337, config.getBufferSize());
     EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
@@ -100,8 +101,7 @@ TEST(TraceConfigTest, createCustom) {
     auto bufferB = config.getBufferFactory()(0, 0);
     auto& bufferBRef = *bufferB;
 
-    EXPECT_EQ(typeid(bufferARef),
-              typeid(bufferBRef));
+    EXPECT_EQ(typeid(bufferARef), typeid(bufferBRef));
 
     EXPECT_EQ(BufferMode::custom, config.getBufferMode());
 }
@@ -114,9 +114,10 @@ TEST(TraceConfigTest, createModeErrors) {
 }
 
 TEST(TraceConfigTest, fromString) {
-    TraceConfig config = TraceConfig::fromString("buffer-mode:fixed,"
-                                                 "buffer-size:1024,"
-                                                 "save-on-stop:out.json");
+    TraceConfig config = TraceConfig::fromString(
+        "buffer-mode:fixed,"
+        "buffer-size:1024,"
+        "save-on-stop:out.json");
 
     EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
     EXPECT_EQ(1024, config.getBufferSize());
@@ -124,7 +125,7 @@ TEST(TraceConfigTest, fromString) {
     EXPECT_TRUE(config.getStopTracingOnDestruct());
     EXPECT_FALSE(TraceConfig::fromString("buffer-mode:fixed,"
                                          "buffer-size:1024,")
-                         .getStopTracingOnDestruct());
+                     .getStopTracingOnDestruct());
 
     EXPECT_THROW(TraceConfig::fromString("buffer-mode:other"),
                  std::invalid_argument);
@@ -145,29 +146,25 @@ class TraceLogTest : public testing::Test {
 public:
     static const int min_buffer_size = sizeof(TraceChunk);
 
-    TraceLogTest() {
-
-    }
+    TraceLogTest() {}
     virtual ~TraceLogTest() = default;
 
     void start_basic() {
-        trace_log.start(TraceConfig(BufferMode::fixed,
-                                    min_buffer_size));
+        trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size));
     }
 
     void log_event() {
-        trace_log.logEvent("category", "name", TraceEvent::Type::Instant,
-                           0, 0, 0);
+        trace_log.logEvent(
+            "category", "name", TraceEvent::Type::Instant, 0, 0, 0);
     }
 
     void log_event_all_types() {
-        trace_log.logEvent("category", "2arg", TraceEvent::Type::Instant,
-                           0, 0, 0);
-        trace_log.logEvent("category", "1arg", TraceEvent::Type::Instant,
-                           0, 0);
-        trace_log.logEvent("category", "0arg", TraceEvent::Type::Instant,
-                           0);
+        trace_log.logEvent(
+            "category", "2arg", TraceEvent::Type::Instant, 0, 0, 0);
+        trace_log.logEvent("category", "1arg", TraceEvent::Type::Instant, 0, 0);
+        trace_log.logEvent("category", "0arg", TraceEvent::Type::Instant, 0);
     }
+
 protected:
     MockTraceLog trace_log;
 };
@@ -175,8 +172,8 @@ protected:
 TEST_F(TraceLogTest, smallBufferThrow) {
     EXPECT_THROW(trace_log.start(TraceConfig(BufferMode::fixed, 0)),
                  std::invalid_argument);
-    EXPECT_NO_THROW(trace_log.start(TraceConfig(BufferMode::fixed,
-                                                min_buffer_size)));
+    EXPECT_NO_THROW(
+        trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size)));
 }
 
 TEST_F(TraceLogTest, isEnabled) {
@@ -207,26 +204,23 @@ TEST_F(TraceLogTest, bufferGenerationCheck) {
 }
 
 TEST_F(TraceLogTest, logTillFullAndEvenThen) {
-    trace_log.start(TraceConfig(BufferMode::fixed,
-                                min_buffer_size * 4));
+    trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size * 4));
 
-    while(trace_log.isEnabled()) {
+    while (trace_log.isEnabled()) {
         log_event_all_types();
     }
     log_event();
 }
 
 TEST_F(TraceLogTest, logTillFullAndEvenThenButReload) {
-    trace_log.start(TraceConfig(BufferMode::fixed,
-                                min_buffer_size * 4));
+    trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size * 4));
 
-    while(trace_log.isEnabled()) {
+    while (trace_log.isEnabled()) {
         log_event();
     }
-    trace_log.start(TraceConfig(BufferMode::fixed,
-                                min_buffer_size * 4));
+    trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size * 4));
 
-    while(trace_log.isEnabled()) {
+    while (trace_log.isEnabled()) {
         log_event();
     }
 }
@@ -234,21 +228,20 @@ TEST_F(TraceLogTest, logTillFullAndEvenThenButReload) {
 TEST_F(TraceLogTest, logTillFullThreaded) {
     const int thread_count = 8;
     std::vector<std::thread> threads;
-    trace_log.start(TraceConfig(BufferMode::fixed,
-                                min_buffer_size * thread_count * 4));
+    trace_log.start(
+        TraceConfig(BufferMode::fixed, min_buffer_size * thread_count * 4));
 
-    for(int i = 0; i < thread_count; ++i) {
+    for (int i = 0; i < thread_count; ++i) {
         threads.emplace_back([this]() {
             while (trace_log.isEnabled()) {
                 log_event();
             }
         });
     }
-    for(std::thread& thread : threads) {
+    for (std::thread& thread : threads) {
         thread.join();
     };
 }
-
 
 TEST(TraceLogStaticTest, getInstance) {
     EXPECT_EQ(&TraceLog::getInstance(), &TraceLog::getInstance());
@@ -277,15 +270,14 @@ TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
 
 TEST_F(TraceLogTest, testDoneCallback) {
     bool callback_invoked = false;
-    trace_log.start(
-            TraceConfig(BufferMode::fixed, min_buffer_size * 4)
-                        .setStoppedCallback([&callback_invoked](TraceLog& log,
-                                               std::lock_guard<TraceLog>& lh) {
+    trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size * 4)
+                        .setStoppedCallback([&callback_invoked](
+                            TraceLog& log, std::lock_guard<TraceLog>& lh) {
                             callback_invoked = true;
                             EXPECT_NE(nullptr, log.getBuffer(lh).get());
                         }));
 
-    while(trace_log.isEnabled()) {
+    while (trace_log.isEnabled()) {
         log_event();
     }
     // TraceLog should already be null
@@ -304,22 +296,21 @@ TEST(TraceLogAltTest, stopOnDestruct) {
     {
         TraceLog trace_log;
         trace_log.start(TraceConfig(BufferMode::fixed, 80000)
-                        .setStoppedCallback([&callback_invoked](TraceLog& log,
-                                               std::lock_guard<TraceLog>& lh) {
-                            callback_invoked = true;
-                        })
-                        .setStopTracingOnDestruct(true));
+                            .setStoppedCallback([&callback_invoked](
+                                TraceLog& log, std::lock_guard<TraceLog>& lh) {
+                                callback_invoked = true;
+                            })
+                            .setStopTracingOnDestruct(true));
     }
     EXPECT_TRUE(callback_invoked);
     callback_invoked = false;
     {
         TraceLog trace_log;
         trace_log.start(TraceConfig(BufferMode::fixed, 80000)
-                        .setStoppedCallback([&callback_invoked](TraceLog& log,
-                                                                std::lock_guard<TraceLog>& lh) {
-                            callback_invoked = true;
-                        }));
+                            .setStoppedCallback([&callback_invoked](
+                                TraceLog& log, std::lock_guard<TraceLog>& lh) {
+                                callback_invoked = true;
+                            }));
     }
     EXPECT_FALSE(callback_invoked);
 }
-

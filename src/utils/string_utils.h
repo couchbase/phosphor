@@ -29,7 +29,7 @@ namespace phosphor {
          * @param args Variable arguments to format into format string
          * @return Formatted string
          */
-        std::string format_string(const char *fmt, ...);
+        std::string format_string(const char* fmt, ...);
 
         /**
          * Converts a string into a valid JSON string
@@ -51,6 +51,7 @@ namespace phosphor {
                                               char delim = ' ');
 
         bool string_replace(std::string& str,
-                            const std::string& from, const std::string& to);
+                            const std::string& from,
+                            const std::string& to);
     }
 }

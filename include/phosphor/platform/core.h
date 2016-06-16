@@ -22,14 +22,14 @@
  * Branch prediction hint for the compiler where the given
  * expression is likely to evaluate to true
  */
-#define likely(x)       __builtin_expect(!!(x), 1)
+#define likely(x) __builtin_expect(!!(x), 1)
 
 /**
  * Branch prediction hint for the compiler where the given
  * expression is unlikely to evaluate to true
  */
-#define unlikely(x)     __builtin_expect(!!(x), 0)
+#define unlikely(x) __builtin_expect(!!(x), 0)
 #else
-#define likely(x)       (x)
-#define unlikely(x)     (x)
+#define likely(x) (x)
+#define unlikely(x) (x)
 #endif

@@ -17,8 +17,8 @@
 
 #include <memory>
 
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include "utils/string_utils.h"
 
@@ -51,8 +51,7 @@ TEST(ToJSONTest, test) {
 using phosphor::utils::split_string;
 
 TEST(SplitStringTest, test) {
-    EXPECT_THAT(split_string("ab"),
-                testing::ElementsAre("ab"));
+    EXPECT_THAT(split_string("ab"), testing::ElementsAre("ab"));
 
     EXPECT_THAT(split_string("Hello, World"),
                 testing::ElementsAre("Hello,", "World"));
@@ -60,9 +59,7 @@ TEST(SplitStringTest, test) {
     EXPECT_THAT(split_string("Hello, World", ','),
                 testing::ElementsAre("Hello", " World"));
 
-    EXPECT_THAT(split_string(""),
-                testing::ElementsAre(""));
+    EXPECT_THAT(split_string(""), testing::ElementsAre(""));
 
-    EXPECT_THAT(split_string(",,,", ','),
-                testing::ElementsAre("", "", ""));
+    EXPECT_THAT(split_string(",,,", ','), testing::ElementsAre("", "", ""));
 }

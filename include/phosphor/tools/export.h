@@ -43,7 +43,6 @@ namespace phosphor {
          */
         class JSONExport {
         public:
-
             /**
              * Creates the export object
              */
@@ -99,7 +98,8 @@ namespace phosphor {
              *                   may accept the wild cards %p for PID and %d for
              *                   an ISOish timestamp 'YYYY.MM.DDTHH.MM.SS'
              */
-            FileStopCallback(const std::string& _file_path = "phosphor.%p.json");
+            FileStopCallback(
+                const std::string& _file_path = "phosphor.%p.json");
 
             /**
              * Callback method called by TraceLog
@@ -113,6 +113,5 @@ namespace phosphor {
             std::string file_path;
             std::string generateFilePath();
         };
-
     }
 }

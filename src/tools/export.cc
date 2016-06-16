@@ -26,48 +26,47 @@
 namespace phosphor {
     namespace tools {
         JSONExport::JSONExport(const TraceBuffer& _buffer)
-            : buffer(_buffer),
-              it(_buffer.begin()) {
-        }
+            : buffer(_buffer), it(_buffer.begin()) {}
 
         size_t JSONExport::read(char* out, size_t length) {
             std::string event_json;
             size_t cursor = 0;
 
-            while(cursor < length && !(state == State::dead && cache.size() == 0)) {
-                if(cache.size() > 0) {
-                    size_t copied = cache.copy((out + cursor),
-                                               length - cursor);
+            while (cursor < length &&
+                   !(state == State::dead && cache.size() == 0)) {
+                if (cache.size() > 0) {
+                    size_t copied = cache.copy((out + cursor), length - cursor);
                     cache.erase(0, copied);
                     cursor += copied;
 
-                    if(cursor >= length) {
+                    if (cursor >= length) {
                         break;
                     }
                 }
                 switch (state) {
-                    case State::opening:
-                        cache = "{\n  \"traceEvents\": [\n";
-                        state = State::first_event;
-                        break;
-                    case State::other_events:
-                        cache += ",\n";
-                    case State::first_event:
-                        event_json = it->to_json();
-                        ++it;
-                        cache += event_json;
-                        state = State::other_events;
-                        if(it == buffer.end()) {
-                            state = State::footer;
-                        }
-                        break;
-                    case State::footer:
-                        cache = "\n    ]\n"
-                                "}\n";
-                        state = State::dead;
-                        break;
-                    case State::dead:
-                        break;
+                case State::opening:
+                    cache = "{\n  \"traceEvents\": [\n";
+                    state = State::first_event;
+                    break;
+                case State::other_events:
+                    cache += ",\n";
+                case State::first_event:
+                    event_json = it->to_json();
+                    ++it;
+                    cache += event_json;
+                    state = State::other_events;
+                    if (it == buffer.end()) {
+                        state = State::footer;
+                    }
+                    break;
+                case State::footer:
+                    cache =
+                        "\n    ]\n"
+                        "}\n";
+                    state = State::dead;
+                    break;
+                case State::dead:
+                    break;
                 }
             }
             return cursor;
@@ -81,27 +80,29 @@ namespace phosphor {
         }
 
         FileStopCallback::FileStopCallback(const std::string& _file_path)
-            : file_path(_file_path) {
-        }
+            : file_path(_file_path) {}
 
-        void FileStopCallback::operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) {
+        void FileStopCallback::operator()(TraceLog& log,
+                                          std::lock_guard<TraceLog>& lh) {
             std::string formatted_path = generateFilePath();
             auto fp = utils::make_unique_FILE(formatted_path.c_str(), "w");
-            if(fp == nullptr) {
+            if (fp == nullptr) {
                 throw std::runtime_error(
-                        "phosphor::tools::ToFileStoppedCallback(): Couldn't"
-                        " Couldn't open file: " + formatted_path);
+                    "phosphor::tools::ToFileStoppedCallback(): Couldn't"
+                    " Couldn't open file: " +
+                    formatted_path);
             }
 
             auto buffer = log.getBuffer(lh);
             char chunk[4096];
             JSONExport exporter(*buffer);
-            while(auto count = exporter.read(chunk, sizeof(chunk))) {
+            while (auto count = exporter.read(chunk, sizeof(chunk))) {
                 auto ret = fwrite(chunk, sizeof(chunk[0]), count, fp.get());
-                if(ret != count) {
+                if (ret != count) {
                     throw std::runtime_error(
-                            "phosphor::tools::ToFileStoppedCallback(): Couldn't"
-                            " write entire chunk: " + std::to_string(ret));
+                        "phosphor::tools::ToFileStoppedCallback(): Couldn't"
+                        " write entire chunk: " +
+                        std::to_string(ret));
                 }
             }
         }
@@ -109,15 +110,17 @@ namespace phosphor {
         std::string FileStopCallback::generateFilePath() {
             std::string target = file_path;
 
-            utils::string_replace(target, "%p",
-                           std::to_string(platform::getCurrentProcessID()));
+            utils::string_replace(
+                target, "%p", std::to_string(platform::getCurrentProcessID()));
 
             std::time_t now = std::chrono::system_clock::to_time_t(
-                    std::chrono::system_clock::now());
+                std::chrono::system_clock::now());
             std::string timestamp;
             timestamp.resize(sizeof("YYYY-MM-DDTHH:MM:SSZ") - 1);
-            strftime(&timestamp[0], timestamp.size(),
-                     "%Y.%m.%dT%H.%M.%SZ", gmtime(&now));
+            strftime(&timestamp[0],
+                     timestamp.size(),
+                     "%Y.%m.%dT%H.%M.%SZ",
+                     gmtime(&now));
             utils::string_replace(target, "%d", timestamp);
             std::cerr << target << std::endl;
             return target;

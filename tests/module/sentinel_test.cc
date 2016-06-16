@@ -48,13 +48,10 @@ TEST_F(SentinelTest, CloseReopenRelease) {
 
 class ThreadedSentinelTest : public SentinelTest {
 protected:
-    ThreadedSentinelTest()
-        : step(0) {
-
-    }
+    ThreadedSentinelTest() : step(0) {}
 
     virtual ~ThreadedSentinelTest() {
-        for(auto& thread : threads) {
+        for (auto& thread : threads) {
             thread.join();
         }
     }
@@ -64,7 +61,6 @@ protected:
 };
 
 TEST_F(ThreadedSentinelTest, BusySpinAcquire) {
-
     threads.emplace_back([this]() {
         sentinel.acquire();
         ++step;
@@ -75,14 +71,14 @@ TEST_F(ThreadedSentinelTest, BusySpinAcquire) {
     });
 
     threads.emplace_back([this]() {
-       while(step.load() != 1) {}
+        while (step.load() != 1) {
+        }
         sentinel.acquire();
         sentinel.release();
     });
 }
 
 TEST_F(ThreadedSentinelTest, BusySpinClose) {
-
     threads.emplace_back([this]() {
         sentinel.acquire();
         ++step;
@@ -93,7 +89,8 @@ TEST_F(ThreadedSentinelTest, BusySpinClose) {
     });
 
     threads.emplace_back([this]() {
-       while(step.load() != 1) {}
+        while (step.load() != 1) {
+        }
         sentinel.close();
     });
 }

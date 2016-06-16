@@ -80,7 +80,6 @@ namespace phosphor {
          */
         std::string to_string() const;
 
-
         /**
          * Used to get a JSON object representation of the TraceEvent
          *
@@ -93,7 +92,7 @@ namespace phosphor {
          *
          * @return cstring representing the given event type
          */
-        static const char* typeToString(Type type);
+        static const char *typeToString(Type type);
 
     protected:
         /**
@@ -104,7 +103,7 @@ namespace phosphor {
          * @return pair where first is the type character and
          *         the second is any bonus parts of the JSON row
          */
-        std::pair<const char*, std::string> typeToJSON() const;
+        std::pair<const char *, std::string> typeToJSON() const;
 
     private:
         const char *name;
@@ -135,5 +134,4 @@ namespace phosphor {
     static_assert(
         sizeof(TraceEvent) <= 64,
         "TraceEvent should fit inside a cache-line for performance reasons");
-
 }
