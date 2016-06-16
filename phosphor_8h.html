@@ -117,46 +117,34 @@ $(document).ready(function(){initNavTree('phosphor_8h.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0, __VA_ARGS__)</td></tr>
+<tr class="memitem:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START</b>(category,  name, ...)</td></tr>
 <tr class="separator:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3630999c3a64adb633e4aeac5e9010f4"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0)</td></tr>
-<tr class="separator:ga3630999c3a64adb633e4aeac5e9010f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5a12ede131162e104e2a40e808dbf9b"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:gac5a12ede131162e104e2a40e808dbf9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a2f5406c7e27c3631965359f15d613b"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0)</td></tr>
-<tr class="separator:ga5a2f5406c7e27c3631965359f15d613b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga271d5130e8aa095bf0e6b7d86a51b852"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT</b>(category,  name, ...)</td></tr>
-<tr class="separator:ga271d5130e8aa095bf0e6b7d86a51b852"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae6c8a2bc0e40c7a0305e8baf5b6b7338"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)</td></tr>
-<tr class="separator:gae6c8a2bc0e40c7a0305e8baf5b6b7338"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae69017013b7d16cb1292e8458904533c"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START</b>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id, __VA_ARGS__)</td></tr>
+<tr class="memitem:ga695fc2141d449f7e41820355311f61f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START0</b>(category,  name)        </td></tr>
+<tr class="separator:ga695fc2141d449f7e41820355311f61f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7991817b731709d7edfc49820313ef51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END</b>(category,  name, ...)    </td></tr>
+<tr class="separator:ga7991817b731709d7edfc49820313ef51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42e9ee350cb307970259a575e5a8dc46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)            </td></tr>
+<tr class="separator:ga42e9ee350cb307970259a575e5a8dc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5bfc0fa5c6e4eabf55e1bc1cbc7d898e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT</b>(category,  name, ...)                                                              </td></tr>
+<tr class="separator:ga5bfc0fa5c6e4eabf55e1bc1cbc7d898e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb349befcaa5eb67183b2c193298fea7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)                                                                      </td></tr>
+<tr class="separator:gafb349befcaa5eb67183b2c193298fea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae69017013b7d16cb1292e8458904533c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START</b>(category,  name,  id, ...)</td></tr>
 <tr class="separator:gae69017013b7d16cb1292e8458904533c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncStart, id)</td></tr>
+<tr class="memitem:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START0</b>(category,  name,  id)</td></tr>
 <tr class="separator:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab682aa4bded65cede078eb2f6e296163"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END</b>(category,  name,  id, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)</td></tr>
+<tr class="memitem:gab682aa4bded65cede078eb2f6e296163"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END</b>(category,  name,  id, ...)</td></tr>
 <tr class="separator:gab682aa4bded65cede078eb2f6e296163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9960c4ef14b2c438d4b118b6b07ba14"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END0</b>(category,  name,  id)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::AsyncEnd, id)</td></tr>
-<tr class="separator:gad9960c4ef14b2c438d4b118b6b07ba14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::Instant, 0)</td></tr>
-<tr class="separator:gadc4e34ecec061e5eeb0e6f14f6513f2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2bec69c464dc6825651df2ae2919452d"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:ga2bec69c464dc6825651df2ae2919452d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8c323ca56314bceed791479249cac70"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0)</td></tr>
-<tr class="separator:gac8c323ca56314bceed791479249cac70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dd7a8d0b20f51ba8fba9fd9234961a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END0</b>(category,  name,  id)    </td></tr>
+<tr class="separator:ga5dd7a8d0b20f51ba8fba9fd9234961a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6443616a5135a3ece6c3cfe533287db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT</b>(category,  name, ...)        </td></tr>
+<tr class="separator:gad6443616a5135a3ece6c3cfe533287db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72957e5fc1825087e801789bf1ddefc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT0</b>(category,  name)                </td></tr>
+<tr class="separator:ga72957e5fc1825087e801789bf1ddefc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae450cfc42d8f016473c4d82363f98764"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL</b>(category,  name, ...)                </td></tr>
+<tr class="separator:gae450cfc42d8f016473c4d82363f98764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)                  </td></tr>
+<tr class="separator:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Phosphor Event Tracing</p>

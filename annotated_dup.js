@@ -3,7 +3,11 @@ var annotated_dup =
     [ "gsl_p", "namespacegsl__p.html", "namespacegsl__p" ],
     [ "phosphor", null, [
       [ "tools", null, [
+        [ "FileStopCallback", "classphosphor_1_1tools_1_1_file_stop_callback.html", "classphosphor_1_1tools_1_1_file_stop_callback" ],
         [ "JSONExport", "classphosphor_1_1tools_1_1_j_s_o_n_export.html", "classphosphor_1_1tools_1_1_j_s_o_n_export" ]
+      ] ],
+      [ "utils", null, [
+        [ "FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", "structphosphor_1_1utils_1_1_f_i_l_e_deleter" ]
       ] ],
       [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
       [ "FromEnvironment", "structphosphor_1_1_from_environment.html", null ],

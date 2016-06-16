@@ -108,16 +108,77 @@ $(document).ready(function(){initNavTree('group__glob.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga2bec69c464dc6825651df2ae2919452d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2bec69c464dc6825651df2ae2919452d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:ga2bec69c464dc6825651df2ae2919452d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8c323ca56314bceed791479249cac70"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac8c323ca56314bceed791479249cac70"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::GlobalInstant, 0)</td></tr>
-<tr class="separator:gac8c323ca56314bceed791479249cac70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae450cfc42d8f016473c4d82363f98764"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL</b>(category,  name, ...)                </td></tr>
+<tr class="separator:gae450cfc42d8f016473c4d82363f98764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)                  </td></tr>
+<tr class="separator:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Global events are used for events that are not scoped to a thread and do not conceptually have a duration. Examples of this might include the initiation of a system shutdown.</p>
-<p>Example: </p><pre class="fragment">TRACE_GLOBAL0("Memcached", "Shutdown")</pre></div><!-- contents -->
+<p>Example: </p><pre class="fragment">TRACE_GLOBAL0("Memcached", "Shutdown")</pre><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gae450cfc42d8f016473c4d82363f98764"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_GLOBAL</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">logEvent</a>(    \</div><div class="line">        category,                                  \</div><div class="line">        name,                                      \</div><div class="line">        phosphor::TraceEvent::Type::GlobalInstant, \</div><div class="line">        0,                                         \</div><div class="line">        __VA_ARGS__)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:240</div></div>
+<div class="ttc" id="classphosphor_1_1_trace_log_html_ac17965235daaff2cb2ecf38040549c68"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:376</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ga02c7a492c40d63c36a05d35a0e0c9132"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_GLOBAL0</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">logEvent</a>( \</div><div class="line">        category, name, phosphor::TraceEvent::Type::GlobalInstant, 0)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:240</div></div>
+<div class="ttc" id="classphosphor_1_1_trace_log_html_ac17965235daaff2cb2ecf38040549c68"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:376</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

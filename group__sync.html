@@ -108,24 +108,145 @@ $(document).ready(function(){initNavTree('group__sync.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga22a8ef705af5aa8d94742d7dadd1d454"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0, __VA_ARGS__)</td></tr>
+<tr class="memitem:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START</b>(category,  name, ...)</td></tr>
 <tr class="separator:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3630999c3a64adb633e4aeac5e9010f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3630999c3a64adb633e4aeac5e9010f4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncStart, 0)</td></tr>
-<tr class="separator:ga3630999c3a64adb633e4aeac5e9010f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5a12ede131162e104e2a40e808dbf9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac5a12ede131162e104e2a40e808dbf9b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END</b>(category,  name, ...)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)</td></tr>
-<tr class="separator:gac5a12ede131162e104e2a40e808dbf9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a2f5406c7e27c3631965359f15d613b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5a2f5406c7e27c3631965359f15d613b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().logEvent(category, name, phosphor::TraceEvent::Type::SyncEnd, 0)</td></tr>
-<tr class="separator:ga5a2f5406c7e27c3631965359f15d613b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga695fc2141d449f7e41820355311f61f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START0</b>(category,  name)        </td></tr>
+<tr class="separator:ga695fc2141d449f7e41820355311f61f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7991817b731709d7edfc49820313ef51"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END</b>(category,  name, ...)    </td></tr>
+<tr class="separator:ga7991817b731709d7edfc49820313ef51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42e9ee350cb307970259a575e5a8dc46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)            </td></tr>
+<tr class="separator:ga42e9ee350cb307970259a575e5a8dc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Synchronous events are used for events that are scoped to a single thread and have a duration.</p>
 <p>Example: </p><pre class="fragment">TRACE_EVENT_START0('Memcached:Frontend', 'SetKey')
 // Perform some expensive operation
-TRACE_EVENT_END0('Memcached:Frontend', 'SetKey')</pre></div><!-- contents -->
+TRACE_EVENT_END0('Memcached:Frontend', 'SetKey')</pre><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga7991817b731709d7edfc49820313ef51"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_END</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">logEvent</a>( \</div><div class="line">        category, name, phosphor::TraceEvent::Type::SyncEnd, 0, __VA_ARGS__)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:240</div></div>
+<div class="ttc" id="classphosphor_1_1_trace_log_html_ac17965235daaff2cb2ecf38040549c68"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:376</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ga42e9ee350cb307970259a575e5a8dc46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_END0</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">logEvent</a>( \</div><div class="line">        category, name, phosphor::TraceEvent::Type::SyncEnd, 0)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:240</div></div>
+<div class="ttc" id="classphosphor_1_1_trace_log_html_ac17965235daaff2cb2ecf38040549c68"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:376</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ga22a8ef705af5aa8d94742d7dadd1d454"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_START</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">logEvent</a>( \</div><div class="line">        category, name, phosphor::TraceEvent::Type::SyncStart, 0, __VA_ARGS__)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:240</div></div>
+<div class="ttc" id="classphosphor_1_1_trace_log_html_ac17965235daaff2cb2ecf38040549c68"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:376</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ga695fc2141d449f7e41820355311f61f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_START0</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">logEvent</a>( \</div><div class="line">        category, name, phosphor::TraceEvent::Type::SyncStart, 0)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:240</div></div>
+<div class="ttc" id="classphosphor_1_1_trace_log_html_ac17965235daaff2cb2ecf38040549c68"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ac17965235daaff2cb2ecf38040549c68">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, size_t id, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:376</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

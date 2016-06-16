@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Phosphor: include/phosphor/trace_argument.h File Reference</title>
+<title>Phosphor: phosphor::utils::FILEDeleter Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -49,8 +49,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -71,8 +71,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -87,7 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('trace__argument_8h.html','');});
+$(document).ready(function(){initNavTree('structphosphor_1_1utils_1_1_f_i_l_e_deleter.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -106,72 +108,32 @@ $(document).ready(function(){initNavTree('trace__argument_8h.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="structphosphor_1_1utils_1_1_f_i_l_e_deleter-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">trace_argument.h File Reference</div>  </div>
+<div class="title">phosphor::utils::FILEDeleter Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;sstream&gt;</code><br />
-<code>#include &lt;stdexcept&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-<code>#include &lt;type_traits&gt;</code><br />
-</div>
-<p><a href="trace__argument_8h_source.html">Go to the source code of this file.</a></p>
+
+<p><code>#include &lt;<a class="el" href="memory_8h_source.html">memory.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionphosphor_1_1_trace_argument.html">phosphor::TraceArgument</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aec2a66a4b2d938018a3ea78e30d25dc6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="trace__argument_8h.html#aec2a66a4b2d938018a3ea78e30d25dc6">ARGUMENT_CONVERSION</a>(src,  dst)                                                                    </td></tr>
-<tr class="separator:aec2a66a4b2d938018a3ea78e30d25dc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aeb851e2e9a76ec22b31d62ac4ec35e35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb851e2e9a76ec22b31d62ac4ec35e35"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (FILE *ptr) const </td></tr>
+<tr class="separator:aeb851e2e9a76ec22b31d62ac4ec35e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This file is internal to the inner workings of Phosphor and is not intended for public consumption. </p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="aec2a66a4b2d938018a3ea78e30d25dc6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ARGUMENT_CONVERSION</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">src, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">dst&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt;                                                          \</div><div class="line">    inline constexpr TraceArgument::Type TraceArgument::getType&lt;src&gt;() { \</div><div class="line">        return Type::is_##dst;                                           \</div><div class="line">    }                                                                    \</div><div class="line">    template &lt;&gt;                                                          \</div><div class="line">    inline TraceArgument::TraceArgument(src arg) : as_##dst(arg) {}</div></div><!-- fragment --><p>Used for defining the constructor and type-to-enum constexpr for a given type.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">src</td><td>The origin type of the argument </td></tr>
-    <tr><td class="paramname">dst</td><td>The destination 'type' (aka the appropriate is_/as_ suffix) of the argument. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<div class="textblock"><p>unique_ptr compatible deleter for make_unique_FILE which closes a file when it goes out of scope. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>src/utils/<a class="el" href="memory_8h_source.html">memory.h</a></li>
+</ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_1c88311f8fdc2818688f49103ed32664.html">phosphor</a></li><li class="navelem"><a class="el" href="trace__argument_8h.html">trace_argument.h</a></li>
+    <li class="navelem"><b>phosphor</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><a class="el" href="structphosphor_1_1utils_1_1_f_i_l_e_deleter.html">FILEDeleter</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>

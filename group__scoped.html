@@ -108,10 +108,10 @@ $(document).ready(function(){initNavTree('group__scoped.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga271d5130e8aa095bf0e6b7d86a51b852"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT</b>(category,  name, ...)</td></tr>
-<tr class="separator:ga271d5130e8aa095bf0e6b7d86a51b852"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae6c8a2bc0e40c7a0305e8baf5b6b7338"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)</td></tr>
-<tr class="separator:gae6c8a2bc0e40c7a0305e8baf5b6b7338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5bfc0fa5c6e4eabf55e1bc1cbc7d898e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT</b>(category,  name, ...)                                                              </td></tr>
+<tr class="separator:ga5bfc0fa5c6e4eabf55e1bc1cbc7d898e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb349befcaa5eb67183b2c193298fea7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)                                                                      </td></tr>
+<tr class="separator:gafb349befcaa5eb67183b2c193298fea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Scoped events are used for events that should log synchronously both a start and an end event automatically according to a scope.</p>
@@ -124,7 +124,7 @@ Macros</h2></td></tr>
 
 } // Automatically log a synchronous end event on function exit
   // (Through return or exception)</pre><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga271d5130e8aa095bf0e6b7d86a51b852"></a>
+<a class="anchor" id="ga5bfc0fa5c6e4eabf55e1bc1cbc7d898e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -153,10 +153,10 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START(category, name, __VA_ARGS__); \</div><div class="line">    struct scoped_trace_t_ ##__LINE__ ##__FILE__ { \</div><div class="line">        ~scoped_trace_t_ ##__LINE__ ##__FILE__() { \</div><div class="line">            phosphor::TraceLog::getInstance().logEvent(category, name, \</div><div class="line">                                                       phosphor::TraceEvent::Type::SyncEnd, \</div><div class="line">                                                       0); \</div><div class="line">            } \</div><div class="line">    } scoped_trace_inst_  ##__LINE__ ##__FILE__;</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START(category, name, __VA_ARGS__);                      \</div><div class="line">    struct scoped_trace_t_##__LINE__##__FILE__ {                         \</div><div class="line">        ~scoped_trace_t_##__LINE__##__FILE__() {                         \</div><div class="line">            phosphor::TraceLog::getInstance().logEvent(                  \</div><div class="line">                category, name, phosphor::TraceEvent::Type::SyncEnd, 0); \</div><div class="line">        }                                                                \</div><div class="line">    } scoped_trace_inst_##__LINE__##__FILE__;</div></div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="gae6c8a2bc0e40c7a0305e8baf5b6b7338"></a>
+<a class="anchor" id="gafb349befcaa5eb67183b2c193298fea7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -179,7 +179,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START(category, name); \</div><div class="line">    struct scoped_trace_t_ ##__LINE__ ##__FILE__ { \</div><div class="line">        ~scoped_trace_t_ ##__LINE__ ##__FILE__() { \</div><div class="line">            phosphor::TraceLog::getInstance().logEvent(category, name, \</div><div class="line">                                                       phosphor::TraceEvent::Type::SyncEnd, \</div><div class="line">                                                       0); \</div><div class="line">            } \</div><div class="line">    } scoped_trace_inst_  ##__LINE__ ##__FILE__;</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START(category, name);                                   \</div><div class="line">    struct scoped_trace_t_##__LINE__##__FILE__ {                         \</div><div class="line">        ~scoped_trace_t_##__LINE__##__FILE__() {                         \</div><div class="line">            phosphor::TraceLog::getInstance().logEvent(                  \</div><div class="line">                category, name, phosphor::TraceEvent::Type::SyncEnd, 0); \</div><div class="line">        }                                                                \</div><div class="line">    } scoped_trace_inst_##__LINE__##__FILE__;</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

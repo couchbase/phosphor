@@ -17,5 +17,5 @@ var classphosphor_1_1_fixed_trace_buffer =
     [ "buffer", "classphosphor_1_1_fixed_trace_buffer.html#a3a0d1708336c0fc2d285ca1f150cf624", null ],
     [ "buffer_size", "classphosphor_1_1_fixed_trace_buffer.html#a23fc99c460b7a99c66175097b4a153bf", null ],
     [ "generation", "classphosphor_1_1_fixed_trace_buffer.html#ac76034ebd28a847665861b402cc02f35", null ],
-    [ "sentinels", "classphosphor_1_1_fixed_trace_buffer.html#a3227c22ab88a670d8c06ee0948fe01ed", null ]
+    [ "sentinels", "classphosphor_1_1_fixed_trace_buffer.html#a59a2039d175dfd1d3887299d19f72958", null ]
 ];
