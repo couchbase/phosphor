@@ -26,9 +26,6 @@ coverage:
 	find . -name *.gcda -exec rm {} \;
 	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DCB_CODE_COVERAGE=ON)
 
-coverage-html:
-	(cd build && make build-coverage-report-html)
-
 coveralls:
 	coveralls
 

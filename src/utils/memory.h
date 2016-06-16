@@ -29,5 +29,12 @@ namespace phosphor {
         std::unique_ptr<T> make_unique(Args &&...args) {
             return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
         }
+
+        using unique_FILE = std::unique_ptr<FILE, int (*)(std::FILE *)>;
+
+        unique_FILE make_unique_FILE(const char * filename, const char * flags) {
+            return unique_FILE(std::fopen(filename, flags), std::fclose);
+        }
+
     }
 }
