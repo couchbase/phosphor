@@ -17,6 +17,7 @@
 
 #if defined(__APPLE__)
 #include <pthread.h>
+#include <unistd.h>
 #elif defined(__linux__)
 #include <linux/unistd.h>
 #include <sys/syscall.h>
@@ -40,6 +41,14 @@ namespace phosphor {
             return GetCurrentThreadId();
 #else
 #error Unsupported platform, no way to get threadid
+#endif
+        }
+
+        int getCurrentProcessID() {
+#if defined(__APPLE__) || defined(__linux__)
+            return getpid();
+#else
+            return _getpid();
 #endif
         }
     }

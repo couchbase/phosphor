@@ -20,7 +20,7 @@
 
 
 #include "phosphor/sentinel.h"
-#include "utils/make_unique.h"
+#include "utils/memory.h"
 
 using phosphor::utils::make_unique;
 

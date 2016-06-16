@@ -15,7 +15,13 @@
  *   limitations under the License.
  */
 
+#include <chrono>
+
+#include "phosphor/platform/thread.h"
 #include "phosphor/tools/export.h"
+
+#include "utils/memory.h"
+#include "utils/string_utils.h"
 
 namespace phosphor {
     namespace tools {
@@ -41,8 +47,7 @@ namespace phosphor {
                 }
                 switch (state) {
                     case State::opening:
-                        cache = "{\n"
-                                "  \"traceEvents\": [\n";
+                        cache = "{\n  \"traceEvents\": [\n";
                         state = State::first_event;
                         break;
                     case State::other_events:
@@ -73,6 +78,49 @@ namespace phosphor {
             out.resize(length, '\0');
             out.resize(read(&out[0], length));
             return out;
+        }
+
+        FileStopCallback::FileStopCallback(const std::string& _file_path)
+            : file_path(_file_path) {
+        }
+
+        void FileStopCallback::operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) {
+            std::string formatted_path = generateFilePath();
+            auto fp = utils::make_unique_FILE(formatted_path.c_str(), "w");
+            if(fp == nullptr) {
+                throw std::runtime_error(
+                        "phosphor::tools::ToFileStoppedCallback(): Couldn't"
+                        " Couldn't open file: " + formatted_path);
+            }
+
+            auto buffer = log.getBuffer(lh);
+            char chunk[4096];
+            JSONExport exporter(*buffer);
+            while(auto count = exporter.read(chunk, sizeof(chunk))) {
+                auto ret = fwrite(chunk, sizeof(chunk[0]), count, fp.get());
+                if(ret != count) {
+                    throw std::runtime_error(
+                            "phosphor::tools::ToFileStoppedCallback(): Couldn't"
+                            " write entire chunk: " + std::to_string(ret));
+                }
+            }
+        }
+
+        std::string FileStopCallback::generateFilePath() {
+            std::string target = file_path;
+
+            utils::string_replace(target, "%p",
+                           std::to_string(platform::getCurrentProcessID()));
+
+            std::time_t now = std::chrono::system_clock::to_time_t(
+                    std::chrono::system_clock::now());
+            std::string timestamp;
+            timestamp.resize(sizeof("YYYY-MM-DDTHH:MM:SSZ") - 1);
+            strftime(&timestamp[0], timestamp.size(),
+                     "%Y.%m.%dT%H.%M.%SZ", gmtime(&now));
+            utils::string_replace(target, "%d", timestamp);
+            std::cerr << target << std::endl;
+            return target;
         }
     }
 }

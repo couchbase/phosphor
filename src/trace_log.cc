@@ -22,7 +22,7 @@
 #include "phosphor/trace_log.h"
 #include "phosphor/platform/thread.h"
 #include "utils/string_utils.h"
-#include "utils/make_unique.h"
+#include "utils/memory.h"
 
 namespace phosphor {
 

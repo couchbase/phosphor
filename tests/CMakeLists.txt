@@ -1,3 +1,16 @@
+MACRO (M_ADD_LIBRARY_GTEST name)
+    ADD_EXECUTABLE(
+            ${name}
+            ${ARGN}
+    )
+    TARGET_LINK_LIBRARIES(${name}
+            gmock
+            gtest
+            gtest_main
+            phosphor)
+    ADD_TEST(NAME ${name} COMMAND ${name})
+ENDMACRO()
+
 IF(DEFINED gtest_SOURCE_DIR)
     INCLUDE_DIRECTORIES(AFTER
             ${gtest_SOURCE_DIR}/include

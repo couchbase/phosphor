@@ -19,7 +19,7 @@
 #include <unordered_set>
 
 #include "phosphor/trace_buffer.h"
-#include "utils/make_unique.h"
+#include "utils/memory.h"
 
 namespace phosphor {
 

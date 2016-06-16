@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <cstdio>
 #include <memory>
 
 namespace phosphor {
@@ -30,11 +31,26 @@ namespace phosphor {
             return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
         }
 
-        using unique_FILE = std::unique_ptr<FILE, int (*)(std::FILE *)>;
+        /**
+         * unique_ptr compatible deleter for make_unique_FILE which closes
+         * a file when it goes out of scope.
+         */
+        struct FILEDeleter {
+            void operator() (FILE* ptr) const {
+                std::fclose(ptr);
+            }
+        };
 
-        unique_FILE make_unique_FILE(const char * filename, const char * flags) {
-            return unique_FILE(std::fopen(filename, flags), std::fclose);
-        }
+        /**
+         * Alias for a unique_ptr for a FILE* handle
+         */
+        using unique_FILE = std::unique_ptr<FILE, FILEDeleter>;
+
+        /**
+         * make_unique equivalant for a FILE* that will ensure the file is
+         * closed properly when the unique_ptr goes out of scope.
+         */
+        unique_FILE make_unique_FILE(const char * filename, const char * flags);
 
     }
 }

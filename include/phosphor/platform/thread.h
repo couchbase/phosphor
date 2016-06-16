@@ -34,6 +34,17 @@ namespace phosphor {
         extern THREAD_LOCAL uint64_t thread_id;
 
         /**
+         * Get the system process id for the calling process
+         *
+         * This is a platform abstraction for getting the process id
+         * and will likely require reimplementation for different
+         * platforms.
+         *
+         * @return process id for the calling process
+         */
+        int getCurrentProcessID();
+
+        /**
          * Get the system thread id for the calling thread
          *
          * This is a platform abstraction for getting the thread id

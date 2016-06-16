@@ -18,6 +18,7 @@
 #pragma once
 
 #include "phosphor/trace_buffer.h"
+#include "phosphor/trace_log.h"
 
 namespace phosphor {
     namespace tools {
@@ -81,6 +82,36 @@ namespace phosphor {
             TraceBuffer::event_iterator it;
             State state = State::opening;
             std::string cache;
+        };
+
+        /**
+         * Reference callback for saving a buffer to a file if tracing stops.
+         *
+         * This saves the buffer to file in the same thread that it is called
+         * from so that it may be used after main has returned (e.g. to write
+         * everything that a given process has traced when the global TraceLog
+         * is destructed).
+         */
+        class FileStopCallback {
+        public:
+            /**
+             * @param _file_path File path to save the buffer to on completion,
+             *                   may accept the wild cards %p for PID and %d for
+             *                   an ISOish timestamp 'YYYY.MM.DDTHH.MM.SS'
+             */
+            FileStopCallback(const std::string& _file_path = "phosphor.%p.json");
+
+            /**
+             * Callback method called by TraceLog
+             *
+             * @param log Reference to the calling TraceLog
+             * @param lh The lock being held when this callback is invoked
+             */
+            void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh);
+
+        protected:
+            std::string file_path;
+            std::string generateFilePath();
         };
 
     }
