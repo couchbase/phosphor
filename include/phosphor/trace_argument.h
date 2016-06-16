@@ -52,8 +52,8 @@ namespace phosphor {
         unsigned long long as_uint;
         long long as_int;
         double as_double;
-        const char *as_string;
-        const void *as_pointer;
+        const char* as_string;
+        const void* as_pointer;
 
         /**
          * Default constructor
@@ -140,9 +140,9 @@ namespace phosphor {
 
     ARGUMENT_CONVERSION(double, double)
 
-    ARGUMENT_CONVERSION(const void *, pointer)
+    ARGUMENT_CONVERSION(const void*, pointer)
 
-    ARGUMENT_CONVERSION(const char *, string)
+    ARGUMENT_CONVERSION(const char*, string)
 
 #undef ARGUMENT_CONVERSION
 

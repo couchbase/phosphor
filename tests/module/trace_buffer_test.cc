@@ -324,8 +324,7 @@ INSTANTIATE_TEST_CASE_P(
     TraceBufferTest,
     testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
                                                "FixedBuffer"),
-                    TraceBufferTest::ParamType(make_ring_buffer,
-                                                "RingBuffer")),
+                    TraceBufferTest::ParamType(make_ring_buffer, "RingBuffer")),
     [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
         return info.param.second;
     });
@@ -340,10 +339,9 @@ INSTANTIATE_TEST_CASE_P(
     });
 
 INSTANTIATE_TEST_CASE_P(
-        BuiltIn,
-        UnFillableTraceBufferTest,
-        testing::Values(TraceBufferTest::ParamType(make_ring_buffer,
-                                                   "RingBuffer")),
-        [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
-            return info.param.second;
-        });
+    BuiltIn,
+    UnFillableTraceBufferTest,
+    testing::Values(TraceBufferTest::ParamType(make_ring_buffer, "RingBuffer")),
+    [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
+        return info.param.second;
+    });

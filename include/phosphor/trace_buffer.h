@@ -68,7 +68,7 @@ namespace phosphor {
          *
          * @return A reference to a TraceEvent to be replaced
          */
-        TraceEvent &addEvent();
+        TraceEvent& addEvent();
 
         /**
          * Used for reviewing TraceEvents in the chunk
@@ -79,7 +79,7 @@ namespace phosphor {
          * @return A const reference to a TraceEvent in the chunk
          *         that can be used to review the event data
          */
-        const TraceEvent &operator[](const int index) const;
+        const TraceEvent& operator[](const int index) const;
 
         /**
          * Determine if the chunk is full
@@ -154,7 +154,7 @@ namespace phosphor {
          * @return A reference to a TraceChunk to
          *         insert events into.
          */
-        virtual TraceChunk &getChunk(Sentinel &sentinel) = 0;
+        virtual TraceChunk& getChunk(Sentinel& sentinel) = 0;
 
         /**
          * Used for removing a sentinel from the set of sentinels
@@ -167,7 +167,7 @@ namespace phosphor {
          *
          * @param sentinel Sentinel to be removed from the set
          */
-        virtual void removeSentinel(Sentinel &sentinel) = 0;
+        virtual void removeSentinel(Sentinel& sentinel) = 0;
 
         /**
          * Used for evicting all ChunkTenants from the buffer
@@ -199,7 +199,7 @@ namespace phosphor {
          *
          * @param chunk The chunk to be returned
          */
-        virtual void returnChunk(TraceChunk &chunk) = 0;
+        virtual void returnChunk(TraceChunk& chunk) = 0;
 
         /**
          * Determine if there are no remaining chunks left to be
@@ -221,7 +221,7 @@ namespace phosphor {
          * @throw std::logic_error if chunks are currently loaned
          *        out to chunk tenants.
          */
-        virtual const TraceChunk &operator[](const int index) const = 0;
+        virtual const TraceChunk& operator[](const int index) const = 0;
 
         /**
          * Used for determining the number of chunks in the buffer
@@ -252,22 +252,22 @@ namespace phosphor {
         class chunk_iterator
             : public std::iterator<std::bidirectional_iterator_tag,
                                    TraceChunk> {
-            using const_reference = const TraceChunk &;
-            using const_pointer = const TraceChunk *;
+            using const_reference = const TraceChunk&;
+            using const_pointer = const TraceChunk*;
             using _self = chunk_iterator;
 
         public:
             chunk_iterator() = default;
-            chunk_iterator(const TraceBuffer &buffer_);
-            chunk_iterator(const TraceBuffer &buffer_, size_t index_);
+            chunk_iterator(const TraceBuffer& buffer_);
+            chunk_iterator(const TraceBuffer& buffer_, size_t index_);
             const_reference operator*() const;
             const_pointer operator->() const;
-            chunk_iterator &operator++();
-            bool operator==(const chunk_iterator &other) const;
-            bool operator!=(const chunk_iterator &other) const;
+            chunk_iterator& operator++();
+            bool operator==(const chunk_iterator& other) const;
+            bool operator!=(const chunk_iterator& other) const;
 
         protected:
-            const TraceBuffer &buffer;
+            const TraceBuffer& buffer;
             size_t index;
         };
 
@@ -323,7 +323,7 @@ namespace phosphor {
             /**
              * @param buffer_ The buffer to iterate over
              */
-            chunk_iterable(const TraceBuffer &buffer_) : buffer(buffer_) {}
+            chunk_iterable(const TraceBuffer& buffer_) : buffer(buffer_) {}
 
             /**
              * @return A const iterator to the first chunk of the buffer
@@ -340,7 +340,7 @@ namespace phosphor {
             }
 
         private:
-            const TraceBuffer &buffer;
+            const TraceBuffer& buffer;
         };
 
         /**
@@ -367,5 +367,4 @@ namespace phosphor {
 
     buffer_ptr make_fixed_buffer(size_t generation, size_t buffer_size);
     buffer_ptr make_ring_buffer(size_t generation, size_t buffer_size);
-
 }

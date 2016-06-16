@@ -58,7 +58,7 @@ namespace phosphor {
      * it somewhere that another thread can access.
      */
     using TracingStoppedCallback =
-        std::function<void(TraceLog &, std::lock_guard<TraceLog> &)>;
+        std::function<void(TraceLog&, std::lock_guard<TraceLog>&)>;
 
     /**
      * The mode of a TraceBuffer implementation
@@ -103,7 +103,7 @@ namespace phosphor {
          * @param _sentinel_count The number of sentinels
          * @return A reference to this config (For chaining)
          */
-        TraceLogConfig &setSentinelCount(unsigned _sentinel_count);
+        TraceLogConfig& setSentinelCount(unsigned _sentinel_count);
 
         /**
          * @return The number of sentinels to be created
@@ -118,7 +118,7 @@ namespace phosphor {
          *                       will be copied for internal storage.
          * @return A reference to this config
          */
-        TraceLogConfig &setStartupTrace(const TraceConfig &_startup_trace);
+        TraceLogConfig& setStartupTrace(const TraceConfig& _startup_trace);
 
         /**
          * Clears the startup trace config that has previously been stored
@@ -126,13 +126,13 @@ namespace phosphor {
          *
          * @return A reference to this config
          */
-        TraceLogConfig &clearStartupTrace();
+        TraceLogConfig& clearStartupTrace();
 
         /**
          * @return a pointer to the TraceConfig (Because it is potentially null,
          *         i.e. tracing should not start)
          */
-        TraceConfig *getStartupTrace() const;
+        TraceConfig* getStartupTrace() const;
 
         /**
          * Factory method which sets up a TraceLogConfig from the
@@ -209,7 +209,7 @@ namespace phosphor {
          * @param _tracing_stopped_callback Callback to be used
          * @return reference to the TraceConfig be configured
          */
-        TraceConfig &setStoppedCallback(
+        TraceConfig& setStoppedCallback(
             TracingStoppedCallback _tracing_stopped_callback);
 
         /**
@@ -225,7 +225,7 @@ namespace phosphor {
          * @param _stop_tracing Stop tracing on shutdown
          * @return reference to the TraceConfig being configured
          */
-        TraceConfig &setStopTracingOnDestruct(bool _stop_tracing);
+        TraceConfig& setStopTracingOnDestruct(bool _stop_tracing);
 
         /**
          * @return Whether or not the tracing shutdown (and therefore callbacks)
@@ -244,7 +244,7 @@ namespace phosphor {
          * @param config Config string to be used to generate the TraceConfig
          * @return Generated TraceConfig
          */
-        static TraceConfig fromString(const std::string &config);
+        static TraceConfig fromString(const std::string& config);
 
     protected:
         /**
@@ -296,7 +296,7 @@ namespace phosphor {
          *
          * @param _config The TraceLogConfig to be used by the TraceLog
          */
-        TraceLog(const TraceLogConfig &_config);
+        TraceLog(const TraceLogConfig& _config);
 
         /**
          * Constructor for generating a TraceLog from the current
@@ -317,7 +317,7 @@ namespace phosphor {
          *
          * @param _config The TraceLogConfig to be used by the TraceLog
          */
-        void configure(const TraceLogConfig &_config);
+        void configure(const TraceLogConfig& _config);
 
         /**
          * Singleton static method to get the TraceLog instance
@@ -327,14 +327,14 @@ namespace phosphor {
          *
          * @return the TraceLog instance
          */
-        static TraceLog &getInstance();
+        static TraceLog& getInstance();
 
         /**
          * Start tracing with the specified config
          *
          * @param _trace_config TraceConfig to use for this tracing run
          */
-        void start(const TraceConfig &_trace_config);
+        void start(const TraceConfig& _trace_config);
 
         /**
          * Start tracing with the specified config and using an external lock
@@ -342,8 +342,8 @@ namespace phosphor {
          * @param lock guard holding the external lock
          * @param _trace_config TraceConfig to use for this tracing run
          */
-        void start(std::lock_guard<TraceLog> &,
-                   const TraceConfig &_trace_config);
+        void start(std::lock_guard<TraceLog>&,
+                   const TraceConfig& _trace_config);
 
         /**
          * Immediately stops tracing
@@ -355,7 +355,7 @@ namespace phosphor {
          *
          * @param Lock guard holding the external lock
          */
-        void stop(std::lock_guard<TraceLog> &);
+        void stop(std::lock_guard<TraceLog>&);
 
         /**
          * Logs an event in the current buffer (if applicable)
@@ -373,15 +373,15 @@ namespace phosphor {
          * @param argB Argument to be saved with the event
          */
         template <typename T, typename U>
-        void logEvent(const char *category,
-                      const char *name,
+        void logEvent(const char* category,
+                      const char* name,
                       TraceEvent::Type type,
                       size_t id,
                       T argA,
                       U argB) {
             if (!enabled)
                 return;
-            ChunkTenant *cs = getChunkTenant();
+            ChunkTenant* cs = getChunkTenant();
             if (cs == nullptr)
                 return;
 
@@ -411,14 +411,14 @@ namespace phosphor {
          * @param argA Argument to be saved with the event
          */
         template <typename T>
-        void logEvent(const char *category,
-                      const char *name,
+        void logEvent(const char* category,
+                      const char* name,
                       TraceEvent::Type type,
                       size_t id,
                       T argA) {
             if (!enabled)
                 return;
-            ChunkTenant *cs = getChunkTenant();
+            ChunkTenant* cs = getChunkTenant();
             if (cs == nullptr)
                 return;
 
@@ -446,13 +446,13 @@ namespace phosphor {
          * @param type The type of the event
          * @param id The id of the event, primarily used for async events
          */
-        void logEvent(const char *category,
-                      const char *name,
+        void logEvent(const char* category,
+                      const char* name,
                       TraceEvent::Type type,
                       size_t id) {
             if (!enabled)
                 return;
-            ChunkTenant *cs = getChunkTenant();
+            ChunkTenant* cs = getChunkTenant();
             if (cs == nullptr)
                 return;
 
@@ -486,7 +486,7 @@ namespace phosphor {
          * @return TraceBuffer
          * @throw std::logic_error if tracing is currently enabled
          */
-        std::unique_ptr<TraceBuffer> getBuffer(std::lock_guard<TraceLog> &);
+        std::unique_ptr<TraceBuffer> getBuffer(std::lock_guard<TraceLog>&);
 
         /**
          * Get the current state of tracing of this TraceLog
@@ -522,7 +522,7 @@ namespace phosphor {
          * @param instance The TraceLog instance that the sentinel is using
          */
         static void deregisterThread(
-            TraceLog &instance = TraceLog::getInstance());
+            TraceLog& instance = TraceLog::getInstance());
 
         /**
          * Lock the trace log externally
@@ -544,8 +544,8 @@ namespace phosphor {
 
     protected:
         struct ChunkTenant {
-            Sentinel *sentinel = nullptr;
-            TraceChunk *chunk = nullptr;
+            Sentinel* sentinel = nullptr;
+            TraceChunk* chunk = nullptr;
         };
 
         /**
@@ -555,11 +555,11 @@ namespace phosphor {
          * @return A valid ChunkTenant with available events or a
          *         nullptr if a valid ChunkTenant could not be acquired.
          */
-        inline ChunkTenant *getChunkTenant() {
+        inline ChunkTenant* getChunkTenant() {
             auto shared_index =
                 platform::getCurrentThreadIDCached() % shared_chunks.size();
 
-            ChunkTenant &cs = (thread_chunk.sentinel)
+            ChunkTenant& cs = (thread_chunk.sentinel)
                                   ? thread_chunk
                                   : shared_chunks[shared_index];
 
@@ -598,7 +598,7 @@ namespace phosphor {
          * @param ct The ChunkTenant that should have it's chunk returned
          *           and replaced
          */
-        void replaceChunk(ChunkTenant &ct);
+        void replaceChunk(ChunkTenant& ct);
 
         /**
          * Resets the current chunk held by the ChunkTenant
@@ -610,7 +610,7 @@ namespace phosphor {
          * this has been done the chunk can be transitioned back into the Open
          * state.
          */
-        void resetChunk(ChunkTenant &ct);
+        void resetChunk(ChunkTenant& ct);
 
         /**
          * The thread-specific ChunkTenant used for low contention

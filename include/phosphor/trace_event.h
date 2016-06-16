@@ -65,13 +65,13 @@ namespace phosphor {
          * @param _args An array of `Value`
          * @param _arg_types An array of argument types
          */
-        TraceEvent(const char *_category,
-                   const char *_name,
+        TraceEvent(const char* _category,
+                   const char* _name,
                    Type _type,
                    size_t _id,
                    uint64_t _thread_id,
-                   std::array<TraceArgument, arg_count> &&_args,
-                   std::array<TraceArgument::Type, arg_count> &&_arg_types);
+                   std::array<TraceArgument, arg_count>&& _args,
+                   std::array<TraceArgument::Type, arg_count>&& _arg_types);
 
         /**
          * Used to get a string representation of the TraceEvent
@@ -92,7 +92,7 @@ namespace phosphor {
          *
          * @return cstring representing the given event type
          */
-        static const char *typeToString(Type type);
+        static const char* typeToString(Type type);
 
     protected:
         /**
@@ -103,11 +103,11 @@ namespace phosphor {
          * @return pair where first is the type character and
          *         the second is any bonus parts of the JSON row
          */
-        std::pair<const char *, std::string> typeToJSON() const;
+        std::pair<const char*, std::string> typeToJSON() const;
 
     private:
-        const char *name;
-        const char *category;
+        const char* name;
+        const char* category;
         size_t id;
         uint64_t thread_id;
         std::array<TraceArgument, arg_count> args;
@@ -129,7 +129,7 @@ namespace phosphor {
      * @param trace_event TraceEvent to be streamed
      * @return Output stream passed in
      */
-    std::ostream &operator<<(std::ostream &os, const TraceEvent &trace_event);
+    std::ostream& operator<<(std::ostream& os, const TraceEvent& trace_event);
 
     static_assert(
         sizeof(TraceEvent) <= 64,

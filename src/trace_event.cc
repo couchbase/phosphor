@@ -23,13 +23,13 @@ namespace phosphor {
     using namespace std::chrono;
 
     TraceEvent::TraceEvent(
-        const char *_category,
-        const char *_name,
+        const char* _category,
+        const char* _name,
         Type _type,
         size_t _id,
         uint64_t _thread_id,
-        std::array<TraceArgument, arg_count> &&_args,
-        std::array<TraceArgument::Type, arg_count> &&_arg_types)
+        std::array<TraceArgument, arg_count>&& _args,
+        std::array<TraceArgument::Type, arg_count>&& _arg_types)
         // Premature optimisation #1:
         //   Initialise name and category first to avoid copying two
         //   registers in advance of the steady_clock::now() function call
@@ -112,7 +112,7 @@ namespace phosphor {
         return output;
     }
 
-    const char *TraceEvent::typeToString(Type type) {
+    const char* TraceEvent::typeToString(Type type) {
         switch (type) {
         case Type::AsyncStart:
             return "AsyncStart";
@@ -132,7 +132,7 @@ namespace phosphor {
             "Invalid TraceEvent type");
     }
 
-    std::pair<const char *, std::string> TraceEvent::typeToJSON() const {
+    std::pair<const char*, std::string> TraceEvent::typeToJSON() const {
         switch (type) {
         case Type::AsyncStart:
             return {"b", utils::format_string(",\"id\": \"0x%X\"", id)};
@@ -152,7 +152,7 @@ namespace phosphor {
             "Invalid TraceArgument type");
     }
 
-    std::ostream &operator<<(std::ostream &os, const TraceEvent &te) {
+    std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {
         os << te.to_string();
         return os;
     }
