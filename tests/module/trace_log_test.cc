@@ -92,6 +92,21 @@ TEST(TraceConfigTest, createFixed) {
     EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
 }
 
+TEST(TraceConfigTest, createRing) {
+    TraceConfig config(BufferMode::ring, 1337);
+
+    /* Check that we get a fixed buffer factory */
+    auto bufferA = make_ring_buffer(0, 0);
+    auto& bufferARef = *bufferA;
+    auto bufferB = config.getBufferFactory()(0, 0);
+    auto& bufferBRef = *bufferB;
+
+    EXPECT_EQ(typeid(bufferARef), typeid(bufferBRef));
+
+    EXPECT_EQ(1337, config.getBufferSize());
+    EXPECT_EQ(BufferMode::ring, config.getBufferMode());
+}
+
 TEST(TraceConfigTest, createCustom) {
     TraceConfig config(make_fixed_buffer, 1337);
 
@@ -107,7 +122,6 @@ TEST(TraceConfigTest, createCustom) {
 }
 
 TEST(TraceConfigTest, createModeErrors) {
-    EXPECT_THROW(TraceConfig(BufferMode::ring, 1337), std::invalid_argument);
     EXPECT_THROW(TraceConfig(BufferMode::custom, 1337), std::invalid_argument);
     EXPECT_THROW(TraceConfig(static_cast<BufferMode>(0xFF), 1337),
                  std::invalid_argument);
@@ -115,11 +129,11 @@ TEST(TraceConfigTest, createModeErrors) {
 
 TEST(TraceConfigTest, fromString) {
     TraceConfig config = TraceConfig::fromString(
-        "buffer-mode:fixed,"
+        "buffer-mode:ring,"
         "buffer-size:1024,"
         "save-on-stop:out.json");
 
-    EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
+    EXPECT_EQ(BufferMode::ring, config.getBufferMode());
     EXPECT_EQ(1024, config.getBufferSize());
     EXPECT_TRUE(config.getStoppedCallback());
     EXPECT_TRUE(config.getStopTracingOnDestruct());

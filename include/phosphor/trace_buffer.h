@@ -366,4 +366,6 @@ namespace phosphor {
         std::function<buffer_ptr(size_t generation, size_t buffer_size)>;
 
     buffer_ptr make_fixed_buffer(size_t generation, size_t buffer_size);
+    buffer_ptr make_ring_buffer(size_t generation, size_t buffer_size);
+
 }

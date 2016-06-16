@@ -137,10 +137,6 @@ TEST_P(TraceBufferTest, GetChunk) {
     /* Expect it to not be empty, then full once a chunk is taken */
     EXPECT_FALSE(buffer->isFull());
     TraceChunk& chunk = buffer->getChunk(sentinel);
-    EXPECT_TRUE(buffer->isFull());
-
-    /* Should expect an exception when full and getting a chunk */
-    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
 
     /* Paranoia about the chunk address */
     ASSERT_NE(nullptr, &chunk);
@@ -271,11 +267,83 @@ TEST_P(TraceBufferTest, fullChunks) {
     EXPECT_EQ(event_count, i);
 }
 
+TEST_P(TraceBufferTest, MassiveBufferFail) {
+    EXPECT_ANY_THROW(make_buffer(std::numeric_limits<size_t>::max()));
+}
+
+using FillableTraceBufferTest = TraceBufferTest;
+
+TEST_P(FillableTraceBufferTest, GetChunk) {
+    /* Make a buffer with one chunk */
+    make_buffer(1);
+
+    /* Expect it to not be empty, then full once a chunk is taken */
+    EXPECT_FALSE(buffer->isFull());
+    TraceChunk& chunk = buffer->getChunk(sentinel);
+    EXPECT_TRUE(buffer->isFull());
+
+    /* Should expect an exception when full and getting a chunk */
+    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
+
+    /* Paranoia about the chunk address */
+    ASSERT_NE(nullptr, &chunk);
+
+    /* Expect chunks recieved from buffer are empty */
+    EXPECT_EQ(0, chunk.count());
+
+    buffer->returnChunk(chunk);
+    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
+}
+
+using UnFillableTraceBufferTest = TraceBufferTest;
+
+TEST_P(UnFillableTraceBufferTest, GetChunk) {
+    /* Make a buffer with one chunk */
+    make_buffer(1);
+
+    /* Expect it to not be empty, then full once a chunk is taken */
+    EXPECT_FALSE(buffer->isFull());
+    TraceChunk& chunk = buffer->getChunk(sentinel);
+    EXPECT_FALSE(buffer->isFull());
+
+    /* Should expect an exception when all chunks are loaned out */
+    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
+
+    /* Paranoia about the chunk address */
+    ASSERT_NE(nullptr, &chunk);
+
+    /* Expect chunks recieved from buffer are empty */
+    EXPECT_EQ(0, chunk.count());
+
+    buffer->returnChunk(chunk);
+    EXPECT_NO_THROW(buffer->getChunk(sentinel));
+}
+
 INSTANTIATE_TEST_CASE_P(
     BuiltIn,
     TraceBufferTest,
+    testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
+                                               "FixedBuffer"),
+                    TraceBufferTest::ParamType(make_ring_buffer,
+                                                "RingBuffer")),
+    [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
+        return info.param.second;
+    });
+
+INSTANTIATE_TEST_CASE_P(
+    BuiltIn,
+    FillableTraceBufferTest,
     testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
                                                "FixedBuffer")),
     [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
         return info.param.second;
     });
+
+INSTANTIATE_TEST_CASE_P(
+        BuiltIn,
+        UnFillableTraceBufferTest,
+        testing::Values(TraceBufferTest::ParamType(make_ring_buffer,
+                                                   "RingBuffer")),
+        [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
+            return info.param.second;
+        });

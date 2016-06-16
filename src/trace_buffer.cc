@@ -17,6 +17,9 @@
 
 #include <stdexcept>
 #include <unordered_set>
+#include <queue>
+
+#include <gsl_p/dyn_array.h>
 
 #include "phosphor/trace_buffer.h"
 #include "utils/memory.h"
@@ -191,4 +194,115 @@ namespace phosphor {
                                                    size_t buffer_size) {
         return utils::make_unique<FixedTraceBuffer>(generation, buffer_size);
     }
+
+    /**
+     * TraceBuffer implementation that stores events in a fixed-size
+     * vector of unique pointers to BufferChunks.
+     */
+    class RingTraceBuffer : public TraceBuffer {
+    public:
+        RingTraceBuffer(size_t generation_, size_t buffer_size_)
+                : buffer(buffer_size_), generation(generation_) {
+        }
+
+        ~RingTraceBuffer() override = default;
+
+        TraceChunk &getChunk(Sentinel &sentinel) override {
+            TraceChunk* chunk;
+            if (actual_count == buffer.size()) {
+                if (return_queue.size() == 0) {
+                    throw std::out_of_range(
+                            "phosphor::CircularTraceBuffer::getChunk: "
+                                    "The TraceBuffer is full");
+                }
+                chunk = &return_queue.back().get();
+                return_queue.pop();
+            } else {
+                chunk = &buffer[actual_count++];
+            }
+            sentinels.insert(&sentinel);
+            chunk->reset();
+            return *chunk;
+        }
+
+        void removeSentinel(Sentinel &sentinel) override {
+            sentinels.erase(&sentinel);
+        }
+
+        void evictThreads() override {
+            for (auto &sentinel : sentinels) {
+                sentinel->close();
+            }
+            sentinels.clear();
+        }
+
+        void returnChunk(TraceChunk &chunk) override {
+            return_queue.push(std::reference_wrapper<TraceChunk>(chunk));
+        }
+
+        bool isFull() const override {
+            return false;
+        }
+
+        size_t getGeneration() const override {
+            return generation;
+        }
+
+        const TraceChunk &operator[](const int index) const override {
+            if (sentinels.size() > 0) {
+                throw std::logic_error(
+                        "phosphor::TraceChunk::operator[]: "
+                        "Cannot read from TraceBuffer while "
+                        "chunks are loaned out!");
+            }
+            return buffer[index];
+        }
+
+        size_t chunk_count() const override {
+            return actual_count;
+        }
+
+        chunk_iterator chunk_begin() const override {
+            if (sentinels.size() > 0) {
+                throw std::logic_error(
+                        "phosphor::TraceChunk::chunk_begin: "
+                        " Cannot read from TraceBuffer while "
+                        "chunks are loaned out!");
+            }
+            return chunk_iterator(*this);
+        }
+
+        chunk_iterator chunk_end() const override {
+            if (sentinels.size() > 0) {
+                throw std::logic_error(
+                        "phosphor::TraceChunk::chunk_end: "
+                        "Cannot read from TraceBuffer while "
+                        "chunks are loaned out!");
+            }
+            return chunk_iterator(*this, chunk_count());
+        }
+
+        event_iterator begin() const override {
+            return event_iterator(chunk_begin(), chunk_end());
+        }
+
+        event_iterator end() const override {
+            return event_iterator(chunk_end(), chunk_end());
+        }
+
+    protected:
+        gsl_p::dyn_array<TraceChunk> buffer;
+        size_t actual_count = 0;
+
+        std::queue<std::reference_wrapper<TraceChunk>> return_queue;
+        size_t generation;
+
+        std::unordered_set<Sentinel *> sentinels;
+    };
+
+    std::unique_ptr<TraceBuffer> make_ring_buffer(size_t generation,
+                                                  size_t buffer_size) {
+        return utils::make_unique<RingTraceBuffer>(generation, buffer_size);
+    }
+
 }

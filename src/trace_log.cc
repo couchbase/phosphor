@@ -114,9 +114,7 @@ namespace phosphor {
         case BufferMode::fixed:
             return trace_buffer_factory(make_fixed_buffer);
         case BufferMode::ring:
-            throw std::invalid_argument(
-                "phosphor::TraceConfig::modeToFactory: "
-                "Ring buffer not yet implemented");
+            return trace_buffer_factory(make_ring_buffer);
         case BufferMode::custom:
             throw std::invalid_argument(
                 "phosphor::TraceConfig::modeToFactory: "
@@ -172,6 +170,8 @@ namespace phosphor {
             if (key == "buffer-mode") {
                 if (value == "fixed") {
                     mode = BufferMode::fixed;
+                } else if (value == "ring") {
+                    mode = BufferMode::ring;
                 } else {
                     throw std::invalid_argument(
                         "TraceConfig::fromString: "
