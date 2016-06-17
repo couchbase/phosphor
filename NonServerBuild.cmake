@@ -33,3 +33,5 @@ ENDIF()
 # Include some of the compiler flag modules from couchbase/tlm
 INCLUDE(CouchbaseCompilerOptions)
 INCLUDE(CouchbaseCodeCoverage)
+INCLUDE(CouchbaseThreadSanitizer)
+INCLUDE(CouchbaseAddressSanitizer)
