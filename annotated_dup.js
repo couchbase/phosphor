@@ -11,6 +11,7 @@ var annotated_dup =
       ] ],
       [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
       [ "FromEnvironment", "structphosphor_1_1_from_environment.html", null ],
+      [ "RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", "classphosphor_1_1_ring_trace_buffer" ],
       [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ],
       [ "TraceArgument", "unionphosphor_1_1_trace_argument.html", "unionphosphor_1_1_trace_argument" ],
       [ "TraceBuffer", "classphosphor_1_1_trace_buffer.html", "classphosphor_1_1_trace_buffer" ],

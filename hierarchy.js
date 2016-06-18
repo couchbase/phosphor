@@ -3,6 +3,7 @@ var hierarchy =
     [ "phosphor::TraceBuffer::chunk_iterable", "classphosphor_1_1_trace_buffer_1_1chunk__iterable.html", null ],
     [ "phosphor::TraceLog::ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", null ],
     [ "gsl_p::dyn_array< _Tp >", "structgsl__p_1_1dyn__array.html", null ],
+    [ "gsl_p::dyn_array< phosphor::TraceChunk >", "structgsl__p_1_1dyn__array.html", null ],
     [ "phosphor::utils::FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", null ],
     [ "phosphor::tools::FileStopCallback", "classphosphor_1_1tools_1_1_file_stop_callback.html", null ],
     [ "phosphor::FromEnvironment", "structphosphor_1_1_from_environment.html", null ],
@@ -15,7 +16,8 @@ var hierarchy =
     [ "phosphor::Sentinel", "classphosphor_1_1_sentinel.html", null ],
     [ "phosphor::TraceArgument", "unionphosphor_1_1_trace_argument.html", null ],
     [ "phosphor::TraceBuffer", "classphosphor_1_1_trace_buffer.html", [
-      [ "phosphor::FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", null ]
+      [ "phosphor::FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", null ],
+      [ "phosphor::RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", null ]
     ] ],
     [ "phosphor::TraceChunk", "classphosphor_1_1_trace_chunk.html", null ],
     [ "phosphor::TraceConfig", "classphosphor_1_1_trace_config.html", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sentinel',['Sentinel',['../classphosphor_1_1_sentinel.html',1,'phosphor']]]
+  ['ringtracebuffer',['RingTraceBuffer',['../classphosphor_1_1_ring_trace_buffer.html',1,'phosphor']]]
 ];

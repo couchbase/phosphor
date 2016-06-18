@@ -125,6 +125,7 @@ Inheritance diagram for phosphor::TraceBuffer:</div>
   <img src="classphosphor_1_1_trace_buffer.png" usemap="#phosphor::TraceBuffer_map" alt=""/>
   <map id="phosphor::TraceBuffer_map" name="phosphor::TraceBuffer_map">
 <area href="classphosphor_1_1_fixed_trace_buffer.html" alt="phosphor::FixedTraceBuffer" shape="rect" coords="0,56,170,80"/>
+<area href="classphosphor_1_1_ring_trace_buffer.html" alt="phosphor::RingTraceBuffer" shape="rect" coords="180,56,350,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -250,7 +251,7 @@ for(const auto&amp; event : trace_buffer) {
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>A const iterator to the first event of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ad7b2fd44da932e52844be76136169d40">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a346f6db9551d46f401732bc10b2fa44e">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ad7b2fd44da932e52844be76136169d40">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -276,7 +277,7 @@ for(const auto&amp; event : trace_buffer) {
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>A const iterator to the first chunk of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ac0061e55d865239f5c9425c3beb9ad5a">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#af4f9d61145ddc2f583f0793c084ddfaa">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ac0061e55d865239f5c9425c3beb9ad5a">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -303,7 +304,7 @@ for(const auto&amp; event : trace_buffer) {
 <p>Used for determining the number of chunks in the buffer</p>
 <dl class="section return"><dt>Returns</dt><dd>Number of chunks currently in the buffer </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a51a3b4d26b0937b5ed361dee7b8ccad9">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a8c898b30d91cfe1e918b48fbf7576416">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a51a3b4d26b0937b5ed361dee7b8ccad9">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -329,7 +330,7 @@ for(const auto&amp; event : trace_buffer) {
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>A const iterator to after the last chunk of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ab4a30635a83fb0e4e85756fa2f811ab5">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a3d79d20b66d4be5ca53266a515d1a6b9">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ab4a30635a83fb0e4e85756fa2f811ab5">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -382,7 +383,7 @@ for(const auto&amp; event : trace_buffer) {
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>A const iterator to after the last event of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a66c2dfdefa2c02172114b4eecd1e6de7">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a8874442e50a26ca101909d5a4cab272c">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a66c2dfdefa2c02172114b4eecd1e6de7">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -411,7 +412,7 @@ for(const auto&amp; event : trace_buffer) {
 <p>This will effectively send a message to all ChunkTenants that their current references to chunks in this buffer are no longer valid.</p>
 <p>Once this function returns the buffer SHOULD be safe to be freed / iterated etc. </p>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2e1dd4770aada8df05bdedebd4ff2362">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a7cf8b50c8b069bef20c75545de202399">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2e1dd4770aada8df05bdedebd4ff2362">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -446,7 +447,7 @@ for(const auto&amp; event : trace_buffer) {
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> to insert events into. </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a7469dafbdebea2c958172d1ed05cad69">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aecae70b11099932fd04cb5ffd21e9755">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a7469dafbdebea2c958172d1ed05cad69">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -472,7 +473,7 @@ for(const auto&amp; event : trace_buffer) {
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>The generation number of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aa10fac1d2c6a062614040c87afd826cf">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -499,7 +500,7 @@ for(const auto&amp; event : trace_buffer) {
 <p>Determine if there are no remaining chunks left to be used</p>
 <dl class="section return"><dt>Returns</dt><dd>true if there are no chunks left or false otherwise </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#ad35fed1a1f21e29a948c7368b99b4ad2">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -534,7 +535,7 @@ for(const auto&amp; event : trace_buffer) {
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a9b0a3721d99140d9cd4d94fc3f0737e3">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#ae24622739a65726701b9c509c1a9ed9b">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a9b0a3721d99140d9cd4d94fc3f0737e3">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -568,7 +569,7 @@ for(const auto&amp; event : trace_buffer) {
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a22004856bb8c6bf344f7a7cd8d075e09">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a8c9cdbc1ec0d820b9db5e343429d3af9">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a22004856bb8c6bf344f7a7cd8d075e09">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -603,7 +604,7 @@ for(const auto&amp; event : trace_buffer) {
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#afc9b66b570050686a4072d1cd1d03113">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aa84948f04f3e8748d0ba8780e2c35c33">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#afc9b66b570050686a4072d1cd1d03113">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>

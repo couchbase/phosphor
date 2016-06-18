@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Phosphor: phosphor::FixedTraceBuffer Class Reference</title>
+<title>Phosphor: phosphor::RingTraceBuffer Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,7 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('classphosphor_1_1_fixed_trace_buffer.html','');});
+$(document).ready(function(){initNavTree('classphosphor_1_1_ring_trace_buffer.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -110,50 +110,50 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_fixed_trace_buffer.h
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="classphosphor_1_1_fixed_trace_buffer-members.html">List of all members</a>  </div>
+<a href="classphosphor_1_1_ring_trace_buffer-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">phosphor::FixedTraceBuffer Class Reference</div>  </div>
+<div class="title">phosphor::RingTraceBuffer Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for phosphor::FixedTraceBuffer:</div>
+Inheritance diagram for phosphor::RingTraceBuffer:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classphosphor_1_1_fixed_trace_buffer.png" usemap="#phosphor::FixedTraceBuffer_map" alt=""/>
-  <map id="phosphor::FixedTraceBuffer_map" name="phosphor::FixedTraceBuffer_map">
-<area href="classphosphor_1_1_trace_buffer.html" alt="phosphor::TraceBuffer" shape="rect" coords="0,0,170,24"/>
+  <img src="classphosphor_1_1_ring_trace_buffer.png" usemap="#phosphor::RingTraceBuffer_map" alt=""/>
+  <map id="phosphor::RingTraceBuffer_map" name="phosphor::RingTraceBuffer_map">
+<area href="classphosphor_1_1_trace_buffer.html" alt="phosphor::TraceBuffer" shape="rect" coords="0,0,164,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad254b7467cfd39d4d3969cff6974de9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad254b7467cfd39d4d3969cff6974de9c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FixedTraceBuffer</b> (size_t generation_, size_t buffer_size_)</td></tr>
-<tr class="separator:ad254b7467cfd39d4d3969cff6974de9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7469dafbdebea2c958172d1ed05cad69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a7469dafbdebea2c958172d1ed05cad69">getChunk</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel) override</td></tr>
-<tr class="separator:a7469dafbdebea2c958172d1ed05cad69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22004856bb8c6bf344f7a7cd8d075e09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a22004856bb8c6bf344f7a7cd8d075e09">removeSentinel</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel) override</td></tr>
-<tr class="separator:a22004856bb8c6bf344f7a7cd8d075e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e1dd4770aada8df05bdedebd4ff2362"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2e1dd4770aada8df05bdedebd4ff2362">evictThreads</a> () override</td></tr>
-<tr class="separator:a2e1dd4770aada8df05bdedebd4ff2362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc9b66b570050686a4072d1cd1d03113"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#afc9b66b570050686a4072d1cd1d03113">returnChunk</a> (<a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;chunk) override</td></tr>
-<tr class="separator:afc9b66b570050686a4072d1cd1d03113"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1414bd2c3b88df604414efbc24732be2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2">isFull</a> () const  override</td></tr>
-<tr class="separator:a1414bd2c3b88df604414efbc24732be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4530c5502ee0ee493f04315555b629a6"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6">getGeneration</a> () const  override</td></tr>
-<tr class="separator:a4530c5502ee0ee493f04315555b629a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b0a3721d99140d9cd4d94fc3f0737e3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a9b0a3721d99140d9cd4d94fc3f0737e3">operator[]</a> (const int index) const  override</td></tr>
-<tr class="separator:a9b0a3721d99140d9cd4d94fc3f0737e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51a3b4d26b0937b5ed361dee7b8ccad9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a51a3b4d26b0937b5ed361dee7b8ccad9">chunk_count</a> () const  override</td></tr>
-<tr class="separator:a51a3b4d26b0937b5ed361dee7b8ccad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0061e55d865239f5c9425c3beb9ad5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ac0061e55d865239f5c9425c3beb9ad5a">chunk_begin</a> () const  override</td></tr>
-<tr class="separator:ac0061e55d865239f5c9425c3beb9ad5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4a30635a83fb0e4e85756fa2f811ab5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ab4a30635a83fb0e4e85756fa2f811ab5">chunk_end</a> () const  override</td></tr>
-<tr class="separator:ab4a30635a83fb0e4e85756fa2f811ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7b2fd44da932e52844be76136169d40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#ad7b2fd44da932e52844be76136169d40">begin</a> () const  override</td></tr>
-<tr class="separator:ad7b2fd44da932e52844be76136169d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66c2dfdefa2c02172114b4eecd1e6de7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a66c2dfdefa2c02172114b4eecd1e6de7">end</a> () const  override</td></tr>
-<tr class="separator:a66c2dfdefa2c02172114b4eecd1e6de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adeeb73d006d0d39d55a5ef792035cab3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adeeb73d006d0d39d55a5ef792035cab3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RingTraceBuffer</b> (size_t generation_, size_t buffer_size_)</td></tr>
+<tr class="separator:adeeb73d006d0d39d55a5ef792035cab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecae70b11099932fd04cb5ffd21e9755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aecae70b11099932fd04cb5ffd21e9755">getChunk</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel) override</td></tr>
+<tr class="separator:aecae70b11099932fd04cb5ffd21e9755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c9cdbc1ec0d820b9db5e343429d3af9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a8c9cdbc1ec0d820b9db5e343429d3af9">removeSentinel</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel) override</td></tr>
+<tr class="separator:a8c9cdbc1ec0d820b9db5e343429d3af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cf8b50c8b069bef20c75545de202399"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a7cf8b50c8b069bef20c75545de202399">evictThreads</a> () override</td></tr>
+<tr class="separator:a7cf8b50c8b069bef20c75545de202399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa84948f04f3e8748d0ba8780e2c35c33"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aa84948f04f3e8748d0ba8780e2c35c33">returnChunk</a> (<a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;chunk) override</td></tr>
+<tr class="separator:aa84948f04f3e8748d0ba8780e2c35c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35fed1a1f21e29a948c7368b99b4ad2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#ad35fed1a1f21e29a948c7368b99b4ad2">isFull</a> () const  override</td></tr>
+<tr class="separator:ad35fed1a1f21e29a948c7368b99b4ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa10fac1d2c6a062614040c87afd826cf"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aa10fac1d2c6a062614040c87afd826cf">getGeneration</a> () const  override</td></tr>
+<tr class="separator:aa10fac1d2c6a062614040c87afd826cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae24622739a65726701b9c509c1a9ed9b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#ae24622739a65726701b9c509c1a9ed9b">operator[]</a> (const int index) const  override</td></tr>
+<tr class="separator:ae24622739a65726701b9c509c1a9ed9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c898b30d91cfe1e918b48fbf7576416"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a8c898b30d91cfe1e918b48fbf7576416">chunk_count</a> () const  override</td></tr>
+<tr class="separator:a8c898b30d91cfe1e918b48fbf7576416"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4f9d61145ddc2f583f0793c084ddfaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#af4f9d61145ddc2f583f0793c084ddfaa">chunk_begin</a> () const  override</td></tr>
+<tr class="separator:af4f9d61145ddc2f583f0793c084ddfaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d79d20b66d4be5ca53266a515d1a6b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a3d79d20b66d4be5ca53266a515d1a6b9">chunk_end</a> () const  override</td></tr>
+<tr class="separator:a3d79d20b66d4be5ca53266a515d1a6b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a346f6db9551d46f401732bc10b2fa44e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a346f6db9551d46f401732bc10b2fa44e">begin</a> () const  override</td></tr>
+<tr class="separator:a346f6db9551d46f401732bc10b2fa44e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8874442e50a26ca101909d5a4cab272c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a8874442e50a26ca101909d5a4cab272c">end</a> () const  override</td></tr>
+<tr class="separator:a8874442e50a26ca101909d5a4cab272c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classphosphor_1_1_trace_buffer"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classphosphor_1_1_trace_buffer')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classphosphor_1_1_trace_buffer.html">phosphor::TraceBuffer</a></td></tr>
 <tr class="memitem:ae63b6808271a1aa37905c3ab286e3e6e inherit pub_methods_classphosphor_1_1_trace_buffer"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#ae63b6808271a1aa37905c3ab286e3e6e">~TraceBuffer</a> ()=default</td></tr>
 <tr class="separator:ae63b6808271a1aa37905c3ab286e3e6e inherit pub_methods_classphosphor_1_1_trace_buffer"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,18 +162,21 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a3a0d1708336c0fc2d285ca1f150cf624"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a0d1708336c0fc2d285ca1f150cf624"></a>
-std::vector&lt; <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b></td></tr>
-<tr class="separator:a3a0d1708336c0fc2d285ca1f150cf624"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac76034ebd28a847665861b402cc02f35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac76034ebd28a847665861b402cc02f35"></a>
+<tr class="memitem:aa95abe1715e6976eedaa6293326df3ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa95abe1715e6976eedaa6293326df3ac"></a>
+<a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>&lt; <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b></td></tr>
+<tr class="separator:aa95abe1715e6976eedaa6293326df3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6abeecd27933ecd2f37e67ad2b70d49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6abeecd27933ecd2f37e67ad2b70d49"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>actual_count</b> = 0</td></tr>
+<tr class="separator:aa6abeecd27933ecd2f37e67ad2b70d49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaec2cf8aa89d4b57b688dfd374cb68e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaec2cf8aa89d4b57b688dfd374cb68e5"></a>
+std::queue&lt; <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>return_queue</b></td></tr>
+<tr class="separator:aaec2cf8aa89d4b57b688dfd374cb68e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad55a3ea70c3db8dbf6d4c073e1568d9e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad55a3ea70c3db8dbf6d4c073e1568d9e"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>generation</b></td></tr>
-<tr class="separator:ac76034ebd28a847665861b402cc02f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23fc99c460b7a99c66175097b4a153bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23fc99c460b7a99c66175097b4a153bf"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td></tr>
-<tr class="separator:a23fc99c460b7a99c66175097b4a153bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3227c22ab88a670d8c06ee0948fe01ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3227c22ab88a670d8c06ee0948fe01ed"></a>
+<tr class="separator:ad55a3ea70c3db8dbf6d4c073e1568d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af06922d3bd009ddfa755016a505c04ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af06922d3bd009ddfa755016a505c04ed"></a>
 std::unordered_set&lt; <a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sentinels</b></td></tr>
-<tr class="separator:a3227c22ab88a670d8c06ee0948fe01ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:af06922d3bd009ddfa755016a505c04ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -184,7 +187,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> implementation that stores events in a fixed-size vector of unique pointers to BufferChunks. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ad7b2fd44da932e52844be76136169d40"></a>
+<a class="anchor" id="a346f6db9551d46f401732bc10b2fa44e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -192,7 +195,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a> phosphor::FixedTraceBuffer::begin </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a> phosphor::RingTraceBuffer::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -210,7 +213,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac0061e55d865239f5c9425c3beb9ad5a"></a>
+<a class="anchor" id="af4f9d61145ddc2f583f0793c084ddfaa"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -218,7 +221,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a> phosphor::FixedTraceBuffer::chunk_begin </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a> phosphor::RingTraceBuffer::chunk_begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -236,7 +239,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a51a3b4d26b0937b5ed361dee7b8ccad9"></a>
+<a class="anchor" id="a8c898b30d91cfe1e918b48fbf7576416"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -244,7 +247,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t phosphor::FixedTraceBuffer::chunk_count </td>
+          <td class="memname">size_t phosphor::RingTraceBuffer::chunk_count </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -263,7 +266,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab4a30635a83fb0e4e85756fa2f811ab5"></a>
+<a class="anchor" id="a3d79d20b66d4be5ca53266a515d1a6b9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -271,7 +274,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a> phosphor::FixedTraceBuffer::chunk_end </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer_1_1chunk__iterator.html">chunk_iterator</a> phosphor::RingTraceBuffer::chunk_end </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -289,7 +292,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a66c2dfdefa2c02172114b4eecd1e6de7"></a>
+<a class="anchor" id="a8874442e50a26ca101909d5a4cab272c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -297,7 +300,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a> phosphor::FixedTraceBuffer::end </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_buffer.html#a1d0b01d2484999e50aa648d3da644d06">event_iterator</a> phosphor::RingTraceBuffer::end </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -315,7 +318,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2e1dd4770aada8df05bdedebd4ff2362"></a>
+<a class="anchor" id="a7cf8b50c8b069bef20c75545de202399"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -323,7 +326,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void phosphor::FixedTraceBuffer::evictThreads </td>
+          <td class="memname">void phosphor::RingTraceBuffer::evictThreads </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -344,7 +347,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7469dafbdebea2c958172d1ed05cad69"></a>
+<a class="anchor" id="aecae70b11099932fd04cb5ffd21e9755"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -352,7 +355,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>&amp; phosphor::FixedTraceBuffer::getChunk </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>&amp; phosphor::RingTraceBuffer::getChunk </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;&#160;</td>
           <td class="paramname"><em>sentinel</em></td><td>)</td>
@@ -379,7 +382,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4530c5502ee0ee493f04315555b629a6"></a>
+<a class="anchor" id="aa10fac1d2c6a062614040c87afd826cf"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -387,7 +390,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t phosphor::FixedTraceBuffer::getGeneration </td>
+          <td class="memname">size_t phosphor::RingTraceBuffer::getGeneration </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -405,7 +408,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1414bd2c3b88df604414efbc24732be2"></a>
+<a class="anchor" id="ad35fed1a1f21e29a948c7368b99b4ad2"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -413,7 +416,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool phosphor::FixedTraceBuffer::isFull </td>
+          <td class="memname">bool phosphor::RingTraceBuffer::isFull </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -432,7 +435,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9b0a3721d99140d9cd4d94fc3f0737e3"></a>
+<a class="anchor" id="ae24622739a65726701b9c509c1a9ed9b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -440,7 +443,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>&amp; phosphor::FixedTraceBuffer::operator[] </td>
+          <td class="memname">const <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>&amp; phosphor::RingTraceBuffer::operator[] </td>
           <td>(</td>
           <td class="paramtype">const int&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
@@ -467,7 +470,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a22004856bb8c6bf344f7a7cd8d075e09"></a>
+<a class="anchor" id="a8c9cdbc1ec0d820b9db5e343429d3af9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -475,7 +478,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void phosphor::FixedTraceBuffer::removeSentinel </td>
+          <td class="memname">void phosphor::RingTraceBuffer::removeSentinel </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;&#160;</td>
           <td class="paramname"><em>sentinel</em></td><td>)</td>
@@ -501,7 +504,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc9b66b570050686a4072d1cd1d03113"></a>
+<a class="anchor" id="aa84948f04f3e8748d0ba8780e2c35c33"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -509,7 +512,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void phosphor::FixedTraceBuffer::returnChunk </td>
+          <td class="memname">void phosphor::RingTraceBuffer::returnChunk </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td>
           <td class="paramname"><em>chunk</em></td><td>)</td>
@@ -544,7 +547,7 @@ Additional Inherited Members</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>phosphor</b></li><li class="navelem"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html">FixedTraceBuffer</a></li>
+    <li class="navelem"><b>phosphor</b></li><li class="navelem"><a class="el" href="classphosphor_1_1_ring_trace_buffer.html">RingTraceBuffer</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
