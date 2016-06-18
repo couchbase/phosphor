@@ -22,3 +22,6 @@ ENDMACRO()
 M_ADD_MODULE_BENCHMARK(sentinel_bench
         sentinel_bench.cc
         ${phosphor_SOURCE_DIR}/src/sentinel.cc)
+
+M_ADD_LIBRARY_BENCHMARK(tracing_bench
+        tracing_bench.cc)
