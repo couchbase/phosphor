@@ -214,7 +214,7 @@ namespace phosphor {
                         "phosphor::CircularTraceBuffer::getChunk: "
                         "The TraceBuffer is full");
                 }
-                chunk = &return_queue.back().get();
+                chunk = return_queue.front();
                 return_queue.pop();
             } else {
                 chunk = &buffer[actual_count++];
@@ -236,7 +236,7 @@ namespace phosphor {
         }
 
         void returnChunk(TraceChunk& chunk) override {
-            return_queue.push(std::reference_wrapper<TraceChunk>(chunk));
+            return_queue.emplace(&chunk);
         }
 
         bool isFull() const override {
@@ -293,7 +293,7 @@ namespace phosphor {
         gsl_p::dyn_array<TraceChunk> buffer;
         size_t actual_count = 0;
 
-        std::queue<std::reference_wrapper<TraceChunk>> return_queue;
+        std::queue<TraceChunk*> return_queue;
         size_t generation;
 
         std::unordered_set<Sentinel*> sentinels;
