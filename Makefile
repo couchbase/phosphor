@@ -7,7 +7,13 @@ CMAKE_ARGS=$(EXTRA_CMAKE_OPTIONS)
 
 all: test docs
 
-covered: coverage test
+covered: property-coverage test
+
+thread-sanitizer: property-tsan test
+
+address-sanitizer: property-asan test
+
+benchmark: property-benchmark test
 
 coverage-report: covered
 	@-mkdir coverage
@@ -21,10 +27,18 @@ build/Makefile:
 compile: build/Makefile
 	(cd build && $(CMAKE) --build .)
 
-.PHONY: coverage
-coverage:
+property-coverage:
 	find . -name *.gcda -exec rm {} \;
 	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DCB_CODE_COVERAGE=ON)
+
+property-tsan:
+	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DCB_THREADSANITIZER=ON)
+
+property-asan:
+	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DCB_ADDRESSSANITIZER=ON)
+
+property-benchmark:
+	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DPHOSPHOR_ENABLE_BENCHMARKING=1)
 
 coveralls:
 	coveralls
