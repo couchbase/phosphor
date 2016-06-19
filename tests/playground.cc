@@ -41,44 +41,24 @@ int setenv(const char* name, const char* value, int overwrite) {
 #endif
 
 int main(int argc, char* argv[]) {
-    setenv(
-        "PHOSPHOR_TRACING_START", "buffer-mode:fixed,buffer-size:10241024", 1);
-
-    //    phosphor::TraceLog::getInstance().start(
-    //            phosphor::TraceConfig(phosphor::BufferMode::fixed, 1000000)
-    //    );
+    constexpr int thread_count = 4;
+    phosphor::TraceLog::getInstance().start(phosphor::TraceConfig(
+        phosphor::BufferMode::ring,
+        sizeof(phosphor::TraceChunk) * (thread_count + 1)));
 
     std::vector<std::thread> threads;
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < thread_count; i++) {
         threads.emplace_back([i]() {
-            // phosphor::TraceLog::registerThread();
-            while (phosphor::TraceLog::getInstance().isEnabled()) {
-                TRACE_EVENT("child", "thread", 4, 5);
+            phosphor::TraceLog::registerThread();
+            while (true) {
+                TRACE_INSTANT0("category", "name");
             }
-            // phosphor::TraceLog::deregisterThread();
+            phosphor::TraceLog::deregisterThread();
         });
     }
 
-    while (phosphor::TraceLog::getInstance().isEnabled()) {
-        TRACE_EVENT("main", "thread", 4, 5);
-    }
-    phosphor::TraceLog::getInstance().stop();
-    auto buffer(phosphor::TraceLog::getInstance().getBuffer());
-
     for (auto& thread : threads) {
         thread.join();
-    }
-
-    std::fstream fs;
-    fs.open("/Users/will/output.json", std::fstream::out | std::fstream::trunc);
-
-    fs << "[";
-    for (const auto& chunk : buffer->chunks()) {
-        printf("\n\n[NEW CHUNK]\n");
-        for (const auto& event : chunk) {
-            fs << event.to_json() << ",\n";
-            printf("%s\n", event.to_string().c_str());
-        }
     }
 
     return 0;
