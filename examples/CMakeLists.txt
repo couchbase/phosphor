@@ -1,0 +1,2 @@
+ADD_EXECUTABLE(sorting_algorithm sorting_algorithm.cc)
+TARGET_LINK_LIBRARIES(sorting_algorithm phosphor)

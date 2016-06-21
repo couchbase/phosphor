@@ -5,7 +5,7 @@ MAKETYPE=NMake Makefiles
 EXTRA_CMAKE_OPTIONS=
 CMAKE_ARGS=$(EXTRA_CMAKE_OPTIONS)
 
-all: test docs
+all: property-benchmark property-examples property-coverage test
 
 covered: property-coverage test
 
@@ -39,6 +39,9 @@ property-asan:
 
 property-benchmark:
 	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DPHOSPHOR_ENABLE_BENCHMARKING=1)
+
+property-examples:
+	$(eval EXTRA_CMAKE_OPTIONS:=$(EXTRA_CMAKE_OPTIONS) -DPHOSPHOR_BUILD_EXAMPLES=1)
 
 coveralls:
 	coveralls
