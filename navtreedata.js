@@ -1,6 +1,7 @@
 var NAVTREE =
 [
   [ "Phosphor", "index.html", [
+    [ "Phosphor Examples", "index.html", null ],
     [ "Phosphor Architecture", "md_docs_Architecture.html", null ],
     [ "Event Tracing Instrumentation API Spec", "md_docs_design_Instrumentation-API.html", null ],
     [ "One-pager: Tracing in KV-Engine", "md_docs_design_One-pager.html", null ],
@@ -35,7 +36,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"structgsl__p_1_1dyn__array.html#a034c98d47fd30867ebd8227ee92f386f"
+"structgsl__p_1_1dyn__array.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

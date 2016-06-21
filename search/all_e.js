@@ -8,6 +8,7 @@ var searchData=
   ['setstoppedcallback',['setStoppedCallback',['../classphosphor_1_1_trace_config.html#aeeb649565b79d61e54fcf2d8dcb348c1',1,'phosphor::TraceConfig']]],
   ['setstoptracingondestruct',['setStopTracingOnDestruct',['../classphosphor_1_1_trace_config.html#a8a2af9e6a5fe7e09a82032b9dce0b56e',1,'phosphor::TraceConfig']]],
   ['shared_5fchunks',['shared_chunks',['../classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5',1,'phosphor::TraceLog']]],
+  ['sorting_5falgorithm_2ecc',['sorting_algorithm.cc',['../sorting__algorithm_8cc.html',1,'']]],
   ['start',['start',['../classphosphor_1_1_trace_log.html#a22fde18331507432721f09e70f35822e',1,'phosphor::TraceLog::start(const TraceConfig &amp;_trace_config)'],['../classphosphor_1_1_trace_log.html#ad39c97c1cc03aac3d7ebd2294ae46a1a',1,'phosphor::TraceLog::start(std::lock_guard&lt; TraceLog &gt; &amp;, const TraceConfig &amp;_trace_config)']]],
   ['state',['State',['../classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707',1,'phosphor::Sentinel']]],
   ['stop',['stop',['../classphosphor_1_1_trace_log.html#ad61c9956ecb142c03260ab9a430914a2',1,'phosphor::TraceLog::stop()'],['../classphosphor_1_1_trace_log.html#ace0a0b3c1c672bb54843d02aa38e2182',1,'phosphor::TraceLog::stop(std::lock_guard&lt; TraceLog &gt; &amp;)']]],
