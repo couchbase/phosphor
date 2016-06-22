@@ -29,21 +29,28 @@ Done 2016/06/07
 
 ### WEEK COMMENCING 2016/06/13
 
-- Add chunked JSON export (Which takes an iterator)
-- Add a circular buffer implementation
-- Add benchmarking for chunk sizes (By templating the TraceChunk on the
-base type of the chunk itself, ie. std::array vs gsl_p::dyn_array)
-- Add benchmarking for tracing speed
-- Add binary dump export (Including tool to convert binary dump to JSON)
-  - Write buffer to file
-  - Write thread / pointer info to file
+- <strike>Add chunked JSON export (Which takes an iterator)</strike> Done 2016/06/14
+- <strike>Add a circular buffer implementation</strike> Done 2016/06/16
+- <strike>Add benchmarking for tracing speed</strike> Done 2016/06/17
+- <strike>Enable ThreadSanitizer and AddressSanitizer usage</strike> Done 2016/06/17
+
+### WEEK COMMENCING 2016/06/20
+
+- <strike>Add example usage of Phosphor</strike> Done 2016/06/20
+- <strike>Add benchmarking for enabled vs disabled</strike> Done 2016/06/20
+- <strike>Add memory usage tests</strike> Done 2016/06/20
+- Initial work on proper category support
+- Plan out the binary dump of names / categories
+- Add benchmark for chunk replacement
 
 ## Misc Feature List (Not allocated)
 
 - Buffer filled callback and buffer cycling (Useful for FDB usecase)
     - Buffer cycling callback
     - Tracing Stopped adapter so buffer cycling callback could be given
--
+- Add binary dump export (Including tool to convert binary dump to JSON)
+  - Write buffer to file
+  - Write thread / pointer info to file
 
 ## Performance Idea List
 
