@@ -16,6 +16,7 @@ IF(DEFINED gtest_SOURCE_DIR)
             ${gtest_SOURCE_DIR}/include
             ${gmock_SOURCE_DIR}/include)
     ADD_SUBDIRECTORY(module)
+    ADD_SUBDIRECTORY(library)
 ENDIF ()
 
 option(PHOSPHOR_ENABLE_BENCHMARKING "Enable benchmarking of Phosphor." OFF)

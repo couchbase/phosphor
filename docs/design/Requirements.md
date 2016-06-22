@@ -46,13 +46,13 @@ M.6: ✓ The Library must record events into a RAM data structure (Event Log), a
 M.7: ✓ The size of the Event Log must be Application-configurable. It must at
        least allow a range of 1MB to 1GB.
 
-M.8: ~ The amount of RAM used by the Event Tracer must not exceed 110% of the
+M.8: ✓ The amount of RAM used by the Event Tracer must not exceed 110% of the
        configured log size when event tracing is enabled.
 
 M.9: ✓ The event log can be cleared (all events discarded) when tracing is not
        running.
 
-M.10: ~ When the event log is empty (after clearing, or before it is enabled)
+M.10: ✓ When the event log is empty (after clearing, or before it is enabled)
         the amount of RAM used by the Event Tracer must be less than 100KB.
 
 M.11: ~ When tracing is enabled, the cost of recording of a single event with
