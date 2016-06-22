@@ -34,6 +34,11 @@
 
 namespace phosphor {
 
+
+#ifndef PHOSPHOR_CHUNK_PAGE_COUNT
+#define PHOSPHOR_CHUNK_PAGE_COUNT 1
+#endif
+
     /**
      * TraceChunk represents an array of TraceEvents
      *
@@ -41,7 +46,7 @@ namespace phosphor {
      * store various events.
      */
     class TraceChunk {
-        static constexpr auto chunk_page_count = 1;
+        static constexpr auto chunk_page_count = PHOSPHOR_CHUNK_PAGE_COUNT;
         static constexpr auto page_size = 4096;
         static constexpr auto chunk_size =
             ((page_size * chunk_page_count) / sizeof(TraceEvent));

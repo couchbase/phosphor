@@ -15,17 +15,17 @@ INCLUDE_DIRECTORIES(BEFORE
         ${phosphor_SOURCE_DIR}/include
         ${phosphor_SOURCE_DIR}/src)
 
-SET(SOURCE_FILES
-        src/sentinel.cc
-        src/trace_buffer.cc
-        src/trace_event.cc
-        src/trace_log.cc
-        src/platform/thread.cc
-        src/tools/export.cc
-        src/utils/memory.cc
-        src/utils/string_utils.cc)
+SET(phosphor_SOURCE_FILES
+        ${phosphor_SOURCE_DIR}/src/sentinel.cc
+        ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
+        ${phosphor_SOURCE_DIR}/src/trace_event.cc
+        ${phosphor_SOURCE_DIR}/src/trace_log.cc
+        ${phosphor_SOURCE_DIR}/src/platform/thread.cc
+        ${phosphor_SOURCE_DIR}/src/tools/export.cc
+        ${phosphor_SOURCE_DIR}/src/utils/memory.cc
+        ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
-ADD_LIBRARY(phosphor STATIC ${SOURCE_FILES})
+ADD_LIBRARY(phosphor STATIC ${phosphor_SOURCE_FILES})
 
 ADD_SUBDIRECTORY(tests)
 
