@@ -46,6 +46,11 @@ TEST_F(SentinelTest, CloseReopenRelease) {
     sentinel.release();
 }
 
+TEST_F(SentinelTest, CloseMultiple) {
+    sentinel.close();
+    sentinel.close();
+}
+
 class ThreadedSentinelTest : public SentinelTest {
 protected:
     ThreadedSentinelTest() : step(0) {}
