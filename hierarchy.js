@@ -4,6 +4,7 @@ var hierarchy =
     [ "phosphor::TraceLog::ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", null ],
     [ "gsl_p::dyn_array< _Tp >", "structgsl__p_1_1dyn__array.html", null ],
     [ "gsl_p::dyn_array< phosphor::TraceChunk >", "structgsl__p_1_1dyn__array.html", null ],
+    [ "gsl_p::dyn_array< std::atomic< bool > >", "structgsl__p_1_1dyn__array.html", null ],
     [ "phosphor::utils::FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", null ],
     [ "phosphor::tools::FileStopCallback", "classphosphor_1_1tools_1_1_file_stop_callback.html", null ],
     [ "phosphor::FromEnvironment", "structphosphor_1_1_from_environment.html", null ],

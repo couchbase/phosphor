@@ -8,5 +8,6 @@ var classphosphor_1_1_trace_chunk =
     [ "end", "classphosphor_1_1_trace_chunk.html#af249c76173f96baa7269392d5f7e2ac8", null ],
     [ "isFull", "classphosphor_1_1_trace_chunk.html#a599b75005f4e7b8e62ce9d05c11d1ad1", null ],
     [ "operator[]", "classphosphor_1_1_trace_chunk.html#a5bd0c7464c14d0372c8681a1ab0ba4a0", null ],
-    [ "reset", "classphosphor_1_1_trace_chunk.html#a8b8007f7571c359accf90ce20ceae063", null ]
+    [ "reset", "classphosphor_1_1_trace_chunk.html#a8b8007f7571c359accf90ce20ceae063", null ],
+    [ "generation", "classphosphor_1_1_trace_chunk.html#a90b6250a6a8548ba6d6731882ec28d36", null ]
 ];

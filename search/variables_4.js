@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['shared_5fchunks',['shared_chunks',['../classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5',1,'phosphor::TraceLog']]]
+  ['registered_5fsentinels',['registered_sentinels',['../classphosphor_1_1_trace_log.html#a254ad893c602a1c54a7c7347c6495925',1,'phosphor::TraceLog']]]
 ];

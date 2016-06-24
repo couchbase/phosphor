@@ -10,11 +10,9 @@ var classphosphor_1_1_trace_buffer =
     [ "chunk_end", "classphosphor_1_1_trace_buffer.html#af1a0a73f5675c21a610ed69d3bfc6dd3", null ],
     [ "chunks", "classphosphor_1_1_trace_buffer.html#aa8b82981d2e7bdc3d3b07d2ef153abe0", null ],
     [ "end", "classphosphor_1_1_trace_buffer.html#a21e5fee4516976127d6242b0631f0ae5", null ],
-    [ "evictThreads", "classphosphor_1_1_trace_buffer.html#a42931dd2ccc7d6b29899595f5bda7b69", null ],
-    [ "getChunk", "classphosphor_1_1_trace_buffer.html#a046bc151498a98248b732c441848a5f7", null ],
+    [ "getChunk", "classphosphor_1_1_trace_buffer.html#ad6694eb1489bf79362befa8abfe723df", null ],
     [ "getGeneration", "classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55", null ],
     [ "isFull", "classphosphor_1_1_trace_buffer.html#aed684d9119a5b64ecb295ecb2ef6d209", null ],
     [ "operator[]", "classphosphor_1_1_trace_buffer.html#a0536e48a01e77d96fed8376186a34449", null ],
-    [ "removeSentinel", "classphosphor_1_1_trace_buffer.html#ab2ab6d80b88499bc5ac3333fbf1db525", null ],
     [ "returnChunk", "classphosphor_1_1_trace_buffer.html#a46459969a3c87d2b756a00bbd3184305", null ]
 ];

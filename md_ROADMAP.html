@@ -126,15 +126,19 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 </ul>
 <h3>WEEK COMMENCING 2016/06/13</h3>
 <ul>
-<li>Add chunked JSON export (Which takes an iterator)</li>
-<li>Add a circular buffer implementation</li>
-<li>Add benchmarking for chunk sizes (By templating the TraceChunk on the base type of the chunk itself, ie. std::array vs <a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>)</li>
-<li>Add benchmarking for tracing speed</li>
-<li>Add binary dump export (Including tool to convert binary dump to JSON)<ul>
-<li>Write buffer to file</li>
-<li>Write thread / pointer info to file</li>
+<li>&lt;strike&gt;Add chunked JSON export (Which takes an iterator)&lt;/strike&gt; Done 2016/06/14</li>
+<li>&lt;strike&gt;Add a circular buffer implementation&lt;/strike&gt; Done 2016/06/16</li>
+<li>&lt;strike&gt;Add benchmarking for tracing speed&lt;/strike&gt; Done 2016/06/17</li>
+<li>&lt;strike&gt;Enable ThreadSanitizer and AddressSanitizer usage&lt;/strike&gt; Done 2016/06/17</li>
 </ul>
-</li>
+<h3>WEEK COMMENCING 2016/06/20</h3>
+<ul>
+<li>&lt;strike&gt;Add example usage of Phosphor&lt;/strike&gt; Done 2016/06/20</li>
+<li>&lt;strike&gt;Add benchmarking for enabled vs disabled&lt;/strike&gt; Done 2016/06/20</li>
+<li>&lt;strike&gt;Add memory usage tests&lt;/strike&gt; Done 2016/06/20</li>
+<li>Initial work on proper category support</li>
+<li>Plan out the binary dump of names / categories</li>
+<li>Add benchmark for chunk replacement</li>
 </ul>
 <h2>Misc Feature List (Not allocated)</h2>
 <ul>
@@ -143,9 +147,13 @@ $(document).ready(function(){initNavTree('md_ROADMAP.html','');});
 <li>Tracing Stopped adapter so buffer cycling callback could be given</li>
 </ul>
 </li>
-<li><h2>Performance Idea List</h2>
+<li>Add binary dump export (Including tool to convert binary dump to JSON)<ul>
+<li>Write buffer to file</li>
+<li>Write thread / pointer info to file</li>
+</ul>
 </li>
 </ul>
+<h2>Performance Idea List</h2>
 <p>For performance improvements that have been suggested or considered but are currently premature:</p>
 <ul>
 <li>Check enabled flag with relaxed atomic</li>

@@ -145,12 +145,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae63b6808271a1aa37905c3ab286e3e6e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#ae63b6808271a1aa37905c3ab286e3e6e">~TraceBuffer</a> ()=default</td></tr>
 <tr class="separator:ae63b6808271a1aa37905c3ab286e3e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a046bc151498a98248b732c441848a5f7"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a046bc151498a98248b732c441848a5f7">getChunk</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel)=0</td></tr>
-<tr class="separator:a046bc151498a98248b732c441848a5f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2ab6d80b88499bc5ac3333fbf1db525"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#ab2ab6d80b88499bc5ac3333fbf1db525">removeSentinel</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel)=0</td></tr>
-<tr class="separator:ab2ab6d80b88499bc5ac3333fbf1db525"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42931dd2ccc7d6b29899595f5bda7b69"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a42931dd2ccc7d6b29899595f5bda7b69">evictThreads</a> ()=0</td></tr>
-<tr class="separator:a42931dd2ccc7d6b29899595f5bda7b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6694eb1489bf79362befa8abfe723df"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#ad6694eb1489bf79362befa8abfe723df">getChunk</a> ()=0</td></tr>
+<tr class="separator:ad6694eb1489bf79362befa8abfe723df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46459969a3c87d2b756a00bbd3184305"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a46459969a3c87d2b756a00bbd3184305">returnChunk</a> (<a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;chunk)=0</td></tr>
 <tr class="separator:a46459969a3c87d2b756a00bbd3184305"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed684d9119a5b64ecb295ecb2ef6d209"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#aed684d9119a5b64ecb295ecb2ef6d209">isFull</a> () const  =0</td></tr>
@@ -387,7 +383,7 @@ for(const auto&amp; event : trace_buffer) {
 
 </div>
 </div>
-<a class="anchor" id="a42931dd2ccc7d6b29899595f5bda7b69"></a>
+<a class="anchor" id="ad6694eb1489bf79362befa8abfe723df"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -395,7 +391,7 @@ for(const auto&amp; event : trace_buffer) {
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void phosphor::TraceBuffer::evictThreads </td>
+          <td class="memname">virtual <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>* phosphor::TraceBuffer::getChunk </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -407,47 +403,10 @@ for(const auto&amp; event : trace_buffer) {
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Used for evicting all ChunkTenants from the buffer</p>
-<p>This will use the set of sentinels established from calls to the TraceChunk::getChunk method and call <a class="el" href="classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877">Sentinel::close()</a> on all of them.</p>
-<p>This will effectively send a message to all ChunkTenants that their current references to chunks in this buffer are no longer valid.</p>
-<p>Once this function returns the buffer SHOULD be safe to be freed / iterated etc. </p>
-
-<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a7cf8b50c8b069bef20c75545de202399">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2e1dd4770aada8df05bdedebd4ff2362">phosphor::FixedTraceBuffer</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a046bc151498a98248b732c441848a5f7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>&amp; phosphor::TraceBuffer::getChunk </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;&#160;</td>
-          <td class="paramname"><em>sentinel</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 <p>Used for getting a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> to add events to</p>
-<p>Implementors should use the sentinel passed in to create a set of sentinels who have an active reference to a chunk in the buffer. This is to make it possible to evict all ChunkTenants when desired.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sentinel</td><td><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> for the calling thread </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> to insert events into. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> to insert events into or nullptr if the buffer is full. </dd></dl>
 
-<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aecae70b11099932fd04cb5ffd21e9755">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a7469dafbdebea2c958172d1ed05cad69">phosphor::FixedTraceBuffer</a>.</p>
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a4f31f7fb7541404871c55b2fe774174c">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a6e535fa187d0ec2e78e949b988a41948">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -539,40 +498,6 @@ for(const auto&amp; event : trace_buffer) {
 
 </div>
 </div>
-<a class="anchor" id="ab2ab6d80b88499bc5ac3333fbf1db525"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void phosphor::TraceBuffer::removeSentinel </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;&#160;</td>
-          <td class="paramname"><em>sentinel</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Used for removing a sentinel from the set of sentinels</p>
-<p>This is generally called when a thread is being de-registered as it will attempt to delete the sentinel. This will be used to prevent the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> from de-referencing the freed sentinel when it tries to evict threads later.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sentinel</td><td><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> to be removed from the set </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a8c9cdbc1ec0d820b9db5e343429d3af9">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a22004856bb8c6bf344f7a7cd8d075e09">phosphor::FixedTraceBuffer</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a46459969a3c87d2b756a00bbd3184305"></a>
 <div class="memitem">
 <div class="memproto">
@@ -596,7 +521,6 @@ for(const auto&amp; event : trace_buffer) {
 </div><div class="memdoc">
 <p>Used for returning a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> once full</p>
 <p>For some buffer implementations this <em>may</em> be a no-op but for others which might reuse chunks this can be used to only reuse chunks that have been finished with.</p>
-<p><a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> implementations should not use this method to a sentinel from the maintained set of sentinels as the calling thread will likely immediately acquire a new chunk.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chunk</td><td>The chunk to be returned </td></tr>

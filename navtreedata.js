@@ -36,7 +36,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"structgsl__p_1_1dyn__array.html"
+"structgsl__p_1_1dyn__array.html#a005be860ced64fa15a0c5fbcc9e7dbf6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

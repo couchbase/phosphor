@@ -130,12 +130,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad254b7467cfd39d4d3969cff6974de9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad254b7467cfd39d4d3969cff6974de9c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FixedTraceBuffer</b> (size_t generation_, size_t buffer_size_)</td></tr>
 <tr class="separator:ad254b7467cfd39d4d3969cff6974de9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7469dafbdebea2c958172d1ed05cad69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a7469dafbdebea2c958172d1ed05cad69">getChunk</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel) override</td></tr>
-<tr class="separator:a7469dafbdebea2c958172d1ed05cad69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22004856bb8c6bf344f7a7cd8d075e09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a22004856bb8c6bf344f7a7cd8d075e09">removeSentinel</a> (<a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;sentinel) override</td></tr>
-<tr class="separator:a22004856bb8c6bf344f7a7cd8d075e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e1dd4770aada8df05bdedebd4ff2362"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2e1dd4770aada8df05bdedebd4ff2362">evictThreads</a> () override</td></tr>
-<tr class="separator:a2e1dd4770aada8df05bdedebd4ff2362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e535fa187d0ec2e78e949b988a41948"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a6e535fa187d0ec2e78e949b988a41948">getChunk</a> () override</td></tr>
+<tr class="separator:a6e535fa187d0ec2e78e949b988a41948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc9b66b570050686a4072d1cd1d03113"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#afc9b66b570050686a4072d1cd1d03113">returnChunk</a> (<a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;chunk) override</td></tr>
 <tr class="separator:afc9b66b570050686a4072d1cd1d03113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1414bd2c3b88df604414efbc24732be2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2">isFull</a> () const  override</td></tr>
@@ -162,18 +158,15 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a3a0d1708336c0fc2d285ca1f150cf624"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3a0d1708336c0fc2d285ca1f150cf624"></a>
-std::vector&lt; <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b></td></tr>
-<tr class="separator:a3a0d1708336c0fc2d285ca1f150cf624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12fccbeed91c635b763c401978cd6ef8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a12fccbeed91c635b763c401978cd6ef8"></a>
+<a class="el" href="structgsl__p_1_1dyn__array.html">gsl_p::dyn_array</a>&lt; <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b></td></tr>
+<tr class="separator:a12fccbeed91c635b763c401978cd6ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad9d7a3a27bc6827c77accc87f457a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ad9d7a3a27bc6827c77accc87f457a2"></a>
+std::atomic&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>issued</b></td></tr>
+<tr class="separator:a4ad9d7a3a27bc6827c77accc87f457a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac76034ebd28a847665861b402cc02f35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac76034ebd28a847665861b402cc02f35"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>generation</b></td></tr>
 <tr class="separator:ac76034ebd28a847665861b402cc02f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23fc99c460b7a99c66175097b4a153bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23fc99c460b7a99c66175097b4a153bf"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_size</b></td></tr>
-<tr class="separator:a23fc99c460b7a99c66175097b4a153bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3227c22ab88a670d8c06ee0948fe01ed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3227c22ab88a670d8c06ee0948fe01ed"></a>
-std::unordered_set&lt; <a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sentinels</b></td></tr>
-<tr class="separator:a3227c22ab88a670d8c06ee0948fe01ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -315,7 +308,7 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2e1dd4770aada8df05bdedebd4ff2362"></a>
+<a class="anchor" id="a6e535fa187d0ec2e78e949b988a41948"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -323,7 +316,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void phosphor::FixedTraceBuffer::evictThreads </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>* phosphor::FixedTraceBuffer::getChunk </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -335,47 +328,10 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Used for evicting all ChunkTenants from the buffer</p>
-<p>This will use the set of sentinels established from calls to the TraceChunk::getChunk method and call <a class="el" href="classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877">Sentinel::close()</a> on all of them.</p>
-<p>This will effectively send a message to all ChunkTenants that their current references to chunks in this buffer are no longer valid.</p>
-<p>Once this function returns the buffer SHOULD be safe to be freed / iterated etc. </p>
-
-<p>Implements <a class="el" href="classphosphor_1_1_trace_buffer.html#a42931dd2ccc7d6b29899595f5bda7b69">phosphor::TraceBuffer</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7469dafbdebea2c958172d1ed05cad69"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a>&amp; phosphor::FixedTraceBuffer::getChunk </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;&#160;</td>
-          <td class="paramname"><em>sentinel</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 <p>Used for getting a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> to add events to</p>
-<p>Implementors should use the sentinel passed in to create a set of sentinels who have an active reference to a chunk in the buffer. This is to make it possible to evict all ChunkTenants when desired.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sentinel</td><td><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> for the calling thread </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> to insert events into. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> to insert events into or nullptr if the buffer is full. </dd></dl>
 
-<p>Implements <a class="el" href="classphosphor_1_1_trace_buffer.html#a046bc151498a98248b732c441848a5f7">phosphor::TraceBuffer</a>.</p>
+<p>Implements <a class="el" href="classphosphor_1_1_trace_buffer.html#ad6694eb1489bf79362befa8abfe723df">phosphor::TraceBuffer</a>.</p>
 
 </div>
 </div>
@@ -467,40 +423,6 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a22004856bb8c6bf344f7a7cd8d075e09"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void phosphor::FixedTraceBuffer::removeSentinel </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> &amp;&#160;</td>
-          <td class="paramname"><em>sentinel</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Used for removing a sentinel from the set of sentinels</p>
-<p>This is generally called when a thread is being de-registered as it will attempt to delete the sentinel. This will be used to prevent the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> from de-referencing the freed sentinel when it tries to evict threads later.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">sentinel</td><td><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> to be removed from the set </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classphosphor_1_1_trace_buffer.html#ab2ab6d80b88499bc5ac3333fbf1db525">phosphor::TraceBuffer</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="afc9b66b570050686a4072d1cd1d03113"></a>
 <div class="memitem">
 <div class="memproto">
@@ -524,7 +446,6 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Used for returning a <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> once full</p>
 <p>For some buffer implementations this <em>may</em> be a no-op but for others which might reuse chunks this can be used to only reuse chunks that have been finished with.</p>
-<p><a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> implementations should not use this method to a sentinel from the maintained set of sentinels as the calling thread will likely immediately acquire a new chunk.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chunk</td><td>The chunk to be returned </td></tr>
