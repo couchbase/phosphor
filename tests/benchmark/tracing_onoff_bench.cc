@@ -28,7 +28,7 @@ void TracingOnOff(benchmark::State& state) {
                                             1024 * 1024));
         }
     }
-    phosphor::TraceLog::registerThread();
+    log.registerThread();
     while (state.KeepRunning()) {
         // It's likely that the benchmark management overhead will be the
         // significant factor in this instance so run it multiple times
@@ -37,7 +37,7 @@ void TracingOnOff(benchmark::State& state) {
                          phosphor::TraceEvent::Type::Instant, 0);
         }
     }
-    phosphor::TraceLog::deregisterThread(log);
+    log.deregisterThread();
     if(state.thread_index == 0) {
         log.stop();
     }

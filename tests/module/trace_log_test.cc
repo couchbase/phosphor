@@ -95,10 +95,10 @@ TEST(TraceConfigTest, createFixed) {
 TEST(TraceConfigTest, createRing) {
     TraceConfig config(BufferMode::ring, 1337);
 
-    /* Check that we get a fixed buffer factory */
-    auto bufferA = make_ring_buffer(0, 0);
+    /* Check that we get a ring buffer factory */
+    auto bufferA = make_ring_buffer(0, 1);
     auto& bufferARef = *bufferA;
-    auto bufferB = config.getBufferFactory()(0, 0);
+    auto bufferB = config.getBufferFactory()(0, 1);
     auto& bufferBRef = *bufferB;
 
     EXPECT_EQ(typeid(bufferARef), typeid(bufferBRef));
@@ -186,8 +186,8 @@ protected:
 TEST_F(TraceLogTest, smallBufferThrow) {
     EXPECT_THROW(trace_log.start(TraceConfig(BufferMode::fixed, 0)),
                  std::invalid_argument);
-    EXPECT_NO_THROW(
-        trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size)));
+
+        trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size));
 }
 
 TEST_F(TraceLogTest, isEnabled) {
@@ -269,17 +269,17 @@ TEST(TraceLogStaticTest, registerDeRegister) {
     TraceLog trace_log;
     trace_log.start(TraceConfig(BufferMode::fixed, sizeof(TraceChunk)));
 
-    EXPECT_THROW(TraceLog::deregisterThread(trace_log), std::logic_error);
-    TraceLog::registerThread();
-    EXPECT_NO_THROW(TraceLog::deregisterThread(trace_log));
+    EXPECT_THROW(trace_log.deregisterThread(), std::logic_error);
+    trace_log.registerThread();
+    EXPECT_NO_THROW(trace_log.deregisterThread());
 }
 
 TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
     TraceLog trace_log;
     trace_log.start(TraceConfig(BufferMode::fixed, sizeof(TraceChunk)));
-    TraceLog::registerThread();
+    trace_log.registerThread();
     trace_log.logEvent("category", "name", TraceEvent::Type::Instant, 0, 0, 0);
-    EXPECT_NO_THROW(TraceLog::deregisterThread(trace_log));
+    EXPECT_NO_THROW(trace_log.deregisterThread());
 }
 
 TEST_F(TraceLogTest, testDoneCallback) {

@@ -21,43 +21,106 @@
 #include <sstream>
 #include <thread>
 #include <vector>
+#include <cassert>
 
 #include "gsl_p/dyn_array.h"
 
-#ifdef _WIN32
-// Windows doesn't have setenv so emulate it
+class node {
+public:
 
-// StackOverflow @bill-weinman - http://stackoverflow.com/a/23616164/5467841
-int setenv(const char* name, const char* value, int overwrite) {
-    int errcode = 0;
-    if (!overwrite) {
-        size_t envsize = 0;
-        errcode = getenv_s(&envsize, NULL, 0, name);
-        if (errcode || envsize)
-            return errcode;
+    node()
+        : next(0) {
     }
-    return _putenv_s(name, value);
-}
-#endif
+    std::atomic<node*> next;
+
+    int num;
+    std::atomic<int> numat;
+    std::atomic_flag flag = ATOMIC_FLAG_INIT;
+};
+
+class mpmc_queue {
+public:
+
+    mpmc_queue(node* nodes, size_t len)
+       : head(&nodes[0]), tail(&nodes[0]) {
+        for(int i = 1; i < len; ++i) enqueue(&nodes[i]);
+        count = len;
+    }
+
+    void enqueue(node* n) {
+        assert(n != nullptr);
+        n->next = nullptr;
+        while(true) {
+            node* tail_expected = tail.load();
+            node* next_expected = tail_expected->next.load();
+            if(next_expected == nullptr) {
+                if(tail_expected->next.compare_exchange_weak(next_expected, n)) {
+                    tail.compare_exchange_strong(tail_expected, n);
+                    count++;
+                    return;
+                }
+            } else {
+                tail.compare_exchange_weak(tail_expected, next_expected);
+            }
+        }
+    }
+
+    node* dequeue() {
+        while(true) {
+            node* head_expected = head.load();
+            node* tail_expected = tail.load();
+            node* next_expected = head_expected->next.load();
+
+            if(head_expected == tail_expected) {
+                if(next_expected == nullptr) {
+                    return nullptr;
+                } else {
+                    tail.compare_exchange_weak(tail_expected, next_expected);
+                }
+            } else if(next_expected) {
+
+                if(head.compare_exchange_strong(head_expected, next_expected)) {
+                    assert(next_expected != nullptr);
+                    //head_expected->next = nullptr;
+                    count--;
+                    return head_expected;
+                }
+            }
+
+        }
+    }
+
+protected:
+    std::atomic<node*> head;
+    std::atomic<node*> tail;
+    std::atomic<size_t> count;
+};
 
 int main(int argc, char* argv[]) {
-    constexpr int thread_count = 4;
-    phosphor::TraceLog::getInstance().start(phosphor::TraceConfig(
-        phosphor::BufferMode::ring,
-        sizeof(phosphor::TraceChunk) * (thread_count + 1)));
+
+    mpmc_queue queue{new node, 1};
+    for(int i = 0; i < 4; ++i) {
+        queue.enqueue(new node);
+    }
+
 
     std::vector<std::thread> threads;
-    for (int i = 0; i < thread_count; i++) {
-        threads.emplace_back([i]() {
-            phosphor::TraceLog::registerThread();
-            while (true) {
-                TRACE_INSTANT0("category", "name");
+    for(int i = 0; i < 2; ++i) {
+        threads.emplace_back([&queue]() {
+            for(int j = 0; j < 100000; ++j) {
+                node *n{queue.dequeue()};
+                assert(n != nullptr);
+                delete n;
+                n = new node;
+                n->num = 0;
+                n->numat = 0;
+                n->next = nullptr;
+                queue.enqueue(n);
             }
-            phosphor::TraceLog::deregisterThread();
         });
     }
 
-    for (auto& thread : threads) {
+    for(auto& thread : threads) {
         thread.join();
     }
 

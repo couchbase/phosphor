@@ -35,6 +35,8 @@ public:
         if(!cs.sentinel->acquire()) {
             if(!cs.sentinel->reopen()) {
                 return;
+            } else {
+                cs.chunk = nullptr;
             }
         }
         phosphor::TraceLog::replaceChunk(cs);
@@ -42,6 +44,7 @@ public:
             cs.sentinel->release();
         }
     }
+
 };
 
 void NaiveSharedTenants(benchmark::State& state) {
@@ -50,7 +53,7 @@ void NaiveSharedTenants(benchmark::State& state) {
     if(state.thread_index == 0) {
         log.start(phosphor::TraceConfig(
                 phosphor::BufferMode::ring,
-                (sizeof(phosphor::TraceChunk) * (1 + state.threads))));
+                (sizeof(phosphor::TraceChunk) * (10 * state.threads))));
     }
 
     while (state.KeepRunning()) {
@@ -65,11 +68,11 @@ BENCHMARK(NaiveSharedTenants)->ThreadRange(1, 32);
 void RegisterTenants(benchmark::State& state) {
 
     static MockTraceLog log{phosphor::TraceLogConfig()};
-    phosphor::TraceLog::registerThread();
+    log.registerThread();
     if(state.thread_index == 0) {
         log.start(phosphor::TraceConfig(
                 phosphor::BufferMode::ring,
-                (sizeof(phosphor::TraceChunk) * (1 + state.threads))));
+                (sizeof(phosphor::TraceChunk) * (10 * state.threads))));
     }
 
     while (state.KeepRunning()) {
@@ -78,7 +81,7 @@ void RegisterTenants(benchmark::State& state) {
     if(state.thread_index == 0) {
         log.stop();
     }
-    phosphor::TraceLog::deregisterThread(log);
+    log.deregisterThread();
 }
 BENCHMARK(RegisterTenants)->ThreadRange(1, 32);
 

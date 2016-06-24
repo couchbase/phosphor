@@ -110,6 +110,7 @@ namespace phosphor {
          */
         const_iterator end() const;
 
+        size_t generation;
     private:
         unsigned short next_free;
         event_array chunk;
@@ -149,9 +150,10 @@ namespace phosphor {
         /**
          * Used for getting a TraceChunk to add events to
          *
+         * @return A pointer to a TraceChunk to insert events into or
+         *         nullptr if the buffer is full.
          */
-        virtual TraceChunk& getChunk(Sentinel& sentinel) = 0;
-
+        virtual TraceChunk* getChunk() = 0;
 
         /**
          * Used for returning a TraceChunk once full

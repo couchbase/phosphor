@@ -48,7 +48,6 @@ void DistributedSharedTenants(benchmark::State& state) {
                 phosphor::BufferMode::ring,
                 (sizeof(phosphor::TraceChunk) * (1 + state.threads))));
     }
-
     while (state.KeepRunning()) {
         log.logEvent("category", "name", phosphor::TraceEvent::Type::Instant, 0);
     }
@@ -83,11 +82,11 @@ void RegisterThread(benchmark::State& state) {
                 phosphor::BufferMode::ring,
                 (sizeof(phosphor::TraceChunk) * (1 + state.threads))));
     }
-    phosphor::TraceLog::registerThread();
+    log.registerThread();
     while (state.KeepRunning()) {
         log.logEvent("category", "name", phosphor::TraceEvent::Type::Instant, 0);
     }
-    phosphor::TraceLog::deregisterThread(log);
+    log.deregisterThread();
     if(state.thread_index == 0) {
         log.stop();
     }

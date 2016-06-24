@@ -107,21 +107,20 @@ public:
         buffer = factory(0, chunk_count);
     }
 
-    void populate_chunk(TraceChunk& chunk, size_t event_count) {
+    void populate_chunk(TraceChunk* chunk, size_t event_count) {
         for (int i = 0; i < event_count; ++i) {
-            chunk.addEvent();
+            chunk->addEvent();
         }
     }
-    void fill_chunk(TraceChunk& chunk) {
-        while (!chunk.isFull()) {
-            chunk.addEvent();
+    void fill_chunk(TraceChunk* chunk) {
+        while (!chunk->isFull()) {
+            chunk->addEvent();
         }
     }
 
     virtual ~TraceBufferTest() = default;
 
 protected:
-    Sentinel sentinel;
     trace_buffer_factory factory;
     std::unique_ptr<TraceBuffer> buffer;
 };
@@ -136,98 +135,51 @@ TEST_P(TraceBufferTest, GetChunk) {
 
     /* Expect it to not be empty, then full once a chunk is taken */
     EXPECT_FALSE(buffer->isFull());
-    TraceChunk& chunk = buffer->getChunk(sentinel);
+    TraceChunk* chunk = buffer->getChunk();
 
     /* Paranoia about the chunk address */
-    ASSERT_NE(nullptr, &chunk);
+    ASSERT_NE(nullptr, chunk);
 
     /* Expect chunks recieved from buffer are empty */
-    EXPECT_EQ(0, chunk.count());
-}
-
-TEST_P(TraceBufferTest, CheckEviction) {
-    /* Get a chunk */
-    make_buffer(5);
-    TraceChunk& chunk = buffer->getChunk(sentinel);
-
-    /* Attempt to iterate while a chunk is _loaned out_ */
-    EXPECT_THROW(buffer->chunk_begin(), std::logic_error);
-    EXPECT_THROW(buffer->chunk_end(), std::logic_error);
-    EXPECT_THROW((*buffer)[0], std::logic_error);
-
-    /* Returning the buffer shouldn't stop the loan out status */
-    buffer->returnChunk(chunk);
-    EXPECT_THROW(buffer->chunk_begin(), std::logic_error);
-    EXPECT_THROW(buffer->chunk_end(), std::logic_error);
-    EXPECT_THROW((*buffer)[0], std::logic_error);
-
-    /* Eviction should stop the loan out status */
-    buffer->evictThreads();
-    EXPECT_NO_THROW(buffer->chunk_begin());
-    EXPECT_NO_THROW(buffer->chunk_end());
-    EXPECT_NO_THROW((*buffer)[0]);
-
-    /* Explicit sentinel removal should also work */
-    buffer->getChunk(sentinel);
-    buffer->removeSentinel(sentinel);
-    EXPECT_NO_THROW(buffer->chunk_begin());
-    EXPECT_NO_THROW(buffer->chunk_end());
-    EXPECT_NO_THROW((*buffer)[0]);
+    EXPECT_EQ(0, chunk->count());
 }
 
 TEST_P(TraceBufferTest, generation) {
-    buffer = factory(1337, 0);
+    buffer = factory(1337, 1);
     EXPECT_EQ(1337, buffer->getGeneration());
 }
 
 TEST_P(TraceBufferTest, chunkCount) {
-    make_buffer(0);
-    EXPECT_EQ(0, buffer->chunk_count());
     make_buffer(3);
     EXPECT_EQ(0, buffer->chunk_count());
-    buffer->getChunk(sentinel);
+    buffer->getChunk();
     EXPECT_EQ(1, buffer->chunk_count());
-    buffer->getChunk(sentinel);
+    buffer->getChunk();
     EXPECT_EQ(2, buffer->chunk_count());
-    buffer->getChunk(sentinel);
+    buffer->getChunk();
     EXPECT_EQ(3, buffer->chunk_count());
-    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
-    EXPECT_EQ(3, buffer->chunk_count());
-}
-
-TEST_P(TraceBufferTest, iteratorEmpty) {
-    make_buffer(0);
-    EXPECT_EQ(buffer->begin(), buffer->end());
-    EXPECT_EQ(buffer->chunk_begin(), buffer->chunk_end());
 }
 
 TEST_P(TraceBufferTest, iteratorChunksEmpty) {
     make_buffer(5);
-    buffer->getChunk(sentinel);
-    buffer->evictThreads();
+    buffer->getChunk();
     EXPECT_EQ(buffer->begin(), buffer->end());
     EXPECT_EQ(++(buffer->chunk_begin()), buffer->chunk_end());
 
-    /* Need to reopen and release the sentinel before we reuse it */
-    sentinel.reopen();
-    sentinel.release();
-
-    buffer->getChunk(sentinel);
-    buffer->getChunk(sentinel);
-    buffer->getChunk(sentinel);
-    buffer->getChunk(sentinel);
-    buffer->evictThreads();
+    buffer->getChunk();
+    buffer->getChunk();
+    buffer->getChunk();
+    buffer->getChunk();
     EXPECT_EQ(buffer->begin(), buffer->end());
 }
 
 TEST_P(TraceBufferTest, iteratorChunksOccasionallyEmpty) {
     make_buffer(5);
-    populate_chunk(buffer->getChunk(sentinel), 1);
-    buffer->getChunk(sentinel);
-    populate_chunk(buffer->getChunk(sentinel), 2);
-    buffer->getChunk(sentinel);
-    populate_chunk(buffer->getChunk(sentinel), 3);
-    buffer->evictThreads();
+    populate_chunk(buffer->getChunk(), 1);
+    buffer->getChunk();
+    populate_chunk(buffer->getChunk(), 2);
+    buffer->getChunk();
+    populate_chunk(buffer->getChunk(), 3);
     int i = 0;
     for (const auto& event : *buffer) {
         (void)event;
@@ -245,12 +197,11 @@ TEST_P(TraceBufferTest, iteratorChunksOccasionallyEmpty) {
 
 TEST_P(TraceBufferTest, fullChunks) {
     make_buffer(5);
-    fill_chunk(buffer->getChunk(sentinel));
-    fill_chunk(buffer->getChunk(sentinel));
-    fill_chunk(buffer->getChunk(sentinel));
-    fill_chunk(buffer->getChunk(sentinel));
-    fill_chunk(buffer->getChunk(sentinel));
-    buffer->evictThreads();
+    fill_chunk(buffer->getChunk());
+    fill_chunk(buffer->getChunk());
+    fill_chunk(buffer->getChunk());
+    fill_chunk(buffer->getChunk());
+    fill_chunk(buffer->getChunk());
     int event_count = 0;
     int i = 0;
     for (const auto& chunk : buffer->chunks()) {
@@ -279,20 +230,20 @@ TEST_P(FillableTraceBufferTest, GetChunk) {
 
     /* Expect it to not be empty, then full once a chunk is taken */
     EXPECT_FALSE(buffer->isFull());
-    TraceChunk& chunk = buffer->getChunk(sentinel);
+    TraceChunk* chunk = buffer->getChunk();
     EXPECT_TRUE(buffer->isFull());
 
-    /* Should expect an exception when full and getting a chunk */
-    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
+    /* Should expect a nullptr when full and getting a chunk */
+    EXPECT_EQ(nullptr, buffer->getChunk());
 
     /* Paranoia about the chunk address */
-    ASSERT_NE(nullptr, &chunk);
+    ASSERT_NE(nullptr, chunk);
 
     /* Expect chunks recieved from buffer are empty */
-    EXPECT_EQ(0, chunk.count());
+    EXPECT_EQ(0, chunk->count());
 
-    buffer->returnChunk(chunk);
-    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
+    buffer->returnChunk(*chunk);
+    EXPECT_EQ(nullptr, buffer->getChunk());
 }
 
 using UnFillableTraceBufferTest = TraceBufferTest;
@@ -303,20 +254,17 @@ TEST_P(UnFillableTraceBufferTest, GetChunk) {
 
     /* Expect it to not be empty, then full once a chunk is taken */
     EXPECT_FALSE(buffer->isFull());
-    TraceChunk& chunk = buffer->getChunk(sentinel);
+    TraceChunk* chunk = buffer->getChunk();
     EXPECT_FALSE(buffer->isFull());
 
-    /* Should expect an exception when all chunks are loaned out */
-    EXPECT_THROW(buffer->getChunk(sentinel), std::out_of_range);
-
     /* Paranoia about the chunk address */
-    ASSERT_NE(nullptr, &chunk);
+    ASSERT_NE(nullptr, chunk);
 
     /* Expect chunks recieved from buffer are empty */
-    EXPECT_EQ(0, chunk.count());
+    EXPECT_EQ(0, chunk->count());
 
-    buffer->returnChunk(chunk);
-    EXPECT_NO_THROW(buffer->getChunk(sentinel));
+    buffer->returnChunk(*chunk);
+    EXPECT_NO_THROW(buffer->getChunk());
 }
 
 INSTANTIATE_TEST_CASE_P(

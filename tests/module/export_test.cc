@@ -27,9 +27,9 @@ class ExportTest : public testing::Test {
 public:
     ExportTest() : buffer(phosphor::make_fixed_buffer(0, 1)) {
         while (!buffer->isFull()) {
-            auto& chunk = buffer->getChunk(sentinel);
-            while (!chunk.isFull()) {
-                chunk.addEvent() = phosphor::TraceEvent(
+            auto* chunk = buffer->getChunk();
+            while (!chunk->isFull()) {
+                chunk->addEvent() = phosphor::TraceEvent(
                     "category",
                     "name",
                     phosphor::TraceEvent::Type::Instant,
@@ -40,12 +40,10 @@ public:
                       phosphor::TraceArgument::Type::is_none}});
             }
         }
-        buffer->evictThreads();
     }
 
 protected:
     phosphor::buffer_ptr buffer;
-    phosphor::Sentinel sentinel;
 };
 
 TEST_F(ExportTest, test) {

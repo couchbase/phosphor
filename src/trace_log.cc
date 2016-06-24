@@ -344,9 +344,7 @@ namespace phosphor {
             buffer->returnChunk(*ct.chunk);
             ct.chunk = nullptr;
         }
-        if (buffer && !buffer->isFull()) {
-            ct.chunk = &buffer->getChunk(*ct.sentinel);
-        } else {
+        if (!(buffer && (ct.chunk = buffer->getChunk()))) {
             ct.sentinel->release();
             stop(lh);
         }

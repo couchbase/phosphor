@@ -15,10 +15,11 @@
  *   limitations under the License.
  */
 
-#include <queue>
+#include <mutex>
 #include <stdexcept>
 
 #include <gsl_p/dyn_array.h>
+#include <dvyukov/mpmc_bounded_queue.h>
 
 #include "phosphor/trace_buffer.h"
 #include "utils/memory.h"
@@ -98,23 +99,21 @@ namespace phosphor {
     class FixedTraceBuffer : public TraceBuffer {
     public:
         FixedTraceBuffer(size_t generation_, size_t buffer_size_)
-            : generation(generation_), buffer_size(buffer_size_) {
-            buffer.reserve(buffer_size);
+            : buffer(buffer_size_),
+              issued(0),
+              generation(generation_) {
         }
 
         ~FixedTraceBuffer() override = default;
 
-        TraceChunk& getChunk(Sentinel& sentinel) override {
-            if (isFull()) {
-                throw std::out_of_range(
-                    "phosphor::TraceChunk::getChunk: "
-                    "The TraceBuffer is full");
+        TraceChunk* getChunk() override {
+            size_t offset = issued++;
+            if (offset >= buffer.size()) {
+                return nullptr;
             }
-            buffer.emplace_back();
-            buffer.back().reset();
-            return buffer.back();
-        }
-
+            TraceChunk& chunk = buffer[offset];
+            chunk.reset();
+            return &chunk;
         }
 
         void returnChunk(TraceChunk& chunk) override {
@@ -122,7 +121,7 @@ namespace phosphor {
         }
 
         bool isFull() const override {
-            return buffer.size() >= buffer_size;
+            return issued >= buffer.size();
         }
 
         size_t getGeneration() const override {
@@ -134,7 +133,8 @@ namespace phosphor {
         }
 
         size_t chunk_count() const override {
-            return buffer.size();
+            size_t tmp{issued};
+            return (buffer.size() > tmp) ? tmp : buffer.size();
         }
 
         chunk_iterator chunk_begin() const override {
@@ -142,103 +142,6 @@ namespace phosphor {
         }
 
         chunk_iterator chunk_end() const override {
-            return chunk_iterator(*this, chunk_count());
-        }
-
-        event_iterator begin() const override {
-            return event_iterator(chunk_begin(), chunk_end());
-        }
-
-        event_iterator end() const override {
-            return event_iterator(chunk_end(), chunk_end());
-        }
-
-    protected:
-        std::vector<TraceChunk> buffer;
-        size_t generation;
-        size_t buffer_size;
-
-    };
-
-    std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,
-                                                   size_t buffer_size) {
-        return utils::make_unique<FixedTraceBuffer>(generation, buffer_size);
-    }
-
-    /**
-     * TraceBuffer implementation that stores events in a fixed-size
-     * vector of unique pointers to BufferChunks.
-     */
-    class RingTraceBuffer : public TraceBuffer {
-    public:
-        RingTraceBuffer(size_t generation_, size_t buffer_size_)
-            : buffer(buffer_size_), generation(generation_) {}
-
-        ~RingTraceBuffer() override = default;
-
-        TraceChunk& getChunk(Sentinel& sentinel) override {
-            TraceChunk* chunk;
-            if (actual_count == buffer.size()) {
-                if (return_queue.size() == 0) {
-                    throw std::out_of_range(
-                        "phosphor::CircularTraceBuffer::getChunk: "
-                        "The TraceBuffer is full");
-                }
-                chunk = return_queue.front();
-                return_queue.pop();
-            } else {
-                chunk = &buffer[actual_count++];
-            }
-            chunk->reset();
-            return *chunk;
-        }
-
-
-        }
-
-        void returnChunk(TraceChunk& chunk) override {
-            return_queue.emplace(&chunk);
-        }
-
-        bool isFull() const override {
-            return false;
-        }
-
-        size_t getGeneration() const override {
-            return generation;
-        }
-
-        const TraceChunk& operator[](const int index) const override {
-            if (sentinels.size() > 0) {
-                throw std::logic_error(
-                    "phosphor::TraceChunk::operator[]: "
-                    "Cannot read from TraceBuffer while "
-                    "chunks are loaned out!");
-            }
-            return buffer[index];
-        }
-
-        size_t chunk_count() const override {
-            return actual_count;
-        }
-
-        chunk_iterator chunk_begin() const override {
-            if (sentinels.size() > 0) {
-                throw std::logic_error(
-                    "phosphor::TraceChunk::chunk_begin: "
-                    " Cannot read from TraceBuffer while "
-                    "chunks are loaned out!");
-            }
-            return chunk_iterator(*this);
-        }
-
-        chunk_iterator chunk_end() const override {
-            if (sentinels.size() > 0) {
-                throw std::logic_error(
-                    "phosphor::TraceChunk::chunk_end: "
-                    "Cannot read from TraceBuffer while "
-                    "chunks are loaned out!");
-            }
             return chunk_iterator(*this, chunk_count());
         }
 
@@ -252,11 +155,125 @@ namespace phosphor {
 
     protected:
         gsl_p::dyn_array<TraceChunk> buffer;
-        size_t actual_count = 0;
+        std::atomic<size_t> issued;
+        size_t generation;
+    };
 
-        std::queue<TraceChunk*> return_queue;
+    std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,
+                                                   size_t buffer_size) {
+        return utils::make_unique<FixedTraceBuffer>(generation, buffer_size);
+    }
+
+    /**
+     * TraceBuffer implementation that stores events in a fixed-size
+     * vector of unique pointers to BufferChunks.
+     */
+    class RingTraceBuffer : public TraceBuffer {
+    public:
+
+        RingTraceBuffer(size_t generation_, size_t buffer_size_)
+            : actual_count(0),
+              buffer(buffer_size_),
+              loaned(buffer_size_),
+              return_queue(upper_power_of_two(buffer_size_)),
+              in_queue(0),
+              generation(generation_) {
+        }
+
+        ~RingTraceBuffer() override = default;
+
+        TraceChunk* getChunk() override {
+            TraceChunk* chunk = reinterpret_cast<TraceChunk*>(0xDEADB33F);
+
+            auto offset = actual_count++;
+
+            if (offset >= buffer.size()) {
+                assert(in_queue > 0);
+                while(!return_queue.dequeue(chunk)) {}
+                --in_queue;
+            } else {
+                chunk = &buffer[offset];
+                loaned[chunk - &buffer[0]] = false;
+            }
+
+            chunk->reset();
+            chunk->generation = generation;
+
+            assert(!loaned[chunk - &buffer[0]]);
+            loaned[chunk - &buffer[0]] = true;
+
+            return chunk;
+        }
+
+        void returnChunk(TraceChunk& chunk) override {
+            assert(chunk.generation == generation);
+            assert(loaned[&chunk - &buffer[0]]);
+            loaned[&chunk - &buffer[0]] = false;
+            while(!return_queue.enqueue(&chunk));
+            ++in_queue;
+            assert(in_queue <= buffer.size());
+        }
+
+        bool isFull() const override {
+            return false;
+        }
+
+        size_t getGeneration() const override {
+            return generation;
+        }
+
+        const TraceChunk& operator[](const int index) const override {
+            return buffer[index];
+        }
+
+        size_t chunk_count() const override {
+            return actual_count;
+        }
+
+        chunk_iterator chunk_begin() const override {
+            return chunk_iterator(*this);
+        }
+
+        chunk_iterator chunk_end() const override {
+            return chunk_iterator(*this, chunk_count());
+        }
+
+        event_iterator begin() const override {
+            return event_iterator(chunk_begin(), chunk_end());
+        }
+
+        event_iterator end() const override {
+            return event_iterator(chunk_end(), chunk_end());
+        }
+
+    protected:
+        std::atomic<size_t> actual_count;
+
+        gsl_p::dyn_array<TraceChunk> buffer;
+        gsl_p::dyn_array<std::atomic<bool>> loaned;
+
+        dvyukov::mpmc_bounded_queue<TraceChunk*> return_queue;
+        std::atomic<size_t> in_queue;
+
         size_t generation;
 
+    private:
+        template <typename T>
+        T upper_power_of_two(T v) {
+            v--;
+            v |= v >> 1;
+            v |= v >> 2;
+            v |= v >> 4;
+            v |= v >> 8;
+            v |= v >> 16;
+            v++;
+
+            if (v == 1) {
+                v = 2;
+            }
+
+            return v;
+        }
     };
 
     std::unique_ptr<TraceBuffer> make_ring_buffer(size_t generation,

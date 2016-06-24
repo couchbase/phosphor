@@ -27,7 +27,7 @@ size_t allocation_count = 0;
 std::array<std::pair<void*, size_t>, 4096> allocation_map;
 bool tracking_enabled = false;
 
-void* operator new(std::size_t n) throw(std::bad_alloc)
+void* operator new(std::size_t n)
 {
     void* ptr = std::malloc(n);
     if (ptr == nullptr) {
