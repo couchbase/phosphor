@@ -219,17 +219,19 @@ namespace phosphor {
     TraceLog::TraceLog() : TraceLog(TraceLogConfig::fromEnvironment()) {}
 
     TraceLog::~TraceLog() {
-        if (trace_config.getStopTracingOnDestruct()) {
-            stop();
+        stop(true);
+        for (auto& chunk : shared_chunks) {
+            delete chunk.sentinel;
         }
     }
 
     void TraceLog::configure(const TraceLogConfig& _config) {
         std::lock_guard<TraceLog> lh(*this);
 
-        shared_chunks.resize(_config.getSentinelCount());
-        for (auto& chunk : shared_chunks) {
-            chunk.sentinel = new Sentinel();
+        shared_chunks.reserve(_config.getSentinelCount());
+        for (size_t i = shared_chunks.size(); i < _config.getSentinelCount(); ++i) {
+            shared_chunks.emplace_back();
+            shared_chunks[i].sentinel = new Sentinel;
         }
 
         if (auto* startup_trace = _config.getStartupTrace()) {
@@ -243,15 +245,15 @@ namespace phosphor {
         return log_instance;
     }
 
-    void TraceLog::stop() {
+    void TraceLog::stop(bool shutdown) {
         std::lock_guard<TraceLog> lh(*this);
-        stop(lh);
+        stop(lh, shutdown);
     }
 
-    void TraceLog::stop(std::lock_guard<TraceLog>& lh) {
+    void TraceLog::stop(std::lock_guard<TraceLog>& lh, bool shutdown) {
         if (enabled.exchange(false)) {
-            buffer->evictThreads();
-            if (auto cb = trace_config.getStoppedCallback()) {
+            auto cb = trace_config.getStoppedCallback();
+            if (cb && (!shutdown || trace_config.getStopTracingOnDestruct())) {
                 cb(*this, lh);
             }
         }

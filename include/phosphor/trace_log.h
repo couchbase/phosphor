@@ -348,14 +348,14 @@ namespace phosphor {
         /**
          * Immediately stops tracing
          */
-        void stop();
+        void stop(bool shutdown = false);
 
         /**
          * Immediately stops tracing (With external locking)
          *
          * @param Lock guard holding the external lock
          */
-        void stop(std::lock_guard<TraceLog>&);
+        void stop(std::lock_guard<TraceLog>&, bool shutdown = false);
 
         /**
          * Logs an event in the current buffer (if applicable)
