@@ -41,7 +41,7 @@ Done 2016/06/07
 - <strike>Add memory usage tests</strike> Done 2016/06/20
 - Initial work on proper category support
 - Plan out the binary dump of names / categories
-- Add benchmark for chunk replacement
+- <strike>Add benchmark for chunk replacement</strike> Done 2016/06/22
 
 ## Misc Feature List (Not allocated)
 
