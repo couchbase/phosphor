@@ -318,35 +318,23 @@ namespace phosphor {
         }
 
         if (thread_chunk.chunk) {
-            std::lock_guard<std::mutex> lh(instance.mutex);
-            if (instance.buffer) {
-                instance.buffer->returnChunk(*thread_chunk.chunk);
+            if (buffer) {
+                buffer->returnChunk(*thread_chunk.chunk);
             }
+            thread_chunk.chunk = nullptr;
         }
         registered_sentinels.erase(thread_chunk.sentinel);
         delete thread_chunk.sentinel;
     }
 
     void TraceLog::replaceChunk(ChunkTenant& ct) {
-        ct.sentinel->release();
-        std::lock_guard<TraceLog> lh(*this);
-        if (!ct.sentinel->acquire()) {
-            resetChunk(ct);
-            return;
-        }
-        if (!enabled) {
-            ct.chunk = nullptr;
-            ct.sentinel->release();
-            return;
-        }
-
         if (ct.chunk) {
             buffer->returnChunk(*ct.chunk);
             ct.chunk = nullptr;
         }
         if (!(buffer && (ct.chunk = buffer->getChunk()))) {
             ct.sentinel->release();
-            stop(lh);
+            stop();
         }
     }
 
