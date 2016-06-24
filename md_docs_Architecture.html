@@ -103,7 +103,44 @@ $(document).ready(function(){initNavTree('md_docs_Architecture.html','');});
 <div class="title">Phosphor Architecture </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="textblock"><h2>Frontend</h2>
+<p>The frontend consists of two main interfaces:</p>
+<ul>
+<li>Instrumentation Macros</li>
+<li>TraceLog / TraceLogConfig / TraceConfig</li>
+</ul>
+<h3>Instrumentation Macros</h3>
+<p>The instrumentation macros are basically wrappers around the TraceLog::logEvent member functions. There are also some additional utilities, such as the scoped macros.</p>
+<h3>TraceLog</h3>
+<p>The TraceLog is the primary interface used for interacting with Phosphor externally. It is used by the instrumentation macros for actually logging events and also used directly by end users for configuration etc.</p>
+<p>The TraceLog encapsulates most of the logic for actually managing tracing tracing events and tying all the parts of the system together.</p>
+<h4>TraceLogConfig</h4>
+<p>The TraceLogConfig class is used to perform one-time configuration of a TraceLog and consists of configuration that can only performed once.</p>
+<h4>TraceConfig</h4>
+<p>The TraceConfig class is used to perform per-trace configuration of a TraceLog and is passed directly to the TraceLog::start member function.</p>
+<h2>Backend</h2>
+<h3>TraceEvent</h3>
+<p>The TraceEvent class represents a singular event which contains a name, category, timestamp (Which is accurate/meaningful relative to other events) and optional arguments along with the type for those arguments.</p>
+<h3>TraceChunk</h3>
+<p>A TraceChunk is conceptually a collection of TraceEvents and contains 1 or more pages worth of TraceEvents.</p>
+<h3>TraceBuffer</h3>
+<p>The TraceBuffer is a collection of TraceChunks. It loans TraceChunks out to ChunkTenants.</p>
+<h3>ChunkTenant</h3>
+<p>A ChunkTenant is conceptually an object which borrows a TraceChunk from a TraceBuffer. A ChunkTenant can either be allocated per-thread (In the event that threads have been registered appropriately) or can be shared using a pool of ChunkTenants distributed by thread id. A ChunkTenant has two main parts</p>
+<ul>
+<li>A pointer to the currently borrowed chunk (Or nullptr if not currently borrowing one).</li>
+<li>A chunk sentinel</li>
+</ul>
+<h4>Chunk <code>Sentinel</code></h4>
+<p>The sentinel is used to guard access to a Chunk. It is principally a tri-state lock:</p>
+<ul>
+<li>Open: the chunk is currently unlocked and the current pointer is either null or it is safe to use</li>
+<li>Busy: the chunk is currently locked and the pointer is either safe to use or being made safe by the person who locked the sentinel.</li>
+<li>Closed: the chunk is currently unlocked but the current pointer is not safe to use. A TraceLog transitions a sentinel into this third state to indicate that the next user of the ChunkTenant should replace or at least nullify the chunk.</li>
+</ul>
+<p>The TraceLog will transition the chunk sentinel to closed when the trace buffer gets full or when tracing is stopped, this is usually because the trace buffer ownership will be transferred away and the chunk 'loans' need to be revoked. This transition can only be done when the sentinel is open and will block until it is in this state.</p>
+<p>A thread using a ChunkTenant will try to transition its sentinel to busy when they need to log an event and back to open when it's done. It will fail to do this if the sentinel is currently closed. In this event the chunk tenant will transition the sentinel to busy in another way and be aware that it needs to replace the chunk it had before. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
