@@ -17,7 +17,6 @@
 
 #include <queue>
 #include <stdexcept>
-#include <unordered_set>
 
 #include <gsl_p/dyn_array.h>
 
@@ -111,21 +110,11 @@ namespace phosphor {
                     "phosphor::TraceChunk::getChunk: "
                     "The TraceBuffer is full");
             }
-            sentinels.insert(&sentinel);
             buffer.emplace_back();
             buffer.back().reset();
             return buffer.back();
         }
 
-        void removeSentinel(Sentinel& sentinel) override {
-            sentinels.erase(&sentinel);
-        }
-
-        void evictThreads() override {
-            for (auto& sentinel : sentinels) {
-                sentinel->close();
-            }
-            sentinels.clear();
         }
 
         void returnChunk(TraceChunk& chunk) override {
@@ -141,12 +130,6 @@ namespace phosphor {
         }
 
         const TraceChunk& operator[](const int index) const override {
-            if (sentinels.size() > 0) {
-                throw std::logic_error(
-                    "phosphor::TraceChunk::operator[]: "
-                    "Cannot read from TraceBuffer while "
-                    "chunks are loaned out!");
-            }
             return buffer[index];
         }
 
@@ -155,22 +138,10 @@ namespace phosphor {
         }
 
         chunk_iterator chunk_begin() const override {
-            if (sentinels.size() > 0) {
-                throw std::logic_error(
-                    "phosphor::TraceChunk::chunk_begin: "
-                    " Cannot read from TraceBuffer while "
-                    "chunks are loaned out!");
-            }
             return chunk_iterator(*this);
         }
 
         chunk_iterator chunk_end() const override {
-            if (sentinels.size() > 0) {
-                throw std::logic_error(
-                    "phosphor::TraceChunk::chunk_end: "
-                    "Cannot read from TraceBuffer while "
-                    "chunks are loaned out!");
-            }
             return chunk_iterator(*this, chunk_count());
         }
 
@@ -187,7 +158,6 @@ namespace phosphor {
         size_t generation;
         size_t buffer_size;
 
-        std::unordered_set<Sentinel*> sentinels;
     };
 
     std::unique_ptr<TraceBuffer> make_fixed_buffer(size_t generation,
@@ -219,20 +189,11 @@ namespace phosphor {
             } else {
                 chunk = &buffer[actual_count++];
             }
-            sentinels.insert(&sentinel);
             chunk->reset();
             return *chunk;
         }
 
-        void removeSentinel(Sentinel& sentinel) override {
-            sentinels.erase(&sentinel);
-        }
 
-        void evictThreads() override {
-            for (auto& sentinel : sentinels) {
-                sentinel->close();
-            }
-            sentinels.clear();
         }
 
         void returnChunk(TraceChunk& chunk) override {
@@ -296,7 +257,6 @@ namespace phosphor {
         std::queue<TraceChunk*> return_queue;
         size_t generation;
 
-        std::unordered_set<Sentinel*> sentinels;
     };
 
     std::unique_ptr<TraceBuffer> make_ring_buffer(size_t generation,

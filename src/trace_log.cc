@@ -229,9 +229,11 @@ namespace phosphor {
         std::lock_guard<TraceLog> lh(*this);
 
         shared_chunks.reserve(_config.getSentinelCount());
+        registered_sentinels.reserve(_config.getSentinelCount());
         for (size_t i = shared_chunks.size(); i < _config.getSentinelCount(); ++i) {
             shared_chunks.emplace_back();
             shared_chunks[i].sentinel = new Sentinel;
+            registered_sentinels.insert(shared_chunks[i].sentinel);
         }
 
         if (auto* startup_trace = _config.getStartupTrace()) {
@@ -252,6 +254,7 @@ namespace phosphor {
 
     void TraceLog::stop(std::lock_guard<TraceLog>& lh, bool shutdown) {
         if (enabled.exchange(false)) {
+            evictThreads(lh);
             auto cb = trace_config.getStoppedCallback();
             if (cb && (!shutdown || trace_config.getStopTracingOnDestruct())) {
                 cb(*this, lh);
@@ -299,10 +302,15 @@ namespace phosphor {
     }
 
     void TraceLog::registerThread() {
+        std::lock_guard<TraceLog> lh(*this);
+
         thread_chunk.sentinel = new Sentinel;
+        registered_sentinels.insert(thread_chunk.sentinel);
     }
 
-    void TraceLog::deregisterThread(TraceLog& instance) {
+    void TraceLog::deregisterThread() {
+        std::lock_guard<TraceLog> lh(*this);
+
         if (!thread_chunk.sentinel) {
             throw std::logic_error(
                 "phosphor::TraceLog::deregisterThread: This thread has "
@@ -314,8 +322,8 @@ namespace phosphor {
             if (instance.buffer) {
                 instance.buffer->returnChunk(*thread_chunk.chunk);
             }
-            instance.buffer->removeSentinel(*thread_chunk.sentinel);
         }
+        registered_sentinels.erase(thread_chunk.sentinel);
         delete thread_chunk.sentinel;
     }
 
@@ -348,6 +356,12 @@ namespace phosphor {
         if (ct.sentinel->reopen()) {
             ct.chunk = nullptr;
             ct.sentinel->release();
+        }
+    }
+
+    void TraceLog::evictThreads(std::lock_guard<TraceLog>& lh) {
+        for(auto& sentinel : registered_sentinels) {
+            sentinel->close();
         }
     }
 

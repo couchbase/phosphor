@@ -29,7 +29,6 @@
 
 #include <gsl_p/iterator.h>
 
-#include "sentinel.h"
 #include "trace_event.h"
 
 namespace phosphor {
@@ -150,45 +149,9 @@ namespace phosphor {
         /**
          * Used for getting a TraceChunk to add events to
          *
-         * Implementors should use the sentinel passed in to
-         * create a set of sentinels who have an active reference
-         * to a chunk in the buffer. This is to make it possible
-         * to evict all ChunkTenants when desired.
-         *
-         * @param sentinel Sentinel for the calling thread
-         * @return A reference to a TraceChunk to
-         *         insert events into.
          */
         virtual TraceChunk& getChunk(Sentinel& sentinel) = 0;
 
-        /**
-         * Used for removing a sentinel from the set of sentinels
-         *
-         * This is generally called when a thread is being
-         * de-registered as it will attempt to delete the
-         * sentinel. This will be used to prevent the TraceBuffer
-         * from de-referencing the freed sentinel when it tries
-         * to evict threads later.
-         *
-         * @param sentinel Sentinel to be removed from the set
-         */
-        virtual void removeSentinel(Sentinel& sentinel) = 0;
-
-        /**
-         * Used for evicting all ChunkTenants from the buffer
-         *
-         * This will use the set of sentinels established from
-         * calls to the TraceChunk::getChunk method and
-         * call Sentinel::close() on all of them.
-         *
-         * This will effectively send a message to all ChunkTenants
-         * that their current references to chunks in this buffer
-         * are no longer valid.
-         *
-         * Once this function returns the buffer SHOULD be safe to
-         * be freed / iterated etc.
-         */
-        virtual void evictThreads() = 0;
 
         /**
          * Used for returning a TraceChunk once full
@@ -196,11 +159,6 @@ namespace phosphor {
          * For some buffer implementations this *may* be a no-op
          * but for others which might reuse chunks this can be
          * used to only reuse chunks that have been finished with.
-         *
-         * TraceBuffer implementations should not use this method
-         * to a sentinel from the maintained set of sentinels as
-         * the calling thread will likely immediately acquire a
-         * new chunk.
          *
          * @param chunk The chunk to be returned
          */

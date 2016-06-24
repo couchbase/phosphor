@@ -19,8 +19,10 @@
 
 #include <atomic>
 #include <mutex>
+#include <unordered_set>
 
 #include "platform/thread.h"
+#include "sentinel.h"
 #include "trace_buffer.h"
 #include "trace_event.h"
 
@@ -509,7 +511,7 @@ namespace phosphor {
          * this involves acquiring locks that may be under contention
          * this can be expensive.
          */
-        static void registerThread();
+        void registerThread();
 
         /**
          * De-registers the current thread
@@ -521,8 +523,7 @@ namespace phosphor {
          *
          * @param instance The TraceLog instance that the sentinel is using
          */
-        static void deregisterThread(
-            TraceLog& instance = TraceLog::getInstance());
+        void deregisterThread();
 
         /**
          * Lock the trace log externally
@@ -612,6 +613,23 @@ namespace phosphor {
          */
         void resetChunk(ChunkTenant& ct);
 
+
+        /**
+         * Used for evicting all ChunkTenants from the log
+         *
+         * This will use the set of sentinels established from
+         * the calls to registerThread and deregisterThread and
+         * call close() on them.
+         *
+         * This will effectively send a message to all ChunkTenants
+         * that their current references to chunks in their possession
+         * are no longer valid.
+         *
+         * Once this function returns the buffer that the TraceLog had
+         * SHOULD be safe to be freed / iterated etc.
+         */
+        void evictThreads(std::lock_guard<TraceLog>& lh);
+
         /**
          * The thread-specific ChunkTenant used for low contention
          *
@@ -678,5 +696,10 @@ namespace phosphor {
          * constructed in order to 'uniquely' identify it.
          */
         size_t generation = 0;
+
+        /**
+         * The set of sentinels that have been registered to this TraceLog.
+         */
+        std::unordered_set<Sentinel*> registered_sentinels;
     };
 }
