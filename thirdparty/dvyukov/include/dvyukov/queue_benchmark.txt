@@ -1,0 +1,31 @@
+Phosphor chunk replacement benchmark (32 threads) comparison
+
+Dvyukov's MPMC queue
+==========================
+NaiveSharedTenants/threads:32              1794 ns      13847 ns      98816
+NaiveSharedTenants/threads:32              1556 ns      12283 ns      98816
+NaiveSharedTenants/threads:32              2145 ns      16313 ns      98816
+NaiveSharedTenants/threads:32_mean         1832 ns      14148 ns      98816
+NaiveSharedTenants/threads:32_stddev        242 ns       1659 ns          0
+RegisterTenants/threads:32                 2432 ns      18481 ns      32000
+RegisterTenants/threads:32                  922 ns       7006 ns      32000
+RegisterTenants/threads:32                 2966 ns      21758 ns      32000
+RegisterTenants/threads:32_mean            2107 ns      15748 ns      32000
+RegisterTenants/threads:32_stddev           866 ns       6325 ns          0
+
+std::queue + spin lock
+==========================
+NaiveSharedTenants/threads:32              2230 ns      16919 ns      46560
+NaiveSharedTenants/threads:32              3058 ns      23051 ns      46560
+NaiveSharedTenants/threads:32              2828 ns      21874 ns      46560
+NaiveSharedTenants/threads:32_mean         2705 ns      20615 ns      46560
+NaiveSharedTenants/threads:32_stddev        349 ns       2657 ns          0
+RegisterTenants/threads:32                 8348 ns      64280 ns      32000
+RegisterTenants/threads:32                 7958 ns      62856 ns      32000
+RegisterTenants/threads:32                 4657 ns      35791 ns      32000
+RegisterTenants/threads:32_mean            6988 ns      54309 ns      32000
+RegisterTenants/threads:32_stddev          1656 ns      13107 ns          0
+
+Summary: Dvyukov's queue offers better and more consistent performance at high
+thread counts due to fighting over cache lines at different ends of the queue
+rather that just one end of the queue.

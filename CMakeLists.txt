@@ -13,7 +13,8 @@ ENDIF ()
 
 INCLUDE_DIRECTORIES(BEFORE
         ${phosphor_SOURCE_DIR}/include
-        ${phosphor_SOURCE_DIR}/src)
+        ${phosphor_SOURCE_DIR}/src
+        ${phosphor_SOURCE_DIR}/thirdparty/dvyukov/include)
 
 SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/sentinel.cc
