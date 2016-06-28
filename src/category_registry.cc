@@ -15,6 +15,9 @@
  *   limitations under the License.
  */
 
+#include <algorithm>
+#include <cstring>
+
 #include "utils/string_utils.h"
 
 #include "phosphor/category_registry.h"
@@ -32,7 +35,7 @@ namespace phosphor {
 
         // See if we've already got the group without the lock
         size_t currIndex = group_count.load(std::memory_order_relaxed);
-        for(int i = 0; i < currIndex; ++i) {
+        for(size_t i = 0; i < currIndex; ++i) {
             if(strcmp(groups[i].c_str(), category_group) == 0) {
                 return group_statuses[i];
             }
@@ -42,7 +45,7 @@ namespace phosphor {
         // (In case it got added before we got the lock)
         std::lock_guard<std::mutex> lh(mutex);
         currIndex = group_count.load(std::memory_order_relaxed);
-        for(int i = 0; i < currIndex; ++i) {
+        for(size_t i = 0; i < currIndex; ++i) {
             if(strcmp(groups[i].c_str(), category_group) == 0) {
                 return group_statuses[i];
             }
@@ -75,7 +78,7 @@ namespace phosphor {
 
         // We're protected by the mutex so relaxed atomics are fine here
         size_t currIndex = group_count.load(std::memory_order_relaxed);
-        for(int i = 0; i < currIndex; ++i) {
+        for(size_t i = 0; i < currIndex; ++i) {
             group_statuses[i].store(calculateEnabled(i),
                                     std::memory_order_relaxed);
         }
