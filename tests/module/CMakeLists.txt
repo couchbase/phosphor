@@ -10,10 +10,15 @@ MACRO (M_ADD_MODULE_GTEST name)
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()
 
+M_ADD_MODULE_GTEST(category_registry_test
+        category_registry_test.cc
+        ${phosphor_SOURCE_DIR}/src/category_registry.cc
+        ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
+
 M_ADD_LIBRARY_GTEST(export_test
         export_test.cc)
 
-M_ADD_MODULE_GTEST(polyfill_test
+M_ADD_MODULE_GTEST(memory_test
         memory_test.cc)
 
 M_ADD_MODULE_GTEST(sentinel_test

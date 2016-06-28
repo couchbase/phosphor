@@ -17,6 +17,7 @@ INCLUDE_DIRECTORIES(BEFORE
         ${phosphor_SOURCE_DIR}/thirdparty/dvyukov/include)
 
 SET(phosphor_SOURCE_FILES
+        ${phosphor_SOURCE_DIR}/src/category_registry.cc
         ${phosphor_SOURCE_DIR}/src/sentinel.cc
         ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
         ${phosphor_SOURCE_DIR}/src/trace_event.cc
