@@ -59,19 +59,18 @@ namespace phosphor {
         return startup_trace.get();
     }
 
-    TraceLogConfig TraceLogConfig::fromEnvironment() {
-        TraceLogConfig config;
+    TraceLogConfig& TraceLogConfig::fromEnvironment() {
 
         const char* sentinel_count_s = std::getenv("PHOSPHOR_SENTINEL_COUNT");
         if (sentinel_count_s && strlen(sentinel_count_s)) {
             int sentinel_count;
             try {
                 sentinel_count = std::stoi(sentinel_count_s);
-            } catch (std::invalid_argument& e) {
+            } catch (std::invalid_argument&) {
                 throw std::invalid_argument(
                     "TraceLogConfig::fromEnviroment: "
                     "PHOSPHOR_SENTINEL_COUNT was not a valid integer");
-            } catch (std::out_of_range& e) {
+            } catch (std::out_of_range&) {
                 throw std::invalid_argument(
                     "TraceLogConfig::fromEnviroment: "
                     "PHOSPHOR_SENTINEL_COUNT was too large");
@@ -83,15 +82,15 @@ namespace phosphor {
                     "PHOSPHOR_SENTINEL_COUNT cannot be negative");
             }
 
-            config.setSentinelCount(static_cast<unsigned>(sentinel_count));
+            this->setSentinelCount(static_cast<unsigned>(sentinel_count));
         }
 
         const char* startup_config = std::getenv("PHOSPHOR_TRACING_START");
         if (startup_config && strlen(startup_config)) {
-            config.setStartupTrace(TraceConfig::fromString(startup_config));
+            this->setStartupTrace(TraceConfig::fromString(startup_config));
         }
 
-        return config;
+        return *this;
     }
 
     /*
@@ -216,7 +215,7 @@ namespace phosphor {
         configure(_config);
     }
 
-    TraceLog::TraceLog() : TraceLog(TraceLogConfig::fromEnvironment()) {}
+    TraceLog::TraceLog() : TraceLog(TraceLogConfig().fromEnvironment()) {}
 
     TraceLog::~TraceLog() {
         stop(true);

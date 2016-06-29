@@ -62,15 +62,16 @@ TEST(TraceLogConfigTest, startup_trace) {
 
 TEST(TraceLogConfigTest, from_environment) {
     setenv("PHOSPHOR_SENTINEL_COUNT", "5", true);
-    TraceLogConfig config = TraceLogConfig::fromEnvironment();
+    TraceLogConfig config;
+    config.fromEnvironment();
     EXPECT_EQ(5, config.getSentinelCount());
 
     for (const auto& str : {"abdc", "99999999999999999", "-1"}) {
         setenv("PHOSPHOR_SENTINEL_COUNT", str, true);
-        EXPECT_THROW(TraceLogConfig::fromEnvironment(), std::invalid_argument);
+        EXPECT_THROW(config.fromEnvironment(), std::invalid_argument);
     }
     setenv("PHOSPHOR_SENTINEL_COUNT", "", true);
-    EXPECT_NO_THROW(TraceLogConfig::fromEnvironment());
+    EXPECT_NO_THROW(config.fromEnvironment());
 }
 
 TEST(TraceConfigTest, defaultConstructor) {

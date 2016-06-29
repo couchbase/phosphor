@@ -148,8 +148,7 @@ namespace phosphor {
             return {"i", ",\"s\":\"g\""};
         }
         throw std::invalid_argument(
-            "TraceEvent::typeToJSON: "
-            "Invalid TraceArgument type");
+            "TraceEvent::typeToJSON: Invalid TraceArgument type");
     }
 
     std::ostream& operator<<(std::ostream& os, const TraceEvent& te) {

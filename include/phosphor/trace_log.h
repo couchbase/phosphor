@@ -141,9 +141,12 @@ namespace phosphor {
          * Factory method which sets up a TraceLogConfig from the
          * environment variables
          *
-         * @return the new TraceLogConfig
+         * Note: This is a member function because MSVC2012 can't do
+         * copy elision properly.
+         *
+         * @param the TraceLogConfig to initialise
          */
-        static TraceLogConfig fromEnvironment();
+        TraceLogConfig& fromEnvironment();
 
     protected:
         unsigned sentinel_count;
