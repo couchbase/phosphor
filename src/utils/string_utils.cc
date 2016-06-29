@@ -122,5 +122,39 @@ namespace phosphor {
 
             return str;
         }
+
+        bool glob_match(const std::string& glob, const std::string& match) {
+            auto iter = match.begin();
+            bool star = false;
+
+            for (const auto& c : glob) {
+                if (star) {
+                    while (iter != match.end() && c != *iter) {
+                        ++iter;
+                    }
+                    if (iter == match.end())
+                        return false;
+                }
+
+                switch (c) {
+                case '?':
+                    if (iter == match.end())
+                        return false;
+                    ++iter;
+                    break;
+                case '*':
+                    star = true;
+                    break;
+                default:
+                    if (iter == match.end())
+                        return false;
+                    if (c != *iter)
+                        return false;
+                    ++iter;
+                }
+            }
+
+            return iter == match.end() || star;
+        }
     }
 }

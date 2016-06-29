@@ -72,3 +72,22 @@ TEST(SplitReplaceTest, test) {
     EXPECT_EQ("Hello, Will!", string_replace(target, "Phosphor", "BruceWayne"));
     EXPECT_EQ("Hello, Will!", string_replace(target, "", "Oswald"));
 }
+
+using phosphor::utils::glob_match;
+
+TEST(GlobTest, test) {
+    EXPECT_TRUE(glob_match("*", "helloworld.json"));
+    EXPECT_TRUE(glob_match("*.json", "helloworld.json"));
+    EXPECT_TRUE(glob_match("hello*.json", "helloworld.json"));
+    EXPECT_TRUE(glob_match("helloworld?json", "helloworld.json"));
+    EXPECT_TRUE(glob_match("*h", "h"));
+    EXPECT_TRUE(glob_match("*", "h"));
+    EXPECT_TRUE(glob_match("*", ""));
+    EXPECT_TRUE(glob_match("helloworld", "helloworld"));
+    EXPECT_TRUE(glob_match("hello*world", std::string("hello\0\0\0world", 13)));
+
+    EXPECT_FALSE(glob_match("hello", "world"));
+    EXPECT_FALSE(glob_match("a", ""));
+    EXPECT_FALSE(glob_match("?", ""));
+    EXPECT_FALSE(glob_match("*a", "b"));
+}

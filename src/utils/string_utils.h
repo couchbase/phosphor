@@ -53,5 +53,20 @@ namespace phosphor {
         std::string& string_replace(std::string& str,
                                     const std::string& from,
                                     const std::string& to);
+
+        /**
+         * Provides string matching with very basic globbing support
+         *
+         * e.g.
+         *
+         *    assert(glob_match("*.json", "helloworld.json"));
+         *    // assert(glob_match("*.json", "hello.json.json));
+         *    assert(glob_match("hello?json", "hello.json"));
+         *
+         * @param glob Pattern to match against
+         * @param match string to be matches
+         * @return true if it matches, false otherwise
+         */
+        bool glob_match(const std::string& glob, const std::string& match);
     }
 }
