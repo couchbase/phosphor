@@ -187,8 +187,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ad628d76546aac802f047e8ee786e6ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a366b267a03ceffcc9aaa4daf2561cbaf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a366b267a03ceffcc9aaa4daf2561cbaf">trace_config</a></td></tr>
 <tr class="separator:a366b267a03ceffcc9aaa4daf2561cbaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a433797901dd0c7b1015f13ef729e34b4"><td class="memItemLeft" align="right" valign="top">std::atomic_bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a433797901dd0c7b1015f13ef729e34b4">enabled</a></td></tr>
-<tr class="separator:a433797901dd0c7b1015f13ef729e34b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4b650b4031a9c1b03c42b4bf99c33a7"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#aa4b650b4031a9c1b03c42b4bf99c33a7">enabled</a></td></tr>
+<tr class="separator:aa4b650b4031a9c1b03c42b4bf99c33a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51a113a9a75825d65aa7d235eeefd4fb"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a51a113a9a75825d65aa7d235eeefd4fb">mutex</a></td></tr>
 <tr class="separator:a51a113a9a75825d65aa7d235eeefd4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c26730cdfcd9a5006933bb3440253c2"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a7c26730cdfcd9a5006933bb3440253c2">buffer</a></td></tr>
@@ -200,7 +200,7 @@ Protected Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a05712ecaf10a3183c16c8f44c5c7b092"><td class="memItemLeft" align="right" valign="top">static THREAD_LOCAL <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a05712ecaf10a3183c16c8f44c5c7b092">thread_chunk</a></td></tr>
+<tr class="memitem:a05712ecaf10a3183c16c8f44c5c7b092"><td class="memItemLeft" align="right" valign="top">static THREAD_LOCAL <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a05712ecaf10a3183c16c8f44c5c7b092">thread_chunk</a> = {0, 0}</td></tr>
 <tr class="separator:a05712ecaf10a3183c16c8f44c5c7b092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -903,7 +903,7 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a433797901dd0c7b1015f13ef729e34b4"></a>
+<a class="anchor" id="aa4b650b4031a9c1b03c42b4bf99c33a7"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -911,7 +911,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::atomic_bool phosphor::TraceLog::enabled</td>
+          <td class="memname">std::atomic&lt;bool&gt; phosphor::TraceLog::enabled</td>
         </tr>
       </table>
   </td>
@@ -1019,7 +1019,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">THREAD_LOCAL <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">TraceLog::ChunkTenant</a> phosphor::TraceLog::thread_chunk</td>
+          <td class="memname">THREAD_LOCAL <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">TraceLog::ChunkTenant</a> phosphor::TraceLog::thread_chunk = {0, 0}</td>
         </tr>
       </table>
   </td>

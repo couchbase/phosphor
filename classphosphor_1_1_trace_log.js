@@ -24,7 +24,7 @@ var classphosphor_1_1_trace_log =
     [ "stop", "classphosphor_1_1_trace_log.html#a1c65ef1f9ee2e0edb9d6c64b8782c17f", null ],
     [ "unlock", "classphosphor_1_1_trace_log.html#afaa2902b02d5327ffe23301c7cf92a82", null ],
     [ "buffer", "classphosphor_1_1_trace_log.html#a7c26730cdfcd9a5006933bb3440253c2", null ],
-    [ "enabled", "classphosphor_1_1_trace_log.html#a433797901dd0c7b1015f13ef729e34b4", null ],
+    [ "enabled", "classphosphor_1_1_trace_log.html#aa4b650b4031a9c1b03c42b4bf99c33a7", null ],
     [ "generation", "classphosphor_1_1_trace_log.html#aaba5b955aca310f4bd5eda20ab7432d0", null ],
     [ "mutex", "classphosphor_1_1_trace_log.html#a51a113a9a75825d65aa7d235eeefd4fb", null ],
     [ "registered_sentinels", "classphosphor_1_1_trace_log.html#a254ad893c602a1c54a7c7347c6495925", null ],
