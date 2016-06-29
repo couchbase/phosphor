@@ -1,5 +1,8 @@
 var NAVTREEINDEX1 =
 {
+"iterator_8h_source.html":[8,0,1,0,1],
+"md_ROADMAP.html":[5],
+"md_docs_Architecture.html":[1],
 "md_docs_design_Instrumentation-API.html":[2],
 "md_docs_design_One-pager.html":[3],
 "md_docs_design_Requirements.html":[4],
@@ -78,8 +81,8 @@ var NAVTREEINDEX1 =
 "trace__buffer_8h.html#ae1f252ee0643a25be9d507584c9c376d":[8,0,1,1,6,4],
 "trace__buffer_8h_source.html":[8,0,1,1,6],
 "trace__event_8h.html":[8,0,1,1,7],
-"trace__event_8h.html#a6ed111bf6eb80015669c5f85ce99d625":[8,0,1,1,7,2],
-"trace__event_8h.html#ae9770b487b4868e69bb09fff5dd63d5b":[8,0,1,1,7,1],
+"trace__event_8h.html#a6ed111bf6eb80015669c5f85ce99d625":[8,0,1,1,7,3],
+"trace__event_8h.html#ae9770b487b4868e69bb09fff5dd63d5b":[8,0,1,1,7,2],
 "trace__event_8h_source.html":[8,0,1,1,7],
 "trace__log_8h_source.html":[8,0,1,1,8],
 "unionphosphor_1_1_trace_argument.html":[7,0,1,7],

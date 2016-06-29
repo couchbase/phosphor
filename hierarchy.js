@@ -16,6 +16,7 @@ var hierarchy =
     [ "gsl_p::multidimensional_iterator< T >", "classgsl__p_1_1multidimensional__iterator.html", null ],
     [ "gsl_p::multidimensional_iterator< chunk_iterator >", "classgsl__p_1_1multidimensional__iterator.html", null ],
     [ "phosphor::Sentinel", "classphosphor_1_1_sentinel.html", null ],
+    [ "phosphor::TraceEvent::ToJsonResult", "classphosphor_1_1_trace_event_1_1_to_json_result.html", null ],
     [ "phosphor::TraceArgument", "unionphosphor_1_1_trace_argument.html", null ],
     [ "phosphor::TraceBuffer", "classphosphor_1_1_trace_buffer.html", [
       [ "phosphor::FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", null ],

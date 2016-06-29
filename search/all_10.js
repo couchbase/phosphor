@@ -3,6 +3,7 @@ var searchData=
   ['thread_5fchunk',['thread_chunk',['../classphosphor_1_1_trace_log.html#a05712ecaf10a3183c16c8f44c5c7b092',1,'phosphor::TraceLog']]],
   ['to_5fjson',['to_json',['../classphosphor_1_1_trace_event.html#aebdead39e1b2137a5699c136c9ee2274',1,'phosphor::TraceEvent']]],
   ['to_5fstring',['to_string',['../unionphosphor_1_1_trace_argument.html#aa5cb5d9df6a03df39aaa590337e7130d',1,'phosphor::TraceArgument::to_string()'],['../classphosphor_1_1_trace_event.html#acbf61956951d90799160e3c9fe41b3c2',1,'phosphor::TraceEvent::to_string()']]],
+  ['tojsonresult',['ToJsonResult',['../classphosphor_1_1_trace_event_1_1_to_json_result.html',1,'phosphor::TraceEvent']]],
   ['trace_5fargument_2eh',['trace_argument.h',['../trace__argument_8h.html',1,'']]],
   ['trace_5fbuffer_2eh',['trace_buffer.h',['../trace__buffer_8h.html',1,'']]],
   ['trace_5fbuffer_5ffactory',['trace_buffer_factory',['../trace__buffer_8h.html#a6324e6b9fb1544fc8a1cc46e81473aa2',1,'phosphor']]],
@@ -22,6 +23,6 @@ var searchData=
   ['tracelogconfig',['TraceLogConfig',['../classphosphor_1_1_trace_log_config.html',1,'phosphor']]],
   ['tracelogconfig',['TraceLogConfig',['../classphosphor_1_1_trace_log_config.html#ad51578097552a617f85b3fa5f7dc081e',1,'phosphor::TraceLogConfig']]],
   ['type',['Type',['../unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89',1,'phosphor::TraceArgument::Type()'],['../classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b',1,'phosphor::TraceEvent::Type()']]],
-  ['typetojson',['typeToJSON',['../classphosphor_1_1_trace_event.html#a6494256911396c08be3eaeb7d196484f',1,'phosphor::TraceEvent']]],
+  ['typetojson',['typeToJSON',['../classphosphor_1_1_trace_event.html#a6b3621142bc14656b077e84350bb643f',1,'phosphor::TraceEvent']]],
   ['typetostring',['typeToString',['../classphosphor_1_1_trace_event.html#af2f430675e1dc5fc8abbcf332d82ee01',1,'phosphor::TraceEvent']]]
 ];

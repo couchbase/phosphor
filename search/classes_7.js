@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['tojsonresult',['ToJsonResult',['../classphosphor_1_1_trace_event_1_1_to_json_result.html',1,'phosphor::TraceEvent']]],
   ['traceargument',['TraceArgument',['../unionphosphor_1_1_trace_argument.html',1,'phosphor']]],
   ['tracebuffer',['TraceBuffer',['../classphosphor_1_1_trace_buffer.html',1,'phosphor']]],
   ['tracechunk',['TraceChunk',['../classphosphor_1_1_trace_chunk.html',1,'phosphor']]],

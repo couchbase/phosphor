@@ -8,6 +8,6 @@ var searchData=
   ['traceevent',['TraceEvent',['../classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0',1,'phosphor::TraceEvent::TraceEvent()=default'],['../classphosphor_1_1_trace_event.html#adb516429d0f30ebce3149542d63e3345',1,'phosphor::TraceEvent::TraceEvent(const char *_category, const char *_name, Type _type, size_t _id, uint64_t _thread_id, std::array&lt; TraceArgument, arg_count &gt; &amp;&amp;_args, std::array&lt; TraceArgument::Type, arg_count &gt; &amp;&amp;_arg_types)']]],
   ['tracelog',['TraceLog',['../classphosphor_1_1_trace_log.html#a9084ab48cd9916adfea0420c6962e40c',1,'phosphor::TraceLog::TraceLog(const TraceLogConfig &amp;_config)'],['../classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231',1,'phosphor::TraceLog::TraceLog()']]],
   ['tracelogconfig',['TraceLogConfig',['../classphosphor_1_1_trace_log_config.html#ad51578097552a617f85b3fa5f7dc081e',1,'phosphor::TraceLogConfig']]],
-  ['typetojson',['typeToJSON',['../classphosphor_1_1_trace_event.html#a6494256911396c08be3eaeb7d196484f',1,'phosphor::TraceEvent']]],
+  ['typetojson',['typeToJSON',['../classphosphor_1_1_trace_event.html#a6b3621142bc14656b077e84350bb643f',1,'phosphor::TraceEvent']]],
   ['typetostring',['typeToString',['../classphosphor_1_1_trace_event.html#af2f430675e1dc5fc8abbcf332d82ee01',1,'phosphor::TraceEvent']]]
 ];
