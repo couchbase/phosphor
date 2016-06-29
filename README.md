@@ -2,6 +2,7 @@
 
 [![Unix Build Status](https://travis-ci.org/couchbaselabs/phosphor.svg?branch=master)](https://travis-ci.org/couchbaselabs/phosphor)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/gbioajys9fign7kj/branch/master?svg=true)](https://ci.appveyor.com/project/Chippiewill/phosphor-btb32/branch/master)
+[![Server Build status](https://img.shields.io/jenkins/s/http/cv.jenkins.couchbase.com/phosphor.svg?maxAge=2592000&label=Server%20Build)](http://cv.jenkins.couchbase.com/job/phosphor/)
 [![Coverage Status](https://coveralls.io/repos/github/couchbaselabs/phosphor/badge.svg?branch=master)](https://coveralls.io/github/couchbaselabs/phosphor?branch=master)
 [![License](https://img.shields.io/github/license/couchbaselabs/phosphor.svg)](LICENSE.txt)
 
@@ -26,17 +27,17 @@ The following is an example of enabling tracing with a fixed-style 5MB buffer:
 
 
     phosphor::TraceLog::getInstance().start(TraceConfig(BufferMode::fixed, 5))
-    
+
 Once the trace buffer becomes full you can retrieve it and iterate over it:
 
     auto trace_buffer = phosphor::TraceLog::getInstance().getBuffer()
     for(auto& event : *trace_buffer) {
         std::cout << event << '\n';
     }
-    
+
 ## Build
 
-Phosphor is written in C++11 and requires a mostly conforming compiler. Many 
+Phosphor is written in C++11 and requires a mostly conforming compiler. Many
 early C++11 implementations used slow or even inaccurate clock sources which can
 cause issues with tracing.
 
