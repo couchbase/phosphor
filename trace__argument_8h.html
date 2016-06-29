@@ -116,6 +116,7 @@ $(document).ready(function(){initNavTree('trace__argument_8h.html','');});
 <code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
+<code>#include &quot;phosphor/platform/core.h&quot;</code><br />
 </div>
 <p><a href="trace__argument_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -155,7 +156,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt;                                                          \</div><div class="line">    inline constexpr TraceArgument::Type TraceArgument::getType&lt;src&gt;() { \</div><div class="line">        return Type::is_##dst;                                           \</div><div class="line">    }                                                                    \</div><div class="line">    template &lt;&gt;                                                          \</div><div class="line">    inline TraceArgument::TraceArgument(src arg) : as_##dst(arg) {}</div></div><!-- fragment --><p>Used for defining the constructor and type-to-enum constexpr for a given type.</p>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt;                                                          \</div><div class="line">    inline CONSTEXPR TraceArgument::Type TraceArgument::getType&lt;src&gt;() { \</div><div class="line">        return Type::is_##dst;                                           \</div><div class="line">    }                                                                    \</div><div class="line">    template &lt;&gt;                                                          \</div><div class="line">    inline TraceArgument::TraceArgument(src arg) : as_##dst(arg) {}</div></div><!-- fragment --><p>Used for defining the constructor and type-to-enum constexpr for a given type.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">src</td><td>The origin type of the argument </td></tr>

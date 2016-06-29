@@ -78,7 +78,7 @@ var NAVTREEINDEX1 =
 "trace__buffer_8h.html#ae1f252ee0643a25be9d507584c9c376d":[9,0,1,1,6,4],
 "trace__buffer_8h_source.html":[9,0,1,1,6],
 "trace__event_8h.html":[9,0,1,1,7],
-"trace__event_8h.html#a16c2478069af052d402472d9e55d409b":[9,0,1,1,7,2],
+"trace__event_8h.html#a6ed111bf6eb80015669c5f85ce99d625":[9,0,1,1,7,2],
 "trace__event_8h.html#ae9770b487b4868e69bb09fff5dd63d5b":[9,0,1,1,7,1],
 "trace__event_8h_source.html":[9,0,1,1,7],
 "trace__log_8h_source.html":[9,0,1,1,8],
