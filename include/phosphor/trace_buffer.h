@@ -23,6 +23,7 @@
 
 #include <array>
 #include <iterator>
+#include <memory>
 #include <thread>
 #include <type_traits>
 #include <vector>
