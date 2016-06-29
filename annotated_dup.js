@@ -9,6 +9,7 @@ var annotated_dup =
       [ "utils", null, [
         [ "FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", "structphosphor_1_1utils_1_1_f_i_l_e_deleter" ]
       ] ],
+      [ "CategoryRegistry", "classphosphor_1_1_category_registry.html", "classphosphor_1_1_category_registry" ],
       [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
       [ "FromEnvironment", "structphosphor_1_1_from_environment.html", null ],
       [ "RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", "classphosphor_1_1_ring_trace_buffer" ],
