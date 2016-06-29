@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"md_docs_design_Instrumentation-API.html":[2],
 "md_docs_design_One-pager.html":[3],
 "md_docs_design_Requirements.html":[4],
 "memory_8h_source.html":[8,0,2,0,0],

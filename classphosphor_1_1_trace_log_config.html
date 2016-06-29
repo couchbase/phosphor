@@ -108,7 +108,6 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_log_config.htm
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classphosphor_1_1_trace_log_config-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -132,11 +131,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0cd0bca300b9e640e35e0551b5ba2f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac73090f040e5abc80f024b8ecc016fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#aac73090f040e5abc80f024b8ecc016fc">getStartupTrace</a> () const </td></tr>
 <tr class="separator:aac73090f040e5abc80f024b8ecc016fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:adf1527070cc09e0220fb5b3a3bd6a055"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#adf1527070cc09e0220fb5b3a3bd6a055">fromEnvironment</a> ()</td></tr>
-<tr class="separator:adf1527070cc09e0220fb5b3a3bd6a055"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d79432d40482d5801fa0c53a89364d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#a6d79432d40482d5801fa0c53a89364d9">fromEnvironment</a> ()</td></tr>
+<tr class="separator:a6d79432d40482d5801fa0c53a89364d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -186,28 +182,26 @@ std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_config.html">Tra
 
 </div>
 </div>
-<a class="anchor" id="adf1527070cc09e0220fb5b3a3bd6a055"></a>
+<a class="anchor" id="a6d79432d40482d5801fa0c53a89364d9"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> phosphor::TraceLogConfig::fromEnvironment </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp; phosphor::TraceLogConfig::fromEnvironment </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Factory method which sets up a <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> from the environment variables</p>
-<dl class="section return"><dt>Returns</dt><dd>the new <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> </dd></dl>
+<p>Note: This is a member function because MSVC2012 can't do copy elision properly.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">the</td><td><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> to initialise </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

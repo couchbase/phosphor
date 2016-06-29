@@ -33,7 +33,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"md_docs_design_One-pager.html"
+"md_docs_design_Instrumentation-API.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

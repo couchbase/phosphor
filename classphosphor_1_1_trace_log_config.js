@@ -2,6 +2,7 @@ var classphosphor_1_1_trace_log_config =
 [
     [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html#ad51578097552a617f85b3fa5f7dc081e", null ],
     [ "clearStartupTrace", "classphosphor_1_1_trace_log_config.html#a0cd0bca300b9e640e35e0551b5ba2f5f", null ],
+    [ "fromEnvironment", "classphosphor_1_1_trace_log_config.html#a6d79432d40482d5801fa0c53a89364d9", null ],
     [ "getSentinelCount", "classphosphor_1_1_trace_log_config.html#afe2aa44ad93032be982e2058bf62923e", null ],
     [ "getStartupTrace", "classphosphor_1_1_trace_log_config.html#aac73090f040e5abc80f024b8ecc016fc", null ],
     [ "setSentinelCount", "classphosphor_1_1_trace_log_config.html#ae24069f60fd6d7323ee898a65b87fe26", null ],
