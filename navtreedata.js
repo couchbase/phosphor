@@ -8,9 +8,6 @@ var NAVTREE =
     [ "Couchbase Event Tracing Functional Requirements", "md_docs_design_Requirements.html", null ],
     [ "Roadmap", "md_ROADMAP.html", null ],
     [ "Modules", "modules.html", "modules" ],
-    [ "Namespaces", null, [
-      [ "Namespace List", "namespaces.html", "namespaces" ]
-    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -36,7 +33,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"memory_8h_source.html"
+"md_docs_design_One-pager.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

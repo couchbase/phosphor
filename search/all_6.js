@@ -15,6 +15,5 @@ var searchData=
   ['getstoppedcallback',['getStoppedCallback',['../classphosphor_1_1_trace_config.html#ab156b18aa5f8d7e623a6d5f55710a2af',1,'phosphor::TraceConfig']]],
   ['getstoptracingondestruct',['getStopTracingOnDestruct',['../classphosphor_1_1_trace_config.html#a7bbe0fd70283d3c621b8f37da6aa8269',1,'phosphor::TraceConfig']]],
   ['gettype',['getType',['../unionphosphor_1_1_trace_argument.html#a0d3e12ebe76e5e69be8999163156f737',1,'phosphor::TraceArgument']]],
-  ['global_20events',['Global Events',['../group__glob.html',1,'']]],
-  ['gsl_5fp',['gsl_p',['../namespacegsl__p.html',1,'']]]
+  ['global_20events',['Global Events',['../group__glob.html',1,'']]]
 ];
