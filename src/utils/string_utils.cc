@@ -145,6 +145,12 @@ namespace phosphor {
                 case '*':
                     star = true;
                     break;
+                case '+':
+                    if (iter == match.end())
+                        return false;
+                    ++iter;
+                    star = true;
+                    break;
                 default:
                     if (iter == match.end())
                         return false;

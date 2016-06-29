@@ -83,6 +83,7 @@ TEST(GlobTest, test) {
     EXPECT_TRUE(glob_match("*h", "h"));
     EXPECT_TRUE(glob_match("*", "h"));
     EXPECT_TRUE(glob_match("*", ""));
+    EXPECT_TRUE(glob_match("heya*", "heya"));
     EXPECT_TRUE(glob_match("helloworld", "helloworld"));
     EXPECT_TRUE(glob_match("hello*world", std::string("hello\0\0\0world", 13)));
 
@@ -90,4 +91,14 @@ TEST(GlobTest, test) {
     EXPECT_FALSE(glob_match("a", ""));
     EXPECT_FALSE(glob_match("?", ""));
     EXPECT_FALSE(glob_match("*a", "b"));
+
+    EXPECT_TRUE(glob_match("+", "helloworld.json"));
+    EXPECT_TRUE(glob_match("+.json", "helloworld.json"));
+    EXPECT_TRUE(glob_match("hello+.json", "helloworld.json"));
+    EXPECT_FALSE(glob_match("+h", "h"));
+    EXPECT_TRUE(glob_match("+", "h"));
+    EXPECT_FALSE(glob_match("+", ""));
+    EXPECT_FALSE(glob_match("heya+", "heya"));
+    EXPECT_TRUE(glob_match("helloworld", "helloworld"));
+    EXPECT_TRUE(glob_match("hello+world", std::string("hello\0\0\0world", 13)));
 }
