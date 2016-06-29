@@ -20,23 +20,23 @@
 
 #include <gtest/gtest.h>
 
-#include <phosphor/phosphor.h>
 #include "utils/memory.h"
+#include <phosphor/phosphor.h>
 
 size_t allocation_count = 0;
 std::array<std::pair<void*, size_t>, 4096> allocation_map;
 bool tracking_enabled = false;
 
-void* operator new(std::size_t n)
-{
+void* operator new(std::size_t n) {
     void* ptr = std::malloc(n);
     if (ptr == nullptr) {
         throw std::bad_alloc();
     }
     if (tracking_enabled) {
         auto row = allocation_map.begin();
-        for(;row != allocation_map.end() && row->first != nullptr; ++row) {}
-        if(row == allocation_map.end()) {
+        for (; row != allocation_map.end() && row->first != nullptr; ++row) {
+        }
+        if (row == allocation_map.end()) {
             free(ptr);
             throw std::bad_alloc();
         }
@@ -46,24 +46,23 @@ void* operator new(std::size_t n)
     return ptr;
 }
 
-void operator delete(void* ptr) throw()
-{
-   if (tracking_enabled) {
-       for(auto& row : allocation_map) {
-           if(row.first == ptr) {
-               allocation_count -= row.second;
-               row = {nullptr, 0};
-               break;
-           }
-       }
-   }
-   free(ptr);
+void operator delete(void* ptr) throw() {
+    if (tracking_enabled) {
+        for (auto& row : allocation_map) {
+            if (row.first == ptr) {
+                allocation_count -= row.second;
+                row = {nullptr, 0};
+                break;
+            }
+        }
+    }
+    free(ptr);
 }
 
 void enable_memory_tracking() {
     tracking_enabled = true;
     allocation_count = 0;
-    for(auto& row : allocation_map) {
+    for (auto& row : allocation_map) {
         row = {nullptr, 0};
     }
 }
@@ -85,14 +84,15 @@ public:
 class MemoryTrackingTest : public testing::TestWithParam<size_t> {
 public:
     MemoryTrackingTest()
-       : baseline(allocation_count),
-         log(phosphor::utils::make_unique<phosphor::TraceLog>()) {
+        : baseline(allocation_count),
+          log(phosphor::utils::make_unique<phosphor::TraceLog>()){
 
-    };
+          };
 
     size_t memory_change() {
         return allocation_count - baseline;
     }
+
 protected:
     scoped_tracking track;
     size_t baseline;
@@ -112,9 +112,9 @@ TEST_F(MemoryTrackingTest, empty_log) {
 TEST_P(MemoryTrackingTest, full_log) {
     log->start(phosphor::TraceConfig(phosphor::BufferMode::fixed,
                                      GetParam() * MEGABYTE));
-    while(log->isEnabled()) {
-        log->logEvent("category", "name",
-                      phosphor::TraceEvent::Type::Instant, 0);
+    while (log->isEnabled()) {
+        log->logEvent(
+            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
     }
     size_t overhead{memory_change()};
 

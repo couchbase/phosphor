@@ -53,28 +53,26 @@ TEST_F(CategoryRegistryTest, FillRegistry) {
     const AtomicCategoryStatus* last = nullptr;
     do {
         last = &registry.getStatus(std::to_string(i++).c_str());
-    } while(last != &registry.getStatus("category limit reached"));
+    } while (last != &registry.getStatus("category limit reached"));
 
-    for(int j = 0; j < i; ++j) {
+    for (int j = 0; j < i; ++j) {
         EXPECT_EQ(CategoryStatus::Disabled,
                   registry.getStatus(std::to_string(j).c_str()));
     }
     --i;
 
     std::vector<std::string> categories;
-    for(int j = 0; j < i; ++j) {
+    for (int j = 0; j < i; ++j) {
         categories.push_back(std::to_string(j));
     }
     registry.updateEnabled(categories);
-    for(int j = 0; j < i; ++j) {
+    for (int j = 0; j < i; ++j) {
         EXPECT_EQ(CategoryStatus::Enabled,
                   registry.getStatus(std::to_string(j).c_str()));
     }
     registry.updateEnabled({{}});
-    for(int j = 0; j < i; ++j) {
+    for (int j = 0; j < i; ++j) {
         EXPECT_EQ(CategoryStatus::Disabled,
                   registry.getStatus(std::to_string(j).c_str()));
     }
 }
-
-

@@ -35,7 +35,6 @@
 
 namespace phosphor {
 
-
 #ifndef PHOSPHOR_CHUNK_PAGE_COUNT
 #define PHOSPHOR_CHUNK_PAGE_COUNT 1
 #endif
@@ -113,6 +112,7 @@ namespace phosphor {
         const_iterator end() const;
 
         size_t generation;
+
     private:
         unsigned short next_free;
         event_array chunk;

@@ -61,7 +61,7 @@ class MockFileStopCallback : public FileStopCallback {
 public:
     template <class... Args>
     MockFileStopCallback(Args&&... args)
-        : FileStopCallback(std::forward<Args>(args)...) { }
+        : FileStopCallback(std::forward<Args>(args)...) {}
 
     std::string generateFilePath() {
         return FileStopCallback::generateFilePath();

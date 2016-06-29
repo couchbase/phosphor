@@ -18,8 +18,8 @@
 #include <mutex>
 #include <stdexcept>
 
-#include <gsl_p/dyn_array.h>
 #include <dvyukov/mpmc_bounded_queue.h>
+#include <gsl_p/dyn_array.h>
 
 #include "phosphor/trace_buffer.h"
 #include "utils/memory.h"
@@ -99,10 +99,7 @@ namespace phosphor {
     class FixedTraceBuffer : public TraceBuffer {
     public:
         FixedTraceBuffer(size_t generation_, size_t buffer_size_)
-            : buffer(buffer_size_),
-              issued(0),
-              generation(generation_) {
-        }
+            : buffer(buffer_size_), issued(0), generation(generation_) {}
 
         ~FixedTraceBuffer() override = default;
 
@@ -170,15 +167,13 @@ namespace phosphor {
      */
     class RingTraceBuffer : public TraceBuffer {
     public:
-
         RingTraceBuffer(size_t generation_, size_t buffer_size_)
             : actual_count(0),
               buffer(buffer_size_),
               loaned(buffer_size_),
               return_queue(upper_power_of_two(buffer_size_)),
               in_queue(0),
-              generation(generation_) {
-        }
+              generation(generation_) {}
 
         ~RingTraceBuffer() override = default;
 
@@ -189,7 +184,8 @@ namespace phosphor {
 
             if (offset >= buffer.size()) {
                 assert(in_queue > 0);
-                while(!return_queue.dequeue(chunk)) {}
+                while (!return_queue.dequeue(chunk)) {
+                }
                 --in_queue;
             } else {
                 chunk = &buffer[offset];
@@ -209,7 +205,8 @@ namespace phosphor {
             assert(chunk.generation == generation);
             assert(loaned[&chunk - &buffer[0]]);
             loaned[&chunk - &buffer[0]] = false;
-            while(!return_queue.enqueue(&chunk));
+            while (!return_queue.enqueue(&chunk))
+                ;
             ++in_queue;
             assert(in_queue <= buffer.size());
         }

@@ -48,7 +48,7 @@ namespace phosphor {
     void Sentinel::close() {
         auto expected = State::open;
         while (!state.compare_exchange_strong(expected, State::closed)) {
-            if(expected == State::closed) {
+            if (expected == State::closed) {
                 return;
             }
             expected = State::open;

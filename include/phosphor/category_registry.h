@@ -34,10 +34,7 @@ namespace phosphor {
     /**
      * The states of tracing that a given category can be in
      */
-    enum class CategoryStatus : char {
-        Disabled,
-        Enabled
-    };
+    enum class CategoryStatus : char { Disabled, Enabled };
 
     using AtomicCategoryStatus = std::atomic<CategoryStatus>;
 
@@ -78,7 +75,6 @@ namespace phosphor {
         void updateEnabled(const std::vector<std::string>& enabled);
 
     protected:
-
         /**
          * Calculates whether or not a given group index should
          * be enabled based on the currently enabled categories.
@@ -91,10 +87,8 @@ namespace phosphor {
 
         std::mutex mutex;
 
-        std::array<std::string, registry_size> groups = {{
-                "default",
-                "category limit reached",
-                "__metadata"}};
+        std::array<std::string, registry_size> groups = {
+            {"default", "category limit reached", "__metadata"}};
         static CONSTEXPR int index_category_limit = 1;
         static CONSTEXPR int index_metadata = 2;
         static CONSTEXPR int index_non_default_categories = 3;
@@ -104,5 +98,4 @@ namespace phosphor {
 
         std::vector<std::string> enabled_categories;
     };
-
 }

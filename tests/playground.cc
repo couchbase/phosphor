@@ -19,4 +19,3 @@ int main(int argc, char* argv[]) {
     // Removed old code.
     return 0;
 }
-

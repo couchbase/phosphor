@@ -188,7 +188,7 @@ TEST_F(TraceLogTest, smallBufferThrow) {
     EXPECT_THROW(trace_log.start(TraceConfig(BufferMode::fixed, 0)),
                  std::invalid_argument);
 
-        trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size));
+    trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size));
 }
 
 TEST_F(TraceLogTest, isEnabled) {

@@ -617,7 +617,6 @@ namespace phosphor {
          */
         void resetChunk(ChunkTenant& ct);
 
-
         /**
          * Used for evicting all ChunkTenants from the log
          *

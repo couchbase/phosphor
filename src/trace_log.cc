@@ -60,7 +60,6 @@ namespace phosphor {
     }
 
     TraceLogConfig& TraceLogConfig::fromEnvironment() {
-
         const char* sentinel_count_s = std::getenv("PHOSPHOR_SENTINEL_COUNT");
         if (sentinel_count_s && strlen(sentinel_count_s)) {
             int sentinel_count;
@@ -229,7 +228,8 @@ namespace phosphor {
 
         shared_chunks.reserve(_config.getSentinelCount());
         registered_sentinels.reserve(_config.getSentinelCount());
-        for (size_t i = shared_chunks.size(); i < _config.getSentinelCount(); ++i) {
+        for (size_t i = shared_chunks.size(); i < _config.getSentinelCount();
+             ++i) {
             shared_chunks.emplace_back();
             shared_chunks[i].sentinel = new Sentinel;
             shared_chunks[i].chunk = nullptr;
@@ -346,7 +346,7 @@ namespace phosphor {
     }
 
     void TraceLog::evictThreads(std::lock_guard<TraceLog>& lh) {
-        for(auto& sentinel : registered_sentinels) {
+        for (auto& sentinel : registered_sentinels) {
             sentinel->close();
         }
     }

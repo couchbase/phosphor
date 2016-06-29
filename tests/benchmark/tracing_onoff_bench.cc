@@ -22,23 +22,23 @@
 
 void TracingOnOff(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
-    if(state.thread_index == 0) {
+    if (state.thread_index == 0) {
         if (state.range_x()) {
-            log.start(phosphor::TraceConfig(phosphor::BufferMode::ring,
-                                            1024 * 1024));
+            log.start(
+                phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
         }
     }
     log.registerThread();
     while (state.KeepRunning()) {
         // It's likely that the benchmark management overhead will be the
         // significant factor in this instance so run it multiple times
-        for(int i = 0; i < 100; i++) {
-            log.logEvent("category", "name",
-                         phosphor::TraceEvent::Type::Instant, 0);
+        for (int i = 0; i < 100; i++) {
+            log.logEvent(
+                "category", "name", phosphor::TraceEvent::Type::Instant, 0);
         }
     }
     log.deregisterThread();
-    if(state.thread_index == 0) {
+    if (state.thread_index == 0) {
         log.stop();
     }
 }

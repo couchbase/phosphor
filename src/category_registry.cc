@@ -26,17 +26,17 @@ namespace phosphor {
 
     CategoryRegistry::CategoryRegistry()
         : group_count(index_non_default_categories) {
-        for(auto& status : group_statuses) {
+        for (auto& status : group_statuses) {
             status.store(CategoryStatus::Disabled, std::memory_order_relaxed);
         }
     }
 
-    const AtomicCategoryStatus& CategoryRegistry::getStatus(const char* category_group) {
-
+    const AtomicCategoryStatus& CategoryRegistry::getStatus(
+        const char* category_group) {
         // See if we've already got the group without the lock
         size_t currIndex = group_count.load(std::memory_order_relaxed);
-        for(size_t i = 0; i < currIndex; ++i) {
-            if(strcmp(groups[i].c_str(), category_group) == 0) {
+        for (size_t i = 0; i < currIndex; ++i) {
+            if (strcmp(groups[i].c_str(), category_group) == 0) {
                 return group_statuses[i];
             }
         }
@@ -45,8 +45,8 @@ namespace phosphor {
         // (In case it got added before we got the lock)
         std::lock_guard<std::mutex> lh(mutex);
         currIndex = group_count.load(std::memory_order_relaxed);
-        for(size_t i = 0; i < currIndex; ++i) {
-            if(strcmp(groups[i].c_str(), category_group) == 0) {
+        for (size_t i = 0; i < currIndex; ++i) {
+            if (strcmp(groups[i].c_str(), category_group) == 0) {
                 return group_statuses[i];
             }
         }
@@ -63,22 +63,26 @@ namespace phosphor {
     }
 
     CategoryStatus CategoryRegistry::calculateEnabled(size_t index) {
-        const std::vector<std::string> categories(utils::split_string(groups[index], ','));
-        for(const auto& category : categories) {
-            if(std::find(enabled_categories.begin(), enabled_categories.end(), category) != enabled_categories.end()) {
+        const std::vector<std::string> categories(
+            utils::split_string(groups[index], ','));
+        for (const auto& category : categories) {
+            if (std::find(enabled_categories.begin(),
+                          enabled_categories.end(),
+                          category) != enabled_categories.end()) {
                 return CategoryStatus::Enabled;
             }
         }
         return CategoryStatus::Disabled;
     }
 
-    void CategoryRegistry::updateEnabled(const std::vector<std::string>& enabled) {
+    void CategoryRegistry::updateEnabled(
+        const std::vector<std::string>& enabled) {
         std::lock_guard<std::mutex> lh(mutex);
         enabled_categories = enabled;
 
         // We're protected by the mutex so relaxed atomics are fine here
         size_t currIndex = group_count.load(std::memory_order_relaxed);
-        for(size_t i = 0; i < currIndex; ++i) {
+        for (size_t i = 0; i < currIndex; ++i) {
             group_statuses[i].store(calculateEnabled(i),
                                     std::memory_order_relaxed);
         }

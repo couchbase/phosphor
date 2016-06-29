@@ -113,7 +113,6 @@ namespace phosphor {
         ToJsonResult typeToJSON() const;
 
     private:
-
         const char* name;
         const char* category;
         size_t id;
