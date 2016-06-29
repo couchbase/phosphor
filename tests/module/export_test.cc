@@ -59,7 +59,9 @@ TEST_F(ExportTest, test) {
 
 class MockFileStopCallback : public FileStopCallback {
 public:
-    using FileStopCallback::FileStopCallback;
+    template <class... Args>
+    MockFileStopCallback(Args&&... args)
+        : FileStopCallback(std::forward<Args>(args)...) { }
 
     std::string generateFilePath() {
         return FileStopCallback::generateFilePath();
