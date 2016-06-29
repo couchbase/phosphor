@@ -233,6 +233,7 @@ namespace phosphor {
         for (size_t i = shared_chunks.size(); i < _config.getSentinelCount(); ++i) {
             shared_chunks.emplace_back();
             shared_chunks[i].sentinel = new Sentinel;
+            shared_chunks[i].chunk = nullptr;
             registered_sentinels.insert(shared_chunks[i].sentinel);
         }
 
@@ -351,5 +352,5 @@ namespace phosphor {
         }
     }
 
-    THREAD_LOCAL TraceLog::ChunkTenant TraceLog::thread_chunk;
+    THREAD_LOCAL TraceLog::ChunkTenant TraceLog::thread_chunk = {0, 0};
 }

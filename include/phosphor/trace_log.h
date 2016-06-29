@@ -546,8 +546,8 @@ namespace phosphor {
 
     protected:
         struct ChunkTenant {
-            Sentinel* sentinel = nullptr;
-            TraceChunk* chunk = nullptr;
+            Sentinel* sentinel;
+            TraceChunk* chunk;
         };
 
         /**
