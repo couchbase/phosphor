@@ -83,8 +83,8 @@ namespace phosphor {
         output += ",\"cat\":" + utils::to_json(category);
 
         auto type_converted = typeToJSON();
-        output += ",\"ph\":\"" + std::string(type_converted.first) + "\"";
-        output += type_converted.second;
+        output += ",\"ph\":\"" + std::string(type_converted.type) + "\"";
+        output += type_converted.extras;
 
         output += ",\"ts\":" + std::to_string(time / 1000);
         output += ",\"pid\":0";
@@ -132,20 +132,34 @@ namespace phosphor {
             "Invalid TraceEvent type");
     }
 
-    std::pair<const char*, std::string> TraceEvent::typeToJSON() const {
+    TraceEvent::ToJsonResult TraceEvent::typeToJSON() const {
+        TraceEvent::ToJsonResult res;
+
         switch (type) {
         case Type::AsyncStart:
-            return {"b", utils::format_string(",\"id\": \"0x%X\"", id)};
+            res.type = "b";
+            res.extras = utils::format_string(",\"id\": \"0x%X\"", id);
+            return res;
         case Type::AsyncEnd:
-            return {"e", utils::format_string(",\"id\": \"0x%x\"", id)};
+            res.type = "e";
+            res.extras = utils::format_string(",\"id\": \"0x%X\"", id);
+            return res;
         case Type::SyncStart:
-            return {"B", ""};
+            res.type = "B";
+            res.extras = "";
+            return res;
         case Type::SyncEnd:
-            return {"E", ""};
+            res.type = "E";
+            res.extras = "";
+            return res;
         case Type::Instant:
-            return {"i", ",\"s\":\"t\""};
+            res.type = "i";
+            res.extras = ",\"s\":\"t\"";
+            return res;
         case Type::GlobalInstant:
-            return {"i", ",\"s\":\"g\""};
+            res.type = "i";
+            res.extras = ",\"s\":\"g\"";
+            return res;
         }
         throw std::invalid_argument(
             "TraceEvent::typeToJSON: Invalid TraceArgument type");

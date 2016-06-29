@@ -144,8 +144,8 @@ TEST(TraceEventTypeToJSON, Instant) {
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
-    EXPECT_EQ("i", std::string(res.first));
-    EXPECT_EQ(",\"s\":\"t\"", res.second);
+    EXPECT_EQ("i", std::string(res.type));
+    EXPECT_EQ(",\"s\":\"t\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, SyncStart) {
@@ -158,8 +158,8 @@ TEST(TraceEventTypeToJSON, SyncStart) {
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
-    EXPECT_EQ("B", std::string(res.first));
-    EXPECT_EQ("", res.second);
+    EXPECT_EQ("B", std::string(res.type));
+    EXPECT_EQ("", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, SyncEnd) {
@@ -172,8 +172,8 @@ TEST(TraceEventTypeToJSON, SyncEnd) {
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
-    EXPECT_EQ("E", std::string(res.first));
-    EXPECT_EQ("", res.second);
+    EXPECT_EQ("E", std::string(res.type));
+    EXPECT_EQ("", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, AsyncStart) {
@@ -186,8 +186,8 @@ TEST(TraceEventTypeToJSON, AsyncStart) {
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
-    EXPECT_EQ("b", std::string(res.first));
-    EXPECT_EQ(",\"id\": \"0x0\"", res.second);
+    EXPECT_EQ("b", std::string(res.type));
+    EXPECT_EQ(",\"id\": \"0x0\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, AsyncEnd) {
@@ -200,8 +200,8 @@ TEST(TraceEventTypeToJSON, AsyncEnd) {
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
-    EXPECT_EQ("e", std::string(res.first));
-    EXPECT_EQ(",\"id\": \"0x0\"", res.second);
+    EXPECT_EQ("e", std::string(res.type));
+    EXPECT_EQ(",\"id\": \"0x0\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, GlobalInstant) {
@@ -214,8 +214,8 @@ TEST(TraceEventTypeToJSON, GlobalInstant) {
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
-    EXPECT_EQ("i", std::string(res.first));
-    EXPECT_EQ(",\"s\":\"g\"", res.second);
+    EXPECT_EQ("i", std::string(res.type));
+    EXPECT_EQ(",\"s\":\"g\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, Invalid) {
