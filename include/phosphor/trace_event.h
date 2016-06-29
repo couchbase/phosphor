@@ -29,11 +29,12 @@
 #include <thread>
 #include <type_traits>
 
+#include "phosphor/platform/core.h"
 #include "trace_argument.h"
 
 namespace phosphor {
 
-    constexpr auto arg_count = 2;
+    CONSTEXPR auto arg_count = 2;
 
     class TraceEvent {
     public:

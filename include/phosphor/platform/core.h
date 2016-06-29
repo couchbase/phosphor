@@ -33,3 +33,9 @@
 #define likely(x) (x)
 #define unlikely(x) (x)
 #endif
+
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define CONSTEXPR const
+#else
+#define CONSTEXPR constexpr
+#endif

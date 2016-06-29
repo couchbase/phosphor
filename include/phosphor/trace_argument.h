@@ -26,6 +26,8 @@
 #include <string>
 #include <type_traits>
 
+#include "phosphor/platform/core.h"
+
 namespace phosphor {
 
     /**
@@ -83,7 +85,7 @@ namespace phosphor {
          *     Type t = TraceArgument::getType<int>()
          */
         template <class T>
-        inline static constexpr Type getType();
+        inline static CONSTEXPR Type getType();
 
         /**
          * Converts the TraceArgument to string
@@ -108,7 +110,7 @@ namespace phosphor {
  */
 #define ARGUMENT_CONVERSION(src, dst)                                    \
     template <>                                                          \
-    inline constexpr TraceArgument::Type TraceArgument::getType<src>() { \
+    inline CONSTEXPR TraceArgument::Type TraceArgument::getType<src>() { \
         return Type::is_##dst;                                           \
     }                                                                    \
     template <>                                                          \

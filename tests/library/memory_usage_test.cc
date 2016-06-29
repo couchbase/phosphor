@@ -99,8 +99,8 @@ protected:
     std::unique_ptr<phosphor::TraceLog> log;
 };
 
-constexpr size_t KILOBYTE = 1024;
-constexpr size_t MEGABYTE = 1024 * 1024;
+const size_t KILOBYTE = 1024;
+const size_t MEGABYTE = 1024 * 1024;
 
 TEST_F(MemoryTrackingTest, empty_log) {
     size_t overhead{memory_change()};

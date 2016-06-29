@@ -29,6 +29,7 @@
 
 #include <gsl_p/iterator.h>
 
+#include "phosphor/platform/core.h"
 #include "trace_event.h"
 
 namespace phosphor {
@@ -45,9 +46,9 @@ namespace phosphor {
      * store various events.
      */
     class TraceChunk {
-        static constexpr auto chunk_page_count = PHOSPHOR_CHUNK_PAGE_COUNT;
-        static constexpr auto page_size = 4096;
-        static constexpr auto chunk_size =
+        static CONSTEXPR auto chunk_page_count = PHOSPHOR_CHUNK_PAGE_COUNT;
+        static CONSTEXPR auto page_size = 4096;
+        static CONSTEXPR auto chunk_size =
             ((page_size * chunk_page_count) / sizeof(TraceEvent));
         using event_array = std::array<TraceEvent, chunk_size>;
 

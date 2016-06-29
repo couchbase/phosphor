@@ -145,7 +145,7 @@ namespace dvyukov {
             T data_;
         };
 
-        static constexpr size_t cacheline_size = 64;
+        static const size_t cacheline_size = 64;
 
         alignas(cacheline_size) gsl_p::dyn_array<cell_t> buffer_;
         alignas(cacheline_size) const size_t buffer_mask_;

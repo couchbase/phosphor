@@ -27,6 +27,7 @@
 #include <string>
 #include <vector>
 
+#include "phosphor/platform/core.h"
 
 namespace phosphor {
 
@@ -49,7 +50,7 @@ namespace phosphor {
         /**
          * Number of unique category permutations that a registry supports
          */
-        static constexpr int registry_size = 250;
+        static CONSTEXPR int registry_size = 250;
 
         /**
          * Default constructor
@@ -94,9 +95,9 @@ namespace phosphor {
                 "default",
                 "category limit reached",
                 "__metadata"}};
-        static constexpr int index_category_limit = 1;
-        static constexpr int index_metadata = 2;
-        static constexpr int index_non_default_categories = 3;
+        static CONSTEXPR int index_category_limit = 1;
+        static CONSTEXPR int index_metadata = 2;
+        static CONSTEXPR int index_non_default_categories = 3;
 
         std::array<AtomicCategoryStatus, registry_size> group_statuses;
         std::atomic<size_t> group_count;
