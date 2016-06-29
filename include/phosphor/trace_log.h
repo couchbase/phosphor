@@ -666,7 +666,7 @@ namespace phosphor {
          * will be logged, but any threads currently in the process
          * of tracing an event MAY finish tracing the event they're on.
          */
-        std::atomic_bool enabled;
+        std::atomic<bool> enabled;
 
         /**
          * mutex is the 'global' lock for the TraceLog and should be
