@@ -23,6 +23,8 @@
 
 #include <atomic>
 
+#include "phosphor/platform/core.h"
+
 namespace phosphor {
 
     /**

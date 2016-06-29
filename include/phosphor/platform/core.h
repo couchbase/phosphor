@@ -36,6 +36,7 @@
 
 #if defined(_MSC_VER) && _MSC_VER < 1900
 #define CONSTEXPR const
+#define alignas(x)
 #else
 #define CONSTEXPR constexpr
 #endif

@@ -146,11 +146,16 @@ namespace dvyukov {
         };
 
         static const size_t cacheline_size = 64;
+        typedef char cacheline_pad_t [cacheline_size];
 
-        alignas(cacheline_size) gsl_p::dyn_array<cell_t> buffer_;
-        alignas(cacheline_size) const size_t buffer_mask_;
-        alignas(cacheline_size) std::atomic<size_t> enqueue_pos_;
-        alignas(cacheline_size) std::atomic<size_t> dequeue_pos_;
+        cacheline_pad_t pad0_;
+        gsl_p::dyn_array<cell_t> buffer_;
+        const size_t buffer_mask_;
+        cacheline_pad_t pad1_;
+        std::atomic<size_t> enqueue_pos_;
+        cacheline_pad_t pad2_;
+        std::atomic<size_t> dequeue_pos_;
+        cacheline_pad_t pad3_;
 
         mpmc_bounded_queue(mpmc_bounded_queue const &);
 
