@@ -130,8 +130,24 @@ TEST(TraceEvent, toJSONAlt) {
 
 class MockTraceEvent : public TraceEvent {
 public:
-    using TraceEvent::TraceEvent;
     using TraceEvent::typeToJSON;
+
+    MockTraceEvent(
+               const char* _category,
+               const char* _name,
+               Type _type,
+               size_t _id,
+               uint64_t _thread_id,
+               std::array<TraceArgument, phosphor::arg_count>&& _args,
+               std::array<TraceArgument::Type, phosphor::arg_count>&& _arg_types)
+        : TraceEvent(_category,
+                     _name,
+                     _type,
+                     _id,
+                     _thread_id,
+                     std::move(_args),
+                     std::move(_arg_types)) {
+    }
 };
 
 TEST(TraceEventTypeToJSON, Instant) {
