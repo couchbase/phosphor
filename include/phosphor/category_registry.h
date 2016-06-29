@@ -66,7 +66,7 @@ namespace phosphor {
          */
         const AtomicCategoryStatus& getStatus(const char* category_group);
 
-        // TODO: Add 'disabled' category support and wildcard support
+        // TODO: Add 'disabled' category support
         /**
          * Enable a list of categories for tracing (and disable all others)
          *

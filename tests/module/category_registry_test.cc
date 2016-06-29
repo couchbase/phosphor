@@ -44,6 +44,34 @@ TEST_F(CategoryRegistryTest, EnableBeforeFirstUse) {
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("Hello!"));
 }
 
+TEST_F(CategoryRegistryTest, MultiMatch) {
+    EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default,abcd"));
+    registry.updateEnabled({{"abcd"}});
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default,abcd"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("abcd,default"));
+    EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default"));
+}
+
+
+TEST_F(CategoryRegistryTest, WildcardEnable) {
+    registry.updateEnabled({{"*"}});
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("katkarang,heya"));
+}
+
+TEST_F(CategoryRegistryTest, WildcardPrefix) {
+    registry.updateEnabled({{"memcached:*"}});
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_get"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_set,"
+                                                          "kv:mutation"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:"));
+    registry.updateEnabled({{"memcached:+"}});
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_get"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_set,"
+                                                                  "kv:mutation"));
+    EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("memcached:"));
+}
+
 // Fills the registry with categories, checks they're all disabled,
 // enables them all, checks they're all enabled, disables them all,
 // checks they're all disabled.

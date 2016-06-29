@@ -66,9 +66,11 @@ namespace phosphor {
         const std::vector<std::string> categories(
             utils::split_string(groups[index], ','));
         for (const auto& category : categories) {
-            if (std::find(enabled_categories.begin(),
-                          enabled_categories.end(),
-                          category) != enabled_categories.end()) {
+            if (std::find_if(enabled_categories.begin(),
+                             enabled_categories.end(),
+                             [&category](const std::string enabled) {
+                                 return utils::glob_match(enabled, category);
+                             }) != enabled_categories.end()) {
                 return CategoryStatus::Enabled;
             }
         }
