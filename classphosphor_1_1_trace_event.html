@@ -141,8 +141,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a10a9f62b1f28691baa3d4926a89790d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0">TraceEvent</a> ()=default</td></tr>
 <tr class="separator:a10a9f62b1f28691baa3d4926a89790d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb516429d0f30ebce3149542d63e3345"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#adb516429d0f30ebce3149542d63e3345">TraceEvent</a> (const char *_category, const char *_name, <a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">Type</a> _type, size_t _id, uint64_t _thread_id, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html">TraceArgument</a>, arg_count &gt; &amp;&amp;_args, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a>, arg_count &gt; &amp;&amp;_arg_types)</td></tr>
-<tr class="separator:adb516429d0f30ebce3149542d63e3345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a697e5766da8eb049f011993986fdc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a69a697e5766da8eb049f011993986fdc">TraceEvent</a> (const char *_category, const char *_name, <a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">Type</a> _type, uint64_t _thread_id, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html">TraceArgument</a>, arg_count &gt; &amp;&amp;_args, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a>, arg_count &gt; &amp;&amp;_arg_types)</td></tr>
+<tr class="separator:a69a697e5766da8eb049f011993986fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbf61956951d90799160e3c9fe41b3c2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#acbf61956951d90799160e3c9fe41b3c2">to_string</a> () const </td></tr>
 <tr class="separator:acbf61956951d90799160e3c9fe41b3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebdead39e1b2137a5699c136c9ee2274"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#aebdead39e1b2137a5699c136c9ee2274">to_json</a> () const </td></tr>
@@ -205,7 +205,7 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adb516429d0f30ebce3149542d63e3345"></a>
+<a class="anchor" id="a69a697e5766da8eb049f011993986fdc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -226,12 +226,6 @@ Protected Member Functions</h2></td></tr>
           <td></td>
           <td class="paramtype"><a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">Type</a>&#160;</td>
           <td class="paramname"><em>_type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -264,7 +258,6 @@ Protected Member Functions</h2></td></tr>
     <tr><td class="paramname">_category</td><td>C-String for the event's category </td></tr>
     <tr><td class="paramname">_name</td><td>C-String for the event's name </td></tr>
     <tr><td class="paramname">_type</td><td>The event type </td></tr>
-    <tr><td class="paramname">_id</td><td>A unique identifier for the event for pairing up async start/stop events </td></tr>
     <tr><td class="paramname">_args</td><td>An array of <code>Value</code> </td></tr>
     <tr><td class="paramname">_arg_types</td><td>An array of argument types </td></tr>
   </table>

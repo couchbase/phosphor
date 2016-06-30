@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['setcategories',['setCategories',['../classphosphor_1_1_trace_config.html#a06350570334ce91209b01b27b35708ec',1,'phosphor::TraceConfig']]],
   ['setsentinelcount',['setSentinelCount',['../classphosphor_1_1_trace_log_config.html#ae24069f60fd6d7323ee898a65b87fe26',1,'phosphor::TraceLogConfig']]],
   ['setstartuptrace',['setStartupTrace',['../classphosphor_1_1_trace_log_config.html#aac1cd06b2988348c7d9d0cc4d7db121a',1,'phosphor::TraceLogConfig']]],
   ['setstoppedcallback',['setStoppedCallback',['../classphosphor_1_1_trace_config.html#aeeb649565b79d61e54fcf2d8dcb348c1',1,'phosphor::TraceConfig']]],

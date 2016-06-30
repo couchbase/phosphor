@@ -128,6 +128,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a477d7578bdbb01b11062ed1ed86fa68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a238b7dca9c6f7284357c045f73263707"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#a238b7dca9c6f7284357c045f73263707">updateEnabled</a> (const std::vector&lt; std::string &gt; &amp;enabled, const std::vector&lt; std::string &gt; &amp;disabled)</td></tr>
 <tr class="separator:a238b7dca9c6f7284357c045f73263707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68ce1824aae7dcc45c7f896dc573ebe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#ae68ce1824aae7dcc45c7f896dc573ebe">disableAll</a> ()</td></tr>
+<tr class="separator:ae68ce1824aae7dcc45c7f896dc573ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -221,6 +223,24 @@ static CONSTEXPR int&#160;</td><td class="memItemRight" valign="bottom"><b>index
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The calculated status of the group based on the currently enabled categories. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae68ce1824aae7dcc45c7f896dc573ebe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::CategoryRegistry::disableAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Disables all category groups</p>
+<p>Equivalent to: </p><pre class="fragment">CategoryRegistry::updateEnabled({{}}, {{}});
+</pre><p>Except a bit more efficient as it doesn't bother with calculations </p>
 
 </div>
 </div>

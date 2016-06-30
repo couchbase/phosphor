@@ -110,6 +110,7 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_chunk.html',''
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classphosphor_1_1_trace_chunk-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">phosphor::TraceChunk Class Reference</div>  </div>
@@ -120,6 +121,9 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_chunk.html',''
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr class="memitem:aafef183f277ec6e7595b98f19920d6c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafef183f277ec6e7595b98f19920d6c3"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>event_array</b> = std::array&lt; <a class="el" href="classphosphor_1_1_trace_event.html">TraceEvent</a>, chunk_size &gt;</td></tr>
+<tr class="separator:aafef183f277ec6e7595b98f19920d6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e9bdb98cd039b4d89b449b1868c5f9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e9bdb98cd039b4d89b449b1868c5f9a"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>const_iterator</b> = event_array::const_iterator</td></tr>
 <tr class="separator:a9e9bdb98cd039b4d89b449b1868c5f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,6 +152,20 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a90b6250a6a8548ba6d6731882ec28d36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90b6250a6a8548ba6d6731882ec28d36"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>generation</b></td></tr>
 <tr class="separator:a90b6250a6a8548ba6d6731882ec28d36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a25edbf063c4d1153e398c879090f4072"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25edbf063c4d1153e398c879090f4072"></a>
+static CONSTEXPR auto&#160;</td><td class="memItemRight" valign="bottom"><b>chunk_page_count</b> = PHOSPHOR_CHUNK_PAGE_COUNT</td></tr>
+<tr class="separator:a25edbf063c4d1153e398c879090f4072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada0c77d6acd8e1500455962eaf8ae442"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada0c77d6acd8e1500455962eaf8ae442"></a>
+static CONSTEXPR auto&#160;</td><td class="memItemRight" valign="bottom"><b>page_size</b> = 4096</td></tr>
+<tr class="separator:ada0c77d6acd8e1500455962eaf8ae442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abafbca5014b6e52c786dc00eb9c55c8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abafbca5014b6e52c786dc00eb9c55c8e"></a>
+static CONSTEXPR auto&#160;</td><td class="memItemRight" valign="bottom"><b>array_offset</b> = 64</td></tr>
+<tr class="separator:abafbca5014b6e52c786dc00eb9c55c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb0a70451601b9f7a7d5fef4322f7881"><td class="memItemLeft" align="right" valign="top">static CONSTEXPR auto&#160;</td><td class="memItemRight" valign="bottom"><b>chunk_size</b></td></tr>
+<tr class="separator:abb0a70451601b9f7a7d5fef4322f7881"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> represents an array of TraceEvents</p>
@@ -295,6 +313,27 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>generation</b></td>
 <p>Reset the state of the <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a></p>
 <p>This should be called before the <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> is first used as <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> is a trivial type and requires initialisation. </p>
 
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="abb0a70451601b9f7a7d5fef4322f7881"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CONSTEXPR auto phosphor::TraceChunk::chunk_size</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">            (((page_size * chunk_page_count) - array_offset) /</div><div class="line">             <span class="keyword">sizeof</span>(TraceEvent))</div></div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>

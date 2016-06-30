@@ -1,6 +1,7 @@
 var classphosphor_1_1_trace_chunk =
 [
     [ "const_iterator", "classphosphor_1_1_trace_chunk.html#a9e9bdb98cd039b4d89b449b1868c5f9a", null ],
+    [ "event_array", "classphosphor_1_1_trace_chunk.html#aafef183f277ec6e7595b98f19920d6c3", null ],
     [ "TraceChunk", "classphosphor_1_1_trace_chunk.html#a3501cea696562c03ea2f501031027459", null ],
     [ "addEvent", "classphosphor_1_1_trace_chunk.html#a7c08f938911ee5197a8682428bc6135e", null ],
     [ "begin", "classphosphor_1_1_trace_chunk.html#a55c422822822a5ca3b119510ca75921b", null ],
