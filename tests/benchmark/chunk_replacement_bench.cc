@@ -41,6 +41,9 @@ public:
         phosphor::TraceLog::replaceChunk(cs);
         if (cs.chunk) {
             cs.sentinel->release();
+        } else {
+            cs.sentinel->release();
+            stop();
         }
     }
 };

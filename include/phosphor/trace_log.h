@@ -574,8 +574,9 @@ namespace phosphor {
             }
             // State is busy
             if (!cs.chunk || cs.chunk->isFull()) {
-                replaceChunk(cs);
-                if (!cs.chunk) {
+                if (!replaceChunk(cs)) {
+                    cs.sentinel->release();
+                    stop();
                     return nullptr;
                 }
             }
@@ -590,20 +591,12 @@ namespace phosphor {
          * This function must be called while the ChunkTenant sentinel is held
          * in the 'Busy' state (via Sentinel::acquire or Sentinel::reopen).
          *
-         * This function internally performs some lock juggling as it requires
-         * the global lock and the global lock must not be picked up while
-         * holding a Sentinel busy lock (Otherwise deadlock may occur).
-         * Therefore
-         * the sentinel is released, the global lock is picked up and then
-         * sentinel
-         * is reacquired. The global lock is dropped before the function is
-         * returned
-         * from.
-         *
          * @param ct The ChunkTenant that should have it's chunk returned
          *           and replaced
+         * @return true if the chunk has been successfully
+         *              replaced, false otherwise
          */
-        void replaceChunk(ChunkTenant& ct);
+        bool replaceChunk(ChunkTenant& ct);
 
         /**
          * Resets the current chunk held by the ChunkTenant

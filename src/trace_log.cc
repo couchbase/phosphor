@@ -327,15 +327,12 @@ namespace phosphor {
         delete thread_chunk.sentinel;
     }
 
-    void TraceLog::replaceChunk(ChunkTenant& ct) {
+    bool TraceLog::replaceChunk(ChunkTenant& ct) {
         if (ct.chunk) {
             buffer->returnChunk(*ct.chunk);
             ct.chunk = nullptr;
         }
-        if (!(buffer && (ct.chunk = buffer->getChunk()))) {
-            ct.sentinel->release();
-            stop();
-        }
+        return buffer && (ct.chunk = buffer->getChunk());
     }
 
     void TraceLog::resetChunk(ChunkTenant& ct) {
