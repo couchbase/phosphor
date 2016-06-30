@@ -61,15 +61,12 @@ namespace phosphor {
          * @param _category C-String for the event's category
          * @param _name C-String for the event's name
          * @param _type The event type
-         * @param _id A unique identifier for the event for pairing up
-         *            async start/stop events
          * @param _args An array of `Value`
          * @param _arg_types An array of argument types
          */
         TraceEvent(const char* _category,
                    const char* _name,
                    Type _type,
-                   size_t _id,
                    uint64_t _thread_id,
                    std::array<TraceArgument, arg_count>&& _args,
                    std::array<TraceArgument::Type, arg_count>&& _arg_types);
@@ -115,7 +112,6 @@ namespace phosphor {
     private:
         const char* name;
         const char* category;
-        size_t id;
         uint64_t thread_id;
         std::array<TraceArgument, arg_count> args;
 

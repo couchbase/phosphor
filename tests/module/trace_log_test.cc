@@ -183,15 +183,13 @@ public:
     }
 
     void log_event() {
-        trace_log.logEvent(
-            "category", "name", TraceEvent::Type::Instant, 0, 0, 0);
+        trace_log.logEvent("category", "name", TraceEvent::Type::Instant, 0, 0);
     }
 
     void log_event_all_types() {
-        trace_log.logEvent(
-            "category", "2arg", TraceEvent::Type::Instant, 0, 0, 0);
-        trace_log.logEvent("category", "1arg", TraceEvent::Type::Instant, 0, 0);
-        trace_log.logEvent("category", "0arg", TraceEvent::Type::Instant, 0);
+        trace_log.logEvent("category", "2arg", TraceEvent::Type::Instant, 0, 0);
+        trace_log.logEvent("category", "1arg", TraceEvent::Type::Instant, 0);
+        trace_log.logEvent("category", "0arg", TraceEvent::Type::Instant);
     }
 
 protected:
@@ -300,7 +298,7 @@ TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
     TraceLog trace_log;
     trace_log.start(TraceConfig(BufferMode::fixed, sizeof(TraceChunk)));
     trace_log.registerThread();
-    trace_log.logEvent("category", "name", TraceEvent::Type::Instant, 0, 0, 0);
+    trace_log.logEvent("category", "name", TraceEvent::Type::Instant, 0, 0);
     EXPECT_NO_THROW(trace_log.deregisterThread());
 }
 

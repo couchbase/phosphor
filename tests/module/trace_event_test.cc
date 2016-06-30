@@ -33,7 +33,6 @@ TEST(TraceEvent, create) {
         "name",
         TraceEvent::Type::Instant,
         0,
-        0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
 }
@@ -43,7 +42,6 @@ TEST(TraceEvent, string_check) {
         "category",
         "name",
         TraceEvent::Type::Instant,
-        0,
         0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
@@ -88,7 +86,6 @@ TEST(TraceEvent, toJSON) {
         "name",
         TraceEvent::Type::Instant,
         0,
-        0,
         {{0, 0}},
         {{TraceArgument::Type::is_bool, TraceArgument::Type::is_none}});
 
@@ -110,7 +107,6 @@ TEST(TraceEvent, toJSONAlt) {
         "category",
         "name",
         TraceEvent::Type::SyncEnd,
-        0,
         0,
         {{0, 0}},
         {{TraceArgument::Type::is_bool, TraceArgument::Type::is_bool}});
@@ -136,14 +132,12 @@ public:
         const char* _category,
         const char* _name,
         Type _type,
-        size_t _id,
         uint64_t _thread_id,
         std::array<TraceArgument, phosphor::arg_count>&& _args,
         std::array<TraceArgument::Type, phosphor::arg_count>&& _arg_types)
         : TraceEvent(_category,
                      _name,
                      _type,
-                     _id,
                      _thread_id,
                      std::move(_args),
                      std::move(_arg_types)) {}
@@ -154,7 +148,6 @@ TEST(TraceEventTypeToJSON, Instant) {
         "category",
         "name",
         TraceEvent::Type::Instant,
-        0,
         0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
@@ -169,7 +162,6 @@ TEST(TraceEventTypeToJSON, SyncStart) {
         "name",
         TraceEvent::Type::SyncStart,
         0,
-        0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
@@ -182,7 +174,6 @@ TEST(TraceEventTypeToJSON, SyncEnd) {
         "category",
         "name",
         TraceEvent::Type::SyncEnd,
-        0,
         0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
@@ -197,7 +188,6 @@ TEST(TraceEventTypeToJSON, AsyncStart) {
         "name",
         TraceEvent::Type::AsyncStart,
         0,
-        0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
@@ -210,7 +200,6 @@ TEST(TraceEventTypeToJSON, AsyncEnd) {
         "category",
         "name",
         TraceEvent::Type::AsyncEnd,
-        0,
         0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
@@ -225,7 +214,6 @@ TEST(TraceEventTypeToJSON, GlobalInstant) {
         "name",
         TraceEvent::Type::GlobalInstant,
         0,
-        0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     auto res = event.typeToJSON();
@@ -238,7 +226,6 @@ TEST(TraceEventTypeToJSON, Invalid) {
         "category",
         "name",
         static_cast<TraceEvent::Type>(0xFF),
-        0,
         0,
         {{0, 0}},
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});

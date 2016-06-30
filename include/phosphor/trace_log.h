@@ -398,7 +398,6 @@ namespace phosphor {
          *        pointer should remain valid until the buffer is freed.
          * @param name The name of the event
          * @param type The type of the event
-         * @param id The id of the event, primarily used for async events
          * @param argA Argument to be saved with the event
          * @param argB Argument to be saved with the event
          */
@@ -406,7 +405,6 @@ namespace phosphor {
         void logEvent(const char* category,
                       const char* name,
                       TraceEvent::Type type,
-                      size_t id,
                       T argA,
                       U argB) {
             if (!enabled)
@@ -419,7 +417,6 @@ namespace phosphor {
                 category,
                 name,
                 type,
-                id,
                 platform::getCurrentThreadIDCached(),
                 {{TraceArgument(argA), TraceArgument(argB)}},
                 {{TraceArgument::getType<T>(), TraceArgument::getType<U>()}});
@@ -437,14 +434,12 @@ namespace phosphor {
          *        pointer should remain valid until the buffer is freed.
          * @param name The name of the event
          * @param type The type of the event
-         * @param id The id of the event, primarily used for async events
          * @param argA Argument to be saved with the event
          */
         template <typename T>
         void logEvent(const char* category,
                       const char* name,
                       TraceEvent::Type type,
-                      size_t id,
                       T argA) {
             if (!enabled)
                 return;
@@ -456,7 +451,6 @@ namespace phosphor {
                 category,
                 name,
                 type,
-                id,
                 platform::getCurrentThreadIDCached(),
                 {{TraceArgument(argA), 0}},
                 {{TraceArgument::getType<T>(), TraceArgument::Type::is_none}});
@@ -474,12 +468,10 @@ namespace phosphor {
          *        pointer should remain valid until the buffer is freed.
          * @param name The name of the event
          * @param type The type of the event
-         * @param id The id of the event, primarily used for async events
          */
         void logEvent(const char* category,
                       const char* name,
-                      TraceEvent::Type type,
-                      size_t id) {
+                      TraceEvent::Type type) {
             if (!enabled)
                 return;
             ChunkTenant* cs = getChunkTenant();
@@ -490,7 +482,6 @@ namespace phosphor {
                 category,
                 name,
                 type,
-                id,
                 platform::getCurrentThreadIDCached(),
                 {{0, 0}},
                 {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});

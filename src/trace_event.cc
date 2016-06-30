@@ -26,7 +26,6 @@ namespace phosphor {
         const char* _category,
         const char* _name,
         Type _type,
-        size_t _id,
         uint64_t _thread_id,
         std::array<TraceArgument, arg_count>&& _args,
         std::array<TraceArgument::Type, arg_count>&& _arg_types)
@@ -35,7 +34,6 @@ namespace phosphor {
         //   registers in advance of the steady_clock::now() function call
         : name(_name),
           category(_category),
-          id(_id),
           thread_id(_thread_id),
           args(_args),
           time(
@@ -138,11 +136,13 @@ namespace phosphor {
         switch (type) {
         case Type::AsyncStart:
             res.type = "b";
-            res.extras = utils::format_string(",\"id\": \"0x%X\"", id);
+            res.extras =
+                utils::format_string(",\"id\": \"0x%X\"", args[0].as_int);
             return res;
         case Type::AsyncEnd:
             res.type = "e";
-            res.extras = utils::format_string(",\"id\": \"0x%X\"", id);
+            res.extras =
+                utils::format_string(",\"id\": \"0x%X\"", args[0].as_int);
             return res;
         case Type::SyncStart:
             res.type = "B";

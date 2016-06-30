@@ -37,7 +37,6 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
             "name",
             TraceEvent::Type::Instant,
             0,
-            0,
             {{0, 0}},
             {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
         count++;
@@ -56,7 +55,6 @@ TEST(TraceChunkTest, string_check) {
             "category",
             "name",
             TraceEvent::Type::Instant,
-            0,
             0,
             {{0, 0}},
             {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});

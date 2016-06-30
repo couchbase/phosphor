@@ -34,7 +34,6 @@ public:
                     "name",
                     phosphor::TraceEvent::Type::Instant,
                     0,
-                    0,
                     {{0, 0}},
                     {{phosphor::TraceArgument::Type::is_none,
                       phosphor::TraceArgument::Type::is_none}});
