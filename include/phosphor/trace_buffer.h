@@ -49,8 +49,10 @@ namespace phosphor {
     public:
         static CONSTEXPR auto chunk_page_count = PHOSPHOR_CHUNK_PAGE_COUNT;
         static CONSTEXPR auto page_size = 4096;
+        static CONSTEXPR auto array_offset = 64;
         static CONSTEXPR auto chunk_size =
-            ((page_size * chunk_page_count) / sizeof(TraceEvent));
+            (((page_size * chunk_page_count) - array_offset) /
+             sizeof(TraceEvent));
         using event_array = std::array<TraceEvent, chunk_size>;
 
         using const_iterator = event_array::const_iterator;

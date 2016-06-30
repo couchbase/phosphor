@@ -49,6 +49,11 @@ int main(int argc, char** argv) {
     std::cout << "===================\n";
     std::cout << "TraceChunk: " << TraceChunk::chunk_size << " trace events\n";
     std::cout << "100MiB TraceBuffer: " << buffer->chunk_count() << " trace chunks\n";
-    std::cout << "100MiB TraceBuffer: " << &(*buffer->end()) - &(*buffer->begin()) << " trace events\n";
+
+    int n = 0;
+    for(const auto& event : *buffer) {
+        n++;
+    }
+    std::cout << "100MiB TraceBuffer: " << n << " trace events\n";
 
 }
