@@ -224,7 +224,7 @@ TEST_F(TraceLogTest, logTillFullAndEvenThen) {
     while (trace_log.isEnabled()) {
         log_event_all_types();
     }
-    log_event();
+    log_event_all_types();
 }
 
 TEST_F(TraceLogTest, logTillFullAndEvenThenButReload) {
