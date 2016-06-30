@@ -18,6 +18,7 @@
 #include <thread>
 #include <vector>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "phosphor/trace_buffer.h"
@@ -126,6 +127,13 @@ TEST(TraceConfigTest, createModeErrors) {
     EXPECT_THROW(TraceConfig(BufferMode::custom, 1337), std::invalid_argument);
     EXPECT_THROW(TraceConfig(static_cast<BufferMode>(0xFF), 1337),
                  std::invalid_argument);
+}
+
+TEST(TraceConfigTest, CategoryConfig) {
+    TraceConfig config(BufferMode::fixed, 1337);
+    config.setCategories({{"hello"}}, {{"world"}});
+    EXPECT_THAT(config.getEnabledCategories(), testing::ElementsAre("hello"));
+    EXPECT_THAT(config.getDisabledCategories(), testing::ElementsAre("world"));
 }
 
 TEST(TraceConfigTest, fromString) {
@@ -256,6 +264,13 @@ TEST_F(TraceLogTest, logTillFullThreaded) {
     for (std::thread& thread : threads) {
         thread.join();
     };
+}
+
+TEST_F(TraceLogTest, CategoryConfig) {
+    trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size)
+                        .setCategories({{"*"}}, {{"world"}}));
+    EXPECT_EQ(CategoryStatus::Enabled, trace_log.getCategoryStatus("hello"));
+    EXPECT_EQ(CategoryStatus::Disabled, trace_log.getCategoryStatus("world"));
 }
 
 TEST(TraceLogStaticTest, getInstance) {

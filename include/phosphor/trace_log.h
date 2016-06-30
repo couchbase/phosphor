@@ -22,6 +22,7 @@
 #include <mutex>
 #include <unordered_set>
 
+#include "category_registry.h"
 #include "platform/thread.h"
 #include "sentinel.h"
 #include "trace_buffer.h"
@@ -240,6 +241,26 @@ namespace phosphor {
         bool getStopTracingOnDestruct() const;
 
         /**
+         * Set the categories to enable/disable in this trace config
+         *
+         * @param enabled The categories to explicitly enable
+         * @param disabled The categories to explicitly disable
+         * @return reference to the TraceConfig being configured
+         */
+        TraceConfig& setCategories(const std::vector<std::string>& enabled,
+                                   const std::vector<std::string>& disabled);
+
+        /**
+         * @return The enabled categories for this trace config
+         */
+        const std::vector<std::string>& getEnabledCategories() const;
+
+        /**
+         * @return The disabled categories fro this trace config
+         */
+        const std::vector<std::string>& getDisabledCategories() const;
+
+        /**
          * Generate a TraceConfig from a config string (Usually set from
          * an environment variable).
          *
@@ -269,6 +290,9 @@ namespace phosphor {
         trace_buffer_factory buffer_factory;
         TracingStoppedCallback tracing_stopped_callback;
         bool stop_tracing = false;
+
+        std::vector<std::string> enabled_categories;
+        std::vector<std::string> disabled_categories;
     };
 
     /**
@@ -472,6 +496,19 @@ namespace phosphor {
                 {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
             cs->sentinel->release();
         }
+
+        /**
+         * Used to get a reference to a reusable CategoryStatus. This should
+         * generally be held in a block-scope static at a given trace point
+         * to verify if the category for that trace point is presently
+         * enabled.
+         *
+         * @param category_group The category group to check
+         * @return const reference to the CategoryStatus atomic that holds
+         *         that status for the given category group
+         */
+        const AtomicCategoryStatus& getCategoryStatus(
+            const char* category_group);
 
         /**
          * Transfers ownership of the current TraceBuffer to the caller
@@ -697,5 +734,10 @@ namespace phosphor {
          * The set of sentinels that have been registered to this TraceLog.
          */
         std::unordered_set<Sentinel*> registered_sentinels;
+
+        /**
+         * Category registry which manages the enabled / disabled categories
+         */
+        CategoryRegistry registry;
     };
 }

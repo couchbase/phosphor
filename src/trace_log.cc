@@ -99,13 +99,15 @@ namespace phosphor {
     TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
         : buffer_mode(_buffer_mode),
           buffer_size(_buffer_size),
-          buffer_factory(modeToFactory(_buffer_mode)) {}
+          buffer_factory(modeToFactory(_buffer_mode)),
+          enabled_categories({{"*"}}) {}
 
     TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory,
                              size_t _buffer_size)
         : buffer_mode(BufferMode::custom),
           buffer_size(_buffer_size),
-          buffer_factory(_buffer_factory) {}
+          buffer_factory(_buffer_factory),
+          enabled_categories({{"*"}}) {}
 
     trace_buffer_factory TraceConfig::modeToFactory(BufferMode mode) {
         switch (mode) {
@@ -151,6 +153,22 @@ namespace phosphor {
 
     bool TraceConfig::getStopTracingOnDestruct() const {
         return stop_tracing;
+    }
+
+    TraceConfig& TraceConfig::setCategories(
+        const std::vector<std::string>& enabled,
+        const std::vector<std::string>& disabled) {
+        enabled_categories = enabled;
+        disabled_categories = disabled;
+        return *this;
+    }
+
+    const std::vector<std::string>& TraceConfig::getEnabledCategories() const {
+        return enabled_categories;
+    }
+
+    const std::vector<std::string>& TraceConfig::getDisabledCategories() const {
+        return disabled_categories;
     }
 
     TraceConfig TraceConfig::fromString(const std::string& config) {
@@ -254,6 +272,7 @@ namespace phosphor {
 
     void TraceLog::stop(std::lock_guard<TraceLog>& lh, bool shutdown) {
         if (enabled.exchange(false)) {
+            registry.disableAll();
             evictThreads(lh);
             auto cb = trace_config.getStoppedCallback();
             if (cb && (!shutdown || trace_config.getStopTracingOnDestruct())) {
@@ -279,7 +298,14 @@ namespace phosphor {
         }
 
         buffer = trace_config.getBufferFactory()(generation++, buffer_size);
+        registry.updateEnabled(trace_config.getEnabledCategories(),
+                               trace_config.getDisabledCategories());
         enabled.store(true);
+    }
+
+    const AtomicCategoryStatus& TraceLog::getCategoryStatus(
+        const char* category_group) {
+        return registry.getStatus(category_group);
     }
 
     std::unique_ptr<TraceBuffer> TraceLog::getBuffer() {
