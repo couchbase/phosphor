@@ -29,46 +29,60 @@ public:
 
 TEST_F(CategoryRegistryTest, SwitchEnabled) {
     EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default"));
-    registry.updateEnabled({{"default"}});
+    registry.updateEnabled({{"default"}}, {{}});
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default"));
-    registry.updateEnabled({{}});
+    registry.updateEnabled({{}}, {{}});
+    EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default"));
+    registry.updateEnabled({{"default"}}, {{"default"}});
     EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default"));
 }
 
+TEST_F(CategoryRegistryTest, MultiCategory) {
+    registry.updateEnabled({{"notdefault"}, {"default"}}, {{}});
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("notdefault"));
+}
+
 TEST_F(CategoryRegistryTest, EnableBeforeFirstUse) {
-    registry.updateEnabled({{"Hello!"}});
+    registry.updateEnabled({{"Hello!"}}, {{}});
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("Hello!"));
-    registry.updateEnabled({{}});
+    registry.updateEnabled({{}}, {{}});
     EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("Hello!"));
-    registry.updateEnabled({{"Hello!"}});
+    registry.updateEnabled({{"Hello!"}}, {{}});
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("Hello!"));
 }
 
 TEST_F(CategoryRegistryTest, MultiMatch) {
     EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default,abcd"));
-    registry.updateEnabled({{"abcd"}});
+    registry.updateEnabled({{"abcd"}}, {{}});
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default,abcd"));
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("abcd,default"));
     EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default"));
+    registry.updateEnabled({{"abcd"}, {"default"}}, {{"abcd"}});
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default,abcd"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("abcd,default"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default"));
+    EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("abcd"));
 }
 
-
 TEST_F(CategoryRegistryTest, WildcardEnable) {
-    registry.updateEnabled({{"*"}});
+    registry.updateEnabled({{"*"}}, {{}});
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default"));
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("katkarang,heya"));
 }
 
 TEST_F(CategoryRegistryTest, WildcardPrefix) {
-    registry.updateEnabled({{"memcached:*"}});
+    registry.updateEnabled({{"memcached:*"}}, {{}});
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_get"));
-    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_set,"
-                                                          "kv:mutation"));
+    EXPECT_EQ(CategoryStatus::Enabled,
+              registry.getStatus("memcached:cmd_set,"
+                                 "kv:mutation"));
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:"));
-    registry.updateEnabled({{"memcached:+"}});
+    registry.updateEnabled({{"memcached:+"}}, {{}});
     EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_get"));
-    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("memcached:cmd_set,"
-                                                                  "kv:mutation"));
+    EXPECT_EQ(CategoryStatus::Enabled,
+              registry.getStatus("memcached:cmd_set,"
+                                 "kv:mutation"));
     EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("memcached:"));
 }
 
@@ -93,12 +107,22 @@ TEST_F(CategoryRegistryTest, FillRegistry) {
     for (int j = 0; j < i; ++j) {
         categories.push_back(std::to_string(j));
     }
-    registry.updateEnabled(categories);
+    registry.updateEnabled({{"*"}}, {{}});
     for (int j = 0; j < i; ++j) {
         EXPECT_EQ(CategoryStatus::Enabled,
                   registry.getStatus(std::to_string(j).c_str()));
     }
-    registry.updateEnabled({{}});
+    registry.updateEnabled(categories, {{}});
+    for (int j = 0; j < i; ++j) {
+        EXPECT_EQ(CategoryStatus::Enabled,
+                  registry.getStatus(std::to_string(j).c_str()));
+    }
+    registry.updateEnabled(categories, {{"*"}});
+    for (int j = 0; j < i; ++j) {
+        EXPECT_EQ(CategoryStatus::Disabled,
+                  registry.getStatus(std::to_string(j).c_str()));
+    }
+    registry.updateEnabled({{}}, {{}});
     for (int j = 0; j < i; ++j) {
         EXPECT_EQ(CategoryStatus::Disabled,
                   registry.getStatus(std::to_string(j).c_str()));

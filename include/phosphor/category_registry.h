@@ -71,8 +71,10 @@ namespace phosphor {
          * Enable a list of categories for tracing (and disable all others)
          *
          * @param enabled Vector of categories to mark as enabled
+         * @param disabled Vector of categories to mark as disabled
          */
-        void updateEnabled(const std::vector<std::string>& enabled);
+        void updateEnabled(const std::vector<std::string>& enabled,
+                           const std::vector<std::string>& disabled);
 
     protected:
         /**
@@ -87,8 +89,9 @@ namespace phosphor {
 
         std::mutex mutex;
 
-        std::array<std::string, registry_size> groups = {
-            {"default", "category limit reached", "__metadata"}};
+        std::array<std::string, registry_size> groups =
+            std::array<std::string, registry_size>{
+                {"default", "category limit reached", "__metadata"}};
         static CONSTEXPR int index_category_limit = 1;
         static CONSTEXPR int index_metadata = 2;
         static CONSTEXPR int index_non_default_categories = 3;
@@ -97,5 +100,6 @@ namespace phosphor {
         std::atomic<size_t> group_count;
 
         std::vector<std::string> enabled_categories;
+        std::vector<std::string> disabled_categories;
     };
 }

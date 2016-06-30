@@ -65,22 +65,42 @@ namespace phosphor {
     CategoryStatus CategoryRegistry::calculateEnabled(size_t index) {
         const std::vector<std::string> categories(
             utils::split_string(groups[index], ','));
+
+        std::vector<std::string> enabled_relevant;
+
+        // Find all categories which match an enabled category
         for (const auto& category : categories) {
             if (std::find_if(enabled_categories.begin(),
                              enabled_categories.end(),
                              [&category](const std::string enabled) {
                                  return utils::glob_match(enabled, category);
                              }) != enabled_categories.end()) {
+                enabled_relevant.push_back(category);
+            }
+        }
+
+        // Find any category that doesn't match a disabled category
+        for (const auto& category : enabled_relevant) {
+            if (std::find_if(disabled_categories.begin(),
+                             disabled_categories.end(),
+                             [&category](const std::string enabled) {
+                                 return utils::glob_match(enabled, category);
+                             }) == disabled_categories.end()) {
+                // Found a single non-disabled category in our list of
+                // enabled categories.
                 return CategoryStatus::Enabled;
             }
         }
+
         return CategoryStatus::Disabled;
     }
 
     void CategoryRegistry::updateEnabled(
-        const std::vector<std::string>& enabled) {
+        const std::vector<std::string>& enabled,
+        const std::vector<std::string>& disabled) {
         std::lock_guard<std::mutex> lh(mutex);
         enabled_categories = enabled;
+        disabled_categories = disabled;
 
         // We're protected by the mutex so relaxed atomics are fine here
         size_t currIndex = group_count.load(std::memory_order_relaxed);
