@@ -66,7 +66,6 @@ namespace phosphor {
          */
         const AtomicCategoryStatus& getStatus(const char* category_group);
 
-        // TODO: Add 'disabled' category support
         /**
          * Enable a list of categories for tracing (and disable all others)
          *
@@ -75,6 +74,17 @@ namespace phosphor {
          */
         void updateEnabled(const std::vector<std::string>& enabled,
                            const std::vector<std::string>& disabled);
+
+        /**
+         * Disables all category groups
+         *
+         * Equivalent to:
+         *
+         *     CategoryRegistry::updateEnabled({{}}, {{}});
+         *
+         * Except a bit more efficient as it doesn't bother with calculations
+         */
+        void disableAll();
 
     protected:
         /**

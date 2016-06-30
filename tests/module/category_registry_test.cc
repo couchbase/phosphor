@@ -86,6 +86,15 @@ TEST_F(CategoryRegistryTest, WildcardPrefix) {
     EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("memcached:"));
 }
 
+TEST_F(CategoryRegistryTest, DisableAll) {
+    registry.updateEnabled({{"notdefault"}, {"default"}}, {{}});
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("default"));
+    EXPECT_EQ(CategoryStatus::Enabled, registry.getStatus("notdefault"));
+    registry.disableAll();
+    EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("default"));
+    EXPECT_EQ(CategoryStatus::Disabled, registry.getStatus("notdefault"));
+}
+
 // Fills the registry with categories, checks they're all disabled,
 // enables them all, checks they're all enabled, disables them all,
 // checks they're all disabled.

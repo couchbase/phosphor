@@ -110,4 +110,17 @@ namespace phosphor {
                                     std::memory_order_relaxed);
         }
     }
+
+    void CategoryRegistry::disableAll() {
+        std::lock_guard<std::mutex> lh(mutex);
+        enabled_categories = {{}};
+        disabled_categories = {{}};
+
+        // We're protected by the mutex so relaxed atomics are fine here
+        size_t currIndex = group_count.load(std::memory_order_relaxed);
+        for (size_t i = 0; i < currIndex; ++i) {
+            group_statuses[i].store(CategoryStatus::Disabled,
+                                    std::memory_order_relaxed);
+        }
+    }
 }
