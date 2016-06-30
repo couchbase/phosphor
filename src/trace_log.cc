@@ -154,7 +154,7 @@ namespace phosphor {
     }
 
     TraceConfig TraceConfig::fromString(const std::string& config) {
-        auto arguments(phosphor::utils::split_string(config, ','));
+        auto arguments(phosphor::utils::split_string(config, ';'));
 
         BufferMode mode = BufferMode::fixed;
         int buffer_size = 1024 * 1024 * 8;

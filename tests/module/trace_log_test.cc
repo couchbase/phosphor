@@ -130,16 +130,16 @@ TEST(TraceConfigTest, createModeErrors) {
 
 TEST(TraceConfigTest, fromString) {
     TraceConfig config = TraceConfig::fromString(
-        "buffer-mode:ring,"
-        "buffer-size:1024,"
+        "buffer-mode:ring;"
+        "buffer-size:1024;"
         "save-on-stop:out.json");
 
     EXPECT_EQ(BufferMode::ring, config.getBufferMode());
     EXPECT_EQ(1024, config.getBufferSize());
     EXPECT_TRUE(config.getStoppedCallback());
     EXPECT_TRUE(config.getStopTracingOnDestruct());
-    EXPECT_FALSE(TraceConfig::fromString("buffer-mode:fixed,"
-                                         "buffer-size:1024,")
+    EXPECT_FALSE(TraceConfig::fromString("buffer-mode:fixed;"
+                                         "buffer-size:1024;")
                      .getStopTracingOnDestruct());
 
     EXPECT_THROW(TraceConfig::fromString("buffer-mode:other"),
@@ -301,7 +301,7 @@ TEST_F(TraceLogTest, testDoneCallback) {
 }
 
 TEST(TraceLogAltTest, FromEnvironmentConstructor) {
-    setenv("PHOSPHOR_TRACING_START", "buffer-mode:fixed,buffer-size:80000", 1);
+    setenv("PHOSPHOR_TRACING_START", "buffer-mode:fixed;buffer-size:80000", 1);
     TraceLog trace_log;
     setenv("PHOSPHOR_TRACING_START", "", true);
 }
