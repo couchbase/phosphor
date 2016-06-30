@@ -46,13 +46,13 @@ namespace phosphor {
      * store various events.
      */
     class TraceChunk {
+    public:
         static CONSTEXPR auto chunk_page_count = PHOSPHOR_CHUNK_PAGE_COUNT;
         static CONSTEXPR auto page_size = 4096;
         static CONSTEXPR auto chunk_size =
             ((page_size * chunk_page_count) / sizeof(TraceEvent));
         using event_array = std::array<TraceEvent, chunk_size>;
 
-    public:
         using const_iterator = event_array::const_iterator;
 
         /**
