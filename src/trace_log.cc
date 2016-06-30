@@ -177,6 +177,8 @@ namespace phosphor {
         BufferMode mode = BufferMode::fixed;
         int buffer_size = 1024 * 1024 * 8;
         std::string filename = "";
+        std::string enabled_categories = "*";
+        std::string disabled_categories = "";
 
         for (const std::string& argument : arguments) {
             auto kv(phosphor::utils::split_string(argument, ':'));
@@ -213,6 +215,10 @@ namespace phosphor {
                 }
             } else if (key == "save-on-stop") {
                 filename = value;
+            } else if (key == "enabled-categories") {
+                enabled_categories = value;
+            } else if (key == "disabled-categories") {
+                disabled_categories = value;
             }
         }
 
@@ -221,6 +227,8 @@ namespace phosphor {
             config_obj.setStoppedCallback(tools::FileStopCallback(filename));
             config_obj.setStopTracingOnDestruct(true);
         }
+        config_obj.setCategories(utils::split_string(enabled_categories, ','),
+                                 utils::split_string(disabled_categories, ','));
         return config_obj;
     }
 
