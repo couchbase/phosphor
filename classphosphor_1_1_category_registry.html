@@ -126,8 +126,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a128049d6b880dc37aa9aff44d597885f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a477d7578bdbb01b11062ed1ed86fa68d"><td class="memItemLeft" align="right" valign="top">const AtomicCategoryStatus &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#a477d7578bdbb01b11062ed1ed86fa68d">getStatus</a> (const char *category_group)</td></tr>
 <tr class="separator:a477d7578bdbb01b11062ed1ed86fa68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af16fcb6cb63df934c35b8d3b178980ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#af16fcb6cb63df934c35b8d3b178980ed">updateEnabled</a> (const std::vector&lt; std::string &gt; &amp;enabled)</td></tr>
-<tr class="separator:af16fcb6cb63df934c35b8d3b178980ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a238b7dca9c6f7284357c045f73263707"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#a238b7dca9c6f7284357c045f73263707">updateEnabled</a> (const std::vector&lt; std::string &gt; &amp;enabled, const std::vector&lt; std::string &gt; &amp;disabled)</td></tr>
+<tr class="separator:a238b7dca9c6f7284357c045f73263707"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -144,7 +144,8 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ad495dbc0d894112941e395075d787453"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad495dbc0d894112941e395075d787453"></a>
 std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>mutex</b></td></tr>
 <tr class="separator:ad495dbc0d894112941e395075d787453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1394fcf76a0df6f4ca4f3deb5bfb555"><td class="memItemLeft" align="right" valign="top">std::array&lt; std::string, <a class="el" href="classphosphor_1_1_category_registry.html#a900d851f1a76309133f449ac1e8eb14d">registry_size</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>groups</b></td></tr>
+<tr class="memitem:aa1394fcf76a0df6f4ca4f3deb5bfb555"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1394fcf76a0df6f4ca4f3deb5bfb555"></a>
+std::array&lt; std::string, <a class="el" href="classphosphor_1_1_category_registry.html#a900d851f1a76309133f449ac1e8eb14d">registry_size</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>groups</b></td></tr>
 <tr class="separator:aa1394fcf76a0df6f4ca4f3deb5bfb555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a879556969fa1a51af36775fb42fac671"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a879556969fa1a51af36775fb42fac671"></a>
 std::array&lt; AtomicCategoryStatus, <a class="el" href="classphosphor_1_1_category_registry.html#a900d851f1a76309133f449ac1e8eb14d">registry_size</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>group_statuses</b></td></tr>
@@ -155,6 +156,9 @@ std::atomic&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><
 <tr class="memitem:a7aee8ccd0259bb6d4e0ab271b8e05cfa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7aee8ccd0259bb6d4e0ab271b8e05cfa"></a>
 std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>enabled_categories</b></td></tr>
 <tr class="separator:a7aee8ccd0259bb6d4e0ab271b8e05cfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2de2e6c237d9319e2f899b692ff5ffc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2de2e6c237d9319e2f899b692ff5ffc3"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>disabled_categories</b></td></tr>
+<tr class="separator:a2de2e6c237d9319e2f899b692ff5ffc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
@@ -244,7 +248,7 @@ static CONSTEXPR int&#160;</td><td class="memItemRight" valign="bottom"><b>index
 
 </div>
 </div>
-<a class="anchor" id="af16fcb6cb63df934c35b8d3b178980ed"></a>
+<a class="anchor" id="a238b7dca9c6f7284357c045f73263707"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -252,8 +256,18 @@ static CONSTEXPR int&#160;</td><td class="memItemRight" valign="bottom"><b>index
           <td class="memname">void phosphor::CategoryRegistry::updateEnabled </td>
           <td>(</td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td class="paramname"><em>enabled</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>disabled</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -261,6 +275,7 @@ static CONSTEXPR int&#160;</td><td class="memItemRight" valign="bottom"><b>index
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">enabled</td><td>Vector of categories to mark as enabled </td></tr>
+    <tr><td class="paramname">disabled</td><td>Vector of categories to mark as disabled </td></tr>
   </table>
   </dd>
 </dl>
@@ -268,26 +283,6 @@ static CONSTEXPR int&#160;</td><td class="memItemRight" valign="bottom"><b>index
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="aa1394fcf76a0df6f4ca4f3deb5bfb555"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::array&lt;std::string, <a class="el" href="classphosphor_1_1_category_registry.html#a900d851f1a76309133f449ac1e8eb14d">registry_size</a>&gt; phosphor::CategoryRegistry::groups</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">            {<span class="stringliteral">&quot;default&quot;</span>, <span class="stringliteral">&quot;category limit reached&quot;</span>, <span class="stringliteral">&quot;__metadata&quot;</span>}}</div></div><!-- fragment -->
-</div>
-</div>
 <a class="anchor" id="a900d851f1a76309133f449ac1e8eb14d"></a>
 <div class="memitem">
 <div class="memproto">
