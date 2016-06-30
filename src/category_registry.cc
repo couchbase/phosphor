@@ -25,7 +25,8 @@
 namespace phosphor {
 
     CategoryRegistry::CategoryRegistry()
-        : group_count(index_non_default_categories) {
+        : groups({{"default", "category limit reached", "__metadata"}}),
+          group_count(index_non_default_categories) {
         for (auto& status : group_statuses) {
             status.store(CategoryStatus::Disabled, std::memory_order_relaxed);
         }

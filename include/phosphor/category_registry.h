@@ -89,9 +89,7 @@ namespace phosphor {
 
         std::mutex mutex;
 
-        std::array<std::string, registry_size> groups =
-            std::array<std::string, registry_size>{
-                {"default", "category limit reached", "__metadata"}};
+        std::array<std::string, registry_size> groups;
         static CONSTEXPR int index_category_limit = 1;
         static CONSTEXPR int index_metadata = 2;
         static CONSTEXPR int index_non_default_categories = 3;
