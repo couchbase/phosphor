@@ -120,7 +120,7 @@
     } scoped_trace_inst_##__LINE__##__FILE__;
 
 #define TRACE_EVENT0(category, name)                                  \
-    TRACE_EVENT_START(category, name);                                \
+    TRACE_EVENT_START0(category, name);                                \
     struct scoped_trace_t_##__LINE__##__FILE__ {                      \
         ~scoped_trace_t_##__LINE__##__FILE__() {                      \
             phosphor::TraceLog::getInstance().logEvent(               \
