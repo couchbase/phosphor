@@ -1,11 +1,12 @@
 var NAVTREE =
 [
   [ "Phosphor", "index.html", [
-    [ "Phosphor Examples", "index.html", null ],
     [ "Phosphor Architecture", "md_docs_Architecture.html", null ],
     [ "Event Tracing Instrumentation API Spec", "md_docs_design_Instrumentation-API.html", null ],
     [ "One-pager: Tracing in KV-Engine", "md_docs_design_One-pager.html", null ],
     [ "Couchbase Event Tracing Functional Requirements", "md_docs_design_Requirements.html", null ],
+    [ "Phosphor Examples", "md_examples_README.html", null ],
+    [ "Phosphor", "md_README.html", null ],
     [ "Roadmap", "md_ROADMAP.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Classes", "annotated.html", [
