@@ -178,7 +178,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START(category, name);                                \</div><div class="line">    struct scoped_trace_t_##__LINE__##__FILE__ {                      \</div><div class="line">        ~scoped_trace_t_##__LINE__##__FILE__() {                      \</div><div class="line">            phosphor::TraceLog::getInstance().logEvent(               \</div><div class="line">                category, name, phosphor::TraceEvent::Type::SyncEnd); \</div><div class="line">        }                                                             \</div><div class="line">    } scoped_trace_inst_##__LINE__##__FILE__;</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START0(category, name);                               \</div><div class="line">    struct scoped_trace_t_##__LINE__##__FILE__ {                      \</div><div class="line">        ~scoped_trace_t_##__LINE__##__FILE__() {                      \</div><div class="line">            phosphor::TraceLog::getInstance().logEvent(               \</div><div class="line">                category, name, phosphor::TraceEvent::Type::SyncEnd); \</div><div class="line">        }                                                             \</div><div class="line">    } scoped_trace_inst_##__LINE__##__FILE__;</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
