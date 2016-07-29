@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Phosphor: Main Page</title>
+<title>Phosphor: Phosphor Examples</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,10 +99,14 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Phosphor Documentation</div>  </div>
+<div class="title">Phosphor Examples </div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><p>This directory contains examples of Phosphor being used for tracing. The examples in this directory can be built with the rest of the examples by using the "-DPHOSPHOR_BUILD_EXAMPLES=1" CMake config flag or running <code>make all</code> with the top-level-makefile (Which will also build the benchmarks, with coverage and run the tests).</p>
+<h2>sorting_algorithm</h2>
+<p>The sorting algorithm executable contains an implementation of merge sort and will print out an array of ints before and after sorting. You can enable tracing with Phosphor by using the PHOSPHOR_TRACING_START environment variable. e.g. </p><pre class="fragment">PHOSPHOR_TRACING_START="buffer-mode:fixed,buffer-size:1241024,save-on-stop:sorting_output.%d.json" build/examples/sorting_algorithm
+</pre><p>Will start tracing when the trace log object is instantiated (Usually at the first call site) with a fixed size buffer roughly 1MB in size. It will also automaticallted dump a file named along the lines of <code>sorting_output.2016-06-21T08:00:45Z.json</code> when the trace log is destructed (On program exit). This tracing file can be viewed in the Catapult tracing viewer which is bundled with Chrome/Chromium (chrome://tracing/). </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
