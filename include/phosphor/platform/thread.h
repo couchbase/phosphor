@@ -33,7 +33,6 @@
 
 namespace phosphor {
     namespace platform {
-        extern THREAD_LOCAL uint64_t thread_id;
 
         /**
          * Get the system process id for the calling process
@@ -44,6 +43,7 @@ namespace phosphor {
          *
          * @return process id for the calling process
          */
+        PHOSPHOR_API
         int getCurrentProcessID();
 
         /**
@@ -55,6 +55,7 @@ namespace phosphor {
          *
          * @return thread id for the calling thread
          */
+        PHOSPHOR_API
         uint64_t getCurrentThreadID();
 
         /**
@@ -71,6 +72,8 @@ namespace phosphor {
          * @return thread id for the calling thread
          */
         inline uint64_t getCurrentThreadIDCached() {
+            static THREAD_LOCAL uint64_t thread_id;
+
             if (unlikely(!thread_id)) {
                 thread_id = getCurrentThreadID();
             }

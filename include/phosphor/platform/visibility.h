@@ -17,28 +17,20 @@
 
 #pragma once
 
-#include "visibility.h"
+/* Macros for handling symbol visibility */
 
-#if defined(__GNUC__) || defined(__clang__)
-/**
- * Branch prediction hint for the compiler where the given
- * expression is likely to evaluate to true
+
+/* EXPORT_SYMBOL
+ *
+ * Use for symbols which should be exported (externally visible) from a
+ * library.
  */
-#define likely(x) __builtin_expect(!!(x), 1)
-
-/**
- * Branch prediction hint for the compiler where the given
- * expression is unlikely to evaluate to true
- */
-#define unlikely(x) __builtin_expect(!!(x), 0)
+#if (defined(__SUNPRO_C) && (__SUNPRO_C >= 0x550)) || (defined(__SUNPRO_CC) && (__SUNPRO_CC >= 0x550))
+#define PHOSPHOR_API __global
+#elif defined __GNUC__
+#define PHOSPHOR_API __attribute__ ((visibility("default")))
+#elif defined(_MSC_VER)
+#define PHOSPHOR_API __declspec(dllexport)
 #else
-#define likely(x) (x)
-#define unlikely(x) (x)
-#endif
-
-#if defined(_MSC_VER) && _MSC_VER < 1900
-#define CONSTEXPR const
-#define alignas(x)
-#else
-#define CONSTEXPR constexpr
+#define PHOSPHOR_API
 #endif

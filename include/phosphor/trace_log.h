@@ -31,8 +31,8 @@
 namespace phosphor {
 
     // Forward declare
-    class TraceLog;
-    class TraceConfig;
+    class PHOSPHOR_API TraceLog;
+    class PHOSPHOR_API TraceConfig;
 
     /**
      * Functor type for a callback to be used when a TraceLog stops
@@ -86,7 +86,7 @@ namespace phosphor {
      * created, or by using the TraceLog::configure() method *prior* to
      * the first time the TraceLog is started.
      */
-    class TraceLogConfig {
+    class PHOSPHOR_API TraceLogConfig {
     public:
         /**
          * Default constructor establishes sensible default values for
@@ -172,7 +172,7 @@ namespace phosphor {
      * All other arguments are optional and may be specified using chainable
      * methods.
      */
-    class TraceConfig {
+    class PHOSPHOR_API TraceConfig {
     public:
         TraceConfig() = default;
 
@@ -318,7 +318,7 @@ namespace phosphor {
      *
      * This class's public interface is *generally* thread-safe.
      */
-    class TraceLog {
+    class PHOSPHOR_API TraceLog {
     public:
         /**
          * Constructor for creating a TraceLog with a specific log
@@ -575,11 +575,12 @@ namespace phosphor {
             mutex.unlock();
         }
 
-    protected:
         struct ChunkTenant {
             Sentinel* sentinel;
             TraceChunk* chunk;
         };
+
+    protected:
 
         /**
          * Gets a pointer to the appropriate ChunkTenant (or nullptr)
@@ -588,29 +589,7 @@ namespace phosphor {
          * @return A valid ChunkTenant with available events or a
          *         nullptr if a valid ChunkTenant could not be acquired.
          */
-        inline ChunkTenant* getChunkTenant() {
-            auto shared_index =
-                platform::getCurrentThreadIDCached() % shared_chunks.size();
-
-            ChunkTenant& cs = (thread_chunk.sentinel)
-                                  ? thread_chunk
-                                  : shared_chunks[shared_index];
-
-            if (!cs.sentinel->acquire()) {
-                resetChunk(cs);
-                return nullptr;
-            }
-            // State is busy
-            if (!cs.chunk || cs.chunk->isFull()) {
-                if (!replaceChunk(cs)) {
-                    cs.sentinel->release();
-                    stop();
-                    return nullptr;
-                }
-            }
-
-            return &cs;
-        }
+        ChunkTenant* getChunkTenant();
 
         /**
          * Replaces the current chunk held by the ChunkTenant with a new chunk
@@ -653,15 +632,6 @@ namespace phosphor {
          * SHOULD be safe to be freed / iterated etc.
          */
         void evictThreads(std::lock_guard<TraceLog>& lh);
-
-        /**
-         * The thread-specific ChunkTenant used for low contention
-         *
-         * This ChunkTenant is only used when the current thread
-         * has been registered as it requires resources allocated
-         * that are only referred to from thread-local storage.
-         */
-        static THREAD_LOCAL ChunkTenant thread_chunk;
 
         /**
          * The shared ChunkTenants which are used by default when a thread

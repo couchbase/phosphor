@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "phosphor/platform/core.h"
 #include "phosphor/trace_buffer.h"
 #include "phosphor/trace_log.h"
 
@@ -41,7 +42,7 @@ namespace phosphor {
          * The above will write the JSON to stderr.
          *
          */
-        class JSONExport {
+        class PHOSPHOR_API JSONExport {
         public:
             /**
              * Creates the export object
@@ -91,7 +92,7 @@ namespace phosphor {
          * everything that a given process has traced when the global TraceLog
          * is destructed).
          */
-        class FileStopCallback {
+        class PHOSPHOR_API FileStopCallback {
         public:
             /**
              * @param _file_path File path to save the buffer to on completion,

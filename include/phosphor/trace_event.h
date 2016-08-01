@@ -36,7 +36,7 @@ namespace phosphor {
 
     CONSTEXPR auto arg_count = 2;
 
-    class TraceEvent {
+    class PHOSPHOR_API TraceEvent {
     public:
         /**
          * The enumeration representing the different types of TraceEvents

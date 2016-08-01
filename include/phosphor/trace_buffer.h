@@ -45,7 +45,7 @@ namespace phosphor {
      * The TraceChunk should be used from a single thread to
      * store various events.
      */
-    class TraceChunk {
+    class PHOSPHOR_API TraceChunk {
     public:
         static CONSTEXPR auto chunk_page_count = PHOSPHOR_CHUNK_PAGE_COUNT;
         static CONSTEXPR auto page_size = 4096;
@@ -334,6 +334,9 @@ namespace phosphor {
     using trace_buffer_factory =
         std::function<buffer_ptr(size_t generation, size_t buffer_size)>;
 
+    PHOSPHOR_API
     buffer_ptr make_fixed_buffer(size_t generation, size_t buffer_size);
+
+    PHOSPHOR_API
     buffer_ptr make_ring_buffer(size_t generation, size_t buffer_size);
 }

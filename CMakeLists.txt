@@ -27,7 +27,7 @@ SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/utils/memory.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
-ADD_LIBRARY(phosphor STATIC ${phosphor_SOURCE_FILES})
+ADD_LIBRARY(phosphor SHARED ${phosphor_SOURCE_FILES})
 
 ADD_SUBDIRECTORY(tests)
 

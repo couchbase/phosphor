@@ -45,7 +45,7 @@ namespace phosphor {
      * - Close   [Open->Close]
      * - Reopen  [Close->Busy]
      */
-    class alignas(64) Sentinel {
+    class PHOSPHOR_API Sentinel {
     public:
         Sentinel();
 
@@ -123,6 +123,9 @@ namespace phosphor {
         enum class State { open, busy, closed };
 
         std::atomic<State> state;
+
+        // Increase size to at least that of a cacheline
+        char cacheline_pad[64 - sizeof(std::atomic<State>)];
     };
 
 }  // namespace phosphor

@@ -236,6 +236,15 @@ namespace phosphor {
      * TraceLog implementation
      */
 
+    /**
+     * The thread-specific ChunkTenant used for low contention
+     *
+     * This ChunkTenant is only used when the current thread
+     * has been registered as it requires resources allocated
+     * that are only referred to from thread-local storage.
+     */
+    THREAD_LOCAL TraceLog::ChunkTenant thread_chunk = {0, 0};
+
     TraceLog::TraceLog(const TraceLogConfig& _config) : enabled(false) {
         configure(_config);
     }
@@ -361,6 +370,30 @@ namespace phosphor {
         delete thread_chunk.sentinel;
     }
 
+    TraceLog::ChunkTenant* TraceLog::getChunkTenant() {
+        auto shared_index =
+                platform::getCurrentThreadIDCached() % shared_chunks.size();
+
+        ChunkTenant& cs = (thread_chunk.sentinel)
+                          ? thread_chunk
+                          : shared_chunks[shared_index];
+
+        if (!cs.sentinel->acquire()) {
+            resetChunk(cs);
+            return nullptr;
+        }
+        // State is busy
+        if (!cs.chunk || cs.chunk->isFull()) {
+            if (!replaceChunk(cs)) {
+                cs.sentinel->release();
+                stop();
+                return nullptr;
+            }
+        }
+
+        return &cs;
+    }
+
     bool TraceLog::replaceChunk(ChunkTenant& ct) {
         if (ct.chunk) {
             buffer->returnChunk(*ct.chunk);
@@ -382,5 +415,4 @@ namespace phosphor {
         }
     }
 
-    THREAD_LOCAL TraceLog::ChunkTenant TraceLog::thread_chunk = {0, 0};
 }
