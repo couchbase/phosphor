@@ -142,6 +142,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aa6d0ac824898033ce24310a3e1c6a01f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6d0ac824898033ce24310a3e1c6a01f"></a>
 std::atomic&lt; <a class="el" href="classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707">State</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>state</b></td></tr>
 <tr class="separator:aa6d0ac824898033ce24310a3e1c6a01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7da0819440823dbd29e7aafc9f000186"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7da0819440823dbd29e7aafc9f000186"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>cacheline_pad</b> [64-sizeof(std::atomic&lt; <a class="el" href="classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707">State</a> &gt;)]</td></tr>
+<tr class="separator:a7da0819440823dbd29e7aafc9f000186"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> is used to encapsulate the logic behind locking of a <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">TraceLog::ChunkTenant</a>. It is used to safely handle transitions between various states that a ChunkTenant might be in.</p>

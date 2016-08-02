@@ -6,7 +6,7 @@ var searchData=
   ['getbuffersize',['getBufferSize',['../classphosphor_1_1_trace_config.html#af7cd85da9429af0aa6c2e748519cfb2e',1,'phosphor::TraceConfig']]],
   ['getcategorystatus',['getCategoryStatus',['../classphosphor_1_1_trace_log.html#ac9c0245c0bc2e15e5268a154785aa987',1,'phosphor::TraceLog']]],
   ['getchunk',['getChunk',['../classphosphor_1_1_trace_buffer.html#ad6694eb1489bf79362befa8abfe723df',1,'phosphor::TraceBuffer::getChunk()'],['../classphosphor_1_1_fixed_trace_buffer.html#a6e535fa187d0ec2e78e949b988a41948',1,'phosphor::FixedTraceBuffer::getChunk()'],['../classphosphor_1_1_ring_trace_buffer.html#a4f31f7fb7541404871c55b2fe774174c',1,'phosphor::RingTraceBuffer::getChunk()']]],
-  ['getchunktenant',['getChunkTenant',['../classphosphor_1_1_trace_log.html#aeea8aa36e859190f94f516ba25b4077d',1,'phosphor::TraceLog']]],
+  ['getchunktenant',['getChunkTenant',['../classphosphor_1_1_trace_log.html#a30cd12f4e9970f7347efe63986638227',1,'phosphor::TraceLog']]],
   ['getdisabledcategories',['getDisabledCategories',['../classphosphor_1_1_trace_config.html#a8198d188e20880b6344593915a6d6b5f',1,'phosphor::TraceConfig']]],
   ['getenabledcategories',['getEnabledCategories',['../classphosphor_1_1_trace_config.html#a09d32bbeb531167bf499e402b3e9165f',1,'phosphor::TraceConfig']]],
   ['getgeneration',['getGeneration',['../classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55',1,'phosphor::TraceBuffer::getGeneration()'],['../classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6',1,'phosphor::FixedTraceBuffer::getGeneration()'],['../classphosphor_1_1_ring_trace_buffer.html#aa10fac1d2c6a062614040c87afd826cf',1,'phosphor::RingTraceBuffer::getGeneration()']]],

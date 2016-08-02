@@ -10,5 +10,6 @@ var classphosphor_1_1_sentinel =
     [ "close", "classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877", null ],
     [ "release", "classphosphor_1_1_sentinel.html#ac72905e7efc8bb93349eef2b394f3551", null ],
     [ "reopen", "classphosphor_1_1_sentinel.html#a7ead8e098b98397cf731e5e5733a9215", null ],
+    [ "cacheline_pad", "classphosphor_1_1_sentinel.html#a7da0819440823dbd29e7aafc9f000186", null ],
     [ "state", "classphosphor_1_1_sentinel.html#aa6d0ac824898033ce24310a3e1c6a01f", null ]
 ];

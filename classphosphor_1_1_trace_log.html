@@ -112,7 +112,6 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_log.html','');
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classphosphor_1_1_trace_log-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">phosphor::TraceLog Class Reference</div>  </div>
@@ -174,8 +173,8 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aeea8aa36e859190f94f516ba25b4077d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#aeea8aa36e859190f94f516ba25b4077d">getChunkTenant</a> ()</td></tr>
-<tr class="separator:aeea8aa36e859190f94f516ba25b4077d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30cd12f4e9970f7347efe63986638227"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a30cd12f4e9970f7347efe63986638227">getChunkTenant</a> ()</td></tr>
+<tr class="separator:a30cd12f4e9970f7347efe63986638227"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac3501043f159ac129c97cf03b302041"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#aac3501043f159ac129c97cf03b302041">replaceChunk</a> (<a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> &amp;ct)</td></tr>
 <tr class="separator:aac3501043f159ac129c97cf03b302041"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7072d5d2fa370d231b6c93490d2180ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a7072d5d2fa370d231b6c93490d2180ca">resetChunk</a> (<a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> &amp;ct)</td></tr>
@@ -201,11 +200,6 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a254ad893c602a1c54a7c7347c6495925"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0b34e540994efaabe4ce310070287cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_category_registry.html">CategoryRegistry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#af0b34e540994efaabe4ce310070287cb">registry</a></td></tr>
 <tr class="separator:af0b34e540994efaabe4ce310070287cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a05712ecaf10a3183c16c8f44c5c7b092"><td class="memItemLeft" align="right" valign="top">static THREAD_LOCAL <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a05712ecaf10a3183c16c8f44c5c7b092">thread_chunk</a> = {0, 0}</td></tr>
-<tr class="separator:a05712ecaf10a3183c16c8f44c5c7b092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> class is the main public management interface of Phosphor. Generally the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is used as a singleton, this instance is acquired via <a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">TraceLog::getInstance()</a>.</p>
@@ -409,7 +403,7 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 
 </div>
 </div>
-<a class="anchor" id="aeea8aa36e859190f94f516ba25b4077d"></a>
+<a class="anchor" id="a30cd12f4e9970f7347efe63986638227"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -417,7 +411,7 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a>* phosphor::TraceLog::getChunkTenant </td>
+          <td class="memname"><a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">TraceLog::ChunkTenant</a> * phosphor::TraceLog::getChunkTenant </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -425,7 +419,7 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1036,28 +1030,6 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>The shared ChunkTenants which are used by default when a thread has not been registered.</p>
 <p>This is because we need to guarantee that the resources in the thread-specific chunk will be at some point freed up. </p>
-
-</div>
-</div>
-<a class="anchor" id="a05712ecaf10a3183c16c8f44c5c7b092"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">THREAD_LOCAL <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">TraceLog::ChunkTenant</a> phosphor::TraceLog::thread_chunk = {0, 0}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The thread-specific <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> used for low contention</p>
-<p>This <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> is only used when the current thread has been registered as it requires resources allocated that are only referred to from thread-local storage. </p>
 
 </div>
 </div>
