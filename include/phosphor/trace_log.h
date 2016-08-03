@@ -285,10 +285,10 @@ namespace phosphor {
          */
         static trace_buffer_factory modeToFactory(BufferMode mode);
 
-        BufferMode buffer_mode;
-        size_t buffer_size;
-        trace_buffer_factory buffer_factory;
-        TracingStoppedCallback tracing_stopped_callback;
+        BufferMode buffer_mode = BufferMode::fixed;
+        size_t buffer_size = 0;
+        trace_buffer_factory buffer_factory = nullptr;
+        TracingStoppedCallback tracing_stopped_callback = nullptr;
         bool stop_tracing = false;
 
         std::vector<std::string> enabled_categories;
