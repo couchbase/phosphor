@@ -13,6 +13,7 @@ var classphosphor_1_1_trace_config =
     [ "setCategories", "classphosphor_1_1_trace_config.html#a06350570334ce91209b01b27b35708ec", null ],
     [ "setStoppedCallback", "classphosphor_1_1_trace_config.html#aeeb649565b79d61e54fcf2d8dcb348c1", null ],
     [ "setStopTracingOnDestruct", "classphosphor_1_1_trace_config.html#a8a2af9e6a5fe7e09a82032b9dce0b56e", null ],
+    [ "toString", "classphosphor_1_1_trace_config.html#a247dd8a84e17bb8c9762ec1d536c57e9", null ],
     [ "buffer_factory", "classphosphor_1_1_trace_config.html#ae76d1955c51c9f02c72d22ca1ccb8d07", null ],
     [ "buffer_mode", "classphosphor_1_1_trace_config.html#aacb4572164142479ea8f34746c3396c3", null ],
     [ "buffer_size", "classphosphor_1_1_trace_config.html#a354004aeacedd828f717a81bbf9dc4bd", null ],
