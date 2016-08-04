@@ -229,6 +229,23 @@ TEST_F(TraceLogTest, isEnabled) {
     EXPECT_FALSE(trace_log.isEnabled());
 }
 
+TEST_F(TraceLogTest, multiStart) {
+    TraceConfig configA(BufferMode::ring, min_buffer_size);
+    TraceConfig configB(BufferMode::fixed, min_buffer_size * 2);
+
+    trace_log.start(configA);
+    EXPECT_TRUE(trace_log.isEnabled());
+    EXPECT_EQ(configA.toString(), trace_log.getTraceConfig().toString());
+
+    trace_log.start(configB);
+    EXPECT_TRUE(trace_log.isEnabled());
+    EXPECT_EQ(configB.toString(), trace_log.getTraceConfig().toString());
+    trace_log.stop();
+    EXPECT_FALSE(trace_log.isEnabled());
+    trace_log.stop();
+    EXPECT_FALSE(trace_log.isEnabled());
+}
+
 TEST_F(TraceLogTest, EnabledBufferGetThrow) {
     EXPECT_EQ(nullptr, trace_log.getBuffer().get());
     start_basic();

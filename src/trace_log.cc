@@ -333,7 +333,7 @@ namespace phosphor {
         start(lh, _trace_config);
     }
 
-    void TraceLog::start(std::lock_guard<TraceLog>&,
+    void TraceLog::start(std::lock_guard<TraceLog>& lh,
                          const TraceConfig& _trace_config) {
         trace_config = _trace_config;
 
@@ -342,6 +342,10 @@ namespace phosphor {
             throw std::invalid_argument(
                 "Cannot specify a buffer size less than a single chunk (" +
                 std::to_string(sizeof(TraceChunk)) + " bytes)");
+        }
+
+        if (enabled) {
+            stop(lh);
         }
 
         buffer = trace_config.getBufferFactory()(generation++, buffer_size);
