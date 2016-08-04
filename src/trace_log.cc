@@ -400,6 +400,11 @@ namespace phosphor {
         delete thread_chunk.sentinel;
     }
 
+    TraceConfig TraceLog::getTraceConfig() const {
+        std::lock_guard<std::mutex> lh(mutex);
+        return trace_config;
+    }
+
     TraceLog::ChunkTenant* TraceLog::getChunkTenant() {
         auto shared_index =
                 platform::getCurrentThreadIDCached() % shared_chunks.size();

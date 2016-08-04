@@ -596,6 +596,8 @@ namespace phosphor {
             TraceChunk* chunk;
         };
 
+        TraceConfig getTraceConfig() const;
+
     protected:
 
         /**
@@ -686,7 +688,7 @@ namespace phosphor {
          * TraceChunk contained within a ChunkTenant, this is
          * protected by the ChunkTenant's sentinel lock instead.
          */
-        std::mutex mutex;
+        mutable std::mutex mutex;
 
         /**
          * buffer is the current buffer that is being used by the TraceLog.

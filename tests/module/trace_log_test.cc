@@ -295,6 +295,16 @@ TEST_F(TraceLogTest, CategoryConfig) {
     EXPECT_EQ(CategoryStatus::Disabled, trace_log.getCategoryStatus("world"));
 }
 
+TEST_F(TraceLogTest, GetConfig) {
+    TraceConfig config(BufferMode::fixed, min_buffer_size);
+    config.setCategories({{"*"}}, {{"world"}});
+
+    trace_log.start(config);
+    EXPECT_EQ(config.toString(), trace_log.getTraceConfig().toString());
+    EXPECT_EQ(BufferMode::fixed, trace_log.getTraceConfig().getBufferMode());
+    EXPECT_EQ(sizeof(TraceChunk), trace_log.getTraceConfig().getBufferSize());
+}
+
 TEST(TraceLogStaticTest, getInstance) {
     EXPECT_EQ(&TraceLog::getInstance(), &TraceLog::getInstance());
 }
