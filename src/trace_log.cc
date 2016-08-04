@@ -27,6 +27,21 @@
 
 namespace phosphor {
 
+    std::ostream& operator<<(std::ostream& stream, const BufferMode mode) {
+        switch (mode) {
+            case BufferMode::custom:
+                stream << "custom";
+                break;
+            case BufferMode::fixed:
+                stream << "fixed";
+                break;
+            case BufferMode::ring:
+                stream << "ring";
+                break;
+        }
+        return stream;
+    }
+
     /*
      * TraceLogConfig implementation
      */
@@ -230,6 +245,21 @@ namespace phosphor {
         config_obj.setCategories(utils::split_string(enabled_categories, ','),
                                  utils::split_string(disabled_categories, ','));
         return config_obj;
+    }
+
+    std::string TraceConfig::toString() const {
+        std::stringstream result;
+
+        result << "buffer-mode:" << buffer_mode << ";";
+        result << "buffer-size:" << buffer_size << ";";
+        result << "enabled-categories:"
+               << utils::join_string(enabled_categories, ',') << ";";
+        result << "disabled-categories:"
+               << utils::join_string(disabled_categories, ',') << "";
+
+        // Can't easily do the 'save-on-stop' callback
+
+        return result.str();
     }
 
     /*

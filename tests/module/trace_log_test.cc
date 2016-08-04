@@ -166,6 +166,24 @@ TEST(TraceConfigTest, fromString) {
                  std::invalid_argument);
 }
 
+TEST(TraceConfigTest, toString) {
+    TraceConfig config(BufferMode::fixed, 1337);
+    config.setCategories({{"hello"}}, {{"world"}});
+    EXPECT_EQ("buffer-mode:fixed;buffer-size:1337;"
+              "enabled-categories:hello;disabled-categories:world",
+              config.toString());
+
+    TraceConfig config2(BufferMode::ring, 0);
+    EXPECT_EQ("buffer-mode:ring;buffer-size:0;"
+              "enabled-categories:*;disabled-categories:",
+              config2.toString());
+
+    TraceConfig config3(make_fixed_buffer, 1337);
+    EXPECT_EQ("buffer-mode:custom;buffer-size:1337;"
+              "enabled-categories:*;disabled-categories:",
+              config3.toString());
+}
+
 class MockTraceLog : public TraceLog {
     friend class TraceLogTest;
     using TraceLog::TraceLog;

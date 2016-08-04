@@ -78,6 +78,12 @@ namespace phosphor {
     };
 
     /**
+     * ostream operator overload for BufferMode
+     */
+    PHOSPHOR_API
+    std::ostream& operator<<(std::ostream& stream, const BufferMode mode);
+
+    /**
      * The TraceLogConfig is used to perform a one-time config of a
      * TraceLog for anything that must be set only once e.g. the number
      * of shared sentinels to create.
@@ -272,6 +278,16 @@ namespace phosphor {
          * @return Generated TraceConfig
          */
         static TraceConfig fromString(const std::string& config);
+
+        /**
+         * Converts a TraceConfig to a config string.
+         *
+         * This can be used to convert the TraceConfig that a TraceLog is
+         * using to a human readable form.
+         *
+         * @return The config string
+         */
+        std::string toString() const;
 
     protected:
         /**
