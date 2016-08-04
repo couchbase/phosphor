@@ -109,6 +109,20 @@ namespace phosphor {
             return elems;
         }
 
+        std::string join_string(const std::vector<std::string>& strs,
+                                const char delim) {
+            std::string result;
+            if (strs.size() == 0) {
+                return result;
+            }
+
+            for(const auto& str : strs) {
+                result += str + delim;
+            }
+            result.resize(result.size() - 1); // Remove last delimiter
+            return result;
+        }
+
         std::string& string_replace(std::string& str,
                                     const std::string& from,
                                     const std::string& to) {

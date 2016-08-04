@@ -50,6 +50,9 @@ namespace phosphor {
         std::vector<std::string> split_string(const std::string& str,
                                               char delim = ' ');
 
+        std::string join_string(const std::vector<std::string>& strs,
+                                const char delim = ' ');
+
         std::string& string_replace(std::string& str,
                                     const std::string& from,
                                     const std::string& to);

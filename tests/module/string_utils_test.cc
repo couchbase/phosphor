@@ -64,6 +64,16 @@ TEST(SplitStringTest, test) {
     EXPECT_THAT(split_string(",,,", ','), testing::ElementsAre("", "", ""));
 }
 
+TEST(JoinStringTest, test) {
+    using phosphor::utils::join_string;
+
+    EXPECT_EQ(join_string({{"hello"}}), "hello");
+    EXPECT_EQ(join_string({{"hello"}, {"world"}}), "hello world");
+    EXPECT_EQ(join_string({}), "");
+    EXPECT_EQ(join_string({{"hello"}, {"world"}}, ','), "hello,world");
+    EXPECT_EQ(join_string({{"hello"}, {""}}, ','), "hello,");
+}
+
 using phosphor::utils::string_replace;
 
 TEST(SplitReplaceTest, test) {
