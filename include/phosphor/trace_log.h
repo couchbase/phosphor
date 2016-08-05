@@ -262,7 +262,7 @@ namespace phosphor {
         const std::vector<std::string>& getEnabledCategories() const;
 
         /**
-         * @return The disabled categories fro this trace config
+         * @return The disabled categories for this trace config
          */
         const std::vector<std::string>& getDisabledCategories() const;
 
