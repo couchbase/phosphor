@@ -27,22 +27,15 @@ public:
     using phosphor::TraceLog::TraceLog;
 
     void replaceChunk() {
-        auto shared_index = phosphor::platform::getCurrentThreadIDCached() %
-                            shared_chunks.size();
-        ChunkTenant& cs = (thread_chunk.sentinel) ? thread_chunk
-                                                  : shared_chunks[shared_index];
-        if (!cs.sentinel->acquire()) {
-            if (!cs.sentinel->reopen()) {
-                return;
-            } else {
-                cs.chunk = nullptr;
-            }
+        ChunkTenant* cs = getChunkTenant();
+        if (!cs) {
+            return;
         }
-        phosphor::TraceLog::replaceChunk(cs);
-        if (cs.chunk) {
-            cs.sentinel->release();
+        phosphor::TraceLog::replaceChunk(*cs);
+        if (cs->chunk) {
+            cs->sentinel->release();
         } else {
-            cs.sentinel->release();
+            cs->sentinel->release();
             stop();
         }
     }

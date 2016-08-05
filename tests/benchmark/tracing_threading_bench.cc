@@ -40,25 +40,6 @@ void NaiveSharedTenants(benchmark::State& state) {
 }
 BENCHMARK(NaiveSharedTenants)->ThreadRange(1, 32);
 
-void DistributedSharedTenants(benchmark::State& state) {
-    static phosphor::TraceLog log{phosphor::TraceLogConfig()};
-    phosphor::platform::thread_id = state.thread_index;
-
-    if (state.thread_index == 0) {
-        log.start(phosphor::TraceConfig(
-            phosphor::BufferMode::ring,
-            (sizeof(phosphor::TraceChunk) * (1 + state.threads))));
-    }
-    while (state.KeepRunning()) {
-        log.logEvent(
-            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
-    }
-    if (state.thread_index == 0) {
-        log.stop();
-    }
-}
-BENCHMARK(DistributedSharedTenants)->ThreadRange(1, 32);
-
 void SingleChunkTenant(benchmark::State& state) {
     static phosphor::TraceLog log(
         phosphor::TraceLogConfig().setSentinelCount(1));
