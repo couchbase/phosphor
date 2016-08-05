@@ -218,7 +218,7 @@ namespace phosphor {
          *         }
          *     }
          */
-        class chunk_iterator
+        class PHOSPHOR_API chunk_iterator
             : public std::iterator<std::bidirectional_iterator_tag,
                                    TraceChunk> {
             using const_reference = const TraceChunk&;
@@ -287,7 +287,7 @@ namespace phosphor {
          *         // Do something with every chunk
          *     }
          */
-        class chunk_iterable {
+        class PHOSPHOR_API chunk_iterable {
         public:
             /**
              * @param buffer_ The buffer to iterate over

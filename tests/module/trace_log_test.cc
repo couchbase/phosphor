@@ -305,6 +305,28 @@ TEST_F(TraceLogTest, logTillFullThreaded) {
     };
 }
 
+TEST_F(TraceLogTest, StopRestartVerify) {
+    // Start tracing and ensure we've taken a chunk from it
+    start_basic();
+    trace_log.logEvent("category", "name", TraceEvent::Type::Instant);
+
+    // Stop tracing (and invalidate the chunk we're currently holding)
+    trace_log.stop();
+
+    // Restart tracing and attempt to log an event
+    start_basic();
+    trace_log.logEvent("category2", "name", TraceEvent::Type::Instant);
+
+    // Fetch the buffer and ensure that it contains our second event
+    // (i.e. we didn't lose the event in the
+    // process of resetting the ChunkTenant)
+    trace_log.stop();
+    auto buffer = trace_log.getBuffer();
+    auto event = buffer->begin();
+    ASSERT_NE(buffer->end(), event);
+    EXPECT_STREQ("category2", (*event).getCategory());
+}
+
 TEST_F(TraceLogTest, CategoryConfig) {
     trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size)
                         .setCategories({{"*"}}, {{"world"}}));

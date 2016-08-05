@@ -417,9 +417,8 @@ namespace phosphor {
                           ? thread_chunk
                           : shared_chunks[shared_index];
 
-        if (!cs.sentinel->acquire()) {
+        while (!cs.sentinel->acquire()) {
             resetChunk(cs);
-            return nullptr;
         }
         // State is busy
         if (!cs.chunk || cs.chunk->isFull()) {
