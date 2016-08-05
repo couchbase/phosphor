@@ -168,6 +168,7 @@ namespace phosphor {
      * @param trace_event TraceEvent to be streamed
      * @return Output stream passed in
      */
+    PHOSPHOR_API
     std::ostream& operator<<(std::ostream& os, const TraceEvent& trace_event);
 
     static_assert(

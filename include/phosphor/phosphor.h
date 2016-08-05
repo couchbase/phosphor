@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include "phosphor-internal.h"
 #include "trace_log.h"
 
 /** \file
@@ -60,6 +61,11 @@
  */
 
 /**
+ * Defined to return the global singleton instance of the Phosphor TraceLog
+ */
+#define PHOSPHOR_INSTANCE phosphor::TraceLog::getInstance()
+
+/**
  * \defgroup sync Synchronous events
  *
  * Synchronous events are used for events that are scoped to a single
@@ -73,20 +79,21 @@
  *
  * @{
  */
+
 #define TRACE_EVENT_START(category, name, ...)  \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(              \
         category, name, phosphor::TraceEvent::Type::SyncStart, __VA_ARGS__)
 
 #define TRACE_EVENT_START0(category, name)      \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::SyncStart)
 
 #define TRACE_EVENT_END(category, name, ...)    \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(              \
         category, name, phosphor::TraceEvent::Type::SyncEnd, __VA_ARGS__)
 
 #define TRACE_EVENT_END0(category, name)        \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::SyncEnd)
 /** @} */
 
@@ -114,8 +121,7 @@
     TRACE_EVENT_START(category, name, __VA_ARGS__);                   \
     struct scoped_trace_t_##__LINE__##__FILE__ {                      \
         ~scoped_trace_t_##__LINE__##__FILE__() {                      \
-            phosphor::TraceLog::getInstance().logEvent(               \
-                category, name, phosphor::TraceEvent::Type::SyncEnd); \
+            TRACE_EVENT_END0(category, name);                         \
         }                                                             \
     } scoped_trace_inst_##__LINE__##__FILE__;
 
@@ -123,8 +129,7 @@
     TRACE_EVENT_START0(category, name);                               \
     struct scoped_trace_t_##__LINE__##__FILE__ {                      \
         ~scoped_trace_t_##__LINE__##__FILE__() {                      \
-            phosphor::TraceLog::getInstance().logEvent(               \
-                category, name, phosphor::TraceEvent::Type::SyncEnd); \
+            TRACE_EVENT_END0(category, name);                         \
         }                                                             \
     } scoped_trace_inst_##__LINE__##__FILE__;
 /** @} */
@@ -147,7 +152,7 @@
  * @{
  */
 #define TRACE_ASYNC_START(category, name, id, ...) \
-    phosphor::TraceLog::getInstance().logEvent(    \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(                 \
         category,                                  \
         name,                                      \
         phosphor::TraceEvent::Type::AsyncStart,    \
@@ -155,15 +160,15 @@
         __VA_ARGS__)
 
 #define TRACE_ASYNC_START0(category, name, id)  \
-    phosphor::TraceLog::getInstance().logEvent( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT(            \
         category, name, phosphor::TraceEvent::Type::AsyncStart, id)
 
 #define TRACE_ASYNC_END(category, name, id, ...) \
-    phosphor::TraceLog::getInstance().logEvent(  \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(               \
         category, name, phosphor::TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)
 
 #define TRACE_ASYNC_END0(category, name, id)    \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(             \
         category, name, phosphor::TraceEvent::Type::AsyncEnd, id)
 /** @} */
 
@@ -180,11 +185,11 @@
  *  @{
  */
 #define TRACE_INSTANT(category, name, ...)      \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(              \
         category, name, phosphor::TraceEvent::Type::Instant, __VA_ARGS__)
 
 #define TRACE_INSTANT0(category, name)          \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::Instant)
 /** @} */
 
@@ -202,13 +207,13 @@
  *  @{
  */
 #define TRACE_GLOBAL(category, name, ...)          \
-    phosphor::TraceLog::getInstance().logEvent(    \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(                 \
         category,                                  \
         name,                                      \
         phosphor::TraceEvent::Type::GlobalInstant, \
         __VA_ARGS__)
 
 #define TRACE_GLOBAL0(category, name)           \
-    phosphor::TraceLog::getInstance().logEvent( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::GlobalInstant)
 /** @} */

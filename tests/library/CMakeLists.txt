@@ -5,3 +5,6 @@ IF (NOT (CB_THREADSANITIZER OR CB_ADDRESSSANITIZER))
     M_ADD_LIBRARY_GTEST(memory_usage_test
             memory_usage_test.cc)
 ENDIF()
+
+M_ADD_LIBRARY_GTEST(macro_test
+            macro_test.cc)
