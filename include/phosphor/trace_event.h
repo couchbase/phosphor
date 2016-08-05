@@ -92,6 +92,42 @@ namespace phosphor {
          */
         static const char* typeToString(Type type);
 
+        /**
+         * @return the name of the event
+         */
+        const char* getName() const;
+
+        /**
+         * @return the category of the event
+         */
+        const char* getCategory() const;
+
+        /**
+         * @return the type of the event
+         */
+        Type getType() const;
+
+        /**
+         * @return the thread id of the event
+         */
+        uint64_t getThreadID() const;
+
+        /**
+         * @return the arguments of the event
+         */
+        const std::array<TraceArgument, arg_count>& getArgs() const;
+
+        /**
+         * @return the types of the arguments of the event
+         */
+        const std::array<TraceArgument::Type, arg_count>& getArgTypes() const;
+
+        /**
+         * @return the timestamp of the event measured in
+         *         nanoseconds from an undefined epoch
+         */
+        int64_t getTime() const;
+
     protected:
         class ToJsonResult {
         public:

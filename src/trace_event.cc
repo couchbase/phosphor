@@ -130,6 +130,34 @@ namespace phosphor {
             "Invalid TraceEvent type");
     }
 
+    const char* TraceEvent::getName() const {
+        return name;
+    }
+
+    const char* TraceEvent::getCategory() const {
+        return category;
+    }
+
+    TraceEvent::Type TraceEvent::getType() const {
+        return type;
+    }
+
+    uint64_t TraceEvent::getThreadID() const {
+        return thread_id;
+    }
+
+    const std::array<TraceArgument, arg_count>& TraceEvent::getArgs() const {
+        return args;
+    };
+
+    const std::array<TraceArgument::Type, arg_count>& TraceEvent::getArgTypes() const {
+        return arg_types;
+    };
+
+    int64_t TraceEvent::getTime() const {
+        return time;
+    }
+
     TraceEvent::ToJsonResult TraceEvent::typeToJSON() const {
         TraceEvent::ToJsonResult res;
 

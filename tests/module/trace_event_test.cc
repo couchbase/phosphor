@@ -231,3 +231,20 @@ TEST(TraceEventTypeToJSON, Invalid) {
         {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
     EXPECT_THROW(event.typeToJSON(), std::invalid_argument);
 }
+
+TEST(TraceEventTypeToJSON, testProperties) {
+    TraceEvent event(
+            "category",
+            "name",
+            TraceEvent::Type::Instant,
+            0,
+            {{0, 4.5}},
+            {{TraceArgument::Type::is_int, TraceArgument::Type::is_double}});
+    EXPECT_STREQ("category", event.getCategory());
+    EXPECT_STREQ("name", event.getName());
+    EXPECT_EQ(TraceEvent::Type::Instant, event.getType());
+    EXPECT_EQ(0, event.getArgs()[0].as_int);
+    EXPECT_EQ(4.5, event.getArgs()[1].as_double);
+    EXPECT_EQ(TraceArgument::Type::is_int, event.getArgTypes()[0]);
+    EXPECT_EQ(TraceArgument::Type::is_double, event.getArgTypes()[1]);
+}
