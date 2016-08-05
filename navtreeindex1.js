@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__inst.html#gad6443616a5135a3ece6c3cfe533287db":[8,0,1,1,3,12],
 "group__scoped.html":[6,1],
 "group__scoped.html#ga2609c5355bde4c8c39d77caf0fd048de":[8,0,1,1,3,4],
 "group__scoped.html#ga624e8d2d37daf5672a168e7d2535392a":[8,0,1,1,3,5],

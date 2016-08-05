@@ -11,6 +11,7 @@ var classphosphor_1_1_trace_log =
     [ "getBuffer", "classphosphor_1_1_trace_log.html#ae5041e833872a887191ec8ca8ef95d6d", null ],
     [ "getCategoryStatus", "classphosphor_1_1_trace_log.html#ac9c0245c0bc2e15e5268a154785aa987", null ],
     [ "getChunkTenant", "classphosphor_1_1_trace_log.html#a30cd12f4e9970f7347efe63986638227", null ],
+    [ "getTraceConfig", "classphosphor_1_1_trace_log.html#ad214f6f2f7881800d1ac6dd243806679", null ],
     [ "isEnabled", "classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f", null ],
     [ "lock", "classphosphor_1_1_trace_log.html#af2df1c20bf288ee486ad043dc61c3b09", null ],
     [ "logEvent", "classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8", null ],
