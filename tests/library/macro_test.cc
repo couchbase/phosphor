@@ -35,8 +35,11 @@
 class MacroTraceEventTest : public testing::Test {
 public:
     MacroTraceEventTest() {
-        PHOSPHOR_INSTANCE.start(phosphor::TraceConfig(phosphor::BufferMode::fixed,
-                                                      sizeof(phosphor::TraceChunk)));
+        PHOSPHOR_INSTANCE.start(
+                phosphor::TraceConfig(phosphor::BufferMode::fixed,
+                                      sizeof(phosphor::TraceChunk))
+                        .setCategories({{"category"}, {"ex*"}},
+                                       {{"excluded"}}));
     }
 
     ~MacroTraceEventTest() {
@@ -51,8 +54,11 @@ public:
             ++verification;
         }
 
-        EXPECT_EQ(event, buffer->end());
-        EXPECT_EQ(verification, verifications.end());
+        EXPECT_EQ(buffer->end(), event) << "Too many events in buffer!";
+        EXPECT_EQ(verifications.end(), verification)
+                            << "Too many verifications left ("
+                            << std::distance(verification,
+                                             verifications.end()) << ")";
     }
 
 protected:
@@ -188,3 +194,23 @@ TEST_F(MacroTraceEventTest, Scoped) {
     }
 }
 
+// Basic smoke test that category filtering works at a macro level,
+// other unit tests should handle the more extensive testing
+TEST_F(MacroTraceEventTest, CategoryFiltering) {
+    TRACE_INSTANT0("excluded", "name");
+    TRACE_INSTANT0("example", "name");
+    verifications.emplace_back([](const phosphor::TraceEvent& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("example", event.getCategory());
+        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
+    });
+    TRACE_INSTANT("excluded", "name", 3, 4);
+    TRACE_INSTANT("example", "name", 3, 4);
+    verifications.emplace_back([](const phosphor::TraceEvent& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("example", event.getCategory());
+        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
+        EXPECT_EQ(3, event.getArgs()[0].as_int);
+        EXPECT_EQ(4, event.getArgs()[1].as_int);
+    });
+}

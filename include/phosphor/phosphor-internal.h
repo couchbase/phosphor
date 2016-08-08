@@ -19,8 +19,62 @@
  * Phosphor and is not intended for public consumption.
  */
 
-#define PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, type, ...) \
-    PHOSPHOR_INSTANCE.logEvent(category, name, type, __VA_ARGS__)
+#include <atomic>
 
+/*
+ * Generates a variable name that will be unique per-line for the given prefix
+ */
+#define PHOSPHOR_INTERNAL_UID3(a, b) \
+    phosphor_internal_ ##a##_##b
+
+#define PHOSPHOR_INTERNAL_UID2(a, b) \
+    PHOSPHOR_INTERNAL_UID3(a, b)
+
+#define PHOSPHOR_INTERNAL_UID(prefix) \
+    PHOSPHOR_INTERNAL_UID2(prefix, __LINE__)
+
+/*
+ * Sets up the category status variables
+ *
+ * This makes a slight optimisation by storing the result of loading
+ * category_enabled into category_enabled_temp which saves a second
+ * load in the calling macro.
+ *
+ * TODO: MB-20466 MSVC2013 cannot support a store operation on a
+ *       const atomic pointer due to a bug in the stdlib header.
+ *       Once MSVC is upgraded, move to using a store using
+ *       std::memory_order_release instead of assignment operator.
+ */
+#define PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \
+    static std::atomic<const phosphor::AtomicCategoryStatus*> \
+            PHOSPHOR_INTERNAL_UID(category_enabled); \
+    const phosphor::AtomicCategoryStatus* PHOSPHOR_INTERNAL_UID(category_enabled_temp) \
+        = PHOSPHOR_INTERNAL_UID(category_enabled).load(std::memory_order_acquire); \
+    if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \
+        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &PHOSPHOR_INSTANCE.getCategoryStatus(category); \
+        PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \
+    }
+
+/*
+ * Traces an event of a specified type with one or more arguments
+ *
+ * This compares '!=' to disabled instead of '==' to enabled as it allows
+ * for comparison to 0 rather than comparison to 1 which saves an instruction
+ * on the disabled path when compiled.
+ */
+#define PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, type, ...) \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
+          != phosphor::CategoryStatus::Disabled) { \
+        PHOSPHOR_INSTANCE.logEvent(category, name, type, __VA_ARGS__); \
+    }
+
+/*
+ * Traces an event of a specified type with zero arguments
+ */
 #define PHOSPHOR_INTERNAL_TRACE_EVENT0(category, name, type) \
-    PHOSPHOR_INSTANCE.logEvent(category, name, type)
+    PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
+          != phosphor::CategoryStatus::Disabled) { \
+        PHOSPHOR_INSTANCE.logEvent(category, name, type); \
+    }

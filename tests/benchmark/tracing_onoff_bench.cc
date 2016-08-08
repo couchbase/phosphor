@@ -17,9 +17,15 @@
 
 #include <benchmark/benchmark.h>
 
-#include "phosphor/trace_log.h"
+#include <phosphor/phosphor.h>
+
 #include "utils/memory.h"
 
+/*
+ * The TracingOnOff test evaluates the performance of tracing when it is both
+ * enabled and disabled in order to measure the relative overhead of having
+ * non-functioning trace points.
+ */
 void TracingOnOff(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
     if (state.thread_index == 0) {
@@ -46,5 +52,35 @@ BENCHMARK(TracingOnOff)->Arg(true);
 BENCHMARK(TracingOnOff)->Arg(false);
 BENCHMARK(TracingOnOff)->Arg(true)->ThreadPerCpu();
 BENCHMARK(TracingOnOff)->Arg(false)->ThreadPerCpu();
+
+/*
+ * The TracingOnOffMacro test is similar to the TracingOnOff test except
+ * it uses a standard tracing macro and so is disabled from the category
+ * flag instead of the global tracing flag.
+ */
+void TracingOnOffMacro(benchmark::State& state) {
+    if (state.thread_index == 0) {
+        if (state.range_x()) {
+            PHOSPHOR_INSTANCE.start(
+                    phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
+        }
+    }
+    PHOSPHOR_INSTANCE.registerThread();
+    while (state.KeepRunning()) {
+        // It's likely that the benchmark management overhead will be the
+        // significant factor in this instance so run it multiple times
+        for (int i = 0; i < 100; i++) {
+            TRACE_INSTANT0("category", "name");
+        }
+    }
+    PHOSPHOR_INSTANCE.deregisterThread();
+    if (state.thread_index == 0) {
+        PHOSPHOR_INSTANCE.stop();
+    }
+}
+BENCHMARK(TracingOnOffMacro)->Arg(true);
+BENCHMARK(TracingOnOffMacro)->Arg(false);
+BENCHMARK(TracingOnOffMacro)->Arg(true)->ThreadPerCpu();
+BENCHMARK(TracingOnOffMacro)->Arg(false)->ThreadPerCpu();
 
 BENCHMARK_MAIN()
