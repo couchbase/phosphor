@@ -158,9 +158,7 @@ TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)</pre><h2 class="group
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">logEvent</a>(  \</div><div class="line">        category, name, phosphor::TraceEvent::Type::AsyncEnd, <span class="keywordtype">id</span>, __VA_ARGS__)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:309</div></div>
-<div class="ttc" id="classphosphor_1_1_trace_log_html_a14ca2e9816276cbfb1950e9b363873b8"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:421</div></div>
-</div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT(               \</div><div class="line">        category, name, phosphor::TraceEvent::Type::AsyncEnd, <span class="keywordtype">id</span>, __VA_ARGS__)</div></div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ga5dd7a8d0b20f51ba8fba9fd9234961a8"></a>
@@ -192,9 +190,7 @@ TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)</pre><h2 class="group
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">logEvent</a>( \</div><div class="line">        category, name, phosphor::TraceEvent::Type::AsyncEnd, <span class="keywordtype">id</span>)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:309</div></div>
-<div class="ttc" id="classphosphor_1_1_trace_log_html_a14ca2e9816276cbfb1950e9b363873b8"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:421</div></div>
-</div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT(             \</div><div class="line">        category, name, phosphor::TraceEvent::Type::AsyncEnd, <span class="keywordtype">id</span>)</div></div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="gae69017013b7d16cb1292e8458904533c"></a>
@@ -232,9 +228,7 @@ TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)</pre><h2 class="group
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">logEvent</a>(    \</div><div class="line">        category,                                  \</div><div class="line">        name,                                      \</div><div class="line">        phosphor::TraceEvent::Type::AsyncStart,    \</div><div class="line">        <span class="keywordtype">id</span>,                                        \</div><div class="line">        __VA_ARGS__)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:309</div></div>
-<div class="ttc" id="classphosphor_1_1_trace_log_html_a14ca2e9816276cbfb1950e9b363873b8"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:421</div></div>
-</div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT(                 \</div><div class="line">        category,                                  \</div><div class="line">        name,                                      \</div><div class="line">        phosphor::TraceEvent::Type::AsyncStart,    \</div><div class="line">        <span class="keywordtype">id</span>,                                        \</div><div class="line">        __VA_ARGS__)</div></div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="gafd52b97219b6f24b7a46d1f7e4992b49"></a>
@@ -266,9 +260,7 @@ TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)</pre><h2 class="group
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>().<a class="code" href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">logEvent</a>( \</div><div class="line">        category, name, phosphor::TraceEvent::Type::AsyncStart, <span class="keywordtype">id</span>)</div><div class="ttc" id="classphosphor_1_1_trace_log_html_ade38924fc3174ca43696c6432f05c658"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a></div><div class="ttdeci">static TraceLog &amp; getInstance()</div><div class="ttdef"><b>Definition:</b> trace_log.cc:309</div></div>
-<div class="ttc" id="classphosphor_1_1_trace_log_html_a14ca2e9816276cbfb1950e9b363873b8"><div class="ttname"><a href="classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8">phosphor::TraceLog::logEvent</a></div><div class="ttdeci">void logEvent(const char *category, const char *name, TraceEvent::Type type, T argA, U argB)</div><div class="ttdef"><b>Definition:</b> trace_log.h:421</div></div>
-</div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT(            \</div><div class="line">        category, name, phosphor::TraceEvent::Type::AsyncStart, <span class="keywordtype">id</span>)</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

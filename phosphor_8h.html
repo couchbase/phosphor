@@ -110,12 +110,15 @@ $(document).ready(function(){initNavTree('phosphor_8h.html','');});
 <div class="title">phosphor.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;trace_log.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="phosphor-internal_8h_source.html">phosphor-internal.h</a>&quot;</code><br />
+<code>#include &quot;trace_log.h&quot;</code><br />
 </div>
 <p><a href="phosphor_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:a5c3acfbde298bed30fb871e7ef3fecf3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>()</td></tr>
+<tr class="separator:a5c3acfbde298bed30fb871e7ef3fecf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START</b>(category,  name, ...)</td></tr>
 <tr class="separator:ga22a8ef705af5aa8d94742d7dadd1d454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga695fc2141d449f7e41820355311f61f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START0</b>(category,  name)        </td></tr>
@@ -168,7 +171,21 @@ Macros</h2></td></tr>
 <li>char* pointing to a cstring</li>
 <li>void* </li>
 </ul>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a5c3acfbde298bed30fb871e7ef3fecf3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PHOSPHOR_INSTANCE&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>()</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defined to return the global singleton instance of the Phosphor TraceLog </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
