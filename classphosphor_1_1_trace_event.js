@@ -11,6 +11,13 @@ var classphosphor_1_1_trace_event =
     ] ],
     [ "TraceEvent", "classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0", null ],
     [ "TraceEvent", "classphosphor_1_1_trace_event.html#a69a697e5766da8eb049f011993986fdc", null ],
+    [ "getArgs", "classphosphor_1_1_trace_event.html#af96e39a22f30e1148c9c25bd5e22846a", null ],
+    [ "getArgTypes", "classphosphor_1_1_trace_event.html#ab3666f566b86edfd8d16ab97fe6eb130", null ],
+    [ "getCategory", "classphosphor_1_1_trace_event.html#a119b357ef0c900abbd6c42b2cae305ed", null ],
+    [ "getName", "classphosphor_1_1_trace_event.html#a2e5f75b9724df9aea7736cf5fa70406e", null ],
+    [ "getThreadID", "classphosphor_1_1_trace_event.html#acc5c9d66ed68469b94aa8475f401bb78", null ],
+    [ "getTime", "classphosphor_1_1_trace_event.html#aa2f888bd4b325a5b83033f354e6143d8", null ],
+    [ "getType", "classphosphor_1_1_trace_event.html#af44a80cebb6c82eea7dca5f56ec01f63", null ],
     [ "to_json", "classphosphor_1_1_trace_event.html#aebdead39e1b2137a5699c136c9ee2274", null ],
     [ "to_string", "classphosphor_1_1_trace_event.html#acbf61956951d90799160e3c9fe41b3c2", null ],
     [ "typeToJSON", "classphosphor_1_1_trace_event.html#a6b3621142bc14656b077e84350bb643f", null ]

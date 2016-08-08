@@ -147,6 +147,20 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acbf61956951d90799160e3c9fe41b3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebdead39e1b2137a5699c136c9ee2274"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#aebdead39e1b2137a5699c136c9ee2274">to_json</a> () const </td></tr>
 <tr class="separator:aebdead39e1b2137a5699c136c9ee2274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e5f75b9724df9aea7736cf5fa70406e"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a2e5f75b9724df9aea7736cf5fa70406e">getName</a> () const </td></tr>
+<tr class="separator:a2e5f75b9724df9aea7736cf5fa70406e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a119b357ef0c900abbd6c42b2cae305ed"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a119b357ef0c900abbd6c42b2cae305ed">getCategory</a> () const </td></tr>
+<tr class="separator:a119b357ef0c900abbd6c42b2cae305ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af44a80cebb6c82eea7dca5f56ec01f63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#af44a80cebb6c82eea7dca5f56ec01f63">getType</a> () const </td></tr>
+<tr class="separator:af44a80cebb6c82eea7dca5f56ec01f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc5c9d66ed68469b94aa8475f401bb78"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#acc5c9d66ed68469b94aa8475f401bb78">getThreadID</a> () const </td></tr>
+<tr class="separator:acc5c9d66ed68469b94aa8475f401bb78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af96e39a22f30e1148c9c25bd5e22846a"><td class="memItemLeft" align="right" valign="top">const std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html">TraceArgument</a>, arg_count &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#af96e39a22f30e1148c9c25bd5e22846a">getArgs</a> () const </td></tr>
+<tr class="separator:af96e39a22f30e1148c9c25bd5e22846a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3666f566b86edfd8d16ab97fe6eb130"><td class="memItemLeft" align="right" valign="top">const std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a>, arg_count &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#ab3666f566b86edfd8d16ab97fe6eb130">getArgTypes</a> () const </td></tr>
+<tr class="separator:ab3666f566b86edfd8d16ab97fe6eb130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2f888bd4b325a5b83033f354e6143d8"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#aa2f888bd4b325a5b83033f354e6143d8">getTime</a> () const </td></tr>
+<tr class="separator:aa2f888bd4b325a5b83033f354e6143d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -267,6 +281,118 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af96e39a22f30e1148c9c25bd5e22846a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html">TraceArgument</a>, arg_count &gt; &amp; phosphor::TraceEvent::getArgs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the arguments of the event </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab3666f566b86edfd8d16ab97fe6eb130"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a>, arg_count &gt; &amp; phosphor::TraceEvent::getArgTypes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the types of the arguments of the event </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a119b357ef0c900abbd6c42b2cae305ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * phosphor::TraceEvent::getCategory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the category of the event </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2e5f75b9724df9aea7736cf5fa70406e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * phosphor::TraceEvent::getName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the name of the event </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acc5c9d66ed68469b94aa8475f401bb78"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t phosphor::TraceEvent::getThreadID </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the thread id of the event </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa2f888bd4b325a5b83033f354e6143d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t phosphor::TraceEvent::getTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the timestamp of the event measured in nanoseconds from an undefined epoch </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af44a80cebb6c82eea7dca5f56ec01f63"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">TraceEvent::Type</a> phosphor::TraceEvent::getType </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the type of the event </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aebdead39e1b2137a5699c136c9ee2274"></a>
 <div class="memitem">
 <div class="memproto">
