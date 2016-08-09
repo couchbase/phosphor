@@ -103,9 +103,13 @@ $(document).ready(function(){initNavTree('index.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>This directory contains examples of Phosphor being used for tracing. The examples in this directory can be built with the rest of the examples by using the "-DPHOSPHOR_BUILD_EXAMPLES=1" CMake config flag or running <code>make all</code> with the top-level-makefile (Which will also build the benchmarks, with coverage and run the tests).</p>
+<h2>solo</h2>
+<p>The solo executable logs a single 'instant' trace event with zero arguments - effectively a 'Hello, World' for tracing.</p>
 <h2>sorting_algorithm</h2>
-<p>The sorting algorithm executable contains an implementation of merge sort and will print out an array of ints before and after sorting. You can enable tracing with Phosphor by using the PHOSPHOR_TRACING_START environment variable. e.g. </p><pre class="fragment">PHOSPHOR_TRACING_START="buffer-mode:fixed,buffer-size:1241024,save-on-stop:sorting_output.%d.json" build/examples/sorting_algorithm
-</pre><p>Will start tracing when the trace log object is instantiated (Usually at the first call site) with a fixed size buffer roughly 1MB in size. It will also automaticallted dump a file named along the lines of <code>sorting_output.2016-06-21T08:00:45Z.json</code> when the trace log is destructed (On program exit). This tracing file can be viewed in the Catapult tracing viewer which is bundled with Chrome/Chromium (chrome://tracing/). </p>
+<p>The sorting algorithm executable contains an implementation of merge sort and will print out an array of ints before and after sorting. You can enable tracing with Phosphor by using the PHOSPHOR_TRACING_START environment variable. e.g. </p><pre class="fragment">PHOSPHOR_TRACING_START="buffer-mode:fixed;buffer-size:1241024;save-on-stop:sorting_output.%d.json" build/examples/sorting_algorithm
+</pre><p>Will start tracing when the trace log object is instantiated (Usually at the first call site) with a fixed size buffer roughly 1MB in size. It will also automaticallted dump a file named along the lines of <code>sorting_output.2016-06-21T08:00:45Z.json</code> when the trace log is destructed (On program exit). This tracing file can be viewed in the Catapult tracing viewer which is bundled with Chrome/Chromium (chrome://tracing/).</p>
+<h2>statistics</h2>
+<p>The statistics executable dumps a bunch of information regarding the sizes of various internal phosphor structures and their relative capacities. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
