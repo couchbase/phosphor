@@ -65,6 +65,8 @@
  */
 #define PHOSPHOR_INSTANCE phosphor::TraceLog::getInstance()
 
+#if !defined(PHOSPHOR_DISABLED) || PHOSPHOR_DISABLED == 0
+
 /**
  * \defgroup sync Synchronous events
  *
@@ -217,3 +219,26 @@
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::GlobalInstant)
 /** @} */
+
+#else // if: defined(PHOSPHOR_DISABLED) && PHOSPHOR_DISABLED != 0
+
+#define TRACE_EVENT_START(category, name, ...)
+#define TRACE_EVENT_START0(category, name)
+#define TRACE_EVENT_END(category, name, ...)
+#define TRACE_EVENT_END0(category, name)
+
+#define TRACE_EVENT(category, name, ...)
+#define TRACE_EVENT0(category, name)
+
+#define TRACE_ASYNC_START(category, name, ...)
+#define TRACE_ASYNC_START0(category, name)
+#define TRACE_ASYNC_END(category, name, ...)
+#define TRACE_ASYNC_END0(category, name)
+
+#define TRACE_INSTANT(category, name, ...)
+#define TRACE_INSTANT0(category, name)
+
+#define TRACE_GLOBAL(category, name, ...)
+#define TRACE_GLOBAL0(category, name)
+
+#endif // PHOSPHOR_DISABLED

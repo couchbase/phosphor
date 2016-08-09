@@ -29,6 +29,12 @@ SET(phosphor_SOURCE_FILES
 
 ADD_LIBRARY(phosphor SHARED ${phosphor_SOURCE_FILES})
 
+SET(PHOSPHOR_LIB phosphor)
+GET_DIRECTORY_PROPERTY(hasParent PARENT_DIRECTORY)
+IF(hasParent)
+    SET(PHOSPHOR_LIB phosphor PARENT_SCOPE)
+ENDIF()
+
 ADD_SUBDIRECTORY(tests)
 
 option(PHOSPHOR_BUILD_EXAMPLES "Enable building the examples" OFF)
