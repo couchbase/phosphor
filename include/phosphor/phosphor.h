@@ -65,6 +65,16 @@
  */
 #define PHOSPHOR_INSTANCE phosphor::TraceLog::getInstance()
 
+/**
+ * Alias for static casting to a `const void*` which can be used for
+ * logging the address of any pointer as an argument.
+ *
+ * This is required as the current implementation of argument type
+ * resolution does not support partial template specialisation in
+ * order to accept any pointer type (MB-20473).
+ */
+#define PHOSPHOR_PTR(arg) static_cast<const void*>(arg)
+
 #if !defined(PHOSPHOR_DISABLED) || PHOSPHOR_DISABLED == 0
 
 /**
