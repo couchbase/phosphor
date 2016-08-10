@@ -1,6 +1,7 @@
 var phosphor_8h =
 [
     [ "PHOSPHOR_INSTANCE", "phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3", null ],
+    [ "PHOSPHOR_PTR", "phosphor_8h.html#acb0b7bd9c31454bacf0a483f0c4b1238", null ],
     [ "TRACE_ASYNC_END", "group__async.html#gab682aa4bded65cede078eb2f6e296163", null ],
     [ "TRACE_ASYNC_END0", "group__async.html#ga5dd7a8d0b20f51ba8fba9fd9234961a8", null ],
     [ "TRACE_ASYNC_START", "group__async.html#gae69017013b7d16cb1292e8458904533c", null ],
