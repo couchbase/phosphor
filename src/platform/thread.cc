@@ -25,6 +25,9 @@
 #elif defined(_WIN32)
 #include <process.h>
 #include <windows.h>
+#elif defined(__FreeBSD__)
+#include <pthread_np.h>
+#include <unistd.h>
 #endif
 
 #include "phosphor/platform/thread.h"
@@ -40,13 +43,15 @@ namespace phosphor {
             return syscall(__NR_gettid);
 #elif defined(_WIN32)
             return GetCurrentThreadId();
+#elif defined(__FreeBSD__)
+            return pthread_getthreadid_np();
 #else
 #error Unsupported platform, no way to get threadid
 #endif
         }
 
         int getCurrentProcessID() {
-#if defined(__APPLE__) || defined(__linux__)
+#if defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__)
             return getpid();
 #else
             return _getpid();
