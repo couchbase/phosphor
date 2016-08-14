@@ -75,7 +75,11 @@
  */
 #define PHOSPHOR_PTR(arg) static_cast<const void*>(arg)
 
-#if !defined(PHOSPHOR_DISABLED) || PHOSPHOR_DISABLED == 0
+#if !defined(PHOSPHOR_DISABLED)
+#define PHOSPHOR_DISABLED 0
+#endif
+
+#if !PHOSPHOR_DISABLED
 
 /**
  * \defgroup sync Synchronous events
