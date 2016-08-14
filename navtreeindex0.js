@@ -248,6 +248,6 @@ var NAVTREEINDEX0 =
 "globals.html":[8,1,0],
 "globals_defs.html":[8,1,1],
 "group__async.html":[6,2],
-"group__async.html#ga5dd7a8d0b20f51ba8fba9fd9234961a8":[8,0,1,1,4,3],
-"group__async.html#gab682aa4bded65cede078eb2f6e296163":[8,0,1,1,4,2]
+"group__async.html#ga5dd7a8d0b20f51ba8fba9fd9234961a8":[8,0,1,1,4,4],
+"group__async.html#gab682aa4bded65cede078eb2f6e296163":[8,0,1,1,4,3]
 };
