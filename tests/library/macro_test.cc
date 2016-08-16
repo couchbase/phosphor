@@ -194,6 +194,45 @@ TEST_F(MacroTraceEventTest, Scoped) {
     }
 }
 
+void macro_test_functionA() {
+    TRACE_FUNCTION0("category");
+}
+
+void macro_test_functionB() {
+    TRACE_FUNCTION("category", 3, 4);
+}
+
+TEST_F(MacroTraceEventTest, Function) {
+    {
+        macro_test_functionA();
+        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+            EXPECT_STREQ("macro_test_functionA", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
+        });
+        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+            EXPECT_STREQ("macro_test_functionA", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
+        });
+    }
+    {
+        macro_test_functionB();
+        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+            EXPECT_STREQ("macro_test_functionB", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
+            EXPECT_EQ(3, event.getArgs()[0].as_int);
+            EXPECT_EQ(4, event.getArgs()[1].as_int);
+        });
+        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+            EXPECT_STREQ("macro_test_functionB", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
+        });
+    }
+}
+
 // Basic smoke test that category filtering works at a macro level,
 // other unit tests should handle the more extensive testing
 TEST_F(MacroTraceEventTest, CategoryFiltering) {

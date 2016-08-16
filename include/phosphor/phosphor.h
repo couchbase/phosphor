@@ -121,6 +121,10 @@
  * Scoped events are used for events that should log synchronously both
  * a start and an end event automatically according to a scope.
  *
+ * The TRACE_FUNCTION event macros are identical to the TRACE_EVENT
+ * macros except they don't accept a name parameter and the name is
+ * predefined as the function name (using `__func__`).
+ *
  * Example:
  *
  *     void defragment_part(int vbucket) {
@@ -136,20 +140,28 @@
  * @{
  */
 #define TRACE_EVENT(category, name, ...)                              \
+    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
     TRACE_EVENT_START(category, name, __VA_ARGS__);                   \
-    struct scoped_trace_t_##__LINE__##__FILE__ {                      \
-        ~scoped_trace_t_##__LINE__##__FILE__() {                      \
-            TRACE_EVENT_END0(category, name);                         \
+    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
+        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
+            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \
         }                                                             \
-    } scoped_trace_inst_##__LINE__##__FILE__;
+    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
 
 #define TRACE_EVENT0(category, name)                                  \
+    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
     TRACE_EVENT_START0(category, name);                               \
-    struct scoped_trace_t_##__LINE__##__FILE__ {                      \
-        ~scoped_trace_t_##__LINE__##__FILE__() {                      \
-            TRACE_EVENT_END0(category, name);                         \
+    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
+        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
+            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));\
         }                                                             \
-    } scoped_trace_inst_##__LINE__##__FILE__;
+    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
+
+#define TRACE_FUNCTION(category, ...) \
+    TRACE_EVENT(category, PH__func__, __VA_ARGS__)
+
+#define TRACE_FUNCTION0(category) \
+    TRACE_EVENT0(category, PH__func__)
 /** @} */
 
 /**
@@ -245,6 +257,9 @@
 
 #define TRACE_EVENT(category, name, ...)
 #define TRACE_EVENT0(category, name)
+
+#define TRACE_FUNCTION(category, ...)
+#define TRACE_FUNCTION0(category)
 
 #define TRACE_ASYNC_START(category, name, ...)
 #define TRACE_ASYNC_START0(category, name)

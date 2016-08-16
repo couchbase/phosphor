@@ -36,9 +36,12 @@
 #define unlikely(x) (x)
 #endif
 
+// Various macro definitions to allow MSVC2013 to work
 #if defined(_MSC_VER) && _MSC_VER < 1900
 #define CONSTEXPR const
 #define alignas(x)
+#define PH__func__ __FUNCTION__
 #else
 #define CONSTEXPR constexpr
+#define PH__func__ __func__
 #endif
