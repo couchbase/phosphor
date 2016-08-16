@@ -43,3 +43,6 @@ M_ADD_LIBRARY_BENCHMARK(tracing_onoff_bench
 
 M_ADD_LIBRARY_BENCHMARK(chunk_replacement_bench
         chunk_replacement_bench.cc)
+
+M_ADD_LIBRARY_BENCHMARK(category_registry_bench
+        category_registry_bench.cc)

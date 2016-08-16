@@ -35,7 +35,7 @@ namespace phosphor {
     const AtomicCategoryStatus& CategoryRegistry::getStatus(
         const char* category_group) {
         // See if we've already got the group without the lock
-        size_t currIndex = group_count.load(std::memory_order_relaxed);
+        size_t currIndex = group_count.load(std::memory_order_acquire);
         for (size_t i = 0; i < currIndex; ++i) {
             if (strcmp(groups[i].c_str(), category_group) == 0) {
                 return group_statuses[i];
@@ -56,7 +56,7 @@ namespace phosphor {
         if (currIndex < registry_size) {
             groups[currIndex] = category_group;
             group_statuses[currIndex] = calculateEnabled(currIndex);
-            group_count++;
+            group_count.fetch_add(1, std::memory_order_release);
             return group_statuses[currIndex];
         } else {
             return group_statuses[index_category_limit];
