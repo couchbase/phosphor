@@ -119,17 +119,17 @@ $(document).ready(function(){initNavTree('md_docs_design_Requirements.html','');
 </ul>
 <p>M.3: ✓ Event timestamps must have precision of at least 1 microsecond. (Chromium JSON format only supports microsecond resolution)</p>
 <p>M.4: ✓ Events can optionally have up to two user-defined 8Byte fields associated with them (in addition to the name, category and timestamp. These fields will have a limited set of types. Exact types TBD, but for example: bool, int, float, string, pointer.</p>
-<p>M.5: ~ Event Tracing can be enabled / disabled globally. When event tracing is globally disabled, the CPU overhead should be minimal (i.e. of the order of ASM-level load, compare &amp; branch instructions).</p>
+<p>M.5: ✓ Event Tracing can be enabled / disabled globally. When event tracing is globally disabled, the CPU overhead should be minimal (i.e. of the order of ASM-level load, compare &amp; branch instructions).</p>
 <p>M.6: ✓ The Library must record events into a RAM data structure (Event Log), and allow retrieval of all recorded events.</p>
 <p>M.7: ✓ The size of the Event Log must be Application-configurable. It must at least allow a range of 1MB to 1GB.</p>
 <p>M.8: ✓ The amount of RAM used by the Event Tracer must not exceed 110% of the configured log size when event tracing is enabled.</p>
 <p>M.9: ✓ The event log can be cleared (all events discarded) when tracing is not running.</p>
 <p>M.10: ✓ When the event log is empty (after clearing, or before it is enabled) the amount of RAM used by the Event Tracer must be less than 100KB.</p>
-<p>M.11: ~ When tracing is enabled, the cost of recording of a single event with two user-defined fields to the in-memory Event Log (measured from before calling the Event API to it returning) must be 1 microsecond or less.</p>
+<p>M.11: ✓ When tracing is enabled, the cost of recording of a single event with two user-defined fields to the in-memory Event Log (measured from before calling the Event API to it returning) must be 1 microsecond or less.</p>
 <p>M.12: ✗ The Library must facilitate the use of a memory-mapped file for the Event Log (so the log can be directly persisted to disk by the OS). Note: The Library does not need to handle the disk writing itself.</p>
 <h3>Extended Functional Requirements</h3>
 <p>The following requirements describe desirable functionality, which increases the utility and functionality of the event tracing feature - they are nice to have, although the event tracing library.</p>
-<p>E.1: ✗ Events can be enabled / disabled at a category level.</p>
+<p>E.1: ✓ Events can be enabled / disabled at a category level.</p>
 <p>E.2: ✗ Events can be retrieved at a category level.</p>
 <p>E.3: ✗ Events can be retrieved by specifying a timestamp start / end (i.e. "give me all events which fall between these two timestamps").</p>
 <h2>Event Analysis</h2>
