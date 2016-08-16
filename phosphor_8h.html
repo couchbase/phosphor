@@ -139,6 +139,12 @@ Macros</h2></td></tr>
 <tr class="separator:ga2609c5355bde4c8c39d77caf0fd048de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga624e8d2d37daf5672a168e7d2535392a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)                                                                </td></tr>
 <tr class="separator:ga624e8d2d37daf5672a168e7d2535392a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION</b>(category, ...)&#160;&#160;&#160;TRACE_EVENT(category, PH__func__, __VA_ARGS__)</td></tr>
+<tr class="separator:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION0</b>(category)&#160;&#160;&#160;TRACE_EVENT0(category, PH__func__)</td></tr>
+<tr class="separator:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae69017013b7d16cb1292e8458904533c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START</b>(category,  name,  id, ...)</td></tr>
 <tr class="separator:gae69017013b7d16cb1292e8458904533c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START0</b>(category,  name,  id)</td></tr>

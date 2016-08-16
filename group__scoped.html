@@ -111,9 +111,16 @@ Macros</h2></td></tr>
 <tr class="separator:ga2609c5355bde4c8c39d77caf0fd048de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga624e8d2d37daf5672a168e7d2535392a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)                                                                </td></tr>
 <tr class="separator:ga624e8d2d37daf5672a168e7d2535392a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga38f5e3e2bf88bc153aa024e8d7e8fc92"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION</b>(category, ...)&#160;&#160;&#160;TRACE_EVENT(category, PH__func__, __VA_ARGS__)</td></tr>
+<tr class="separator:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3ea82db4ad2733dbfbdcea914c20194a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION0</b>(category)&#160;&#160;&#160;TRACE_EVENT0(category, PH__func__)</td></tr>
+<tr class="separator:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Scoped events are used for events that should log synchronously both a start and an end event automatically according to a scope.</p>
+<p>The TRACE_FUNCTION event macros are identical to the TRACE_EVENT macros except they don't accept a name parameter and the name is predefined as the function name (using <code>__func__</code>).</p>
 <p>Example: </p><pre class="fragment">void defragment_part(int vbucket) {
     // Set up a scoped event and log the start event
     TRACE_EVENT("ep-engine:vbucket", "defragment_part", vbucket);
@@ -152,7 +159,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START(category, name, __VA_ARGS__);                   \</div><div class="line">    struct scoped_trace_t_##__LINE__##__FILE__ {                      \</div><div class="line">        ~scoped_trace_t_##__LINE__##__FILE__() {                      \</div><div class="line">            TRACE_EVENT_END0(category, name);                         \</div><div class="line">        }                                                             \</div><div class="line">    } scoped_trace_inst_##__LINE__##__FILE__;</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> PHOSPHOR_INTERNAL_UID(nme) = name;       \</div><div class="line">    TRACE_EVENT_START(category, name, __VA_ARGS__);                   \</div><div class="line">    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \</div><div class="line">        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \</div><div class="line">            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \</div><div class="line">        }                                                             \</div><div class="line">    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);</div></div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ga624e8d2d37daf5672a168e7d2535392a"></a>
@@ -178,7 +185,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">TRACE_EVENT_START0(category, name);                               \</div><div class="line">    struct scoped_trace_t_##__LINE__##__FILE__ {                      \</div><div class="line">        ~scoped_trace_t_##__LINE__##__FILE__() {                      \</div><div class="line">            TRACE_EVENT_END0(category, name);                         \</div><div class="line">        }                                                             \</div><div class="line">    } scoped_trace_inst_##__LINE__##__FILE__;</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> PHOSPHOR_INTERNAL_UID(nme) = name;       \</div><div class="line">    TRACE_EVENT_START0(category, name);                               \</div><div class="line">    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \</div><div class="line">        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \</div><div class="line">            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));\</div><div class="line">        }                                                             \</div><div class="line">    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

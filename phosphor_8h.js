@@ -14,6 +14,8 @@ var phosphor_8h =
     [ "TRACE_EVENT_END0", "group__sync.html#ga42e9ee350cb307970259a575e5a8dc46", null ],
     [ "TRACE_EVENT_START", "group__sync.html#ga22a8ef705af5aa8d94742d7dadd1d454", null ],
     [ "TRACE_EVENT_START0", "group__sync.html#ga695fc2141d449f7e41820355311f61f8", null ],
+    [ "TRACE_FUNCTION", "group__scoped.html#ga38f5e3e2bf88bc153aa024e8d7e8fc92", null ],
+    [ "TRACE_FUNCTION0", "group__scoped.html#ga3ea82db4ad2733dbfbdcea914c20194a", null ],
     [ "TRACE_GLOBAL", "group__glob.html#gae450cfc42d8f016473c4d82363f98764", null ],
     [ "TRACE_GLOBAL0", "group__glob.html#ga02c7a492c40d63c36a05d35a0e0c9132", null ],
     [ "TRACE_INSTANT", "group__inst.html#gad6443616a5135a3ece6c3cfe533287db", null ],
