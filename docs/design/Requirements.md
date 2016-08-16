@@ -36,7 +36,7 @@ M.4: ✓ Events can optionally have up to two user-defined 8Byte fields associat
        will have a limited set of types. Exact types TBD, but for example: bool,
        int, float, string, pointer.
 
-M.5: ~ Event Tracing can be enabled / disabled globally. When event tracing is
+M.5: ✓ Event Tracing can be enabled / disabled globally. When event tracing is
        globally disabled, the CPU overhead should be minimal (i.e. of the order
        of ASM-level load, compare & branch instructions).
 
@@ -55,7 +55,7 @@ M.9: ✓ The event log can be cleared (all events discarded) when tracing is not
 M.10: ✓ When the event log is empty (after clearing, or before it is enabled)
         the amount of RAM used by the Event Tracer must be less than 100KB.
 
-M.11: ~ When tracing is enabled, the cost of recording of a single event with
+M.11: ✓ When tracing is enabled, the cost of recording of a single event with
 two user-defined fields to the in-memory Event Log (measured from before calling
 the Event API to it returning) must be 1 microsecond or less.
 
@@ -68,7 +68,7 @@ The following requirements describe desirable functionality, which increases the
 utility and functionality of the event tracing feature - they are nice to have,
 although the event tracing library.
 
-E.1: ✗ Events can be enabled / disabled at a category level.
+E.1: ✓ Events can be enabled / disabled at a category level.
 
 E.2: ✗ Events can be retrieved at a category level.
 
