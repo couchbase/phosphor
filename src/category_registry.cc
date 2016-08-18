@@ -63,30 +63,34 @@ namespace phosphor {
         }
     }
 
-    CategoryStatus CategoryRegistry::calculateEnabled(size_t index) {
+    CategoryStatus CategoryRegistry::calculateEnabled(
+            const std::string& category_group,
+            const std::vector<std::string>& enabled,
+            const std::vector<std::string>& disabled) {
+
         const std::vector<std::string> categories(
-            utils::split_string(groups[index], ','));
+                utils::split_string(category_group, ','));
 
         std::vector<std::string> enabled_relevant;
 
         // Find all categories which match an enabled category
         for (const auto& category : categories) {
-            if (std::find_if(enabled_categories.begin(),
-                             enabled_categories.end(),
+            if (std::find_if(enabled.begin(),
+                             enabled.end(),
                              [&category](const std::string enabled) {
                                  return utils::glob_match(enabled, category);
-                             }) != enabled_categories.end()) {
+                             }) != enabled.end()) {
                 enabled_relevant.push_back(category);
             }
         }
 
         // Find any category that doesn't match a disabled category
         for (const auto& category : enabled_relevant) {
-            if (std::find_if(disabled_categories.begin(),
-                             disabled_categories.end(),
+            if (std::find_if(disabled.begin(),
+                             disabled.end(),
                              [&category](const std::string enabled) {
                                  return utils::glob_match(enabled, category);
-                             }) == disabled_categories.end()) {
+                             }) == disabled.end()) {
                 // Found a single non-disabled category in our list of
                 // enabled categories.
                 return CategoryStatus::Enabled;
@@ -94,6 +98,12 @@ namespace phosphor {
         }
 
         return CategoryStatus::Disabled;
+    }
+
+    CategoryStatus CategoryRegistry::calculateEnabled(size_t index) {
+        return this->calculateEnabled(groups[index],
+                                      enabled_categories,
+                                      disabled_categories);
     }
 
     void CategoryRegistry::updateEnabled(

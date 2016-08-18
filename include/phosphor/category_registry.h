@@ -86,6 +86,21 @@ namespace phosphor {
          */
         void disableAll();
 
+        /**
+         * Calculates whether or not a given category group string
+         * be enabled based on the supplied categories.
+         *
+         * @param category_group The category_group to get the status of
+         * @param enabled The enabled groups
+         * @param disabled The disabled groups
+         * @return The calculated status of the group based on the
+         *         currently enabled/disabled categories.
+         */
+        static CategoryStatus calculateEnabled(
+                const std::string& category_group,
+                const std::vector<std::string>& enabled,
+                const std::vector<std::string>& disabled);
+
     protected:
         /**
          * Calculates whether or not a given group index should
@@ -93,7 +108,7 @@ namespace phosphor {
          *
          * @param index The index of the group to calculate
          * @return The calculated status of the group based on the
-         *         currently enabled categories.
+         *         currently enabled/disabled categories.
          */
         CategoryStatus calculateEnabled(size_t index);
 
