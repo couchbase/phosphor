@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['calculateenabled',['calculateEnabled',['../classphosphor_1_1_category_registry.html#af0a995d763dcb821920ef4df594c87b3',1,'phosphor::CategoryRegistry']]],
+  ['calculateenabled',['calculateEnabled',['../classphosphor_1_1_category_registry.html#af147be50bf52d3b4122fad4da674a76b',1,'phosphor::CategoryRegistry::calculateEnabled(const std::string &amp;category_group, const std::vector&lt; std::string &gt; &amp;enabled, const std::vector&lt; std::string &gt; &amp;disabled)'],['../classphosphor_1_1_category_registry.html#af0a995d763dcb821920ef4df594c87b3',1,'phosphor::CategoryRegistry::calculateEnabled(size_t index)']]],
   ['category_5fregistry_2eh',['category_registry.h',['../category__registry_8h.html',1,'']]],
   ['categoryregistry',['CategoryRegistry',['../classphosphor_1_1_category_registry.html',1,'phosphor']]],
   ['categoryregistry',['CategoryRegistry',['../classphosphor_1_1_category_registry.html#a128049d6b880dc37aa9aff44d597885f',1,'phosphor::CategoryRegistry']]],

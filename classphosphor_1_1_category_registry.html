@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_category_registry.ht
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
@@ -130,6 +131,11 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a238b7dca9c6f7284357c045f73263707"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae68ce1824aae7dcc45c7f896dc573ebe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#ae68ce1824aae7dcc45c7f896dc573ebe">disableAll</a> ()</td></tr>
 <tr class="separator:ae68ce1824aae7dcc45c7f896dc573ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:af147be50bf52d3b4122fad4da674a76b"><td class="memItemLeft" align="right" valign="top">static CategoryStatus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#af147be50bf52d3b4122fad4da674a76b">calculateEnabled</a> (const std::string &amp;category_group, const std::vector&lt; std::string &gt; &amp;enabled, const std::vector&lt; std::string &gt; &amp;disabled)</td></tr>
+<tr class="separator:af147be50bf52d3b4122fad4da674a76b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -194,6 +200,56 @@ static CONSTEXPR int&#160;</td><td class="memItemRight" valign="bottom"><b>index
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="af147be50bf52d3b4122fad4da674a76b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CategoryStatus phosphor::CategoryRegistry::calculateEnabled </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>category_group</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>enabled</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>disabled</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Calculates whether or not a given category group string be enabled based on the supplied categories.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">category_group</td><td>The category_group to get the status of </td></tr>
+    <tr><td class="paramname">enabled</td><td>The enabled groups </td></tr>
+    <tr><td class="paramname">disabled</td><td>The disabled groups </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The calculated status of the group based on the currently enabled/disabled categories. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="af0a995d763dcb821920ef4df594c87b3"></a>
 <div class="memitem">
 <div class="memproto">
@@ -222,7 +278,7 @@ static CONSTEXPR int&#160;</td><td class="memItemRight" valign="bottom"><b>index
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The calculated status of the group based on the currently enabled categories. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The calculated status of the group based on the currently enabled/disabled categories. </dd></dl>
 
 </div>
 </div>
