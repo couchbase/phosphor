@@ -16,6 +16,21 @@ INCLUDE_DIRECTORIES(BEFORE
         ${phosphor_SOURCE_DIR}/src
         ${phosphor_SOURCE_DIR}/thirdparty/dvyukov/include)
 
+SET(phosphor_HEADER_FILES
+        ${phosphor_SOURCE_DIR}/include/phosphor/category_registry.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/phosphor.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/phosphor-internal.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/sentinel.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/trace_argument.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/trace_buffer.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/trace_config.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/trace_event.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/trace_log.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/platform/core.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/platform/thread.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/platform/visibility.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/tools/export.h)
+
 SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/category_registry.cc
         ${phosphor_SOURCE_DIR}/src/sentinel.cc
@@ -28,7 +43,9 @@ SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/utils/memory.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
-ADD_LIBRARY(phosphor SHARED ${phosphor_SOURCE_FILES})
+ADD_LIBRARY(phosphor SHARED
+        ${phosphor_HEADER_FILES}
+        ${phosphor_SOURCE_FILES})
 
 INSTALL(TARGETS phosphor
         RUNTIME DESTINATION bin
