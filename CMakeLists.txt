@@ -20,6 +20,7 @@ SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/category_registry.cc
         ${phosphor_SOURCE_DIR}/src/sentinel.cc
         ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
+        ${phosphor_SOURCE_DIR}/src/trace_config.cc
         ${phosphor_SOURCE_DIR}/src/trace_event.cc
         ${phosphor_SOURCE_DIR}/src/trace_log.cc
         ${phosphor_SOURCE_DIR}/src/platform/thread.cc

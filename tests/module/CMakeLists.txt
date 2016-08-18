@@ -44,5 +44,8 @@ M_ADD_MODULE_GTEST(trace_buffer_test
         ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
+M_ADD_LIBRARY_GTEST(trace_config_test
+        trace_config_test.cc)
+
 M_ADD_LIBRARY_GTEST(trace_log_test
         trace_log_test.cc)
