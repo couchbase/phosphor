@@ -47,7 +47,11 @@ namespace phosphor {
                 switch (state) {
                 case State::opening:
                     cache = "{\n  \"traceEvents\": [\n";
-                    state = State::first_event;
+                    if (it == context.trace_buffer->end()) {
+                        state = State::footer;
+                    } else {
+                        state = State::first_event;
+                    }
                     break;
                 case State::other_events:
                     cache += ",\n";

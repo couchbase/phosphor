@@ -57,6 +57,18 @@ TEST_F(ExportTest, test) {
     EXPECT_EQ("", exporter.read(4096));
 }
 
+TEST(EmptyExportTest, test) {
+    TraceContext context(make_fixed_buffer(0, 1));
+    JSONExport exporter(context);
+    std::string p;
+    do {
+        p = exporter.read(80);
+        EXPECT_LE(p.size(), 80);
+        std::cerr << p;
+    } while (p.size());
+    EXPECT_EQ("", exporter.read(4096));
+}
+
 class MockFileStopCallback : public FileStopCallback {
 public:
     template <class... Args>
