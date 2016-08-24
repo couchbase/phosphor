@@ -26,6 +26,7 @@
 #include "platform/thread.h"
 #include "sentinel.h"
 #include "trace_config.h"
+#include "trace_context.h"
 #include "trace_buffer.h"
 #include "trace_event.h"
 
@@ -251,6 +252,23 @@ namespace phosphor {
          * @throw std::logic_error if tracing is currently enabled
          */
         std::unique_ptr<TraceBuffer> getBuffer(std::lock_guard<TraceLog>&);
+
+        /**
+         * Returns a trace context object which can be used to generate
+         * a JSON export / iterated over
+         *
+         * @return TraceContext for the last trace
+         * @throw std::logic_error if tracing is currently enabled
+         */
+        TraceContext getTraceContext();
+
+        /**
+         * Same as TraceLog::getTraceContext() except with external locking
+         *
+         * @return TraceContext for the last trace
+         * @throw std::logic_error if tracing is currently enabled
+         */
+        TraceContext getTraceContext(std::lock_guard<TraceLog>&);
 
         /**
          * Get the current state of tracing of this TraceLog

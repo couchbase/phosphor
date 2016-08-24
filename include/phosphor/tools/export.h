@@ -19,6 +19,7 @@
 
 #include "phosphor/platform/core.h"
 #include "phosphor/trace_buffer.h"
+#include "phosphor/trace_context.h"
 #include "phosphor/trace_log.h"
 
 namespace phosphor {
@@ -47,7 +48,7 @@ namespace phosphor {
             /**
              * Creates the export object
              */
-            JSONExport(const TraceBuffer& _buffer);
+            JSONExport(const TraceContext& _context);
 
             /**
              * Read 'length' worth of JSON
@@ -78,7 +79,7 @@ namespace phosphor {
                 dead
             };
 
-            const TraceBuffer& buffer;
+            const TraceContext& context;
             TraceBuffer::event_iterator it;
             State state = State::opening;
             std::string cache;

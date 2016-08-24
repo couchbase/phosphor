@@ -26,8 +26,8 @@
 
 namespace phosphor {
     namespace tools {
-        JSONExport::JSONExport(const TraceBuffer& _buffer)
-            : buffer(_buffer), it(_buffer.begin()) {}
+        JSONExport::JSONExport(const TraceContext& _context)
+            : context(_context), it(context.trace_buffer->begin()) {}
 
         size_t JSONExport::read(char* out, size_t length) {
             std::string event_json;
@@ -56,7 +56,7 @@ namespace phosphor {
                     ++it;
                     cache += event_json;
                     state = State::other_events;
-                    if (it == buffer.end()) {
+                    if (it == context.trace_buffer->end()) {
                         state = State::footer;
                     }
                     break;
@@ -94,9 +94,9 @@ namespace phosphor {
                     formatted_path);
             }
 
-            auto buffer = log.getBuffer(lh);
+            const TraceContext context = log.getTraceContext(lh);
             char chunk[4096];
-            JSONExport exporter(*buffer);
+            JSONExport exporter(context);
             while (auto count = exporter.read(chunk, sizeof(chunk))) {
                 auto ret = fwrite(chunk, sizeof(chunk[0]), count, fp.get());
                 if (ret != count) {

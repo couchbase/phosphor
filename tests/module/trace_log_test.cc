@@ -112,15 +112,23 @@ TEST_F(TraceLogTest, EnabledBufferGetThrow) {
     EXPECT_NE(nullptr, trace_log.getBuffer().get());
 }
 
+TEST_F(TraceLogTest, EnabledContextGetThrow) {
+    EXPECT_NO_THROW(trace_log.getTraceContext());
+    start_basic();
+    EXPECT_THROW(trace_log.getBuffer(), std::logic_error);
+    trace_log.stop();
+    EXPECT_NO_THROW(trace_log.getTraceContext());
+}
+
 TEST_F(TraceLogTest, bufferGenerationCheck) {
     start_basic();
     trace_log.stop();
-    buffer_ptr buffer = trace_log.getBuffer();
-    EXPECT_EQ(0, buffer->getGeneration());
+    TraceContext context = trace_log.getTraceContext();
+    EXPECT_EQ(0, context.trace_buffer->getGeneration());
     start_basic();
     trace_log.stop();
-    buffer = trace_log.getBuffer();
-    EXPECT_EQ(1, buffer->getGeneration());
+    context = trace_log.getTraceContext();
+    EXPECT_EQ(1, context.trace_buffer->getGeneration());
 }
 
 TEST_F(TraceLogTest, logTillFullAndEvenThen) {
@@ -179,9 +187,9 @@ TEST_F(TraceLogTest, StopRestartVerify) {
     // (i.e. we didn't lose the event in the
     // process of resetting the ChunkTenant)
     trace_log.stop();
-    auto buffer = trace_log.getBuffer();
-    auto event = buffer->begin();
-    ASSERT_NE(buffer->end(), event);
+    auto context = trace_log.getTraceContext();
+    auto event = context.trace_buffer->begin();
+    ASSERT_NE(context.trace_buffer->end(), event);
     EXPECT_STREQ("category2", (*event).getCategory());
 }
 
@@ -233,14 +241,15 @@ TEST_F(TraceLogTest, testDoneCallback) {
                         .setStoppedCallback([&callback_invoked](
                             TraceLog& log, std::lock_guard<TraceLog>& lh) {
                             callback_invoked = true;
-                            EXPECT_NE(nullptr, log.getBuffer(lh).get());
+                            EXPECT_NE(nullptr,
+                                      log.getTraceContext(lh).trace_buffer);
                         }));
 
     while (trace_log.isEnabled()) {
         log_event();
     }
     // TraceLog should already be null
-    EXPECT_EQ(nullptr, trace_log.getBuffer().get());
+    EXPECT_EQ(nullptr, trace_log.getTraceContext().trace_buffer);
     EXPECT_TRUE(callback_invoked);
 }
 

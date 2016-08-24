@@ -22,12 +22,13 @@
 
 using phosphor::tools::JSONExport;
 using phosphor::tools::FileStopCallback;
+using namespace phosphor;
 
 class ExportTest : public testing::Test {
 public:
-    ExportTest() : buffer(phosphor::make_fixed_buffer(0, 1)) {
-        while (!buffer->isFull()) {
-            auto* chunk = buffer->getChunk();
+    ExportTest() : context(TraceContext{make_fixed_buffer(0, 1)}) {
+        while (!context.trace_buffer->isFull()) {
+            auto* chunk = context.trace_buffer->getChunk();
             while (!chunk->isFull()) {
                 chunk->addEvent() = phosphor::TraceEvent(
                     "category",
@@ -42,11 +43,11 @@ public:
     }
 
 protected:
-    phosphor::buffer_ptr buffer;
+    phosphor::TraceContext context;
 };
 
 TEST_F(ExportTest, test) {
-    JSONExport exporter(*buffer);
+    JSONExport exporter(context);
     std::string p;
     do {
         p = exporter.read(80);

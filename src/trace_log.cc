@@ -139,6 +139,20 @@ namespace phosphor {
         return std::move(buffer);
     }
 
+    TraceContext TraceLog::getTraceContext() {
+        std::lock_guard<TraceLog> lh(*this);
+        return getTraceContext(lh);
+    }
+
+    TraceContext TraceLog::getTraceContext(std::lock_guard<TraceLog>&) {
+        if (enabled) {
+            throw std::logic_error(
+                    "phosphor::TraceLog::getTraceContext: Cannot get the "
+                            "TraceContext while logging is enabled");
+        }
+        return TraceContext{std::move(buffer)};
+    }
+
     bool TraceLog::isEnabled() {
         return enabled;
     }

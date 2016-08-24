@@ -24,6 +24,7 @@ SET(phosphor_HEADER_FILES
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_argument.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_buffer.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_config.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/trace_context.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_event.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_log.h
         ${phosphor_SOURCE_DIR}/include/phosphor/platform/core.h
