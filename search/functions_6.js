@@ -22,5 +22,6 @@ var searchData=
   ['getstoptracingondestruct',['getStopTracingOnDestruct',['../classphosphor_1_1_trace_config.html#a7bbe0fd70283d3c621b8f37da6aa8269',1,'phosphor::TraceConfig']]],
   ['getthreadid',['getThreadID',['../classphosphor_1_1_trace_event.html#acc5c9d66ed68469b94aa8475f401bb78',1,'phosphor::TraceEvent']]],
   ['gettime',['getTime',['../classphosphor_1_1_trace_event.html#aa2f888bd4b325a5b83033f354e6143d8',1,'phosphor::TraceEvent']]],
+  ['gettracecontext',['getTraceContext',['../classphosphor_1_1_trace_log.html#a788fdc1d44ef074dfc4f3fa68830a1b4',1,'phosphor::TraceLog::getTraceContext()'],['../classphosphor_1_1_trace_log.html#a0e1214bab281962bccc6029be63c8755',1,'phosphor::TraceLog::getTraceContext(std::lock_guard&lt; TraceLog &gt; &amp;)']]],
   ['gettype',['getType',['../unionphosphor_1_1_trace_argument.html#a0d3e12ebe76e5e69be8999163156f737',1,'phosphor::TraceArgument::getType()'],['../classphosphor_1_1_trace_event.html#af44a80cebb6c82eea7dca5f56ec01f63',1,'phosphor::TraceEvent::getType()']]]
 ];

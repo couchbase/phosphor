@@ -12,6 +12,8 @@ var classphosphor_1_1_trace_log =
     [ "getCategoryStatus", "classphosphor_1_1_trace_log.html#ac9c0245c0bc2e15e5268a154785aa987", null ],
     [ "getChunkTenant", "classphosphor_1_1_trace_log.html#a30cd12f4e9970f7347efe63986638227", null ],
     [ "getTraceConfig", "classphosphor_1_1_trace_log.html#ad214f6f2f7881800d1ac6dd243806679", null ],
+    [ "getTraceContext", "classphosphor_1_1_trace_log.html#a788fdc1d44ef074dfc4f3fa68830a1b4", null ],
+    [ "getTraceContext", "classphosphor_1_1_trace_log.html#a0e1214bab281962bccc6029be63c8755", null ],
     [ "isEnabled", "classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f", null ],
     [ "lock", "classphosphor_1_1_trace_log.html#af2df1c20bf288ee486ad043dc61c3b09", null ],
     [ "logEvent", "classphosphor_1_1_trace_log.html#a14ca2e9816276cbfb1950e9b363873b8", null ],

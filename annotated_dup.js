@@ -20,6 +20,7 @@ var annotated_dup =
       [ "TraceBuffer", "classphosphor_1_1_trace_buffer.html", "classphosphor_1_1_trace_buffer" ],
       [ "TraceChunk", "classphosphor_1_1_trace_chunk.html", "classphosphor_1_1_trace_chunk" ],
       [ "TraceConfig", "classphosphor_1_1_trace_config.html", "classphosphor_1_1_trace_config" ],
+      [ "TraceContext", "classphosphor_1_1_trace_context.html", "classphosphor_1_1_trace_context" ],
       [ "TraceEvent", "classphosphor_1_1_trace_event.html", "classphosphor_1_1_trace_event" ],
       [ "TraceLog", "classphosphor_1_1_trace_log.html", "classphosphor_1_1_trace_log" ],
       [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html", "classphosphor_1_1_trace_log_config" ]

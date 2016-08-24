@@ -155,6 +155,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a47bd45e0cec58a6315aeab78a0562469"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5041e833872a887191ec8ca8ef95d6d"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae5041e833872a887191ec8ca8ef95d6d">getBuffer</a> (std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;)</td></tr>
 <tr class="separator:ae5041e833872a887191ec8ca8ef95d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a788fdc1d44ef074dfc4f3fa68830a1b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a788fdc1d44ef074dfc4f3fa68830a1b4">getTraceContext</a> ()</td></tr>
+<tr class="separator:a788fdc1d44ef074dfc4f3fa68830a1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e1214bab281962bccc6029be63c8755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a0e1214bab281962bccc6029be63c8755">getTraceContext</a> (std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;)</td></tr>
+<tr class="separator:a0e1214bab281962bccc6029be63c8755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f">isEnabled</a> ()</td></tr>
 <tr class="separator:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1fbcb3a1285fd447b4d8df6f6fccd8e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ab1fbcb3a1285fd447b4d8df6f6fccd8e">registerThread</a> ()</td></tr>
@@ -454,6 +458,53 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 <p>Singleton static method to get the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> instance</p>
 <p>This is technically ThreadSafe according to the C++11 spec but versions of MSVC &lt; 2015 are not <em>quite</em> conforming.</p>
 <dl class="section return"><dt>Returns</dt><dd>the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> instance </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a788fdc1d44ef074dfc4f3fa68830a1b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> phosphor::TraceLog::getTraceContext </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns a trace context object which can be used to generate a JSON export / iterated over</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> for the last trace </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::logic_error</td><td>if tracing is currently enabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a0e1214bab281962bccc6029be63c8755"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> phosphor::TraceLog::getTraceContext </td>
+          <td>(</td>
+          <td class="paramtype">std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Same as <a class="el" href="classphosphor_1_1_trace_log.html#a788fdc1d44ef074dfc4f3fa68830a1b4">TraceLog::getTraceContext()</a> except with external locking</p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> for the last trace </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::logic_error</td><td>if tracing is currently enabled </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

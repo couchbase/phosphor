@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Phosphor: Member List</title>
+<title>Phosphor: phosphor::TraceContext Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,7 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('classphosphor_1_1tools_1_1_j_s_o_n_export.html','');});
+$(document).ready(function(){initNavTree('classphosphor_1_1_trace_context.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -106,26 +106,60 @@ $(document).ready(function(){initNavTree('classphosphor_1_1tools_1_1_j_s_o_n_exp
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classphosphor_1_1_trace_context-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">phosphor::tools::JSONExport Member List</div>  </div>
+<div class="title">phosphor::TraceContext Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>cache</b> (defined in <a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a>)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>context</b> (defined in <a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a>)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>it</b> (defined in <a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a>)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#aa01f3a39e481fd4b22ed357408cbbe6a">JSONExport</a>(const TraceContext &amp;_context)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#aee5e3bbc1e2ff24a9a35799da2fe4f69">read</a>(char *out, size_t length)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#a6c882ca178ecc739ca8ff9d0f67a222c">read</a>(size_t length)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>State</b> enum name (defined in <a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a>)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>state</b> (defined in <a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a>)</td><td class="entry"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html">phosphor::tools::JSONExport</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-</table></div><!-- contents -->
+<p><code>#include &lt;<a class="el" href="trace__context_8h_source.html">trace_context.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a583fb1d340ed4dc49d1655a6df59d27c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a583fb1d340ed4dc49d1655a6df59d27c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TraceContext</b> (std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt; &amp;&amp;buffer)</td></tr>
+<tr class="separator:a583fb1d340ed4dc49d1655a6df59d27c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf6491023ba7d8c4e5d58b44ecb4c9f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf6491023ba7d8c4e5d58b44ecb4c9f2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TraceContext</b> (<a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> &amp;&amp;other)</td></tr>
+<tr class="separator:adf6491023ba7d8c4e5d58b44ecb4c9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4378a5ec51ca5e333b3a235c77c312d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4378a5ec51ca5e333b3a235c77c312d3"></a>
+<a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> &amp;&amp;other)</td></tr>
+<tr class="separator:a4378a5ec51ca5e333b3a235c77c312d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a816ea32862ae2c3d6b80a8014184ee67"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_context.html#a816ea32862ae2c3d6b80a8014184ee67">trace_buffer</a></td></tr>
+<tr class="separator:a816ea32862ae2c3d6b80a8014184ee67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> is an object which encapsulates all information and metadata surrounding a trace that might be required to perform an export.</p>
+<p>The <a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> enforces movement semantics as it contains a std::unique_ptr </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a816ea32862ae2c3d6b80a8014184ee67"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a>&gt; phosphor::TraceContext::trace_buffer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The trace buffer from the trace </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/phosphor/<a class="el" href="trace__context_8h_source.html">trace_context.h</a></li>
+</ul>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><b>phosphor</b></li><li class="navelem"><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.11 </li>
