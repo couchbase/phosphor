@@ -70,6 +70,18 @@ namespace phosphor {
              */
             std::string read(size_t length);
 
+            /**
+             * Read entire buffer's worth of JSON
+             *
+             * @returns The entire buffer converted to JSON
+             */
+            std::string read();
+
+            /**
+             * @return True if the export is complete
+             */
+            bool done();
+
         protected:
             enum class State {
                 opening,

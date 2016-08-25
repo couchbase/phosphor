@@ -84,6 +84,23 @@ namespace phosphor {
             return out;
         }
 
+        bool JSONExport::done() {
+            return state == State::dead;
+        }
+
+        std::string JSONExport::read() {
+            std::string out;
+
+            size_t last_wrote;
+            do {
+                out.resize(out.size() + 4096);
+                last_wrote = read(&out[out.size() - 4096], 4096);
+            } while (!done());
+
+            out.resize(out.size() - (4096 - last_wrote));
+            return out;
+        }
+
         FileStopCallback::FileStopCallback(const std::string& _file_path)
             : file_path(_file_path) {}
 

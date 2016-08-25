@@ -57,6 +57,15 @@ TEST_F(ExportTest, test) {
     EXPECT_EQ("", exporter.read(4096));
 }
 
+TEST_F(ExportTest, fulltest) {
+    JSONExport exporter(context);
+    std::string p = exporter.read();
+    EXPECT_TRUE(exporter.done());
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+}
+
+
 TEST(EmptyExportTest, test) {
     TraceContext context(make_fixed_buffer(0, 1));
     JSONExport exporter(context);
