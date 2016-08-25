@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"functions_enum.html":[7,3,4],
+"functions_func.html":[7,3,1],
 "functions_type.html":[7,3,3],
 "functions_vars.html":[7,3,2],
 "globals.html":[8,1,0],

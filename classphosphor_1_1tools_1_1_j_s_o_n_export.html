@@ -126,6 +126,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aee5e3bbc1e2ff24a9a35799da2fe4f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c882ca178ecc739ca8ff9d0f67a222c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#a6c882ca178ecc739ca8ff9d0f67a222c">read</a> (size_t length)</td></tr>
 <tr class="separator:a6c882ca178ecc739ca8ff9d0f67a222c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a949fc1cc59be0d2dc717671a303a7f45"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#a949fc1cc59be0d2dc717671a303a7f45">read</a> ()</td></tr>
+<tr class="separator:a949fc1cc59be0d2dc717671a303a7f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f35b02739089adb9722593e3f88ae98"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_j_s_o_n_export.html#a2f35b02739089adb9722593e3f88ae98">done</a> ()</td></tr>
+<tr class="separator:a2f35b02739089adb9722593e3f88ae98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-types"></a>
 Protected Types</h2></td></tr>
@@ -184,6 +188,22 @@ do {
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a2f35b02739089adb9722593e3f88ae98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool phosphor::tools::JSONExport::done </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>True if the export is complete </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="aee5e3bbc1e2ff24a9a35799da2fe4f69"></a>
 <div class="memitem">
 <div class="memproto">
@@ -234,6 +254,23 @@ do {
 </div><div class="memdoc">
 <p>Read 'length' worth of JSON</p>
 <dl class="section return"><dt>Returns</dt><dd>roughly 'length' bytes of the JSON starting from the point that was previously left off. This will return less than 'length' at the end of the buffer. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a949fc1cc59be0d2dc717671a303a7f45"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string phosphor::tools::JSONExport::read </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read entire buffer's worth of JSON</p>
+<dl class="section return"><dt>Returns</dt><dd>The entire buffer converted to JSON </dd></dl>
 
 </div>
 </div>
