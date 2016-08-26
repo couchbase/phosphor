@@ -182,6 +182,8 @@ namespace phosphor {
 
             auto offset = actual_count++;
 
+            // Once we've handed out more chunks than the buffer size, start
+            // pulling chunks from the queue
             if (offset >= buffer.size()) {
                 assert(in_queue > 0);
                 while (!return_queue.dequeue(chunk)) {
@@ -224,7 +226,13 @@ namespace phosphor {
         }
 
         size_t chunk_count() const override {
-            return actual_count;
+            // If the chunks given out is greater than the buffer size
+            // then return the buffer size instead.
+            if (actual_count > buffer.size()) {
+                return buffer.size();
+            } else {
+                return actual_count;
+            }
         }
 
         chunk_iterator chunk_begin() const override {
@@ -244,6 +252,7 @@ namespace phosphor {
         }
 
     protected:
+        // This is the total number of chunks ever handed out
         std::atomic<size_t> actual_count;
 
         gsl_p::dyn_array<TraceChunk> buffer;

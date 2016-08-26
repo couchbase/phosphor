@@ -265,6 +265,20 @@ TEST_P(UnFillableTraceBufferTest, GetChunk) {
     EXPECT_NO_THROW(buffer->getChunk());
 }
 
+// Test that the reported trace chunk count does
+// not exceed the size of the buffer
+TEST_P(UnFillableTraceBufferTest, CorrectCount) {
+    /* Make a buffer with one chunk */
+    make_buffer(1);
+    EXPECT_EQ(0, buffer->chunk_count());
+    TraceChunk* chunk = buffer->getChunk();
+    buffer->returnChunk(*chunk);
+    EXPECT_EQ(1, buffer->chunk_count());
+    chunk = buffer->getChunk();
+    buffer->returnChunk(*chunk);
+    EXPECT_EQ(1, buffer->chunk_count());
+}
+
 INSTANTIATE_TEST_CASE_P(
     BuiltIn,
     TraceBufferTest,
