@@ -115,7 +115,7 @@ TEST_F(TraceLogTest, EnabledBufferGetThrow) {
 TEST_F(TraceLogTest, EnabledContextGetThrow) {
     EXPECT_NO_THROW(trace_log.getTraceContext());
     start_basic();
-    EXPECT_THROW(trace_log.getBuffer(), std::logic_error);
+    EXPECT_THROW(trace_log.getTraceContext(), std::logic_error);
     trace_log.stop();
     EXPECT_NO_THROW(trace_log.getTraceContext());
 }
@@ -222,8 +222,14 @@ TEST(TraceLogStaticTest, registerDeRegister) {
     TraceLog trace_log;
     trace_log.start(TraceConfig(BufferMode::fixed, sizeof(TraceChunk)));
 
+    // Cannot deregister without registering first
     EXPECT_THROW(trace_log.deregisterThread(), std::logic_error);
+
+    // Cannot register twice
     trace_log.registerThread();
+    EXPECT_THROW(trace_log.registerThread(), std::logic_error);
+
+    // Should be able to deregister after registering
     EXPECT_NO_THROW(trace_log.deregisterThread());
 }
 
@@ -281,4 +287,47 @@ TEST(TraceLogAltTest, stopOnDestruct) {
                             }));
     }
     EXPECT_FALSE(callback_invoked);
+}
+
+TEST_F(TraceLogTest, RegisterDeregisterRegister) {
+
+    trace_log.registerThread("name1");
+    auto context = trace_log.getTraceContext();
+    ASSERT_NE(0, context.thread_names.size());
+    auto it = context.thread_names.begin();
+    EXPECT_EQ("name1", it->second);
+
+    // Thread name shouldn't persist after de-registering when not running
+    trace_log.deregisterThread();
+    context = trace_log.getTraceContext();
+    EXPECT_EQ(0, context.thread_names.size());
+
+    // Thread name should persist even after de-registering when running
+    trace_log.registerThread("name1");
+    start_basic();
+    trace_log.deregisterThread();
+    trace_log.stop();
+    context = trace_log.getTraceContext();
+    ASSERT_NE(0, context.thread_names.size());
+    it = context.thread_names.begin();
+    EXPECT_EQ("name1", it->second);
+
+    // Registering a new name should override the old one
+    trace_log.registerThread("name2");
+    context = trace_log.getTraceContext();
+    ASSERT_NE(0, context.thread_names.size());
+    it = context.thread_names.begin();
+    EXPECT_EQ("name2", it->second);
+
+    // Thread names should be cleared by start
+    start_basic();
+    trace_log.deregisterThread();
+    trace_log.stop();
+    context = trace_log.getTraceContext();
+    EXPECT_NE(0, context.thread_names.size());
+    start_basic();
+    trace_log.stop();
+    context = trace_log.getTraceContext();
+    EXPECT_EQ(0, context.thread_names.size());
+
 }

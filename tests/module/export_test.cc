@@ -26,7 +26,7 @@ using namespace phosphor;
 
 class ExportTest : public testing::Test {
 public:
-    ExportTest() : context(TraceContext{make_fixed_buffer(0, 1)}) {
+    ExportTest() : context(TraceContext(make_fixed_buffer(0, 1))) {
         while (!context.trace_buffer->isFull()) {
             auto* chunk = context.trace_buffer->getChunk();
             while (!chunk->isFull()) {

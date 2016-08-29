@@ -18,6 +18,8 @@
 #pragma once
 
 #include <memory>
+#include <string>
+#include <unordered_map>
 
 namespace phosphor {
 
@@ -39,12 +41,21 @@ namespace phosphor {
 
         }
 
+        TraceContext(std::unique_ptr<TraceBuffer>&& buffer,
+                     const std::unordered_map<uint64_t, std::string>& _thread_names)
+            : trace_buffer(std::move(buffer)),
+              thread_names(_thread_names) {
+
+        }
+
         TraceContext(TraceContext&& other)
-            : trace_buffer(std::move(other.trace_buffer)) {
+            : trace_buffer(std::move(other.trace_buffer)),
+              thread_names(other.thread_names) {
         }
 
         TraceContext& operator=(TraceContext&& other) {
             trace_buffer = std::move(other.trace_buffer);
+            thread_names = other.thread_names;
             return *this;
         }
 
@@ -52,6 +63,12 @@ namespace phosphor {
          * The trace buffer from the trace
          */
         std::unique_ptr<TraceBuffer> trace_buffer;
+
+        /**
+         * A mapping of thread ids to thread names for all threads that
+         * were registered at any point when the trace was being conducted
+         */
+        std::unordered_map<uint64_t, std::string> thread_names;
     };
 
 }

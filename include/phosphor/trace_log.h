@@ -20,6 +20,8 @@
 #include <atomic>
 #include <memory>
 #include <mutex>
+#include <set>
+#include <unordered_map>
 #include <unordered_set>
 
 #include "category_registry.h"
@@ -280,6 +282,9 @@ namespace phosphor {
         /**
          * Registers the current thread for tracing (Optional)
          *
+         * Can also give a name to associate the thread's TID with a name
+         * for export purposes. Thread name is ignored if it's an empty string.
+         *
          * Registering a thread is used for a long-living thread and is
          * used to give it a dedicated ChunkTenant and optionally a
          * name. A registered thread MUST be de-registered before the
@@ -290,8 +295,11 @@ namespace phosphor {
          * a ChunkTenant with all other non-registered threads. Because
          * this involves acquiring locks that may be under contention
          * this can be expensive.
+         *
+         * @param thread_name (optional) name of the thread to register
+         * @throw std::logic_error if the thread has already been registered
          */
-        void registerThread();
+        void registerThread(const std::string& thread_name = "");
 
         /**
          * De-registers the current thread
@@ -384,6 +392,12 @@ namespace phosphor {
         void evictThreads(std::lock_guard<TraceLog>& lh);
 
         /**
+         * Removes all threads from the thread_name map that are part of the
+         * deregistered threads set.
+         */
+        void clearDeregisteredThreads();
+
+        /**
          * The shared ChunkTenants which are used by default when a thread
          * has not been registered.
          *
@@ -450,5 +464,15 @@ namespace phosphor {
          * Category registry which manages the enabled / disabled categories
          */
         CategoryRegistry registry;
+
+        /**
+         * Map of registered thread TIDs to names
+         */
+        std::unordered_map<uint64_t, std::string> thread_names;
+
+        /**
+         * List of deregistered thread ids while tracing is running
+         */
+        std::set<uint64_t> deregistered_threads;
     };
 }

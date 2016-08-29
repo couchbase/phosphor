@@ -116,6 +116,7 @@ namespace phosphor {
         buffer = trace_config.getBufferFactory()(generation++, buffer_size);
         registry.updateEnabled(trace_config.getEnabledCategories(),
                                trace_config.getDisabledCategories());
+        clearDeregisteredThreads();
         enabled.store(true);
     }
 
@@ -150,18 +151,33 @@ namespace phosphor {
                     "phosphor::TraceLog::getTraceContext: Cannot get the "
                             "TraceContext while logging is enabled");
         }
-        return TraceContext{std::move(buffer)};
+        return TraceContext(std::move(buffer), thread_names);
     }
 
     bool TraceLog::isEnabled() {
         return enabled;
     }
 
-    void TraceLog::registerThread() {
+    void TraceLog::registerThread(const std::string& thread_name) {
         std::lock_guard<TraceLog> lh(*this);
+
+        if (thread_chunk.sentinel) {
+            throw std::logic_error("TraceLog::registerThread: Thread is "
+                                   "already registered");
+        }
 
         thread_chunk.sentinel = new Sentinel;
         registered_sentinels.insert(thread_chunk.sentinel);
+
+        if (thread_name != "") {
+            // Unconditionally set the name of the thread, even for the unlikely
+            // event that it is already there.
+            thread_names[platform::getCurrentThreadIDCached()] = thread_name;
+
+            // Make sure we don't remove our newly registered thread if we
+            // happened to reuse the TID of a thread that's been deregistered.
+            deregistered_threads.erase(platform::getCurrentThreadIDCached());
+        }
     }
 
     void TraceLog::deregisterThread() {
@@ -181,6 +197,13 @@ namespace phosphor {
         }
         registered_sentinels.erase(thread_chunk.sentinel);
         delete thread_chunk.sentinel;
+        thread_chunk.sentinel = nullptr;
+
+        if (isEnabled()) {
+            deregistered_threads.emplace(platform::getCurrentThreadIDCached());
+        } else {
+            thread_names.erase(platform::getCurrentThreadIDCached());
+        }
     }
 
     TraceConfig TraceLog::getTraceConfig() const {
@@ -229,6 +252,12 @@ namespace phosphor {
     void TraceLog::evictThreads(std::lock_guard<TraceLog>& lh) {
         for (auto& sentinel : registered_sentinels) {
             sentinel->close();
+        }
+    }
+
+    void TraceLog::clearDeregisteredThreads() {
+        for (const auto& tid : deregistered_threads) {
+            thread_names.erase(tid);
         }
     }
 
