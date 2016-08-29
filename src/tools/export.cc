@@ -26,8 +26,21 @@
 
 namespace phosphor {
     namespace tools {
+
+        std::string threadAssociationToString(
+                const std::pair<uint64_t, std::string>& assoc) {
+            return utils::format_string(
+                "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": 0, "
+                "\"tid\": %d, \"args\": { \"name\" : \"%s\"}}",
+                assoc.first, assoc.second.c_str());
+        }
+
         JSONExport::JSONExport(const TraceContext& _context)
-            : context(_context), it(context.trace_buffer->begin()) {}
+            : context(_context),
+              it(context.trace_buffer->begin()),
+              tit(context.thread_names.begin()) {
+
+        }
 
         size_t JSONExport::read(char* out, size_t length) {
             std::string event_json;
@@ -47,10 +60,12 @@ namespace phosphor {
                 switch (state) {
                 case State::opening:
                     cache = "{\n  \"traceEvents\": [\n";
-                    if (it == context.trace_buffer->end()) {
-                        state = State::footer;
-                    } else {
+                    if (tit != context.thread_names.end()) {
+                        state = State::first_thread;
+                    } else if (it != context.trace_buffer->end()) {
                         state = State::first_event;
+                    } else {
+                        state = State::footer;
                     }
                     break;
                 case State::other_events:
@@ -64,6 +79,21 @@ namespace phosphor {
                         state = State::footer;
                     }
                     break;
+                case State::other_threads:
+                        cache += ",\n";
+                case State::first_thread:
+                        event_json = threadAssociationToString(*tit);
+                        ++tit;
+                        cache += event_json;
+                        state = State::other_threads;
+                        if (tit == context.thread_names.end()) {
+                            if (it != context.trace_buffer->end()) {
+                                state = State::other_events;
+                            } else {
+                                state = State::footer;
+                            }
+                        }
+                        break;
                 case State::footer:
                     cache =
                         "\n    ]\n"

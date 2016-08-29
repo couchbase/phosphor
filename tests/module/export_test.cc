@@ -27,18 +27,39 @@ using namespace phosphor;
 class ExportTest : public testing::Test {
 public:
     ExportTest() : context(TraceContext(make_fixed_buffer(0, 1))) {
+    }
+
+    void fillContextBuffer() {
         while (!context.trace_buffer->isFull()) {
             auto* chunk = context.trace_buffer->getChunk();
             while (!chunk->isFull()) {
                 chunk->addEvent() = phosphor::TraceEvent(
-                    "category",
-                    "name",
-                    phosphor::TraceEvent::Type::Instant,
-                    0,
-                    {{0, 0}},
-                    {{phosphor::TraceArgument::Type::is_none,
-                      phosphor::TraceArgument::Type::is_none}});
+                        "category",
+                        "name",
+                        phosphor::TraceEvent::Type::Instant,
+                        0,
+                        {{0, 0}},
+                        {{phosphor::TraceArgument::Type::is_none,
+                                 phosphor::TraceArgument::Type::is_none}});
             }
+        }
+    }
+
+    void addOneToContextBuffer() {
+        auto* chunk = context.trace_buffer->getChunk();
+        chunk->addEvent() = phosphor::TraceEvent(
+                "category",
+                "name",
+                phosphor::TraceEvent::Type::Instant,
+                0,
+                {{0, 0}},
+                {{phosphor::TraceArgument::Type::is_none,
+                         phosphor::TraceArgument::Type::is_none}});
+    }
+
+    void addThreadsToContext(size_t count) {
+        for (size_t i = 0; i < count; ++i) {
+            context.thread_names.emplace(i, std::to_string(i));
         }
     }
 
@@ -46,18 +67,19 @@ protected:
     phosphor::TraceContext context;
 };
 
-TEST_F(ExportTest, test) {
+TEST_F(ExportTest, FullBufferTest) {
+    fillContextBuffer();
     JSONExport exporter(context);
     std::string p;
     do {
         p = exporter.read(80);
         EXPECT_LE(p.size(), 80);
-        std::cerr << p;
     } while (p.size());
     EXPECT_EQ("", exporter.read(4096));
 }
 
 TEST_F(ExportTest, fulltest) {
+    fillContextBuffer();
     JSONExport exporter(context);
     std::string p = exporter.read();
     EXPECT_TRUE(exporter.done());
@@ -65,15 +87,50 @@ TEST_F(ExportTest, fulltest) {
     EXPECT_EQ('\n', p[p.size() - 1]);
 }
 
+TEST_F(ExportTest, SingleEvent) {
+    addOneToContextBuffer();
+    JSONExport exporter(context);
+    std::string p = exporter.read();
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
+}
 
-TEST(EmptyExportTest, test) {
-    TraceContext context(make_fixed_buffer(0, 1));
+TEST_F(ExportTest, SingleThreadFullBuffer) {
+    addThreadsToContext(1);
+    fillContextBuffer();
+    JSONExport exporter(context);
+    std::string p = exporter.read();
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
+}
+
+TEST_F(ExportTest, LotsOfThreadsFullBuffer) {
+    addThreadsToContext(100);
+    fillContextBuffer();
+    JSONExport exporter(context);
+    std::string p = exporter.read();
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
+}
+
+TEST_F(ExportTest, LotsOfThreadsEmptyBuffer) {
+    addThreadsToContext(100);
+    JSONExport exporter(context);
+    std::string p = exporter.read();
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
+}
+
+TEST_F(ExportTest, test) {
     JSONExport exporter(context);
     std::string p;
     do {
         p = exporter.read(80);
         EXPECT_LE(p.size(), 80);
-        std::cerr << p;
     } while (p.size());
     EXPECT_EQ("", exporter.read(4096));
 }

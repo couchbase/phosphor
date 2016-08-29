@@ -85,14 +85,19 @@ namespace phosphor {
         protected:
             enum class State {
                 opening,
+                /* first_event is only used if first_thread wasn't */
                 first_event,
                 other_events,
+                first_thread,
+                other_threads,
                 footer,
                 dead
             };
 
             const TraceContext& context;
             TraceBuffer::event_iterator it;
+            std::unordered_map<uint64_t, std::string>::const_iterator tit;
+
             State state = State::opening;
             std::string cache;
         };
