@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['generation',['generation',['../classphosphor_1_1_trace_log.html#aaba5b955aca310f4bd5eda20ab7432d0',1,'phosphor::TraceLog']]]
+  ['enabled',['enabled',['../classphosphor_1_1_trace_log.html#aa4b650b4031a9c1b03c42b4bf99c33a7',1,'phosphor::TraceLog']]]
 ];

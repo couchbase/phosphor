@@ -122,6 +122,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a583fb1d340ed4dc49d1655a6df59d27c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a583fb1d340ed4dc49d1655a6df59d27c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TraceContext</b> (std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt; &amp;&amp;buffer)</td></tr>
 <tr class="separator:a583fb1d340ed4dc49d1655a6df59d27c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6b8ebc178f241f811b287f760111ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c6b8ebc178f241f811b287f760111ba"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TraceContext</b> (std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt; &amp;&amp;buffer, const std::unordered_map&lt; uint64_t, std::string &gt; &amp;_thread_names)</td></tr>
+<tr class="separator:a8c6b8ebc178f241f811b287f760111ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf6491023ba7d8c4e5d58b44ecb4c9f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf6491023ba7d8c4e5d58b44ecb4c9f2"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>TraceContext</b> (<a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> &amp;&amp;other)</td></tr>
 <tr class="separator:adf6491023ba7d8c4e5d58b44ecb4c9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,11 +136,26 @@ Public Member Functions</h2></td></tr>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a816ea32862ae2c3d6b80a8014184ee67"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_context.html#a816ea32862ae2c3d6b80a8014184ee67">trace_buffer</a></td></tr>
 <tr class="separator:a816ea32862ae2c3d6b80a8014184ee67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9480c3961ceaacba85a96280853d7b8"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; uint64_t, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_context.html#ab9480c3961ceaacba85a96280853d7b8">thread_names</a></td></tr>
+<tr class="separator:ab9480c3961ceaacba85a96280853d7b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> is an object which encapsulates all information and metadata surrounding a trace that might be required to perform an export.</p>
 <p>The <a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a> enforces movement semantics as it contains a std::unique_ptr </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="ab9480c3961ceaacba85a96280853d7b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;uint64_t, std::string&gt; phosphor::TraceContext::thread_names</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A mapping of thread ids to thread names for all threads that were registered at any point when the trace was being conducted </p>
+
+</div>
+</div>
 <a class="anchor" id="a816ea32862ae2c3d6b80a8014184ee67"></a>
 <div class="memitem">
 <div class="memproto">

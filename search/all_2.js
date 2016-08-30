@@ -13,6 +13,7 @@ var searchData=
   ['chunk_5fiterator',['chunk_iterator',['../classphosphor_1_1_trace_buffer_1_1chunk__iterator.html',1,'phosphor::TraceBuffer']]],
   ['chunks',['chunks',['../classphosphor_1_1_trace_buffer.html#aa8b82981d2e7bdc3d3b07d2ef153abe0',1,'phosphor::TraceBuffer']]],
   ['chunktenant',['ChunkTenant',['../structphosphor_1_1_trace_log_1_1_chunk_tenant.html',1,'phosphor::TraceLog']]],
+  ['clearderegisteredthreads',['clearDeregisteredThreads',['../classphosphor_1_1_trace_log.html#a243cb7cbf1a8ff5ef83209dc7f70717e',1,'phosphor::TraceLog']]],
   ['clearstartuptrace',['clearStartupTrace',['../classphosphor_1_1_trace_log_config.html#a0cd0bca300b9e640e35e0551b5ba2f5f',1,'phosphor::TraceLogConfig']]],
   ['close',['close',['../classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877',1,'phosphor::Sentinel']]],
   ['configure',['configure',['../classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32',1,'phosphor::TraceLog']]],

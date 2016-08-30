@@ -161,8 +161,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0e1214bab281962bccc6029be63c8755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f">isEnabled</a> ()</td></tr>
 <tr class="separator:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1fbcb3a1285fd447b4d8df6f6fccd8e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ab1fbcb3a1285fd447b4d8df6f6fccd8e">registerThread</a> ()</td></tr>
-<tr class="separator:ab1fbcb3a1285fd447b4d8df6f6fccd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e05392fcb945933fd9e4a86254409e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a1e05392fcb945933fd9e4a86254409e9">registerThread</a> (const std::string &amp;thread_name=&quot;&quot;)</td></tr>
+<tr class="separator:a1e05392fcb945933fd9e4a86254409e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91fcc4d0476fa6d815975fb9e6f056ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a91fcc4d0476fa6d815975fb9e6f056ef">deregisterThread</a> ()</td></tr>
 <tr class="separator:a91fcc4d0476fa6d815975fb9e6f056ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2df1c20bf288ee486ad043dc61c3b09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#af2df1c20bf288ee486ad043dc61c3b09">lock</a> ()</td></tr>
@@ -188,6 +188,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a7072d5d2fa370d231b6c93490d2180ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4572e4a608d98fcee59fad41bda1db58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a4572e4a608d98fcee59fad41bda1db58">evictThreads</a> (std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;lh)</td></tr>
 <tr class="separator:a4572e4a608d98fcee59fad41bda1db58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a243cb7cbf1a8ff5ef83209dc7f70717e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a243cb7cbf1a8ff5ef83209dc7f70717e">clearDeregisteredThreads</a> ()</td></tr>
+<tr class="separator:a243cb7cbf1a8ff5ef83209dc7f70717e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -207,6 +209,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a254ad893c602a1c54a7c7347c6495925"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0b34e540994efaabe4ce310070287cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_category_registry.html">CategoryRegistry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#af0b34e540994efaabe4ce310070287cb">registry</a></td></tr>
 <tr class="separator:af0b34e540994efaabe4ce310070287cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ede59541a91a1b67b86a151753da6b5"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; uint64_t, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a2ede59541a91a1b67b86a151753da6b5">thread_names</a></td></tr>
+<tr class="separator:a2ede59541a91a1b67b86a151753da6b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8cded002571dcb034a9a86c6ba79eb5"><td class="memItemLeft" align="right" valign="top">std::set&lt; uint64_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#af8cded002571dcb034a9a86c6ba79eb5">deregistered_threads</a></td></tr>
+<tr class="separator:af8cded002571dcb034a9a86c6ba79eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> class is the main public management interface of Phosphor. Generally the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is used as a singleton, this instance is acquired via <a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">TraceLog::getInstance()</a>.</p>
@@ -258,6 +264,30 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a243cb7cbf1a8ff5ef83209dc7f70717e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::TraceLog::clearDeregisteredThreads </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Removes all threads from the thread_name map that are part of the deregistered threads set. </p>
+
+</div>
+</div>
 <a class="anchor" id="ab61da1a235de557b8321bf542defae32"></a>
 <div class="memitem">
 <div class="memproto">
@@ -725,21 +755,35 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ab1fbcb3a1285fd447b4d8df6f6fccd8e"></a>
+<a class="anchor" id="a1e05392fcb945933fd9e4a86254409e9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void phosphor::TraceLog::registerThread </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>thread_name</em> = <code>&quot;&quot;</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Registers the current thread for tracing (Optional)</p>
+<p>Can also give a name to associate the thread's TID with a name for export purposes. Thread name is ignored if it's an empty string.</p>
 <p>Registering a thread is used for a long-living thread and is used to give it a dedicated <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> and optionally a name. A registered thread MUST be de-registered before the thread is joined as the act of registering allocates resources only accessibly via thread -local storage.</p>
-<p>Registering is desirable as the thread will otherwise share a <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> with all other non-registered threads. Because this involves acquiring locks that may be under contention this can be expensive. </p>
+<p>Registering is desirable as the thread will otherwise share a <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">ChunkTenant</a> with all other non-registered threads. Because this involves acquiring locks that may be under contention this can be expensive.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">thread_name</td><td>(optional) name of the thread to register </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::logic_error</td><td>if the thread has already been registered </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -958,6 +1002,27 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="af8cded002571dcb034a9a86c6ba79eb5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::set&lt;uint64_t&gt; phosphor::TraceLog::deregistered_threads</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>List of deregistered thread ids while tracing is running </p>
+
+</div>
+</div>
 <a class="anchor" id="aa4b650b4031a9c1b03c42b4bf99c33a7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1084,6 +1149,27 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 <p>The shared ChunkTenants which are used by default when a thread has not been registered.</p>
 <p>This is because we need to guarantee that the resources in the thread-specific chunk will be at some point freed up. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2ede59541a91a1b67b86a151753da6b5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;uint64_t, std::string&gt; phosphor::TraceLog::thread_names</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Map of registered thread TIDs to names </p>
 
 </div>
 </div>

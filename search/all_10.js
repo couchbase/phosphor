@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['thread_5fnames',['thread_names',['../classphosphor_1_1_trace_context.html#ab9480c3961ceaacba85a96280853d7b8',1,'phosphor::TraceContext::thread_names()'],['../classphosphor_1_1_trace_log.html#a2ede59541a91a1b67b86a151753da6b5',1,'phosphor::TraceLog::thread_names()']]],
   ['to_5fjson',['to_json',['../classphosphor_1_1_trace_event.html#aebdead39e1b2137a5699c136c9ee2274',1,'phosphor::TraceEvent']]],
   ['to_5fstring',['to_string',['../unionphosphor_1_1_trace_argument.html#aa5cb5d9df6a03df39aaa590337e7130d',1,'phosphor::TraceArgument::to_string()'],['../classphosphor_1_1_trace_event.html#acbf61956951d90799160e3c9fe41b3c2',1,'phosphor::TraceEvent::to_string()']]],
   ['tojsonresult',['ToJsonResult',['../classphosphor_1_1_trace_event_1_1_to_json_result.html',1,'phosphor::TraceEvent']]],
@@ -15,8 +16,8 @@ var searchData=
   ['tracebuffer',['TraceBuffer',['../classphosphor_1_1_trace_buffer.html',1,'phosphor']]],
   ['tracechunk',['TraceChunk',['../classphosphor_1_1_trace_chunk.html',1,'phosphor']]],
   ['tracechunk',['TraceChunk',['../classphosphor_1_1_trace_chunk.html#a3501cea696562c03ea2f501031027459',1,'phosphor::TraceChunk']]],
-  ['traceconfig',['TraceConfig',['../classphosphor_1_1_trace_config.html#ac63adad510f75b0438393cbd87336354',1,'phosphor::TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)'],['../classphosphor_1_1_trace_config.html#aeb643952f63708283e156943825179e5',1,'phosphor::TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory, size_t _buffer_size)']]],
   ['traceconfig',['TraceConfig',['../classphosphor_1_1_trace_config.html',1,'phosphor']]],
+  ['traceconfig',['TraceConfig',['../classphosphor_1_1_trace_config.html#ac63adad510f75b0438393cbd87336354',1,'phosphor::TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)'],['../classphosphor_1_1_trace_config.html#aeb643952f63708283e156943825179e5',1,'phosphor::TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory, size_t _buffer_size)']]],
   ['tracecontext',['TraceContext',['../classphosphor_1_1_trace_context.html',1,'phosphor']]],
   ['traceevent',['TraceEvent',['../classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0',1,'phosphor::TraceEvent::TraceEvent()=default'],['../classphosphor_1_1_trace_event.html#a69a697e5766da8eb049f011993986fdc',1,'phosphor::TraceEvent::TraceEvent(const char *_category, const char *_name, Type _type, uint64_t _thread_id, std::array&lt; TraceArgument, arg_count &gt; &amp;&amp;_args, std::array&lt; TraceArgument::Type, arg_count &gt; &amp;&amp;_arg_types)']]],
   ['traceevent',['TraceEvent',['../classphosphor_1_1_trace_event.html',1,'phosphor']]],
