@@ -42,6 +42,15 @@ int setenv(const char* name, const char* value, int overwrite) {
 }
 #endif
 
+/*
+ * Basic tracepoint_info used in tests
+ */
+phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        {{"arg1", "arg2"}}
+};
+
 class MockTraceLog : public TraceLog {
     friend class TraceLogTest;
     using TraceLog::TraceLog;
@@ -59,13 +68,13 @@ public:
     }
 
     void log_event() {
-        trace_log.logEvent("category", "name", TraceEvent::Type::Instant, 0, 0);
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, 0);
     }
 
     void log_event_all_types() {
-        trace_log.logEvent("category", "2arg", TraceEvent::Type::Instant, 0, 0);
-        trace_log.logEvent("category", "1arg", TraceEvent::Type::Instant, 0);
-        trace_log.logEvent("category", "0arg", TraceEvent::Type::Instant);
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, 0);
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0);
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
     }
 
 protected:
@@ -174,14 +183,20 @@ TEST_F(TraceLogTest, logTillFullThreaded) {
 TEST_F(TraceLogTest, StopRestartVerify) {
     // Start tracing and ensure we've taken a chunk from it
     start_basic();
-    trace_log.logEvent("category", "name", TraceEvent::Type::Instant);
+    trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
 
     // Stop tracing (and invalidate the chunk we're currently holding)
     trace_log.stop();
 
     // Restart tracing and attempt to log an event
     start_basic();
-    trace_log.logEvent("category2", "name", TraceEvent::Type::Instant);
+
+    static tracepoint_info tpi2 = {
+        "category2",
+        "name",
+        {{}}
+    };
+    trace_log.logEvent(&tpi2, TraceEvent::Type::Instant);
 
     // Fetch the buffer and ensure that it contains our second event
     // (i.e. we didn't lose the event in the
@@ -237,7 +252,7 @@ TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
     TraceLog trace_log;
     trace_log.start(TraceConfig(BufferMode::fixed, sizeof(TraceChunk)));
     trace_log.registerThread();
-    trace_log.logEvent("category", "name", TraceEvent::Type::Instant, 0, 0);
+    trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, 0);
     EXPECT_NO_THROW(trace_log.deregisterThread());
 }
 

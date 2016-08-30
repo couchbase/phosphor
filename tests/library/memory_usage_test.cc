@@ -81,6 +81,12 @@ public:
     }
 };
 
+phosphor::tracepoint_info tpi = {
+    "category",
+    "name",
+    {{"arg1", "arg2"}}
+};
+
 class MemoryTrackingTest : public testing::TestWithParam<size_t> {
 public:
     MemoryTrackingTest()
@@ -114,7 +120,7 @@ TEST_P(MemoryTrackingTest, full_log) {
                                      GetParam() * MEGABYTE));
     while (log->isEnabled()) {
         log->logEvent(
-            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
+            &tpi, phosphor::TraceEvent::Type::Instant, 0);
     }
     size_t overhead{memory_change()};
 

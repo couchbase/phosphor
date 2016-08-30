@@ -25,12 +25,20 @@
 using phosphor::TraceEvent;
 using phosphor::TraceArgument;
 
+/*
+ * Basic tracepoint_info used in tests
+ */
+phosphor::tracepoint_info tpi = {
+    "category",
+    "name",
+    {{"arg1", "arg2"}}
+};
+
 TEST(TraceEvent, create) {
     TraceEvent def;
     (void)def;
     TraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::Instant,
         0,
         {{0, 0}},
@@ -39,8 +47,7 @@ TEST(TraceEvent, create) {
 
 TEST(TraceEvent, string_check) {
     TraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::Instant,
         0,
         {{0, 0}},
@@ -82,8 +89,7 @@ TEST(TraceEvent, typeToString) {
 
 TEST(TraceEvent, toJSON) {
     TraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::Instant,
         0,
         {{0, 0}},
@@ -93,7 +99,7 @@ TEST(TraceEvent, toJSON) {
 #if GTEST_USES_POSIX_RE
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
         "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
-        "\"args\":\\{\"0\":false\\}\\}");
+        "\"args\":\\{\"arg1\":false\\}\\}");
 #else
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
         "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
@@ -104,8 +110,7 @@ TEST(TraceEvent, toJSON) {
 
 TEST(TraceEvent, toJSONAlt) {
     TraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::SyncEnd,
         0,
         {{0, 0}},
@@ -115,7 +120,7 @@ TEST(TraceEvent, toJSONAlt) {
 #if GTEST_USES_POSIX_RE
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
         "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
-        "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
+        "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
 #else
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
         "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
@@ -129,14 +134,12 @@ public:
     using TraceEvent::typeToJSON;
 
     MockTraceEvent(
-        const char* _category,
-        const char* _name,
+        const phosphor::tracepoint_info* _tpi,
         Type _type,
         uint64_t _thread_id,
         std::array<TraceArgument, phosphor::arg_count>&& _args,
         std::array<TraceArgument::Type, phosphor::arg_count>&& _arg_types)
-        : TraceEvent(_category,
-                     _name,
+        : TraceEvent(_tpi,
                      _type,
                      _thread_id,
                      std::move(_args),
@@ -145,8 +148,7 @@ public:
 
 TEST(TraceEventTypeToJSON, Instant) {
     MockTraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::Instant,
         0,
         {{0, 0}},
@@ -158,8 +160,7 @@ TEST(TraceEventTypeToJSON, Instant) {
 
 TEST(TraceEventTypeToJSON, SyncStart) {
     MockTraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::SyncStart,
         0,
         {{0, 0}},
@@ -171,8 +172,7 @@ TEST(TraceEventTypeToJSON, SyncStart) {
 
 TEST(TraceEventTypeToJSON, SyncEnd) {
     MockTraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::SyncEnd,
         0,
         {{0, 0}},
@@ -184,8 +184,7 @@ TEST(TraceEventTypeToJSON, SyncEnd) {
 
 TEST(TraceEventTypeToJSON, AsyncStart) {
     MockTraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::AsyncStart,
         0,
         {{0, 0}},
@@ -197,8 +196,7 @@ TEST(TraceEventTypeToJSON, AsyncStart) {
 
 TEST(TraceEventTypeToJSON, AsyncEnd) {
     MockTraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::AsyncEnd,
         0,
         {{0, 0}},
@@ -210,8 +208,7 @@ TEST(TraceEventTypeToJSON, AsyncEnd) {
 
 TEST(TraceEventTypeToJSON, GlobalInstant) {
     MockTraceEvent event(
-        "category",
-        "name",
+        &tpi,
         TraceEvent::Type::GlobalInstant,
         0,
         {{0, 0}},
@@ -223,8 +220,7 @@ TEST(TraceEventTypeToJSON, GlobalInstant) {
 
 TEST(TraceEventTypeToJSON, Invalid) {
     MockTraceEvent event(
-        "category",
-        "name",
+        &tpi,
         static_cast<TraceEvent::Type>(0xFF),
         0,
         {{0, 0}},
@@ -233,15 +229,24 @@ TEST(TraceEventTypeToJSON, Invalid) {
 }
 
 TEST(TraceEventTypeToJSON, testProperties) {
+    using namespace testing;
+
+    phosphor::tracepoint_info tpi2 = {
+        "my_category",
+        "my_name",
+        {{"my_arg1", "my_arg2"}}
+    };
+
     TraceEvent event(
-            "category",
-            "name",
+            &tpi2,
             TraceEvent::Type::Instant,
             0,
             {{0, 4.5}},
             {{TraceArgument::Type::is_int, TraceArgument::Type::is_double}});
-    EXPECT_STREQ("category", event.getCategory());
-    EXPECT_STREQ("name", event.getName());
+    EXPECT_STREQ("my_category", event.getCategory());
+    EXPECT_STREQ("my_name", event.getName());
+    EXPECT_THAT(event.getArgNames(), testing::ElementsAre(StrEq("my_arg1"),
+                                                          StrEq("my_arg2")));
     EXPECT_EQ(TraceEvent::Type::Instant, event.getType());
     EXPECT_EQ(0, event.getArgs()[0].as_int);
     EXPECT_EQ(4.5, event.getArgs()[1].as_double);

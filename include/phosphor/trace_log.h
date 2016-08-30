@@ -135,8 +135,7 @@ namespace phosphor {
          * @param argB Argument to be saved with the event
          */
         template <typename T, typename U>
-        void logEvent(const char* category,
-                      const char* name,
+        void logEvent(const tracepoint_info* tpi,
                       TraceEvent::Type type,
                       T argA,
                       U argB) {
@@ -147,8 +146,7 @@ namespace phosphor {
                 return;
 
             cs->chunk->addEvent() = TraceEvent(
-                category,
-                name,
+                tpi,
                 type,
                 platform::getCurrentThreadIDCached(),
                 {{TraceArgument(argA), TraceArgument(argB)}},
@@ -170,8 +168,7 @@ namespace phosphor {
          * @param argA Argument to be saved with the event
          */
         template <typename T>
-        void logEvent(const char* category,
-                      const char* name,
+        void logEvent(const tracepoint_info* tpi,
                       TraceEvent::Type type,
                       T argA) {
             if (!enabled)
@@ -181,8 +178,7 @@ namespace phosphor {
                 return;
 
             cs->chunk->addEvent() = TraceEvent(
-                category,
-                name,
+                tpi,
                 type,
                 platform::getCurrentThreadIDCached(),
                 {{TraceArgument(argA), 0}},
@@ -202,8 +198,7 @@ namespace phosphor {
          * @param name The name of the event
          * @param type The type of the event
          */
-        void logEvent(const char* category,
-                      const char* name,
+        void logEvent(const tracepoint_info* tpi,
                       TraceEvent::Type type) {
             if (!enabled)
                 return;
@@ -212,8 +207,7 @@ namespace phosphor {
                 return;
 
             cs->chunk->addEvent() = TraceEvent(
-                category,
-                name,
+                tpi,
                 type,
                 platform::getCurrentThreadIDCached(),
                 {{0, 0}},

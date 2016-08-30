@@ -21,6 +21,12 @@
 
 #include "utils/memory.h"
 
+phosphor::tracepoint_info tpi = {
+    "category",
+    "name",
+    {{"arg1", "arg2"}}
+};
+
 /*
  * The TracingOnOff test evaluates the performance of tracing when it is both
  * enabled and disabled in order to measure the relative overhead of having
@@ -40,7 +46,7 @@ void TracingOnOff(benchmark::State& state) {
         // significant factor in this instance so run it multiple times
         for (int i = 0; i < 100; i++) {
             log.logEvent(
-                "category", "name", phosphor::TraceEvent::Type::Instant, 0);
+                &tpi, phosphor::TraceEvent::Type::Instant, 0);
         }
     }
     log.deregisterThread();
@@ -78,9 +84,9 @@ void TracingOnOffMacro(benchmark::State& state) {
         PHOSPHOR_INSTANCE.stop();
     }
 }
-BENCHMARK(TracingOnOffMacro)->Arg(true);
-BENCHMARK(TracingOnOffMacro)->Arg(false);
 BENCHMARK(TracingOnOffMacro)->Arg(true)->ThreadPerCpu();
 BENCHMARK(TracingOnOffMacro)->Arg(false)->ThreadPerCpu();
+BENCHMARK(TracingOnOffMacro)->Arg(true);
+BENCHMARK(TracingOnOffMacro)->Arg(false);
 
 BENCHMARK_MAIN()

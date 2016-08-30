@@ -23,17 +23,12 @@ namespace phosphor {
     using namespace std::chrono;
 
     TraceEvent::TraceEvent(
-        const char* _category,
-        const char* _name,
+        const tracepoint_info* _tpi,
         Type _type,
         uint64_t _thread_id,
         std::array<TraceArgument, arg_count>&& _args,
         std::array<TraceArgument::Type, arg_count>&& _arg_types)
-        // Premature optimisation #1:
-        //   Initialise name and category first to avoid copying two
-        //   registers in advance of the steady_clock::now() function call
-        : name(_name),
-          category(_category),
+        : tpi(_tpi),
           thread_id(_thread_id),
           args(_args),
           time(
@@ -67,8 +62,8 @@ namespace phosphor {
             m.count(),
             s.count(),
             us.count(),
-            category,
-            name,
+            getCategory(),
+            getName(),
             typeToString(type),
             thread_id,
             args[0].to_string(arg_types[0]).c_str(),
@@ -77,8 +72,8 @@ namespace phosphor {
 
     std::string TraceEvent::to_json() const {
         std::string output;
-        output += "{\"name\":" + utils::to_json(name);
-        output += ",\"cat\":" + utils::to_json(category);
+        output += "{\"name\":" + utils::to_json(getName());
+        output += ",\"cat\":" + utils::to_json(getCategory());
 
         auto type_converted = typeToJSON();
         output += ",\"ph\":\"" + std::string(type_converted.type) + "\"";
@@ -97,11 +92,7 @@ namespace phosphor {
                 output += ",";
             }
 
-            std::string arg_name(std::to_string(i));
-            if (type == Type::AsyncEnd || type == Type::SyncEnd) {
-                arg_name += "_end";
-            }
-            output += utils::to_json(arg_name) + ":";
+            output += utils::to_json(tpi->argument_names[i].load()) + ":";
             output += args[i].to_string(arg_types[i]);
         }
         output += "}";
@@ -131,11 +122,11 @@ namespace phosphor {
     }
 
     const char* TraceEvent::getName() const {
-        return name;
+        return tpi->name;
     }
 
     const char* TraceEvent::getCategory() const {
-        return category;
+        return tpi->category;
     }
 
     TraceEvent::Type TraceEvent::getType() const {
@@ -152,6 +143,11 @@ namespace phosphor {
 
     const std::array<TraceArgument::Type, arg_count>& TraceEvent::getArgTypes() const {
         return arg_types;
+    };
+
+    const std::array<RelaxedAtomicCString, arg_count>&
+            TraceEvent::getArgNames() const {
+        return tpi->argument_names;
     };
 
     int64_t TraceEvent::getTime() const {

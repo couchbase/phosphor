@@ -24,6 +24,12 @@
  * representations, e.g. object sizes etc.
  */
 
+phosphor::tracepoint_info tpi = {
+    "category",
+    "name",
+    {{"arg1", "arg2"}}
+};
+
 int main(int argc, char** argv) {
 
     using namespace phosphor;
@@ -41,7 +47,7 @@ int main(int argc, char** argv) {
     TraceLog log;
     log.start(TraceConfig(BufferMode::fixed, 100 * 1024 * 1024));
     while(log.isEnabled()) {
-        log.logEvent("category", "name", TraceEvent::Type::Instant);
+        log.logEvent(&tpi, TraceEvent::Type::Instant);
     }
     auto buffer = log.getBuffer();
 

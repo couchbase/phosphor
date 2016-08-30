@@ -27,10 +27,11 @@ SET(phosphor_HEADER_FILES
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_context.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_event.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_log.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/tracepoint_info.h
         ${phosphor_SOURCE_DIR}/include/phosphor/platform/core.h
         ${phosphor_SOURCE_DIR}/include/phosphor/platform/thread.h
         ${phosphor_SOURCE_DIR}/include/phosphor/platform/visibility.h
-        ${phosphor_SOURCE_DIR}/include/phosphor/tools/export.h)
+        ${phosphor_SOURCE_DIR}/include/phosphor/tools/export.h include/phosphor/relaxed_atomic.h)
 
 SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/category_registry.cc
