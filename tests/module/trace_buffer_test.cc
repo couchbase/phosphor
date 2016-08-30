@@ -25,6 +25,15 @@
 
 using namespace phosphor;
 
+/*
+ * Basic tracepoint_info used in tests
+ */
+phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        {{"arg1", "arg2"}}
+};
+
 TEST(TraceChunkTest, fillAndOverfillAndCount) {
     TraceChunk chunk;
     chunk.reset();
@@ -33,8 +42,7 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
     while (!chunk.isFull()) {
         EXPECT_EQ(count, chunk.count());
         chunk.addEvent() = TraceEvent(
-            "category",
-            "name",
+            &tpi,
             TraceEvent::Type::Instant,
             0,
             {{0, 0}},
@@ -52,8 +60,7 @@ TEST(TraceChunkTest, string_check) {
 
     while (!chunk.isFull()) {
         chunk.addEvent() = TraceEvent(
-            "category",
-            "name",
+            &tpi,
             TraceEvent::Type::Instant,
             0,
             {{0, 0}},

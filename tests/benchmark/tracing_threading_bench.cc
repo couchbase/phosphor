@@ -22,6 +22,12 @@
 
 using phosphor::utils::make_unique;
 
+phosphor::tracepoint_info tpi = {
+    "category",
+    "name",
+    {{"arg1", "arg2"}}
+};
+
 void NaiveSharedTenants(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
     if (state.thread_index == 0) {
@@ -32,7 +38,7 @@ void NaiveSharedTenants(benchmark::State& state) {
 
     while (state.KeepRunning()) {
         log.logEvent(
-            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
+            &tpi, phosphor::TraceEvent::Type::Instant, 0);
     }
     if (state.thread_index == 0) {
         log.stop();
@@ -51,7 +57,7 @@ void SingleChunkTenant(benchmark::State& state) {
 
     while (state.KeepRunning()) {
         log.logEvent(
-            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
+            &tpi, phosphor::TraceEvent::Type::Instant, 0);
     }
 
     if (state.thread_index == 0) {
@@ -70,7 +76,7 @@ void RegisterThread(benchmark::State& state) {
     log.registerThread();
     while (state.KeepRunning()) {
         log.logEvent(
-            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
+            &tpi, phosphor::TraceEvent::Type::Instant, 0);
     }
     log.deregisterThread();
     if (state.thread_index == 0) {

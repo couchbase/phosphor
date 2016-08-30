@@ -31,6 +31,7 @@
 
 #include "phosphor/platform/core.h"
 #include "trace_argument.h"
+#include "tracepoint_info.h"
 
 namespace phosphor {
 
@@ -58,14 +59,12 @@ namespace phosphor {
         /**
          * Constructor for creating new events
          *
-         * @param _category C-String for the event's category
-         * @param _name C-String for the event's name
+         * @param _tpi Tracepoint info for the event
          * @param _type The event type
          * @param _args An array of `Value`
          * @param _arg_types An array of argument types
          */
-        TraceEvent(const char* _category,
-                   const char* _name,
+        TraceEvent(const tracepoint_info* _tpi,
                    Type _type,
                    uint64_t _thread_id,
                    std::array<TraceArgument, arg_count>&& _args,
@@ -123,6 +122,11 @@ namespace phosphor {
         const std::array<TraceArgument::Type, arg_count>& getArgTypes() const;
 
         /**
+         * @return the names of the arguments of the event
+         */
+        const std::array<const char*, arg_count>& getArgNames() const;
+
+        /**
          * @return the timestamp of the event measured in
          *         nanoseconds from an undefined epoch
          */
@@ -146,8 +150,7 @@ namespace phosphor {
         ToJsonResult typeToJSON() const;
 
     private:
-        const char* name;
-        const char* category;
+        const tracepoint_info* tpi;
         uint64_t thread_id;
         std::array<TraceArgument, arg_count> args;
 
