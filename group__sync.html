@@ -115,6 +115,14 @@ Macros</h2></td></tr>
 <tr class="separator:ga7991817b731709d7edfc49820313ef51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga42e9ee350cb307970259a575e5a8dc46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)            </td></tr>
 <tr class="separator:ga42e9ee350cb307970259a575e5a8dc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf11099da5080482fcb5558dc9cf4e92a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START1</b>(category,  name,  arg1_name,  arg1)</td></tr>
+<tr class="separator:gaf11099da5080482fcb5558dc9cf4e92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c2476df9c5e09fab5f2002ade4e325c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END1</b>(category,  name,  arg1_name,  arg1)</td></tr>
+<tr class="separator:ga6c2476df9c5e09fab5f2002ade4e325c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4093d4cdfe69a7e2e752f0c11253f01f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
+<tr class="separator:ga4093d4cdfe69a7e2e752f0c11253f01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabae5f941ec9897a4a77187dadadb6a73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
+<tr class="separator:gabae5f941ec9897a4a77187dadadb6a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Synchronous events are used for events that are scoped to a single thread and have a duration.</p>
@@ -179,6 +187,94 @@ TRACE_EVENT_END0('Memcached:Frontend', 'SetKey')</pre><h2 class="groupheader">Ma
 <b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT0(             \</div><div class="line">        category, name, phosphor::TraceEvent::Type::SyncEnd)</div></div><!-- fragment -->
 </div>
 </div>
+<a class="anchor" id="ga6c2476df9c5e09fab5f2002ade4e325c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_END1</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1_name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT( \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        arg1_name, \</div><div class="line">        <span class="stringliteral">&quot;&quot;</span>, \</div><div class="line">        phosphor::TraceEvent::Type::SyncEnd, \</div><div class="line">        arg1)</div></div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="gabae5f941ec9897a4a77187dadadb6a73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_END2</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1_name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg2_name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg2&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT( \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        arg1_name, \</div><div class="line">        arg2_name, \</div><div class="line">        phosphor::TraceEvent::Type::SyncEnd, \</div><div class="line">        arg1, \</div><div class="line">        arg2)</div></div><!-- fragment -->
+</div>
+</div>
 <a class="anchor" id="ga22a8ef705af5aa8d94742d7dadd1d454"></a>
 <div class="memitem">
 <div class="memproto">
@@ -235,6 +331,94 @@ TRACE_EVENT_END0('Memcached:Frontend', 'SetKey')</pre><h2 class="groupheader">Ma
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT0(             \</div><div class="line">        category, name, phosphor::TraceEvent::Type::SyncStart)</div></div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="gaf11099da5080482fcb5558dc9cf4e92a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_START1</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1_name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT( \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        arg1_name, \</div><div class="line">        <span class="stringliteral">&quot;&quot;</span>, \</div><div class="line">        phosphor::TraceEvent::Type::SyncStart, \</div><div class="line">        arg1)</div></div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="ga4093d4cdfe69a7e2e752f0c11253f01f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_EVENT_START2</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1_name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg1, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg2_name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg2&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT( \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        arg1_name, \</div><div class="line">        arg2_name, \</div><div class="line">        phosphor::TraceEvent::Type::SyncStart, \</div><div class="line">        arg1, \</div><div class="line">        arg2)</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

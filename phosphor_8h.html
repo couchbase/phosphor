@@ -135,32 +135,62 @@ Macros</h2></td></tr>
 <tr class="separator:ga7991817b731709d7edfc49820313ef51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga42e9ee350cb307970259a575e5a8dc46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END0</b>(category,  name)            </td></tr>
 <tr class="separator:ga42e9ee350cb307970259a575e5a8dc46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf11099da5080482fcb5558dc9cf4e92a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START1</b>(category,  name,  arg1_name,  arg1)</td></tr>
+<tr class="separator:gaf11099da5080482fcb5558dc9cf4e92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c2476df9c5e09fab5f2002ade4e325c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END1</b>(category,  name,  arg1_name,  arg1)</td></tr>
+<tr class="separator:ga6c2476df9c5e09fab5f2002ade4e325c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4093d4cdfe69a7e2e752f0c11253f01f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_START2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
+<tr class="separator:ga4093d4cdfe69a7e2e752f0c11253f01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabae5f941ec9897a4a77187dadadb6a73"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT_END2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
+<tr class="separator:gabae5f941ec9897a4a77187dadadb6a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2609c5355bde4c8c39d77caf0fd048de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT</b>(category,  name, ...)                                                        </td></tr>
 <tr class="separator:ga2609c5355bde4c8c39d77caf0fd048de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga624e8d2d37daf5672a168e7d2535392a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)                                                                </td></tr>
 <tr class="separator:ga624e8d2d37daf5672a168e7d2535392a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab365434122d69ab618a965ef1ff788ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT1</b>(category,  name,  arg1_name,  arg1)                              </td></tr>
+<tr class="separator:gab365434122d69ab618a965ef1ff788ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga749d99e1da740a68b2577883b899adef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
+<tr class="separator:ga749d99e1da740a68b2577883b899adef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memItemLeft" align="right" valign="top">
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION</b>(category, ...)&#160;&#160;&#160;TRACE_EVENT(category, PH__func__, __VA_ARGS__)</td></tr>
 <tr class="separator:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memItemLeft" align="right" valign="top">
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION0</b>(category)&#160;&#160;&#160;TRACE_EVENT0(category, PH__func__)</td></tr>
 <tr class="separator:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e485f330f77ee5cfd93955e8b89effb"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION1</b>(category,  arg1_name,  arg1)&#160;&#160;&#160;TRACE_EVENT1(category, PH__func__, arg1_name, arg1)</td></tr>
+<tr class="separator:ga8e485f330f77ee5cfd93955e8b89effb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae27a2665b91c16f22623b861cd7111de"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION2</b>(category,  arg1_name,  arg1,  arg2_name,  arg2)&#160;&#160;&#160;TRACE_EVENT2(category, PH__func__, arg1_name, arg1, arg2_name, arg2)</td></tr>
+<tr class="separator:gae27a2665b91c16f22623b861cd7111de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae69017013b7d16cb1292e8458904533c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START</b>(category,  name,  id, ...)</td></tr>
 <tr class="separator:gae69017013b7d16cb1292e8458904533c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START0</b>(category,  name,  id)</td></tr>
 <tr class="separator:gafd52b97219b6f24b7a46d1f7e4992b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga107629004466f53e46426267df3ee564"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_START1</b>(category,  name,  id,  arg1_name,  arg1)</td></tr>
+<tr class="separator:ga107629004466f53e46426267df3ee564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab682aa4bded65cede078eb2f6e296163"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END</b>(category,  name,  id, ...)</td></tr>
 <tr class="separator:gab682aa4bded65cede078eb2f6e296163"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5dd7a8d0b20f51ba8fba9fd9234961a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END0</b>(category,  name,  id)    </td></tr>
 <tr class="separator:ga5dd7a8d0b20f51ba8fba9fd9234961a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b112667d2adbcb339c1acbd5658964c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_ASYNC_END1</b>(category,  name,  id,  arg1_name,  arg1)</td></tr>
+<tr class="separator:ga7b112667d2adbcb339c1acbd5658964c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT</b>(category,  name, ...)</td></tr>
 <tr class="separator:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga72957e5fc1825087e801789bf1ddefc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT0</b>(category,  name)                </td></tr>
 <tr class="separator:ga72957e5fc1825087e801789bf1ddefc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0365027577f56c5243b6ca668ac33b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT1</b>(category,  name,  arg1_name,  arg1)</td></tr>
+<tr class="separator:gab0365027577f56c5243b6ca668ac33b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd45d6e4b6786163d4958d879162757d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
+<tr class="separator:gafd45d6e4b6786163d4958d879162757d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae450cfc42d8f016473c4d82363f98764"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL</b>(category,  name, ...)                </td></tr>
 <tr class="separator:gae450cfc42d8f016473c4d82363f98764"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)                  </td></tr>
 <tr class="separator:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa31d8d9fa298c69d5a4615cb3b712b6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL1</b>(category,  name,  arg1_name,  arg1)</td></tr>
+<tr class="separator:gaa31d8d9fa298c69d5a4615cb3b712b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0518694fbc024c57525ce5e095060cdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
+<tr class="separator:ga0518694fbc024c57525ce5e095060cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Phosphor Event Tracing</p>
@@ -173,9 +203,10 @@ Macros</h2></td></tr>
 <li>Instant</li>
 <li>Global</li>
 </ul>
-<p>In addition each group will have events macros in one of two styles, either with 0 arguments or with multiple arguments. Macros suffixed with 0, such as TRACE_EVENT_START0, can be used with 0 arguments.</p>
+<p>In addition each group will have events macros in one of three styles, either with 0 arguments, with multiple arguments or with multiple arguments and with argument names. Macros suffixed with 0, such as TRACE_EVENT_START0, can be used with 0 arguments.</p>
 <p>Macros without the 0 suffix can be given 1 or 2 arguments - they <em>might</em> work with 0 arguments but some compilers will generate warnings due to 0-argument variadic macros.</p>
-<p>Only a limited set of data-types can be used as arguments, generally this includes most primitive data-types that are 8-bytes or less in size. In addition, string-literals or long living cstrings can be used so long as the pointer remains valid while tracing is enabled. A non-exhaustive list of these data-types include:</p>
+<p>Macros with either a '1' or '2' suffix can be given 1 or 2 arguments respectively, they also take an argument name (as a string literal) before each of their respective arguments. Example: </p><pre class="fragment">TRACE_EVENT2("category", "name", "arg_name1", 1, "arg_name2", 2);
+</pre><p>Only a limited set of data-types can be used as arguments, generally this includes most primitive data-types that are 8-bytes or less in size. In addition, string-literals or long living cstrings can be used so long as the pointer remains valid while tracing is enabled. A non-exhaustive list of these data-types include:</p>
 <ul>
 <li>boolean</li>
 <li>int</li>
