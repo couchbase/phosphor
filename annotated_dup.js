@@ -23,6 +23,7 @@ var annotated_dup =
       [ "TraceContext", "classphosphor_1_1_trace_context.html", "classphosphor_1_1_trace_context" ],
       [ "TraceEvent", "classphosphor_1_1_trace_event.html", "classphosphor_1_1_trace_event" ],
       [ "TraceLog", "classphosphor_1_1_trace_log.html", "classphosphor_1_1_trace_log" ],
-      [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html", "classphosphor_1_1_trace_log_config" ]
+      [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html", "classphosphor_1_1_trace_log_config" ],
+      [ "tracepoint_info", "structphosphor_1_1tracepoint__info.html", "structphosphor_1_1tracepoint__info" ]
     ] ]
 ];

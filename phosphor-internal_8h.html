@@ -125,34 +125,70 @@ Macros</h2></td></tr>
 <tr class="memitem:acb80a95ade63584da667f5f3f286b8c5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb80a95ade63584da667f5f3f286b8c5"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_INTERNAL_UID</b>(prefix)&#160;&#160;&#160;PHOSPHOR_INTERNAL_UID2(prefix, __LINE__)</td></tr>
 <tr class="separator:acb80a95ade63584da667f5f3f286b8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8212ff223893d75c7d35053634ac259f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_INTERNAL_CATEGORY_INFO</b>(category)</td></tr>
-<tr class="separator:a8212ff223893d75c7d35053634ac259f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09b88511f072ab140fe31c093460a949"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_INTERNAL_TRACE_EVENT</b>(category,  name,  type, ...)</td></tr>
-<tr class="separator:a09b88511f072ab140fe31c093460a949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a0fa6c6389a79c4b48abcf3e3b9cf7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_INTERNAL_CATEGORY_INFO</b></td></tr>
+<tr class="separator:a13a0fa6c6389a79c4b48abcf3e3b9cf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1444175bd4c32c44f06ebf6d340cc39f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT</b>(category,  name,  argA,  argB)</td></tr>
+<tr class="separator:a1444175bd4c32c44f06ebf6d340cc39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2e9567d82fa514036e9cf76a4b36c7c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_INTERNAL_TRACE_EVENT</b>(category,  name,  argA,  argB,  type, ...)</td></tr>
+<tr class="separator:ac2e9567d82fa514036e9cf76a4b36c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbef9ca962d58b38dd9c02cec2aa3ade"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_INTERNAL_TRACE_EVENT0</b>(category,  name,  type)</td></tr>
 <tr class="separator:adbef9ca962d58b38dd9c02cec2aa3ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file is internal to the inner workings of Phosphor and is not intended for public consumption. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a8212ff223893d75c7d35053634ac259f"></a>
+<a class="anchor" id="a13a0fa6c6389a79c4b48abcf3e3b9cf7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">#define PHOSPHOR_INTERNAL_CATEGORY_INFO</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category</td><td>)</td>
-          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> std::atomic&lt;const phosphor::AtomicCategoryStatus*&gt; \</div><div class="line">            PHOSPHOR_INTERNAL_UID(category_enabled); \</div><div class="line">    const phosphor::AtomicCategoryStatus* PHOSPHOR_INTERNAL_UID(category_enabled_temp) \</div><div class="line">        = PHOSPHOR_INTERNAL_UID(category_enabled).load(std::memory_order_acquire); \</div><div class="line">    if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &amp;<a class="code" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>.getCategoryStatus(category); \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \</div><div class="line">    }</div><div class="ttc" id="phosphor_8h_html_a5c3acfbde298bed30fb871e7ef3fecf3"><div class="ttname"><a href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a></div><div class="ttdeci">#define PHOSPHOR_INSTANCE</div><div class="ttdef"><b>Definition:</b> phosphor.h:66</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> std::atomic&lt;const phosphor::AtomicCategoryStatus*&gt; \</div><div class="line">            PHOSPHOR_INTERNAL_UID(category_enabled); \</div><div class="line">    const phosphor::AtomicCategoryStatus* PHOSPHOR_INTERNAL_UID(category_enabled_temp) \</div><div class="line">        = PHOSPHOR_INTERNAL_UID(category_enabled).load(std::memory_order_acquire); \</div></div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a1444175bd4c32c44f06ebf6d340cc39f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">argA, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">argB&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &amp;<a class="code" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>.getCategoryStatus(category); \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \</div><div class="line">        PHOSPHOR_INTERNAL_UID(tpi) = { \</div><div class="line">            category, \</div><div class="line">            name, \</div><div class="line">            {{argA, argB}} \</div><div class="line">        }; \</div><div class="line">    } \</div><div class="ttc" id="phosphor_8h_html_a5c3acfbde298bed30fb871e7ef3fecf3"><div class="ttname"><a href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a></div><div class="ttdeci">#define PHOSPHOR_INSTANCE</div><div class="ttdef"><b>Definition:</b> phosphor.h:66</div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a class="anchor" id="a09b88511f072ab140fe31c093460a949"></a>
+<a class="anchor" id="ac2e9567d82fa514036e9cf76a4b36c7c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -167,6 +203,18 @@ Macros</h2></td></tr>
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">name, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">argA, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">argB, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -187,7 +235,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_acquire) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(category, name, type, __VA_ARGS__); \</div><div class="line">    }</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a> PHOSPHOR_INTERNAL_UID(tpi); \</div><div class="line">    PHOSPHOR_INTERNAL_CATEGORY_INFO \</div><div class="line">    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_acquire) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi), type, __VA_ARGS__); \</div><div class="line">    }</div><div class="ttc" id="structphosphor_1_1tracepoint__info_html"><div class="ttname"><a href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a></div><div class="ttdef"><b>Definition:</b> tracepoint_info.h:29</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="adbef9ca962d58b38dd9c02cec2aa3ade"></a>
@@ -219,7 +268,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_relaxed) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(category, name, type); \</div><div class="line">    }</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a> PHOSPHOR_INTERNAL_UID(tpi); \</div><div class="line">    PHOSPHOR_INTERNAL_CATEGORY_INFO \</div><div class="line">    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, <span class="stringliteral">&quot;arg1&quot;</span>, <span class="stringliteral">&quot;arg2&quot;</span>) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_relaxed) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi), type); \</div><div class="line">    }</div><div class="ttc" id="structphosphor_1_1tracepoint__info_html"><div class="ttname"><a href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a></div><div class="ttdef"><b>Definition:</b> tracepoint_info.h:29</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

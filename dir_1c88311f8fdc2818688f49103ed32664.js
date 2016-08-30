@@ -13,5 +13,8 @@ var dir_1c88311f8fdc2818688f49103ed32664 =
     [ "trace_config.h", "trace__config_8h_source.html", null ],
     [ "trace_context.h", "trace__context_8h_source.html", null ],
     [ "trace_event.h", "trace__event_8h.html", "trace__event_8h" ],
-    [ "trace_log.h", "trace__log_8h_source.html", null ]
+    [ "trace_log.h", "trace__log_8h_source.html", null ],
+    [ "tracepoint_info.h", "tracepoint__info_8h.html", [
+      [ "tracepoint_info", "structphosphor_1_1tracepoint__info.html", "structphosphor_1_1tracepoint__info" ]
+    ] ]
 ];

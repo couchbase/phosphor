@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['getargnames',['getArgNames',['../classphosphor_1_1_trace_event.html#a5737ef659648e4d6d1cab092d0d9ab3f',1,'phosphor::TraceEvent']]],
   ['getargs',['getArgs',['../classphosphor_1_1_trace_event.html#af96e39a22f30e1148c9c25bd5e22846a',1,'phosphor::TraceEvent']]],
   ['getargtypes',['getArgTypes',['../classphosphor_1_1_trace_event.html#ab3666f566b86edfd8d16ab97fe6eb130',1,'phosphor::TraceEvent']]],
   ['getbuffer',['getBuffer',['../classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469',1,'phosphor::TraceLog::getBuffer()'],['../classphosphor_1_1_trace_log.html#ae5041e833872a887191ec8ca8ef95d6d',1,'phosphor::TraceLog::getBuffer(std::lock_guard&lt; TraceLog &gt; &amp;)']]],
