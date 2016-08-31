@@ -111,22 +111,12 @@ Macros</h2></td></tr>
 <tr class="separator:ga2609c5355bde4c8c39d77caf0fd048de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga624e8d2d37daf5672a168e7d2535392a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT0</b>(category,  name)                                                                </td></tr>
 <tr class="separator:ga624e8d2d37daf5672a168e7d2535392a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab365434122d69ab618a965ef1ff788ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT1</b>(category,  name,  arg1_name,  arg1)                              </td></tr>
-<tr class="separator:gab365434122d69ab618a965ef1ff788ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga749d99e1da740a68b2577883b899adef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
-<tr class="separator:ga749d99e1da740a68b2577883b899adef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga38f5e3e2bf88bc153aa024e8d7e8fc92"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION</b>(category, ...)&#160;&#160;&#160;TRACE_EVENT(category, PH__func__, __VA_ARGS__)</td></tr>
 <tr class="separator:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3ea82db4ad2733dbfbdcea914c20194a"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION0</b>(category)&#160;&#160;&#160;TRACE_EVENT0(category, PH__func__)</td></tr>
 <tr class="separator:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e485f330f77ee5cfd93955e8b89effb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8e485f330f77ee5cfd93955e8b89effb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION1</b>(category,  arg1_name,  arg1)&#160;&#160;&#160;TRACE_EVENT1(category, PH__func__, arg1_name, arg1)</td></tr>
-<tr class="separator:ga8e485f330f77ee5cfd93955e8b89effb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae27a2665b91c16f22623b861cd7111de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae27a2665b91c16f22623b861cd7111de"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION2</b>(category,  arg1_name,  arg1,  arg2_name,  arg2)&#160;&#160;&#160;TRACE_EVENT2(category, PH__func__, arg1_name, arg1, arg2_name, arg2)</td></tr>
-<tr class="separator:gae27a2665b91c16f22623b861cd7111de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Scoped events are used for events that should log synchronously both a start and an end event automatically according to a scope.</p>
@@ -196,94 +186,6 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> PHOSPHOR_INTERNAL_UID(nme) = name;       \</div><div class="line">    TRACE_EVENT_START0(category, name);                               \</div><div class="line">    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \</div><div class="line">        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \</div><div class="line">            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));\</div><div class="line">        }                                                             \</div><div class="line">    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);</div></div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="gab365434122d69ab618a965ef1ff788ad"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TRACE_EVENT1</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1_name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> PHOSPHOR_INTERNAL_UID(nme) = name;       \</div><div class="line">    TRACE_EVENT_START1(category, name, arg1_name, arg1);              \</div><div class="line">    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \</div><div class="line">        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \</div><div class="line">            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \</div><div class="line">        }                                                             \</div><div class="line">    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);</div></div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="ga749d99e1da740a68b2577883b899adef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TRACE_EVENT2</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1_name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg2_name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg2&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> PHOSPHOR_INTERNAL_UID(nme) = name;       \</div><div class="line">    TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2); \</div><div class="line">    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \</div><div class="line">        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \</div><div class="line">            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \</div><div class="line">        }                                                             \</div><div class="line">    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

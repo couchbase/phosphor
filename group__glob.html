@@ -111,10 +111,6 @@ Macros</h2></td></tr>
 <tr class="separator:gae450cfc42d8f016473c4d82363f98764"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL0</b>(category,  name)                  </td></tr>
 <tr class="separator:ga02c7a492c40d63c36a05d35a0e0c9132"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa31d8d9fa298c69d5a4615cb3b712b6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL1</b>(category,  name,  arg1_name,  arg1)</td></tr>
-<tr class="separator:gaa31d8d9fa298c69d5a4615cb3b712b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0518694fbc024c57525ce5e095060cdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_GLOBAL2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
-<tr class="separator:ga0518694fbc024c57525ce5e095060cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Global events are used for events that are not scoped to a thread and do not conceptually have a duration. Examples of this might include the initiation of a system shutdown.</p>
@@ -175,94 +171,6 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT0(             \</div><div class="line">        category, name, phosphor::TraceEvent::Type::GlobalInstant)</div></div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="gaa31d8d9fa298c69d5a4615cb3b712b6e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TRACE_GLOBAL1</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1_name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT( \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        arg1_name, \</div><div class="line">        <span class="stringliteral">&quot;&quot;</span>, \</div><div class="line">        phosphor::TraceEvent::Type::GlobalInstant, \</div><div class="line">        arg1)</div></div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="ga0518694fbc024c57525ce5e095060cdf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TRACE_GLOBAL2</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">category, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1_name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg1, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg2_name, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">arg2&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT( \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        arg1_name, \</div><div class="line">        arg2_name, \</div><div class="line">        phosphor::TraceEvent::Type::GlobalInstant, \</div><div class="line">        arg1, \</div><div class="line">        arg2)</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
