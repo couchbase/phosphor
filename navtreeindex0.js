@@ -6,9 +6,10 @@ var NAVTREEINDEX0 =
 ".html":[7,0,1,1],
 "annotated.html":[7,0],
 "category__registry_8h.html":[8,0,1,1,2],
-"category__registry_8h.html#a60daf233b3699fdbfc29fddecc9c8ea4":[8,0,1,1,2,3],
+"category__registry_8h.html#a0a54623e09eebcb7f77a4e388e07a845":[8,0,1,1,2,2],
+"category__registry_8h.html#a0a54623e09eebcb7f77a4e388e07a845a00d23a76e43b46dae9ec7aa9dcbebb32":[8,0,1,1,2,2,1],
+"category__registry_8h.html#a0a54623e09eebcb7f77a4e388e07a845ab9f5c797ebbf55adccdd8539a65a0241":[8,0,1,1,2,2,0],
 "category__registry_8h.html#a6f526a82db20a6fcbb6cd20e1973671d":[8,0,1,1,2,1],
-"category__registry_8h.html#adb2fe05a5ffc17f787e2553985e1d5ef":[8,0,1,1,2,2],
 "category__registry_8h_source.html":[8,0,1,1,2],
 "classes.html":[7,1],
 "classgsl__p_1_1multidimensional__iterator.html":[7,0,0,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "classphosphor_1_1tools_1_1_j_s_o_n_export.html#a9c8d1bd03eb38808d0291c5eae7bc614":[7,0,1,0,1,6],
 "classphosphor_1_1tools_1_1_j_s_o_n_export.html#aa01f3a39e481fd4b22ed357408cbbe6a":[7,0,1,0,1,1],
 "classphosphor_1_1tools_1_1_j_s_o_n_export.html#aa0f7adcff8c1b7f48437f0de41bfb7a5":[7,0,1,0,1,10],
-"classphosphor_1_1tools_1_1_j_s_o_n_export.html#ac32c7e2bffd42f59e29e3d7fa293930b":[7,0,1,0,1,0],
-"classphosphor_1_1tools_1_1_j_s_o_n_export.html#ac32c7e2bffd42f59e29e3d7fa293930ba251d164643533a527361dbe1a7b9235d":[7,0,1,0,1,0,5]
+"classphosphor_1_1tools_1_1_j_s_o_n_export.html#ac32c7e2bffd42f59e29e3d7fa293930b":[7,0,1,0,1,0]
 };

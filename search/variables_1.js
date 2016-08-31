@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['categorystatus',['CategoryStatus',['../category__registry_8h.html#adb2fe05a5ffc17f787e2553985e1d5ef',1,'phosphor']]]
+  ['deregistered_5fthreads',['deregistered_threads',['../classphosphor_1_1_trace_log.html#af8cded002571dcb034a9a86c6ba79eb5',1,'phosphor::TraceLog']]]
 ];
