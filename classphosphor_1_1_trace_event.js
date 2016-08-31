@@ -10,7 +10,7 @@ var classphosphor_1_1_trace_event =
       [ "GlobalInstant", "classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312ba99dcfbf9048d557170d7e940c0096b80", null ]
     ] ],
     [ "TraceEvent", "classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0", null ],
-    [ "TraceEvent", "classphosphor_1_1_trace_event.html#a834eb019e8f718cd4da738e299db7667", null ],
+    [ "TraceEvent", "classphosphor_1_1_trace_event.html#a6f7c4e71d04a685661a2018518486aa4", null ],
     [ "getArgNames", "classphosphor_1_1_trace_event.html#a22819e6b89614e826869ff8149426b2b", null ],
     [ "getArgs", "classphosphor_1_1_trace_event.html#af96e39a22f30e1148c9c25bd5e22846a", null ],
     [ "getArgTypes", "classphosphor_1_1_trace_event.html#ab3666f566b86edfd8d16ab97fe6eb130", null ],
