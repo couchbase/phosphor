@@ -66,7 +66,7 @@ namespace phosphor {
          */
         TraceEvent(const tracepoint_info* _tpi,
                    Type _type,
-                   uint64_t _thread_id,
+                   uint32_t _thread_id,
                    std::array<TraceArgument, arg_count>&& _args,
                    std::array<TraceArgument::Type, arg_count>&& _arg_types);
 
@@ -151,10 +151,10 @@ namespace phosphor {
 
     private:
         const tracepoint_info* tpi;
-        uint64_t thread_id;
         std::array<TraceArgument, arg_count> args;
+        uint64_t time;
 
-        int64_t time;
+        uint32_t thread_id;
         std::array<TraceArgument::Type, arg_count> arg_types;
         Type type;
     };

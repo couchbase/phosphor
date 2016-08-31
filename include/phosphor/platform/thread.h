@@ -56,7 +56,7 @@ namespace phosphor {
          * @return thread id for the calling thread
          */
         PHOSPHOR_API
-        uint64_t getCurrentThreadID();
+        uint32_t getCurrentThreadID();
 
         /**
          * Get the cached system thread id for the calling thread
@@ -71,8 +71,8 @@ namespace phosphor {
          *
          * @return thread id for the calling thread
          */
-        inline uint64_t getCurrentThreadIDCached() {
-            static THREAD_LOCAL uint64_t thread_id;
+        inline uint32_t getCurrentThreadIDCached() {
+            static THREAD_LOCAL uint32_t thread_id;
 
             if (unlikely(!thread_id)) {
                 thread_id = getCurrentThreadID();

@@ -25,15 +25,15 @@ namespace phosphor {
     TraceEvent::TraceEvent(
         const tracepoint_info* _tpi,
         Type _type,
-        uint64_t _thread_id,
+        uint32_t _thread_id,
         std::array<TraceArgument, arg_count>&& _args,
         std::array<TraceArgument::Type, arg_count>&& _arg_types)
         : tpi(_tpi),
-          thread_id(_thread_id),
           args(_args),
           time(
               duration_cast<nanoseconds>(steady_clock::now().time_since_epoch())
                   .count()),
+          thread_id(_thread_id),
           arg_types(_arg_types),
           type(_type) {}
 
