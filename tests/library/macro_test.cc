@@ -94,42 +94,6 @@ TEST_F(MacroTraceEventTest, Synchronous) {
         EXPECT_EQ(5, event.getArgs()[0].as_int);
         EXPECT_EQ(6, event.getArgs()[1].as_int);
     });
-    TRACE_EVENT_START1("category", "name", "my_arg1", 3);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-    });
-    TRACE_EVENT_END1("category", "name", "my_arg1", 3);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-    });
-    TRACE_EVENT_START2("category", "name", "my_arg1", 3, "my_arg2", 4);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-        EXPECT_EQ(4, event.getArgs()[1].as_int);
-        EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
-    });
-    TRACE_EVENT_END2("category", "name", "my_arg1", 3, "my_arg2", 4);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-        EXPECT_EQ(4, event.getArgs()[1].as_int);
-        EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
-    });
 }
 
 TEST_F(MacroTraceEventTest, Asynchronous) {
@@ -139,7 +103,6 @@ TEST_F(MacroTraceEventTest, Asynchronous) {
         EXPECT_STREQ("category", event.getCategory());
         EXPECT_EQ(phosphor::TraceEvent::Type::AsyncStart, event.getType());
         EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("id", event.getArgNames()[0]);
     });
     TRACE_ASYNC_END0("category", "name", 5);
     verifications.emplace_back([](const phosphor::TraceEvent& event) {
@@ -147,7 +110,6 @@ TEST_F(MacroTraceEventTest, Asynchronous) {
         EXPECT_STREQ("category", event.getCategory());
         EXPECT_EQ(phosphor::TraceEvent::Type::AsyncEnd, event.getType());
         EXPECT_EQ(5, event.getArgs()[0].as_int);
-        EXPECT_STREQ("id_end", event.getArgNames()[0]);
     });
     TRACE_ASYNC_START("category", "name", 3, 4);
     verifications.emplace_back([](const phosphor::TraceEvent& event) {
@@ -156,7 +118,6 @@ TEST_F(MacroTraceEventTest, Asynchronous) {
         EXPECT_EQ(phosphor::TraceEvent::Type::AsyncStart, event.getType());
         EXPECT_EQ(3, event.getArgs()[0].as_int);
         EXPECT_EQ(4, event.getArgs()[1].as_int);
-        EXPECT_STREQ("id", event.getArgNames()[0]);
     });
     TRACE_ASYNC_END("category", "name", 5, 6);
     verifications.emplace_back([](const phosphor::TraceEvent& event) {
@@ -165,27 +126,6 @@ TEST_F(MacroTraceEventTest, Asynchronous) {
         EXPECT_EQ(phosphor::TraceEvent::Type::AsyncEnd, event.getType());
         EXPECT_EQ(5, event.getArgs()[0].as_int);
         EXPECT_EQ(6, event.getArgs()[1].as_int);
-        EXPECT_STREQ("id_end", event.getArgNames()[0]);
-    });
-    TRACE_ASYNC_START1("category", "name", 3, "my_arg1", 4);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncStart, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("id", event.getArgNames()[0]);
-        EXPECT_EQ(4, event.getArgs()[1].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[1]);
-    });
-    TRACE_ASYNC_END1("category", "name", 3, "my_arg1", 4);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncEnd, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("id_end", event.getArgNames()[0]);
-        EXPECT_EQ(4, event.getArgs()[1].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[1]);
     });
 }
 
@@ -204,24 +144,6 @@ TEST_F(MacroTraceEventTest, Instant) {
         EXPECT_EQ(3, event.getArgs()[0].as_int);
         EXPECT_EQ(4, event.getArgs()[1].as_int);
     });
-    TRACE_INSTANT1("category", "name", "my_arg1", 3);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-    });
-    TRACE_INSTANT2("category", "name", "my_arg1", 3, "my_arg2", 4);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-        EXPECT_EQ(4, event.getArgs()[1].as_int);
-        EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
-    });
 }
 
 TEST_F(MacroTraceEventTest, Global) {
@@ -238,24 +160,6 @@ TEST_F(MacroTraceEventTest, Global) {
         EXPECT_EQ(phosphor::TraceEvent::Type::GlobalInstant, event.getType());
         EXPECT_EQ(3, event.getArgs()[0].as_int);
         EXPECT_EQ(4, event.getArgs()[1].as_int);
-    });
-    TRACE_GLOBAL1("category", "name", "my_arg1", 3);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::GlobalInstant, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-    });
-    TRACE_GLOBAL2("category", "name", "my_arg1", 3, "my_arg2", 4);
-    verifications.emplace_back([](const phosphor::TraceEvent& event) {
-        EXPECT_STREQ("name", event.getName());
-        EXPECT_STREQ("category", event.getCategory());
-        EXPECT_EQ(phosphor::TraceEvent::Type::GlobalInstant, event.getType());
-        EXPECT_EQ(3, event.getArgs()[0].as_int);
-        EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-        EXPECT_EQ(4, event.getArgs()[1].as_int);
-        EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
     });
 }
 
@@ -288,38 +192,6 @@ TEST_F(MacroTraceEventTest, Scoped) {
             EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
         });
     }
-    {
-        TRACE_EVENT1("category", "name", "my_arg1", 3);
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("name", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-            EXPECT_EQ(3, event.getArgs()[0].as_int);
-            EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-        });
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("name", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
-        });
-    }
-    {
-        TRACE_EVENT2("category", "name", "my_arg1", 3, "my_arg2", 4);
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("name", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-            EXPECT_EQ(3, event.getArgs()[0].as_int);
-            EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-            EXPECT_EQ(4, event.getArgs()[1].as_int);
-            EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
-        });
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("name", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
-        });
-    }
 }
 
 void macro_test_functionA() {
@@ -328,14 +200,6 @@ void macro_test_functionA() {
 
 void macro_test_functionB() {
     TRACE_FUNCTION("category", 3, 4);
-}
-
-void macro_test_functionC() {
-    TRACE_FUNCTION1("category", "my_arg1", 3);
-}
-
-void macro_test_functionD() {
-    TRACE_FUNCTION2("category", "my_arg1", 3, "my_arg2", 4);
 }
 
 TEST_F(MacroTraceEventTest, Function) {
@@ -363,38 +227,6 @@ TEST_F(MacroTraceEventTest, Function) {
         });
         verifications.emplace_back([](const phosphor::TraceEvent &event) {
             EXPECT_STREQ("macro_test_functionB", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
-        });
-    }
-    {
-        macro_test_functionC();
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("macro_test_functionC", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-            EXPECT_EQ(3, event.getArgs()[0].as_int);
-            EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-        });
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("macro_test_functionC", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
-        });
-    }
-    {
-        macro_test_functionD();
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("macro_test_functionD", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-            EXPECT_EQ(3, event.getArgs()[0].as_int);
-            EXPECT_STREQ("my_arg1", event.getArgNames()[0]);
-            EXPECT_EQ(4, event.getArgs()[1].as_int);
-            EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
-        });
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
-            EXPECT_STREQ("macro_test_functionD", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
         });

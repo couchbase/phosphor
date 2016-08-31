@@ -37,20 +37,13 @@
  *  - Instant
  *  - Global
  *
- * In addition each group will have events macros in one of three styles,
- * either with 0 arguments, with multiple arguments or with multiple arguments
- * and with argument names. Macros suffixed with 0, such as TRACE_EVENT_START0,
- * can be used with 0 arguments.
+ * In addition each group will have events macros in one of two styles,
+ * either with 0 arguments or with multiple arguments. Macros suffixed
+ * with 0, such as TRACE_EVENT_START0, can be used with 0 arguments.
  *
  * Macros without the 0 suffix can be given 1 or 2 arguments - they
  * *might* work with 0 arguments but some compilers will generate
  * warnings due to 0-argument variadic macros.
- *
- * Macros with either a '1' or '2' suffix can be given 1 or 2 arguments
- * respectively, they also take an argument name (as a string literal)
- * before each of their respective arguments. Example:
- *
- *     TRACE_EVENT2("category", "name", "arg_name1", 1, "arg_name2", 2);
  *
  * Only a limited set of data-types can be used as arguments, generally
  * this includes most primitive data-types that are 8-bytes or less in
@@ -130,44 +123,6 @@
 #define TRACE_EVENT_END0(category, name)        \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::SyncEnd)
-
-#define TRACE_EVENT_START1(category, name, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        "", \
-        phosphor::TraceEvent::Type::SyncStart, \
-        arg1)
-
-#define TRACE_EVENT_END1(category, name, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        "", \
-        phosphor::TraceEvent::Type::SyncEnd, \
-        arg1)
-
-#define TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        arg2_name, \
-        phosphor::TraceEvent::Type::SyncStart, \
-        arg1, \
-        arg2)
-
-#define TRACE_EVENT_END2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        arg2_name, \
-        phosphor::TraceEvent::Type::SyncEnd, \
-        arg1, \
-        arg2)
 /** @} */
 
 /**
@@ -212,35 +167,11 @@
         }                                                             \
     } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
 
-#define TRACE_EVENT1(category, name, arg1_name, arg1)                 \
-    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
-    TRACE_EVENT_START1(category, name, arg1_name, arg1);              \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
-            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \
-        }                                                             \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
-
-#define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
-    TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2); \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
-            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \
-        }                                                             \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
-
 #define TRACE_FUNCTION(category, ...) \
     TRACE_EVENT(category, PH__func__, __VA_ARGS__)
 
 #define TRACE_FUNCTION0(category) \
     TRACE_EVENT0(category, PH__func__)
-
-#define TRACE_FUNCTION1(category, arg1_name, arg1) \
-    TRACE_EVENT1(category, PH__func__, arg1_name, arg1)
-
-#define TRACE_FUNCTION2(category, arg1_name, arg1, arg2_name, arg2) \
-    TRACE_EVENT2(category, PH__func__, arg1_name, arg1, arg2_name, arg2)
 /** @} */
 
 /**
@@ -279,16 +210,6 @@
         phosphor::TraceEvent::Type::AsyncStart, \
         id)
 
-#define TRACE_ASYNC_START1(category, name, id, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id", \
-        arg1_name, \
-        phosphor::TraceEvent::Type::AsyncStart, \
-        id, \
-        arg1)
-
 #define TRACE_ASYNC_END(category, name, id, ...) \
      PHOSPHOR_INTERNAL_TRACE_EVENT( \
         category, \
@@ -307,16 +228,6 @@
         "", \
         phosphor::TraceEvent::Type::AsyncEnd, \
         id)
-
-#define TRACE_ASYNC_END1(category, name, id, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id_end", \
-        arg1_name, \
-        phosphor::TraceEvent::Type::AsyncEnd, \
-        id, \
-        arg1)
 /** @} */
 
 /**
@@ -343,25 +254,6 @@
 #define TRACE_INSTANT0(category, name)          \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::Instant)
-
-#define TRACE_INSTANT1(category, name, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        "", \
-        phosphor::TraceEvent::Type::Instant, \
-        arg1)
-
-#define TRACE_INSTANT2(category, name, arg1_name, arg1, arg2_name, arg2) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        arg2_name, \
-        phosphor::TraceEvent::Type::Instant, \
-        arg1, \
-        arg2)
 /** @} */
 
 /**
@@ -389,64 +281,30 @@
 #define TRACE_GLOBAL0(category, name)           \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::GlobalInstant)
-
-
-#define TRACE_GLOBAL1(category, name, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        "", \
-        phosphor::TraceEvent::Type::GlobalInstant, \
-        arg1)
-
-#define TRACE_GLOBAL2(category, name, arg1_name, arg1, arg2_name, arg2) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        arg1_name, \
-        arg2_name, \
-        phosphor::TraceEvent::Type::GlobalInstant, \
-        arg1, \
-        arg2)
 /** @} */
 
 #else // if: defined(PHOSPHOR_DISABLED) && PHOSPHOR_DISABLED != 0
 
 #define TRACE_EVENT_START(category, name, ...)
 #define TRACE_EVENT_START0(category, name)
-#define TRACE_EVENT_START1(category, name, arg1_name, arg1)
-#define TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2)
 #define TRACE_EVENT_END(category, name, ...)
 #define TRACE_EVENT_END0(category, name)
-#define TRACE_EVENT_END1(category, name, arg1_name, arg1)
-#define TRACE_EVENT_END2(category, name, arg1_name, arg1, arg2_name, arg2)
 
 #define TRACE_EVENT(category, name, ...)
 #define TRACE_EVENT0(category, name)
-#define TRACE_EVENT1(category, name, arg1_name, arg1)
-#define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2)
 
 #define TRACE_FUNCTION(category, ...)
 #define TRACE_FUNCTION0(category)
-#define TRACE_FUNCTION1(category, name, arg1_name, arg1)
-#define TRACE_FUNCTION2(category, name, arg1_name, arg1, arg2_name, arg2)
 
-#define TRACE_ASYNC_START(category, name, id, ...)
-#define TRACE_ASYNC_START0(category, name, id)
-#define TRACE_ASYNC_START1(category, name, id, arg1_name, arg1)
-#define TRACE_ASYNC_END(category, name, id, ...)
-#define TRACE_ASYNC_END0(category, name, id)
-#define TRACE_ASYNC_END1(category, name, id, arg1_name, arg1)
+#define TRACE_ASYNC_START(category, name, ...)
+#define TRACE_ASYNC_START0(category, name)
+#define TRACE_ASYNC_END(category, name, ...)
+#define TRACE_ASYNC_END0(category, name)
 
 #define TRACE_INSTANT(category, name, ...)
 #define TRACE_INSTANT0(category, name)
-#define TRACE_INSTANT1(category, name, arg1_name, arg1)
-#define TRACE_INSTANT2(category, name, arg1_name, arg1, arg2_name, arg2)
 
 #define TRACE_GLOBAL(category, name, ...)
 #define TRACE_GLOBAL0(category, name)
-#define TRACE_GLOBAL1(category, name, arg1_name, arg1)
-#define TRACE_GLOBAL2(category, name, arg1_name, arg1, arg2_name, arg2)
 
 #endif // PHOSPHOR_DISABLED
