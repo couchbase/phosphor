@@ -141,8 +141,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a10a9f62b1f28691baa3d4926a89790d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0">TraceEvent</a> ()=default</td></tr>
 <tr class="separator:a10a9f62b1f28691baa3d4926a89790d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a834eb019e8f718cd4da738e299db7667"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a834eb019e8f718cd4da738e299db7667">TraceEvent</a> (const <a class="el" href="structphosphor_1_1tracepoint__info.html">tracepoint_info</a> *_tpi, <a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">Type</a> _type, uint64_t _thread_id, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html">TraceArgument</a>, arg_count &gt; &amp;&amp;_args, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a>, arg_count &gt; &amp;&amp;_arg_types)</td></tr>
-<tr class="separator:a834eb019e8f718cd4da738e299db7667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a697e5766da8eb049f011993986fdc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a69a697e5766da8eb049f011993986fdc">TraceEvent</a> (const char *_category, const char *_name, <a class="el" href="classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b">Type</a> _type, uint64_t _thread_id, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html">TraceArgument</a>, arg_count &gt; &amp;&amp;_args, std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a>, arg_count &gt; &amp;&amp;_arg_types)</td></tr>
+<tr class="separator:a69a697e5766da8eb049f011993986fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbf61956951d90799160e3c9fe41b3c2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#acbf61956951d90799160e3c9fe41b3c2">to_string</a> () const </td></tr>
 <tr class="separator:acbf61956951d90799160e3c9fe41b3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebdead39e1b2137a5699c136c9ee2274"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#aebdead39e1b2137a5699c136c9ee2274">to_json</a> () const </td></tr>
@@ -159,8 +159,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:af96e39a22f30e1148c9c25bd5e22846a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab3666f566b86edfd8d16ab97fe6eb130"><td class="memItemLeft" align="right" valign="top">const std::array&lt; <a class="el" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a>, arg_count &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#ab3666f566b86edfd8d16ab97fe6eb130">getArgTypes</a> () const </td></tr>
 <tr class="separator:ab3666f566b86edfd8d16ab97fe6eb130"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5737ef659648e4d6d1cab092d0d9ab3f"><td class="memItemLeft" align="right" valign="top">const std::array&lt; const char *, arg_count &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#a5737ef659648e4d6d1cab092d0d9ab3f">getArgNames</a> () const </td></tr>
-<tr class="separator:a5737ef659648e4d6d1cab092d0d9ab3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2f888bd4b325a5b83033f354e6143d8"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_event.html#aa2f888bd4b325a5b83033f354e6143d8">getTime</a> () const </td></tr>
 <tr class="separator:aa2f888bd4b325a5b83033f354e6143d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -221,15 +219,21 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a834eb019e8f718cd4da738e299db7667"></a>
+<a class="anchor" id="a69a697e5766da8eb049f011993986fdc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">phosphor::TraceEvent::TraceEvent </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structphosphor_1_1tracepoint__info.html">tracepoint_info</a> *&#160;</td>
-          <td class="paramname"><em>_tpi</em>, </td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>_category</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -265,7 +269,8 @@ Protected Member Functions</h2></td></tr>
 <p>Constructor for creating new events</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_tpi</td><td>Tracepoint info for the event </td></tr>
+    <tr><td class="paramname">_category</td><td>C-String for the event's category </td></tr>
+    <tr><td class="paramname">_name</td><td>C-String for the event's name </td></tr>
     <tr><td class="paramname">_type</td><td>The event type </td></tr>
     <tr><td class="paramname">_args</td><td>An array of <code>Value</code> </td></tr>
     <tr><td class="paramname">_arg_types</td><td>An array of argument types </td></tr>
@@ -276,22 +281,6 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a5737ef659648e4d6d1cab092d0d9ab3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::array&lt; const char *, arg_count &gt; &amp; phosphor::TraceEvent::getArgNames </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>the names of the arguments of the event </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="af96e39a22f30e1148c9c25bd5e22846a"></a>
 <div class="memitem">
 <div class="memproto">

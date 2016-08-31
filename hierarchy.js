@@ -26,6 +26,5 @@ var hierarchy =
     [ "phosphor::TraceContext", "classphosphor_1_1_trace_context.html", null ],
     [ "phosphor::TraceEvent", "classphosphor_1_1_trace_event.html", null ],
     [ "phosphor::TraceLog", "classphosphor_1_1_trace_log.html", null ],
-    [ "phosphor::TraceLogConfig", "classphosphor_1_1_trace_log_config.html", null ],
-    [ "phosphor::tracepoint_info", "structphosphor_1_1tracepoint__info.html", null ]
+    [ "phosphor::TraceLogConfig", "classphosphor_1_1_trace_log_config.html", null ]
 ];
