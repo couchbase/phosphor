@@ -87,7 +87,9 @@ TEST(TraceConfigTest, createFixed) {
     auto bufferB = config.getBufferFactory()(0, 0);
     auto& bufferBRef = *bufferB;
 
-    EXPECT_EQ(typeid(bufferARef), typeid(bufferBRef));
+    if (typeid(bufferARef) != typeid(bufferBRef)) {
+        FAIL();
+    }
 
     EXPECT_EQ(1337, config.getBufferSize());
     EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
@@ -102,7 +104,9 @@ TEST(TraceConfigTest, createRing) {
     auto bufferB = config.getBufferFactory()(0, 1);
     auto& bufferBRef = *bufferB;
 
-    EXPECT_EQ(typeid(bufferARef), typeid(bufferBRef));
+    if (typeid(bufferARef) != typeid(bufferBRef)) {
+        FAIL();
+    }
 
     EXPECT_EQ(1337, config.getBufferSize());
     EXPECT_EQ(BufferMode::ring, config.getBufferMode());
@@ -117,7 +121,9 @@ TEST(TraceConfigTest, createCustom) {
     auto bufferB = config.getBufferFactory()(0, 0);
     auto& bufferBRef = *bufferB;
 
-    EXPECT_EQ(typeid(bufferARef), typeid(bufferBRef));
+    if (typeid(bufferARef) != typeid(bufferBRef)) {
+        FAIL();
+    }
 
     EXPECT_EQ(BufferMode::custom, config.getBufferMode());
 }
