@@ -78,7 +78,7 @@ TEST(TraceChunkTest, string_check) {
         "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 
-    for (int i = 0; i < chunk.count(); ++i) {
+    for (size_t i = 0; i < chunk.count(); ++i) {
         const auto& traced = chunk[i];
         // This should probably require linking against GoogleMock
         // as well but I think we'll get away with it..
@@ -113,7 +113,7 @@ public:
     }
 
     void populate_chunk(TraceChunk* chunk, size_t event_count) {
-        for (int i = 0; i < event_count; ++i) {
+        for (size_t i = 0; i < event_count; ++i) {
             chunk->addEvent();
         }
     }

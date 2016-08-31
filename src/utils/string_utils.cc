@@ -40,7 +40,7 @@ namespace phosphor {
             }
             buffer.resize(len);
             len = vsnprintf(buffer.data(), buffer.size(), fmt, args);
-            if (len < 0 || len > buffer.size()) {
+            if (len < 0 || unsigned(len) > buffer.size()) {
                 throw std::runtime_error(
                     "phosphor::utils::format_string "
                     "failed: vsnprintf returned < 0 or "

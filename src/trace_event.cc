@@ -139,16 +139,16 @@ namespace phosphor {
 
     const std::array<TraceArgument, arg_count>& TraceEvent::getArgs() const {
         return args;
-    };
+    }
 
     const std::array<TraceArgument::Type, arg_count>& TraceEvent::getArgTypes() const {
         return arg_types;
-    };
+    }
 
     const std::array<RelaxedAtomicCString, arg_count>&
             TraceEvent::getArgNames() const {
         return tpi->argument_names;
-    };
+    }
 
     int64_t TraceEvent::getTime() const {
         return time;

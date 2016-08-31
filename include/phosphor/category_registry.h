@@ -34,7 +34,7 @@ namespace phosphor {
     /**
      * The states of tracing that a given category can be in
      */
-    enum class PHOSPHOR_API CategoryStatus : char { Disabled, Enabled };
+    enum class CategoryStatus : char { Disabled, Enabled };
 
     using AtomicCategoryStatus = std::atomic<CategoryStatus>;
 
