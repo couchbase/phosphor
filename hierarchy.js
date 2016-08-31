@@ -14,6 +14,10 @@ var hierarchy =
     [ "phosphor::tools::JSONExport", "classphosphor_1_1tools_1_1_j_s_o_n_export.html", null ],
     [ "gsl_p::multidimensional_iterator< T >", "classgsl__p_1_1multidimensional__iterator.html", null ],
     [ "gsl_p::multidimensional_iterator< chunk_iterator >", "classgsl__p_1_1multidimensional__iterator.html", null ],
+    [ "phosphor::RelaxedAtomic< T >", "classphosphor_1_1_relaxed_atomic.html", null ],
+    [ "phosphor::RelaxedAtomic< const char * >", "classphosphor_1_1_relaxed_atomic.html", [
+      [ "phosphor::RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", null ]
+    ] ],
     [ "phosphor::Sentinel", "classphosphor_1_1_sentinel.html", null ],
     [ "phosphor::TraceEvent::ToJsonResult", "classphosphor_1_1_trace_event_1_1_to_json_result.html", null ],
     [ "phosphor::TraceArgument", "unionphosphor_1_1_trace_argument.html", null ],
@@ -26,5 +30,6 @@ var hierarchy =
     [ "phosphor::TraceContext", "classphosphor_1_1_trace_context.html", null ],
     [ "phosphor::TraceEvent", "classphosphor_1_1_trace_event.html", null ],
     [ "phosphor::TraceLog", "classphosphor_1_1_trace_log.html", null ],
-    [ "phosphor::TraceLogConfig", "classphosphor_1_1_trace_log_config.html", null ]
+    [ "phosphor::TraceLogConfig", "classphosphor_1_1_trace_log_config.html", null ],
+    [ "phosphor::tracepoint_info", "structphosphor_1_1tracepoint__info.html", null ]
 ];

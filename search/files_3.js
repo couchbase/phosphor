@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['sentinel_2eh',['sentinel.h',['../sentinel_8h.html',1,'']]],
-  ['sorting_5falgorithm_2ecc',['sorting_algorithm.cc',['../sorting__algorithm_8cc.html',1,'']]],
-  ['statistics_2ecc',['statistics.cc',['../statistics_8cc.html',1,'']]]
+  ['relaxed_5fatomic_2eh',['relaxed_atomic.h',['../relaxed__atomic_8h.html',1,'']]]
 ];

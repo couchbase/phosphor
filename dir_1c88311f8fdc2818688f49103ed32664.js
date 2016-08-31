@@ -5,6 +5,10 @@ var dir_1c88311f8fdc2818688f49103ed32664 =
     [ "category_registry.h", "category__registry_8h.html", "category__registry_8h" ],
     [ "phosphor-internal.h", "phosphor-internal_8h.html", "phosphor-internal_8h" ],
     [ "phosphor.h", "phosphor_8h.html", "phosphor_8h" ],
+    [ "relaxed_atomic.h", "relaxed__atomic_8h.html", [
+      [ "RelaxedAtomic", "classphosphor_1_1_relaxed_atomic.html", "classphosphor_1_1_relaxed_atomic" ],
+      [ "RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", "classphosphor_1_1_relaxed_atomic_c_string" ]
+    ] ],
     [ "sentinel.h", "sentinel_8h.html", [
       [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ]
     ] ],
@@ -13,5 +17,8 @@ var dir_1c88311f8fdc2818688f49103ed32664 =
     [ "trace_config.h", "trace__config_8h_source.html", null ],
     [ "trace_context.h", "trace__context_8h_source.html", null ],
     [ "trace_event.h", "trace__event_8h.html", "trace__event_8h" ],
-    [ "trace_log.h", "trace__log_8h_source.html", null ]
+    [ "trace_log.h", "trace__log_8h_source.html", null ],
+    [ "tracepoint_info.h", "tracepoint__info_8h.html", [
+      [ "tracepoint_info", "structphosphor_1_1tracepoint__info.html", "structphosphor_1_1tracepoint__info" ]
+    ] ]
 ];

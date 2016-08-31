@@ -107,15 +107,15 @@ $(document).ready(function(){initNavTree('group__inst.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gad6443616a5135a3ece6c3cfe533287db"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT</b>(category,  name, ...)        </td></tr>
-<tr class="separator:gad6443616a5135a3ece6c3cfe533287db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT</b>(category,  name, ...)</td></tr>
+<tr class="separator:ga5758c1d58df6f680e9fe824d1ec5a850"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga72957e5fc1825087e801789bf1ddefc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_INSTANT0</b>(category,  name)                </td></tr>
 <tr class="separator:ga72957e5fc1825087e801789bf1ddefc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Instant events are used for events that are scoped to a thread but do not conceptually have a duration.</p>
 <p>Example: </p><pre class="fragment">TRACE_INSTANT0("Memcached:Frontend", "StatsReset")</pre><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gad6443616a5135a3ece6c3cfe533287db"></a>
+<a class="anchor" id="ga5758c1d58df6f680e9fe824d1ec5a850"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -144,7 +144,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT(              \</div><div class="line">        category, name, phosphor::TraceEvent::Type::Instant, __VA_ARGS__)</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_TRACE_EVENT( \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        <span class="stringliteral">&quot;arg1&quot;</span>, \</div><div class="line">        <span class="stringliteral">&quot;arg2&quot;</span>, \</div><div class="line">        phosphor::TraceEvent::Type::Instant, \</div><div class="line">        __VA_ARGS__)</div></div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="ga72957e5fc1825087e801789bf1ddefc0"></a>

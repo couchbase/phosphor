@@ -14,6 +14,8 @@ var annotated_dup =
       ] ],
       [ "CategoryRegistry", "classphosphor_1_1_category_registry.html", "classphosphor_1_1_category_registry" ],
       [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
+      [ "RelaxedAtomic", "classphosphor_1_1_relaxed_atomic.html", "classphosphor_1_1_relaxed_atomic" ],
+      [ "RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", "classphosphor_1_1_relaxed_atomic_c_string" ],
       [ "RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", "classphosphor_1_1_ring_trace_buffer" ],
       [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ],
       [ "TraceArgument", "unionphosphor_1_1_trace_argument.html", "unionphosphor_1_1_trace_argument" ],
@@ -23,6 +25,7 @@ var annotated_dup =
       [ "TraceContext", "classphosphor_1_1_trace_context.html", "classphosphor_1_1_trace_context" ],
       [ "TraceEvent", "classphosphor_1_1_trace_event.html", "classphosphor_1_1_trace_event" ],
       [ "TraceLog", "classphosphor_1_1_trace_log.html", "classphosphor_1_1_trace_log" ],
-      [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html", "classphosphor_1_1_trace_log_config" ]
+      [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html", "classphosphor_1_1_trace_log_config" ],
+      [ "tracepoint_info", "structphosphor_1_1tracepoint__info.html", "structphosphor_1_1tracepoint__info" ]
     ] ]
 ];
