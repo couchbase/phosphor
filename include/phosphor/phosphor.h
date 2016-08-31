@@ -99,26 +99,16 @@
  */
 
 #define TRACE_EVENT_START(category, name, ...)  \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1", \
-        "arg2", \
-        phosphor::TraceEvent::Type::SyncStart, \
-        __VA_ARGS__)
+    PHOSPHOR_INTERNAL_TRACE_EVENT(              \
+        category, name, phosphor::TraceEvent::Type::SyncStart, __VA_ARGS__)
 
 #define TRACE_EVENT_START0(category, name)      \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::SyncStart)
 
 #define TRACE_EVENT_END(category, name, ...)    \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1_end", \
-        "arg2_end", \
-        phosphor::TraceEvent::Type::SyncEnd, \
-        __VA_ARGS__)
+    PHOSPHOR_INTERNAL_TRACE_EVENT(              \
+        category, name, phosphor::TraceEvent::Type::SyncEnd, __VA_ARGS__)
 
 #define TRACE_EVENT_END0(category, name)        \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
@@ -192,42 +182,24 @@
  * @{
  */
 #define TRACE_ASYNC_START(category, name, id, ...) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id", \
-        "arg1", \
-        phosphor::TraceEvent::Type::AsyncStart, \
-        id, \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(                 \
+        category,                                  \
+        name,                                      \
+        phosphor::TraceEvent::Type::AsyncStart,    \
+        id,                                        \
         __VA_ARGS__)
 
 #define TRACE_ASYNC_START0(category, name, id)  \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id", \
-        "", \
-        phosphor::TraceEvent::Type::AsyncStart, \
-        id)
+     PHOSPHOR_INTERNAL_TRACE_EVENT(            \
+        category, name, phosphor::TraceEvent::Type::AsyncStart, id)
 
 #define TRACE_ASYNC_END(category, name, id, ...) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id_end", \
-        "arg1_end", \
-        phosphor::TraceEvent::Type::AsyncEnd, \
-        id, \
-        __VA_ARGS__)
+    PHOSPHOR_INTERNAL_TRACE_EVENT(               \
+        category, name, phosphor::TraceEvent::Type::AsyncEnd, id, __VA_ARGS__)
 
 #define TRACE_ASYNC_END0(category, name, id)    \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id_end", \
-        "", \
-        phosphor::TraceEvent::Type::AsyncEnd, \
-        id)
+    PHOSPHOR_INTERNAL_TRACE_EVENT(             \
+        category, name, phosphor::TraceEvent::Type::AsyncEnd, id)
 /** @} */
 
 /**
@@ -242,14 +214,9 @@
  *
  *  @{
  */
-#define TRACE_INSTANT(category, name, ...) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1", \
-        "arg2", \
-        phosphor::TraceEvent::Type::Instant, \
-        __VA_ARGS__)
+#define TRACE_INSTANT(category, name, ...)      \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(              \
+        category, name, phosphor::TraceEvent::Type::Instant, __VA_ARGS__)
 
 #define TRACE_INSTANT0(category, name)          \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
@@ -270,11 +237,9 @@
  *  @{
  */
 #define TRACE_GLOBAL(category, name, ...)          \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1", \
-        "arg2", \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(                 \
+        category,                                  \
+        name,                                      \
         phosphor::TraceEvent::Type::GlobalInstant, \
         __VA_ARGS__)
 

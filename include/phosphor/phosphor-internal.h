@@ -45,22 +45,15 @@
  *       Once MSVC is upgraded, move to using a store using
  *       std::memory_order_release instead of assignment operator.
  */
-#define PHOSPHOR_INTERNAL_CATEGORY_INFO \
+#define PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \
     static std::atomic<const phosphor::AtomicCategoryStatus*> \
             PHOSPHOR_INTERNAL_UID(category_enabled); \
     const phosphor::AtomicCategoryStatus* PHOSPHOR_INTERNAL_UID(category_enabled_temp) \
         = PHOSPHOR_INTERNAL_UID(category_enabled).load(std::memory_order_acquire); \
-
-#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
     if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \
         PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &PHOSPHOR_INSTANCE.getCategoryStatus(category); \
         PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \
-        PHOSPHOR_INTERNAL_UID(tpi) = { \
-            category, \
-            name, \
-            {{argA, argB}} \
-        }; \
-    } \
+    }
 
 /*
  * Traces an event of a specified type with one or more arguments
@@ -69,23 +62,19 @@
  * for comparison to 0 rather than comparison to 1 which saves an instruction
  * on the disabled path when compiled.
  */
-#define PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, argA, argB, type, ...) \
-    static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi); \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
+#define PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, type, ...) \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
           != phosphor::CategoryStatus::Disabled) { \
-        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi), type, __VA_ARGS__); \
+        PHOSPHOR_INSTANCE.logEvent(category, name, type, __VA_ARGS__); \
     }
 
 /*
  * Traces an event of a specified type with zero arguments
  */
 #define PHOSPHOR_INTERNAL_TRACE_EVENT0(category, name, type) \
-    static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi); \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, "arg1", "arg2") \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO(category) \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
           != phosphor::CategoryStatus::Disabled) { \
-        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi), type); \
+        PHOSPHOR_INSTANCE.logEvent(category, name, type); \
     }

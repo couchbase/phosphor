@@ -24,12 +24,6 @@ using phosphor::tools::JSONExport;
 using phosphor::tools::FileStopCallback;
 using namespace phosphor;
 
-tracepoint_info tpi = {
-    "category",
-    "name",
-    {{"arg1", "arg2"}}
-};
-
 class ExportTest : public testing::Test {
 public:
     ExportTest() : context(TraceContext(make_fixed_buffer(0, 1))) {
@@ -40,7 +34,8 @@ public:
             auto* chunk = context.trace_buffer->getChunk();
             while (!chunk->isFull()) {
                 chunk->addEvent() = phosphor::TraceEvent(
-                        &tpi,
+                        "category",
+                        "name",
                         phosphor::TraceEvent::Type::Instant,
                         0,
                         {{0, 0}},
@@ -53,7 +48,8 @@ public:
     void addOneToContextBuffer() {
         auto* chunk = context.trace_buffer->getChunk();
         chunk->addEvent() = phosphor::TraceEvent(
-                &tpi,
+                "category",
+                "name",
                 phosphor::TraceEvent::Type::Instant,
                 0,
                 {{0, 0}},
@@ -196,7 +192,7 @@ TEST_F(FileStopCallbackTest, test_to_file) {
                   .setStoppedCallback(FileStopCallback(filename)));
     while (log.isEnabled()) {
         log.logEvent(
-            &tpi, phosphor::TraceEvent::Type::Instant, 0);
+            "category", "name", phosphor::TraceEvent::Type::Instant, 0);
     }
 }
 
