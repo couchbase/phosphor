@@ -164,6 +164,25 @@ namespace phosphor {
 
 #undef ARGUMENT_CONVERSION
 
+    /**
+     * Partial specialization argument conversion for any pointer type
+     */
+    template<typename T>
+    class TraceArgumentConversion<T*> {
+        public:
+
+        inline static CONSTEXPR_F TraceArgument::Type getType() {
+            return TraceArgument::Type::is_pointer;
+        }
+
+        inline static CONSTEXPR_F TraceArgument asArgument(T* arg) {
+
+            // This relies on the 'const void*' -> pointer
+            // conversion defined above.
+            return TraceArgument(static_cast<const void*>(arg));
+        }
+    };
+
     inline std::string TraceArgument::to_string(
         TraceArgument::Type type) const {
         std::stringstream ss;

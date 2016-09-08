@@ -24,6 +24,9 @@
 using phosphor::TraceArgument;
 using phosphor::TraceArgumentConversion;
 
+// Opaque forward decl for checking pointer partial specialization
+class Opaque;
+
 TEST(TraceArgument, enum_conversions) {
     EXPECT_EQ(TraceArgumentConversion<bool>::getType(),
               TraceArgument::Type::is_bool);
@@ -59,6 +62,9 @@ TEST(TraceArgument, enum_conversions) {
               TraceArgument::Type::is_pointer);
     EXPECT_EQ(TraceArgumentConversion<const char*>::getType(),
               TraceArgument::Type::is_string);
+
+    EXPECT_EQ(TraceArgumentConversion<Opaque*>::getType(),
+              TraceArgument::Type::is_pointer);
 }
 
 template <class T>
@@ -79,8 +85,8 @@ TEST(TraceArgument, to_string) {
     EXPECT_EQ(inner_to_string_test(3.0), "3.000000");  // Double
 
     std::stringstream pointer_val;
-    pointer_val << reinterpret_cast<const void*>(0xFF);
-    EXPECT_EQ(inner_to_string_test(reinterpret_cast<const void*>(0xFF)),
+    pointer_val << reinterpret_cast<const Opaque*>(0xFF);
+    EXPECT_EQ(inner_to_string_test(reinterpret_cast<const Opaque*>(0xFF)),
               "\"" + pointer_val.str() + "\"");  // Pointer
     EXPECT_EQ(inner_to_string_test("Hello, World"),
               "\"Hello, World\"");  // Pointer
