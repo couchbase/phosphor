@@ -75,17 +75,7 @@ namespace phosphor {
          *
          */
         template <class T>
-        inline TraceArgument(T src);
-
-        /**
-         * @return The enum used for a given type
-         *
-         * Usage:
-         *
-         *     Type t = TraceArgument::getType<int>()
-         */
-        template <class T>
-        inline static CONSTEXPR Type getType();
+        inline CONSTEXPR_F TraceArgument(T src);
 
         /**
          * Converts the TraceArgument to string
@@ -100,6 +90,25 @@ namespace phosphor {
         inline std::string internal_to_string();
     };
 
+    /**
+     * Utility class for holding functions useful for
+     * templated argument conversions.
+     */
+    template <typename T>
+    class TraceArgumentConversion {
+    public:
+        /**
+         * @return The enum-form type of the argument
+         */
+        inline static CONSTEXPR_F TraceArgument::Type getType();
+
+        /**
+         * @param T The argument to be converted to a TraceArgument
+         * @return The argument wrapped as a TraceArgument
+         */
+        inline static CONSTEXPR_F TraceArgument asArgument(T arg);
+    };
+
 /**
  * Used for defining the constructor and type-to-enum
  * constexpr for a given type.
@@ -108,13 +117,20 @@ namespace phosphor {
  * @param dst The destination 'type' (aka the appropriate is_/as_
  *            suffix) of the argument.
  */
-#define ARGUMENT_CONVERSION(src, dst)                                    \
-    template <>                                                          \
-    inline CONSTEXPR TraceArgument::Type TraceArgument::getType<src>() { \
-        return Type::is_##dst;                                           \
-    }                                                                    \
-    template <>                                                          \
-    inline TraceArgument::TraceArgument(src arg) : as_##dst(arg) {}
+#define ARGUMENT_CONVERSION(src, dst) \
+    template <> \
+    inline CONSTEXPR_F TraceArgument::TraceArgument(src arg) : as_##dst(arg) {} \
+    template<> \
+    class TraceArgumentConversion<src> { \
+        public:\
+        inline static CONSTEXPR_F TraceArgument::Type getType() { \
+            return TraceArgument::Type::is_##dst; \
+        } \
+        \
+        inline static CONSTEXPR_F TraceArgument asArgument(src arg) { \
+            return TraceArgument(arg); \
+        } \
+    };
 
     ARGUMENT_CONVERSION(bool, bool)
 

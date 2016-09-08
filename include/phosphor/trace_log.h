@@ -149,8 +149,10 @@ namespace phosphor {
                 tpi,
                 type,
                 platform::getCurrentThreadIDCached(),
-                {{TraceArgument(argA), TraceArgument(argB)}},
-                {{TraceArgument::getType<T>(), TraceArgument::getType<U>()}});
+                {{TraceArgumentConversion<T>::asArgument(argA),
+                  TraceArgumentConversion<U>::asArgument(argB)}},
+                {{TraceArgumentConversion<T>::getType(),
+                  TraceArgumentConversion<U>::getType()}});
             cs->sentinel->release();
         }
 
@@ -181,8 +183,9 @@ namespace phosphor {
                 tpi,
                 type,
                 platform::getCurrentThreadIDCached(),
-                {{TraceArgument(argA), 0}},
-                {{TraceArgument::getType<T>(), TraceArgument::Type::is_none}});
+                {{TraceArgumentConversion<T>::asArgument(argA), 0}},
+                {{TraceArgumentConversion<T>::getType(),
+                  TraceArgument::Type::is_none}});
             cs->sentinel->release();
         }
 

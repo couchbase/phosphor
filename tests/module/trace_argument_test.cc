@@ -22,39 +22,49 @@
 #include <gtest/gtest.h>
 
 using phosphor::TraceArgument;
+using phosphor::TraceArgumentConversion;
 
 TEST(TraceArgument, enum_conversions) {
-    EXPECT_EQ(TraceArgument::getType<bool>(), TraceArgument::Type::is_bool);
+    EXPECT_EQ(TraceArgumentConversion<bool>::getType(),
+              TraceArgument::Type::is_bool);
 
-    EXPECT_EQ(TraceArgument::getType<char>(), TraceArgument::Type::is_int);
-    EXPECT_EQ(TraceArgument::getType<short>(), TraceArgument::Type::is_int);
-    EXPECT_EQ(TraceArgument::getType<int>(), TraceArgument::Type::is_int);
-    EXPECT_EQ(TraceArgument::getType<long>(), TraceArgument::Type::is_int);
-    EXPECT_EQ(TraceArgument::getType<long long>(), TraceArgument::Type::is_int);
+    EXPECT_EQ(TraceArgumentConversion<char>::getType(),
+              TraceArgument::Type::is_int);
+    EXPECT_EQ(TraceArgumentConversion<short>::getType(),
+              TraceArgument::Type::is_int);
+    EXPECT_EQ(TraceArgumentConversion<int>::getType(),
+              TraceArgument::Type::is_int);
+    EXPECT_EQ(TraceArgumentConversion<long>::getType(),
+              TraceArgument::Type::is_int);
+    EXPECT_EQ(TraceArgumentConversion<long long>::getType(),
+              TraceArgument::Type::is_int);
 
-    EXPECT_EQ(TraceArgument::getType<unsigned char>(),
+    EXPECT_EQ(TraceArgumentConversion<unsigned char>::getType(),
               TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned short>(),
+    EXPECT_EQ(TraceArgumentConversion<unsigned short>::getType(),
               TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned int>(),
+    EXPECT_EQ(TraceArgumentConversion<unsigned int>::getType(),
               TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned long>(),
+    EXPECT_EQ(TraceArgumentConversion<unsigned long>::getType(),
               TraceArgument::Type::is_uint);
-    EXPECT_EQ(TraceArgument::getType<unsigned long long>(),
+    EXPECT_EQ(TraceArgumentConversion<unsigned long long>::getType(),
               TraceArgument::Type::is_uint);
 
-    EXPECT_EQ(TraceArgument::getType<float>(), TraceArgument::Type::is_double);
-    EXPECT_EQ(TraceArgument::getType<double>(), TraceArgument::Type::is_double);
+    EXPECT_EQ(TraceArgumentConversion<float>::getType(),
+              TraceArgument::Type::is_double);
+    EXPECT_EQ(TraceArgumentConversion<double>::getType(),
+              TraceArgument::Type::is_double);
 
-    EXPECT_EQ(TraceArgument::getType<const void*>(),
+    EXPECT_EQ(TraceArgumentConversion<const void*>::getType(),
               TraceArgument::Type::is_pointer);
-    EXPECT_EQ(TraceArgument::getType<const char*>(),
+    EXPECT_EQ(TraceArgumentConversion<const char*>::getType(),
               TraceArgument::Type::is_string);
 }
 
 template <class T>
 std::string inner_to_string_test(T src) {
-    return TraceArgument(src).to_string(TraceArgument::getType<T>());
+    return TraceArgumentConversion<T>::asArgument(src)
+            .to_string(TraceArgumentConversion<T>::getType());
 }
 
 TEST(TraceArgument, to_string) {
