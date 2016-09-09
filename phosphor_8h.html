@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('phosphor_8h.html','');});
 Macros</h2></td></tr>
 <tr class="memitem:a5c3acfbde298bed30fb871e7ef3fecf3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>&#160;&#160;&#160;<a class="el" href="classphosphor_1_1_trace_log.html#ade38924fc3174ca43696c6432f05c658">phosphor::TraceLog::getInstance</a>()</td></tr>
 <tr class="separator:a5c3acfbde298bed30fb871e7ef3fecf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb0b7bd9c31454bacf0a483f0c4b1238"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#acb0b7bd9c31454bacf0a483f0c4b1238">PHOSPHOR_PTR</a>(arg)&#160;&#160;&#160;static_cast&lt;const void*&gt;(arg)</td></tr>
+<tr class="memitem:acb0b7bd9c31454bacf0a483f0c4b1238"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#acb0b7bd9c31454bacf0a483f0c4b1238">PHOSPHOR_PTR</a>(arg)&#160;&#160;&#160;arg</td></tr>
 <tr class="separator:acb0b7bd9c31454bacf0a483f0c4b1238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ef15413d3812d887bae64815e4c0bfe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ef15413d3812d887bae64815e4c0bfe"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_DISABLED</b>&#160;&#160;&#160;0</td></tr>
@@ -239,12 +239,11 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">arg</td><td>)</td>
-          <td>&#160;&#160;&#160;static_cast&lt;const void*&gt;(arg)</td>
+          <td>&#160;&#160;&#160;arg</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Alias for static casting to a <code>const void*</code> which can be used for logging the address of any pointer as an argument.</p>
-<p>This is required as the current implementation of argument type resolution does not support partial template specialisation in order to accept any pointer type (MB-20473). </p>
+<p>Deprecated alias for converting pointers to a const void*. Unnecessary as Phosphor now supports arbitrary pointer types for TraceArguments. </p>
 
 </div>
 </div>

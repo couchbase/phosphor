@@ -1,5 +1,7 @@
 var trace__argument_8h =
 [
     [ "TraceArgument", "unionphosphor_1_1_trace_argument.html", "unionphosphor_1_1_trace_argument" ],
-    [ "ARGUMENT_CONVERSION", "trace__argument_8h.html#aec2a66a4b2d938018a3ea78e30d25dc6", null ]
+    [ "TraceArgumentConversion", "classphosphor_1_1_trace_argument_conversion.html", null ],
+    [ "TraceArgumentConversion< T * >", "classphosphor_1_1_trace_argument_conversion_3_01_t_01_5_01_4.html", null ],
+    [ "ARGUMENT_CONVERSION", "trace__argument_8h.html#a53d9963a202e0d8a2bf564f9066e7f10", null ]
 ];

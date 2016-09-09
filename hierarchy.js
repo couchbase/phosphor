@@ -21,6 +21,8 @@ var hierarchy =
     [ "phosphor::Sentinel", "classphosphor_1_1_sentinel.html", null ],
     [ "phosphor::TraceEvent::ToJsonResult", "classphosphor_1_1_trace_event_1_1_to_json_result.html", null ],
     [ "phosphor::TraceArgument", "unionphosphor_1_1_trace_argument.html", null ],
+    [ "phosphor::TraceArgumentConversion< T >", "classphosphor_1_1_trace_argument_conversion.html", null ],
+    [ "phosphor::TraceArgumentConversion< T * >", "classphosphor_1_1_trace_argument_conversion_3_01_t_01_5_01_4.html", null ],
     [ "phosphor::TraceBuffer", "classphosphor_1_1_trace_buffer.html", [
       [ "phosphor::FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", null ],
       [ "phosphor::RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", null ]
