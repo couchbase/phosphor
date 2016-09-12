@@ -78,6 +78,13 @@
  */
 #define PHOSPHOR_PTR(arg) arg
 
+/**
+ * Utility for inlining up to 8 bytes of any string, including dynamically
+ * allocated strings. Accepts std::string or char* as argument. Strings
+ * longer than 8 bytes will be truncated.
+ */
+#define PHOSPHOR_INLINE_STR(arg) phosphor::inline_zstring<8>(arg)
+
 #if !defined(PHOSPHOR_DISABLED)
 #define PHOSPHOR_DISABLED 0
 #endif

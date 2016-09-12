@@ -18,6 +18,7 @@ INCLUDE_DIRECTORIES(BEFORE
 
 SET(phosphor_HEADER_FILES
         ${phosphor_SOURCE_DIR}/include/phosphor/category_registry.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/inline_zstring.h
         ${phosphor_SOURCE_DIR}/include/phosphor/phosphor.h
         ${phosphor_SOURCE_DIR}/include/phosphor/phosphor-internal.h
         ${phosphor_SOURCE_DIR}/include/phosphor/sentinel.h

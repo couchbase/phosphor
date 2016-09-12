@@ -30,7 +30,8 @@ M_ADD_MODULE_GTEST(string_utils_test
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
 M_ADD_MODULE_GTEST(trace_argument_test
-        trace_argument_test.cc)
+        trace_argument_test.cc
+        ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
 M_ADD_MODULE_GTEST(trace_event_test
         trace_event_test.cc

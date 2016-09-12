@@ -26,7 +26,8 @@
 #include <string>
 #include <type_traits>
 
-#include "phosphor/platform/core.h"
+#include "inline_zstring.h"
+#include "platform/core.h"
 
 namespace phosphor {
 
@@ -47,6 +48,7 @@ namespace phosphor {
             is_double,
             is_pointer,
             is_string,
+            is_istring,
             is_none
         };
 
@@ -56,6 +58,7 @@ namespace phosphor {
         double as_double;
         const char* as_string;
         const void* as_pointer;
+        inline_zstring<8> as_istring;
 
         /**
          * Default constructor
@@ -108,6 +111,9 @@ namespace phosphor {
          */
         inline static CONSTEXPR_F TraceArgument asArgument(T arg);
     };
+
+    static_assert(sizeof(TraceArgument) <= 8,
+                  "TraceArgument must be 8 or less bytes");
 
 /**
  * Used for defining the constructor and type-to-enum
@@ -162,6 +168,8 @@ namespace phosphor {
 
     ARGUMENT_CONVERSION(const char*, string)
 
+    ARGUMENT_CONVERSION(inline_zstring<8>, istring)
+
 #undef ARGUMENT_CONVERSION
 
     /**
@@ -200,10 +208,11 @@ namespace phosphor {
             return "\"" + ss.str() + "\"";
         case Type::is_string:
             return "\"" + std::string(as_string) + "\"";
+        case Type::is_istring:
+            return "\"" + std::string(as_istring) + "\"";
         case Type::is_none:
             return std::string("\"Type::is_none\"");
-        default:
-            throw std::invalid_argument("Invalid TraceArgument type");
         }
+        throw std::invalid_argument("Invalid TraceArgument type");
     }
 }  // namespace phosphor

@@ -18,6 +18,8 @@
 #include <string>
 #include <vector>
 
+#include "phosphor/utils/string_utils.h"
+
 #pragma once
 
 namespace phosphor {

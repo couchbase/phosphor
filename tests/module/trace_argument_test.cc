@@ -23,6 +23,7 @@
 
 using phosphor::TraceArgument;
 using phosphor::TraceArgumentConversion;
+using phosphor::inline_zstring;
 
 // Opaque forward decl for checking pointer partial specialization
 class Opaque;
@@ -65,6 +66,9 @@ TEST(TraceArgument, enum_conversions) {
 
     EXPECT_EQ(TraceArgumentConversion<Opaque*>::getType(),
               TraceArgument::Type::is_pointer);
+
+    EXPECT_EQ(TraceArgumentConversion<inline_zstring<8>>::getType(),
+              TraceArgument::Type::is_istring);
 }
 
 template <class T>
@@ -90,6 +94,9 @@ TEST(TraceArgument, to_string) {
               "\"" + pointer_val.str() + "\"");  // Pointer
     EXPECT_EQ(inner_to_string_test("Hello, World"),
               "\"Hello, World\"");  // Pointer
+
+    EXPECT_EQ(inner_to_string_test(inline_zstring<8>("Hello, World!")),
+              "\"Hello, W\"");  // Pointer
 
     EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none),
               "\"Type::is_none\"");

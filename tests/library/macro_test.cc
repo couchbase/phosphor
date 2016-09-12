@@ -401,6 +401,33 @@ TEST_F(MacroTraceEventTest, Function) {
     }
 }
 
+TEST_F(MacroTraceEventTest, InlineString) {
+    TRACE_INSTANT("category", "name", PHOSPHOR_INLINE_STR("Hello, World!"));
+    verifications.emplace_back([](const phosphor::TraceEvent& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
+        EXPECT_EQ("Hello, W",
+                  std::string(event.getArgs()[0].as_istring));
+    });
+    TRACE_INSTANT("category", "name", PHOSPHOR_INLINE_STR("Hello"));
+    verifications.emplace_back([](const phosphor::TraceEvent& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
+        EXPECT_EQ("Hello",
+                  std::string(event.getArgs()[0].as_istring));
+    });
+    TRACE_INSTANT("category", "name", PHOSPHOR_INLINE_STR(""));
+    verifications.emplace_back([](const phosphor::TraceEvent& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
+        EXPECT_EQ("",
+                  std::string(event.getArgs()[0].as_istring));
+    });
+}
+
 // Basic smoke test that category filtering works at a macro level,
 // other unit tests should handle the more extensive testing
 TEST_F(MacroTraceEventTest, CategoryFiltering) {
