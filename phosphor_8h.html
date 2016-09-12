@@ -121,6 +121,8 @@ Macros</h2></td></tr>
 <tr class="separator:a5c3acfbde298bed30fb871e7ef3fecf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb0b7bd9c31454bacf0a483f0c4b1238"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#acb0b7bd9c31454bacf0a483f0c4b1238">PHOSPHOR_PTR</a>(arg)&#160;&#160;&#160;arg</td></tr>
 <tr class="separator:acb0b7bd9c31454bacf0a483f0c4b1238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52119d371fc5085346fd00c2ee2ef4df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="phosphor_8h.html#a52119d371fc5085346fd00c2ee2ef4df">PHOSPHOR_INLINE_STR</a>(arg)&#160;&#160;&#160;<a class="el" href="classphosphor_1_1inline__zstring.html">phosphor::inline_zstring</a>&lt;8&gt;(arg)</td></tr>
+<tr class="separator:a52119d371fc5085346fd00c2ee2ef4df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ef15413d3812d887bae64815e4c0bfe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ef15413d3812d887bae64815e4c0bfe"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PHOSPHOR_DISABLED</b>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a6ef15413d3812d887bae64815e4c0bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,6 +219,23 @@ Macros</h2></td></tr>
 <li>void* </li>
 </ul>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a52119d371fc5085346fd00c2ee2ef4df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PHOSPHOR_INLINE_STR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">arg</td><td>)</td>
+          <td>&#160;&#160;&#160;<a class="el" href="classphosphor_1_1inline__zstring.html">phosphor::inline_zstring</a>&lt;8&gt;(arg)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Utility for inlining up to 8 bytes of any string, including dynamically allocated strings. Accepts std::string or char* as argument. Strings longer than 8 bytes will be truncated. </p>
+
+</div>
+</div>
 <a class="anchor" id="a5c3acfbde298bed30fb871e7ef3fecf3"></a>
 <div class="memitem">
 <div class="memproto">

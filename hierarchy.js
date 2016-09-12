@@ -8,6 +8,8 @@ var hierarchy =
     [ "gsl_p::dyn_array< std::atomic< bool > >", "structgsl__p_1_1dyn__array.html", null ],
     [ "phosphor::utils::FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", null ],
     [ "phosphor::tools::FileStopCallback", "classphosphor_1_1tools_1_1_file_stop_callback.html", null ],
+    [ "phosphor::inline_zstring< max_length >", "classphosphor_1_1inline__zstring.html", null ],
+    [ "phosphor::inline_zstring< 8 >", "classphosphor_1_1inline__zstring.html", null ],
     [ "iterator", null, [
       [ "phosphor::TraceBuffer::chunk_iterator", "classphosphor_1_1_trace_buffer_1_1chunk__iterator.html", null ]
     ] ],

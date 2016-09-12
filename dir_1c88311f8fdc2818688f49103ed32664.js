@@ -2,7 +2,11 @@ var dir_1c88311f8fdc2818688f49103ed32664 =
 [
     [ "platform", "dir_41ff3fdb09ce7a4503d9494e23506ca2.html", "dir_41ff3fdb09ce7a4503d9494e23506ca2" ],
     [ "tools", "dir_59cbd45c5633c9b02a951633b4bdd009.html", "dir_59cbd45c5633c9b02a951633b4bdd009" ],
+    [ "utils", "dir_6f91e335e26c44c48b1e6ff8cda6a3c1.html", "dir_6f91e335e26c44c48b1e6ff8cda6a3c1" ],
     [ "category_registry.h", "category__registry_8h.html", "category__registry_8h" ],
+    [ "inline_zstring.h", "inline__zstring_8h.html", [
+      [ "inline_zstring", "classphosphor_1_1inline__zstring.html", "classphosphor_1_1inline__zstring" ]
+    ] ],
     [ "phosphor-internal.h", "phosphor-internal_8h.html", "phosphor-internal_8h" ],
     [ "phosphor.h", "phosphor_8h.html", "phosphor_8h" ],
     [ "relaxed_atomic.h", "relaxed__atomic_8h.html", [

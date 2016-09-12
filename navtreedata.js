@@ -17,7 +17,8 @@ var NAVTREE =
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
         [ "Typedefs", "functions_type.html", null ],
-        [ "Enumerations", "functions_enum.html", null ]
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "Files", null, [
@@ -33,7 +34,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"classphosphor_1_1tools_1_1_j_s_o_n_export.html#aa0f7adcff8c1b7f48437f0de41bfb7a5"
+"classphosphor_1_1tools_1_1_j_s_o_n_export.html#a2f35b02739089adb9722593e3f88ae98"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

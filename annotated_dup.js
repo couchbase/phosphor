@@ -14,6 +14,7 @@ var annotated_dup =
       ] ],
       [ "CategoryRegistry", "classphosphor_1_1_category_registry.html", "classphosphor_1_1_category_registry" ],
       [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
+      [ "inline_zstring", "classphosphor_1_1inline__zstring.html", "classphosphor_1_1inline__zstring" ],
       [ "RelaxedAtomic", "classphosphor_1_1_relaxed_atomic.html", "classphosphor_1_1_relaxed_atomic" ],
       [ "RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", "classphosphor_1_1_relaxed_atomic_c_string" ],
       [ "RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", "classphosphor_1_1_ring_trace_buffer" ],

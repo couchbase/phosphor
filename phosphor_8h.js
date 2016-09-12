@@ -2,6 +2,7 @@ var phosphor_8h =
 [
     [ "PHOSPHOR_DISABLED", "phosphor_8h.html#a6ef15413d3812d887bae64815e4c0bfe", null ],
     [ "PHOSPHOR_ENABLED", "phosphor_8h.html#aa93c6878f009156e678f5efb8cad5a41", null ],
+    [ "PHOSPHOR_INLINE_STR", "phosphor_8h.html#a52119d371fc5085346fd00c2ee2ef4df", null ],
     [ "PHOSPHOR_INSTANCE", "phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3", null ],
     [ "PHOSPHOR_PTR", "phosphor_8h.html#acb0b7bd9c31454bacf0a483f0c4b1238", null ],
     [ "TRACE_ASYNC_END", "group__async.html#gab682aa4bded65cede078eb2f6e296163", null ],

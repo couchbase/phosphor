@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['relaxedatomic',['RelaxedAtomic',['../classphosphor_1_1_relaxed_atomic.html',1,'phosphor']]],
-  ['relaxedatomic_3c_20const_20char_20_2a_20_3e',['RelaxedAtomic&lt; const char * &gt;',['../classphosphor_1_1_relaxed_atomic.html',1,'phosphor']]],
-  ['relaxedatomiccstring',['RelaxedAtomicCString',['../classphosphor_1_1_relaxed_atomic_c_string.html',1,'phosphor']]],
-  ['ringtracebuffer',['RingTraceBuffer',['../classphosphor_1_1_ring_trace_buffer.html',1,'phosphor']]]
+  ['multidimensional_5fiterator',['multidimensional_iterator',['../classgsl__p_1_1multidimensional__iterator.html',1,'gsl_p']]],
+  ['multidimensional_5fiterator_3c_20chunk_5fiterator_20_3e',['multidimensional_iterator&lt; chunk_iterator &gt;',['../classgsl__p_1_1multidimensional__iterator.html',1,'gsl_p']]]
 ];
