@@ -103,7 +103,7 @@ TEST(TraceEvent, toJSON) {
 #else
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
         "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
-        "\"args\":\\{\"0\":false\\}\\}");
+        "\"args\":\\{\"arg1\":false\\}\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);
 }
@@ -124,7 +124,7 @@ TEST(TraceEvent, toJSONAlt) {
 #else
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
         "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
-        "\"args\":\\{\"0_end\":false,\"1_end\":false\\}\\}");
+        "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);
 }
