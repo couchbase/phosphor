@@ -74,15 +74,15 @@ TEST(TraceEvent, string_check) {
 }
 
 TEST(TraceEvent, typeToString) {
-    EXPECT_EQ("AsyncStart",
-              TraceEvent::typeToString(TraceEvent::Type::AsyncStart));
-    EXPECT_EQ("AsyncEnd", TraceEvent::typeToString(TraceEvent::Type::AsyncEnd));
-    EXPECT_EQ("SyncStart",
-              TraceEvent::typeToString(TraceEvent::Type::SyncStart));
-    EXPECT_EQ("SyncEnd", TraceEvent::typeToString(TraceEvent::Type::SyncEnd));
-    EXPECT_EQ("Instant", TraceEvent::typeToString(TraceEvent::Type::Instant));
-    EXPECT_EQ("GlobalInstant",
-              TraceEvent::typeToString(TraceEvent::Type::GlobalInstant));
+    EXPECT_STREQ("AsyncStart",
+                 TraceEvent::typeToString(TraceEvent::Type::AsyncStart));
+    EXPECT_STREQ("AsyncEnd", TraceEvent::typeToString(TraceEvent::Type::AsyncEnd));
+    EXPECT_STREQ("SyncStart",
+                 TraceEvent::typeToString(TraceEvent::Type::SyncStart));
+    EXPECT_STREQ("SyncEnd", TraceEvent::typeToString(TraceEvent::Type::SyncEnd));
+    EXPECT_STREQ("Instant", TraceEvent::typeToString(TraceEvent::Type::Instant));
+    EXPECT_STREQ("GlobalInstant",
+                 TraceEvent::typeToString(TraceEvent::Type::GlobalInstant));
     EXPECT_THROW(TraceEvent::typeToString(static_cast<TraceEvent::Type>(0xFF)),
                  std::invalid_argument);
 }
