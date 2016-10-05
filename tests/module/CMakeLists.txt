@@ -6,7 +6,8 @@ MACRO (M_ADD_MODULE_GTEST name)
     TARGET_LINK_LIBRARIES(${name}
             gmock
             gtest
-            gtest_main)
+            gtest_main
+            ${_extra_test_libs})
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()
 

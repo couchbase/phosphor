@@ -50,6 +50,8 @@ namespace phosphor {
              */
             JSONExport(const TraceContext& _context);
 
+            ~JSONExport();
+
             /**
              * Read 'length' worth of JSON
              *
@@ -68,14 +70,14 @@ namespace phosphor {
              *          the point that was previously left off. This will
              *          return less than 'length' at the end of the buffer.
              */
-            std::string read(size_t length);
+            StringPtr read(size_t length);
 
             /**
              * Read entire buffer's worth of JSON
              *
              * @returns The entire buffer converted to JSON
              */
-            std::string read();
+            StringPtr read();
 
             /**
              * @return True if the export is complete
@@ -110,7 +112,7 @@ namespace phosphor {
          * everything that a given process has traced when the global TraceLog
          * is destructed).
          */
-        class PHOSPHOR_API FileStopCallback {
+        class PHOSPHOR_API FileStopCallback : public TracingStoppedCallback {
         public:
             /**
              * @param _file_path File path to save the buffer to on completion,
@@ -120,13 +122,15 @@ namespace phosphor {
             FileStopCallback(
                 const std::string& _file_path = "phosphor.%p.json");
 
+            ~FileStopCallback();
+
             /**
              * Callback method called by TraceLog
              *
              * @param log Reference to the calling TraceLog
              * @param lh The lock being held when this callback is invoked
              */
-            void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh);
+            void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) override;
 
         protected:
             std::string file_path;

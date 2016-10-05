@@ -86,9 +86,10 @@ namespace phosphor {
         if (enabled.exchange(false)) {
             registry.disableAll();
             evictThreads(lh);
-            auto cb = trace_config.getStoppedCallback();
-            if (cb && (!shutdown || trace_config.getStopTracingOnDestruct())) {
-                cb(*this, lh);
+            auto* cb = trace_config.getStoppedCallback();
+            if ((cb != nullptr) &&
+                (!shutdown || trace_config.getStopTracingOnDestruct())) {
+                (*cb)(*this, lh);
             }
         }
     }

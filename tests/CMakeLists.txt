@@ -1,3 +1,12 @@
+# When building as part of Couchbase Server, we want to link tests with
+# libplatform, which ensures they use cbmalloc for memory allocation - which
+# crucially is *different* to the allocator used by libphosphor.
+# This allows testing of different malloc libraries (operator new/delete)
+# from phosphor DLL and the executable linking it.
+IF(DEFINED COUCHBASE_SERVER_BUILD)
+    SET(_extra_test_libs platform)
+ENDIF()
+
 MACRO (M_ADD_LIBRARY_GTEST name)
     ADD_EXECUTABLE(
             ${name}
@@ -7,6 +16,7 @@ MACRO (M_ADD_LIBRARY_GTEST name)
             gmock
             gtest
             gtest_main
+            ${_extra_test_libs}
             phosphor)
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()

@@ -21,6 +21,8 @@
 #include <string>
 #include <unordered_map>
 
+#include "phosphor/platform/core.h"
+
 namespace phosphor {
 
     // Forward declare
@@ -34,41 +36,57 @@ namespace phosphor {
      * The TraceContext enforces movement semantics as it contains
      * a std::unique_ptr
      */
-    class TraceContext {
+    class PHOSPHOR_API TraceContext{
     public:
-        TraceContext(std::unique_ptr<TraceBuffer>&& buffer)
-            : trace_buffer(std::move(buffer)) {
+        using ThreadNamesMap = std::unordered_map<uint64_t, std::string>;
 
-        }
+        ~TraceContext();
+
+        TraceContext(std::unique_ptr<TraceBuffer>&& buffer);
 
         TraceContext(std::unique_ptr<TraceBuffer>&& buffer,
-                     const std::unordered_map<uint64_t, std::string>& _thread_names)
-            : trace_buffer(std::move(buffer)),
-              thread_names(_thread_names) {
+                     const ThreadNamesMap& _thread_names);
 
+        TraceContext(TraceContext&& other);
+
+        TraceContext& operator=(TraceContext&& other);
+
+        const TraceBuffer* getBuffer() const {
+            return trace_buffer.get();
         }
 
-        TraceContext(TraceContext&& other)
-            : trace_buffer(std::move(other.trace_buffer)),
-              thread_names(other.thread_names) {
+        /**
+         * Return a pointer to the trace buffer for this context.
+         */
+        TraceBuffer* getBuffer() {
+            return trace_buffer.get();
         }
 
-        TraceContext& operator=(TraceContext&& other) {
-            trace_buffer = std::move(other.trace_buffer);
-            thread_names = other.thread_names;
-            return *this;
+        /**
+         * Return the map of thread IDs -> names
+         */
+        const ThreadNamesMap& getThreadNames() const {
+            return thread_names;
         }
 
+    protected:
+
+        /**
+         * Add an element to the thread name map.
+         */
+        void addThreadName(uint64_t id, const std::string& name);
+
+    private:
         /**
          * The trace buffer from the trace
          */
         std::unique_ptr<TraceBuffer> trace_buffer;
 
         /**
-         * A mapping of thread ids to thread names for all threads that
-         * were registered at any point when the trace was being conducted
-         */
-        std::unordered_map<uint64_t, std::string> thread_names;
+        * A mapping of thread ids to thread names for all threads that
+        * were registered at any point when the trace was being conducted.
+        */
+        ThreadNamesMap thread_names;
     };
 
 }

@@ -41,6 +41,14 @@ namespace phosphor {
         return stream;
     }
 
+    void StringPtrDeleter::operator()(const std::string* ptr) {
+        delete ptr;
+    }
+
+    StringPtr make_String(const std::string& str) {
+        return StringPtr(new std::string(str));
+    }
+
 /*
  * TraceLogConfig implementation
  */
@@ -110,6 +118,15 @@ namespace phosphor {
  * TraceConfig implementation
  */
 
+    // Define the default constructor and destructor non-inline because this
+    // class is part of the DLL interface and the executable may be using a
+    // different CRT. Therefore by making the destructor non-inline we ensure
+    // that memory is allocated and freed using the same runtime as the
+    // constructors.
+    TraceConfig::TraceConfig() = default;
+
+    TraceConfig::~TraceConfig() = default;
+
     TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
             : buffer_mode(_buffer_mode),
               buffer_size(_buffer_size),
@@ -151,13 +168,13 @@ namespace phosphor {
     }
 
     TraceConfig &TraceConfig::setStoppedCallback(
-            TracingStoppedCallback _tracing_stopped_callback) {
+            std::shared_ptr<TracingStoppedCallback> _tracing_stopped_callback) {
         tracing_stopped_callback = _tracing_stopped_callback;
         return *this;
     }
 
-    TracingStoppedCallback TraceConfig::getStoppedCallback() const {
-        return tracing_stopped_callback;
+    TracingStoppedCallback* TraceConfig::getStoppedCallback() const {
+        return tracing_stopped_callback.get();
     }
 
     TraceConfig &TraceConfig::setStopTracingOnDestruct(bool _stop_tracing) {
@@ -239,7 +256,8 @@ namespace phosphor {
 
         TraceConfig config_obj(mode, static_cast<size_t>(buffer_size));
         if (filename != "") {
-            config_obj.setStoppedCallback(tools::FileStopCallback(filename));
+            config_obj.setStoppedCallback(
+                std::make_shared<tools::FileStopCallback>(filename));
             config_obj.setStopTracingOnDestruct(true);
         }
         config_obj.setCategories(utils::split_string(enabled_categories, ','),
@@ -247,7 +265,7 @@ namespace phosphor {
         return config_obj;
     }
 
-    std::string TraceConfig::toString() const {
+    StringPtr TraceConfig::toString() const {
         std::stringstream result;
 
         result << "buffer-mode:" << buffer_mode << ";";
@@ -259,6 +277,6 @@ namespace phosphor {
 
         // Can't easily do the 'save-on-stop' callback
 
-        return result.str();
+        return make_String(result.str());
     }
 }

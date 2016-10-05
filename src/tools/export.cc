@@ -37,10 +37,12 @@ namespace phosphor {
 
         JSONExport::JSONExport(const TraceContext& _context)
             : context(_context),
-              it(context.trace_buffer->begin()),
-              tit(context.thread_names.begin()) {
+              it(context.getBuffer()->begin()),
+              tit(context.getThreadNames().begin()) {
 
         }
+
+        JSONExport::~JSONExport() = default;
 
         size_t JSONExport::read(char* out, size_t length) {
             std::string event_json;
@@ -60,9 +62,9 @@ namespace phosphor {
                 switch (state) {
                 case State::opening:
                     cache = "{\n  \"traceEvents\": [\n";
-                    if (tit != context.thread_names.end()) {
+                    if (tit != context.getThreadNames().end()) {
                         state = State::first_thread;
-                    } else if (it != context.trace_buffer->end()) {
+                    } else if (it != context.getBuffer()->end()) {
                         state = State::first_event;
                     } else {
                         state = State::footer;
@@ -75,7 +77,7 @@ namespace phosphor {
                     ++it;
                     cache += event_json;
                     state = State::other_events;
-                    if (it == context.trace_buffer->end()) {
+                    if (it == context.getBuffer()->end()) {
                         state = State::footer;
                     }
                     break;
@@ -86,8 +88,8 @@ namespace phosphor {
                         ++tit;
                         cache += event_json;
                         state = State::other_threads;
-                        if (tit == context.thread_names.end()) {
-                            if (it != context.trace_buffer->end()) {
+                        if (tit == context.getThreadNames().end()) {
+                            if (it != context.getBuffer()->end()) {
                                 state = State::other_events;
                             } else {
                                 state = State::footer;
@@ -107,18 +109,18 @@ namespace phosphor {
             return cursor;
         }
 
-        std::string JSONExport::read(size_t length) {
+        StringPtr JSONExport::read(size_t length) {
             std::string out;
             out.resize(length, '\0');
             out.resize(read(&out[0], length));
-            return out;
+            return make_String(out);
         }
 
         bool JSONExport::done() {
             return state == State::dead;
         }
 
-        std::string JSONExport::read() {
+        StringPtr JSONExport::read() {
             std::string out;
 
             size_t last_wrote;
@@ -128,11 +130,13 @@ namespace phosphor {
             } while (!done());
 
             out.resize(out.size() - (4096 - last_wrote));
-            return out;
+            return make_String(out);
         }
 
         FileStopCallback::FileStopCallback(const std::string& _file_path)
             : file_path(_file_path) {}
+
+        FileStopCallback::~FileStopCallback() = default;
 
         void FileStopCallback::operator()(TraceLog& log,
                                           std::lock_guard<TraceLog>& lh) {

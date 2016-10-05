@@ -102,11 +102,11 @@ TEST_F(TraceLogTest, multiStart) {
 
     trace_log.start(configA);
     EXPECT_TRUE(trace_log.isEnabled());
-    EXPECT_EQ(configA.toString(), trace_log.getTraceConfig().toString());
+    EXPECT_EQ(*configA.toString(), *trace_log.getTraceConfig().toString());
 
     trace_log.start(configB);
     EXPECT_TRUE(trace_log.isEnabled());
-    EXPECT_EQ(configB.toString(), trace_log.getTraceConfig().toString());
+    EXPECT_EQ(*configB.toString(), *trace_log.getTraceConfig().toString());
     trace_log.stop();
     EXPECT_FALSE(trace_log.isEnabled());
     trace_log.stop();
@@ -114,11 +114,11 @@ TEST_F(TraceLogTest, multiStart) {
 }
 
 TEST_F(TraceLogTest, EnabledBufferGetThrow) {
-    EXPECT_EQ(nullptr, trace_log.getBuffer().get());
+    EXPECT_EQ(nullptr, trace_log.getBuffer());
     start_basic();
     EXPECT_THROW(trace_log.getBuffer(), std::logic_error);
     trace_log.stop();
-    EXPECT_NE(nullptr, trace_log.getBuffer().get());
+    EXPECT_NE(nullptr, trace_log.getBuffer());
 }
 
 TEST_F(TraceLogTest, EnabledContextGetThrow) {
@@ -133,11 +133,11 @@ TEST_F(TraceLogTest, bufferGenerationCheck) {
     start_basic();
     trace_log.stop();
     TraceContext context = trace_log.getTraceContext();
-    EXPECT_EQ(0, context.trace_buffer->getGeneration());
+    EXPECT_EQ(0, context.getBuffer()->getGeneration());
     start_basic();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    EXPECT_EQ(1, context.trace_buffer->getGeneration());
+    EXPECT_EQ(1, context.getBuffer()->getGeneration());
 }
 
 TEST_F(TraceLogTest, logTillFullAndEvenThen) {
@@ -203,8 +203,8 @@ TEST_F(TraceLogTest, StopRestartVerify) {
     // process of resetting the ChunkTenant)
     trace_log.stop();
     auto context = trace_log.getTraceContext();
-    auto event = context.trace_buffer->begin();
-    ASSERT_NE(context.trace_buffer->end(), event);
+    auto event = context.getBuffer()->begin();
+    ASSERT_NE(context.getBuffer()->end(), event);
     EXPECT_STREQ("category2", (*event).getCategory());
 }
 
@@ -220,7 +220,7 @@ TEST_F(TraceLogTest, GetConfig) {
     config.setCategories({{"*"}}, {{"world"}});
 
     trace_log.start(config);
-    EXPECT_EQ(config.toString(), trace_log.getTraceConfig().toString());
+    EXPECT_EQ(*config.toString(), *trace_log.getTraceConfig().toString());
     EXPECT_EQ(BufferMode::fixed, trace_log.getTraceConfig().getBufferMode());
     EXPECT_EQ(sizeof(TraceChunk), trace_log.getTraceConfig().getBufferSize());
 }
@@ -256,22 +256,27 @@ TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
     EXPECT_NO_THROW(trace_log.deregisterThread());
 }
 
+struct DoneCallback : public TracingStoppedCallback {
+    bool invoked = false;
+
+    void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) override {
+        invoked = true;
+        EXPECT_NE(nullptr, log.getTraceContext(lh).getBuffer());
+    }
+};
 TEST_F(TraceLogTest, testDoneCallback) {
-    bool callback_invoked = false;
+
+    auto callback = std::make_shared<DoneCallback>();
+
     trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size * 4)
-                        .setStoppedCallback([&callback_invoked](
-                            TraceLog& log, std::lock_guard<TraceLog>& lh) {
-                            callback_invoked = true;
-                            EXPECT_NE(nullptr,
-                                      log.getTraceContext(lh).trace_buffer);
-                        }));
+                        .setStoppedCallback(callback));
 
     while (trace_log.isEnabled()) {
         log_event();
     }
     // TraceLog should already be null
-    EXPECT_EQ(nullptr, trace_log.getTraceContext().trace_buffer);
-    EXPECT_TRUE(callback_invoked);
+    EXPECT_EQ(nullptr, trace_log.getTraceContext().getBuffer());
+    EXPECT_TRUE(callback->invoked);
 }
 
 TEST(TraceLogAltTest, FromEnvironmentConstructor) {
@@ -280,42 +285,43 @@ TEST(TraceLogAltTest, FromEnvironmentConstructor) {
     setenv("PHOSPHOR_TRACING_START", "", true);
 }
 
+struct DestructCallback : public TracingStoppedCallback {
+    bool invoked = false;
+
+    void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) override {
+        invoked = true;
+    }
+};
 TEST(TraceLogAltTest, stopOnDestruct) {
-    bool callback_invoked = false;
+    auto callback = std::make_shared<DestructCallback>();
     {
         TraceLog trace_log;
         trace_log.start(TraceConfig(BufferMode::fixed, 80000)
-                            .setStoppedCallback([&callback_invoked](
-                                TraceLog& log, std::lock_guard<TraceLog>& lh) {
-                                callback_invoked = true;
-                            })
+                            .setStoppedCallback(callback)
                             .setStopTracingOnDestruct(true));
     }
-    EXPECT_TRUE(callback_invoked);
-    callback_invoked = false;
+    EXPECT_TRUE(callback->invoked);
+    callback->invoked = false;
     {
         TraceLog trace_log;
         trace_log.start(TraceConfig(BufferMode::fixed, 80000)
-                            .setStoppedCallback([&callback_invoked](
-                                TraceLog& log, std::lock_guard<TraceLog>& lh) {
-                                callback_invoked = true;
-                            }));
+                            .setStoppedCallback(callback));
     }
-    EXPECT_FALSE(callback_invoked);
+    EXPECT_FALSE(callback->invoked);
 }
 
 TEST_F(TraceLogTest, RegisterDeregisterRegister) {
 
     trace_log.registerThread("name1");
     auto context = trace_log.getTraceContext();
-    ASSERT_NE(0, context.thread_names.size());
-    auto it = context.thread_names.begin();
+    ASSERT_NE(0, context.getThreadNames().size());
+    auto it = context.getThreadNames().begin();
     EXPECT_EQ("name1", it->second);
 
     // Thread name shouldn't persist after de-registering when not running
     trace_log.deregisterThread();
     context = trace_log.getTraceContext();
-    EXPECT_EQ(0, context.thread_names.size());
+    EXPECT_EQ(0, context.getThreadNames().size());
 
     // Thread name should persist even after de-registering when running
     trace_log.registerThread("name1");
@@ -323,15 +329,15 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     trace_log.deregisterThread();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    ASSERT_NE(0, context.thread_names.size());
-    it = context.thread_names.begin();
+    ASSERT_NE(0, context.getThreadNames().size());
+    it = context.getThreadNames().begin();
     EXPECT_EQ("name1", it->second);
 
     // Registering a new name should override the old one
     trace_log.registerThread("name2");
     context = trace_log.getTraceContext();
-    ASSERT_NE(0, context.thread_names.size());
-    it = context.thread_names.begin();
+    ASSERT_NE(0, context.getThreadNames().size());
+    it = context.getThreadNames().begin();
     EXPECT_EQ("name2", it->second);
 
     // Thread names should be cleared by start
@@ -339,10 +345,10 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     trace_log.deregisterThread();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    EXPECT_NE(0, context.thread_names.size());
+    EXPECT_NE(0, context.getThreadNames().size());
     start_basic();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    EXPECT_EQ(0, context.thread_names.size());
+    EXPECT_EQ(0, context.getThreadNames().size());
 
 }

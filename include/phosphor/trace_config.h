@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <memory>
 #include <mutex>
 
 #include "trace_buffer.h"
@@ -54,8 +55,13 @@ namespace phosphor {
      * the buffer (Which can take a comparatively long time) or to stash
      * it somewhere that another thread can access.
      */
-    using TracingStoppedCallback =
-        std::function<void(TraceLog&, std::lock_guard<TraceLog>&)>;
+    class TracingStoppedCallback {
+    public:
+        virtual ~TracingStoppedCallback() {}
+
+        virtual void operator()(TraceLog&, std::lock_guard<TraceLog>&) = 0;
+
+    };
 
     /**
      * The mode of a TraceBuffer implementation
@@ -75,6 +81,35 @@ namespace phosphor {
      */
     PHOSPHOR_API
     std::ostream& operator<<(std::ostream& stream, const BufferMode mode);
+
+    /**
+     * Custom deleter for our StringPtr class. Exists to create an
+     * explicitly non-inline destructor.
+     */
+    struct PHOSPHOR_API StringPtrDeleter {
+        void operator()(const std::string* ptr);
+    };
+
+    /**
+     * String is used to expose string objects to clients, for example
+     * when reading phosphor config strings.
+     *
+     * This is part of the DLL interface, and hence we need a type
+     * which cannot be deleted directly by the client application -
+     * phosphor itself must delete it to prevent mismatches between
+     * allocate and free. Therefore we use a unique_ptr with a custom
+     * (non-inline) deleter to ensure phosphor itself always deletes
+     * any instances.
+     */
+    using StringPtr = std::unique_ptr<const std::string, StringPtrDeleter>;
+
+    /**
+     * make_unique equivilent for the StringPtr class.
+     *
+     * This should be used to contruct all instances of StringPtr, to ensure
+     * matching alloc/free.
+     */
+    StringPtr make_String(const std::string& str);
 
     /**
      * The TraceLogConfig is used to perform a one-time config of a
@@ -173,7 +208,9 @@ namespace phosphor {
      */
     class PHOSPHOR_API TraceConfig {
     public:
-        TraceConfig() = default;
+        TraceConfig();
+
+        ~TraceConfig();
 
         /**
          * Constructor used when using a builtin TraceBuffer type
@@ -212,17 +249,21 @@ namespace phosphor {
          * Set the tracing_stopped_callback to be invoked when tracing
          * stops.
          *
-         * @param _tracing_stopped_callback Callback to be used
+         * @param _tracing_stopped_callback Callback to be used. Note
+         *        this is passed as a shared_ptr due to it not being
+         *        safe to copy Callbacks in the general case, as it
+         *        may have been allocated with a different CRT than
+         *        phosphor itself is linked against.
          * @return reference to the TraceConfig be configured
          */
         TraceConfig& setStoppedCallback(
-            TracingStoppedCallback _tracing_stopped_callback);
+            std::shared_ptr<TracingStoppedCallback> _tracing_stopped_callback);
 
         /**
          * @return The tracing_stopped_callback to be invoked when tracing
          * stops.
          */
-        TracingStoppedCallback getStoppedCallback() const;
+        TracingStoppedCallback* getStoppedCallback() const;
 
         /**
          * Sets whether or not the tracing shutdown (and therefore callbacks)
@@ -280,7 +321,7 @@ namespace phosphor {
          *
          * @return The config string
          */
-        std::string toString() const;
+        StringPtr toString() const;
 
     protected:
         /**
@@ -297,7 +338,7 @@ namespace phosphor {
         BufferMode buffer_mode = BufferMode::fixed;
         size_t buffer_size = 0;
         trace_buffer_factory buffer_factory = nullptr;
-        TracingStoppedCallback tracing_stopped_callback = nullptr;
+        std::shared_ptr<TracingStoppedCallback> tracing_stopped_callback;
         bool stop_tracing = false;
 
         std::vector<std::string> enabled_categories;

@@ -30,14 +30,26 @@ tracepoint_info tpi = {
     {{"arg1", "arg2"}}
 };
 
+class MockTraceContext : public phosphor::TraceContext {
+public:
+
+    MockTraceContext(std::unique_ptr<TraceBuffer>&& buffer)
+        : TraceContext(std::move(buffer)) {}
+
+    // Expose normally protected method as public for testing.
+    void public_addThreadName(uint64_t id, const std::string& name) {
+        addThreadName(id, name);
+    }
+};
+
 class ExportTest : public testing::Test {
 public:
-    ExportTest() : context(TraceContext(make_fixed_buffer(0, 1))) {
+    ExportTest() : context(MockTraceContext(make_fixed_buffer(0, 1))) {
     }
 
     void fillContextBuffer() {
-        while (!context.trace_buffer->isFull()) {
-            auto* chunk = context.trace_buffer->getChunk();
+        while (!context.getBuffer()->isFull()) {
+            auto* chunk = context.getBuffer()->getChunk();
             while (!chunk->isFull()) {
                 chunk->addEvent() = phosphor::TraceEvent(
                         &tpi,
@@ -51,7 +63,7 @@ public:
     }
 
     void addOneToContextBuffer() {
-        auto* chunk = context.trace_buffer->getChunk();
+        auto* chunk = context.getBuffer()->getChunk();
         chunk->addEvent() = phosphor::TraceEvent(
                 &tpi,
                 phosphor::TraceEvent::Type::Instant,
@@ -63,80 +75,80 @@ public:
 
     void addThreadsToContext(size_t count) {
         for (size_t i = 0; i < count; ++i) {
-            context.thread_names.emplace(i, std::to_string(i));
+            context.public_addThreadName(i, std::to_string(i));
         }
     }
 
 protected:
-    phosphor::TraceContext context;
+    MockTraceContext context;
 };
 
 TEST_F(ExportTest, FullBufferTest) {
     fillContextBuffer();
     JSONExport exporter(context);
-    std::string p;
+    phosphor::StringPtr p;
     do {
         p = exporter.read(80);
-        EXPECT_LE(p.size(), 80);
-    } while (p.size());
-    EXPECT_EQ("", exporter.read(4096));
+        EXPECT_LE(p->size(), 80);
+    } while (p->size());
+    EXPECT_EQ("", *exporter.read(4096));
 }
 
 TEST_F(ExportTest, fulltest) {
     fillContextBuffer();
     JSONExport exporter(context);
-    std::string p = exporter.read();
+    auto p = exporter.read();
     EXPECT_TRUE(exporter.done());
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ('}', (*p)[p->size() - 2]);
+    EXPECT_EQ('\n', (*p)[p->size() - 1]);
 }
 
 TEST_F(ExportTest, SingleEvent) {
     addOneToContextBuffer();
     JSONExport exporter(context);
-    std::string p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
-    EXPECT_EQ("", exporter.read(4096));
+    auto p = exporter.read();
+    EXPECT_EQ('}', (*p)[p->size() - 2]);
+    EXPECT_EQ('\n', (*p)[p->size() - 1]);
+    EXPECT_EQ("", *exporter.read(4096));
 }
 
 TEST_F(ExportTest, SingleThreadFullBuffer) {
     addThreadsToContext(1);
     fillContextBuffer();
     JSONExport exporter(context);
-    std::string p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
-    EXPECT_EQ("", exporter.read(4096));
+    auto p = exporter.read();
+    EXPECT_EQ('}', (*p)[p->size() - 2]);
+    EXPECT_EQ('\n', (*p)[p->size() - 1]);
+    EXPECT_EQ("", *exporter.read(4096));
 }
 
 TEST_F(ExportTest, LotsOfThreadsFullBuffer) {
     addThreadsToContext(100);
     fillContextBuffer();
     JSONExport exporter(context);
-    std::string p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
-    EXPECT_EQ("", exporter.read(4096));
+    auto p = exporter.read();
+    EXPECT_EQ('}', (*p)[p->size() - 2]);
+    EXPECT_EQ('\n', (*p)[p->size() - 1]);
+    EXPECT_EQ("", *exporter.read(4096));
 }
 
 TEST_F(ExportTest, LotsOfThreadsEmptyBuffer) {
     addThreadsToContext(100);
     JSONExport exporter(context);
-    std::string p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
-    EXPECT_EQ("", exporter.read(4096));
+    auto p = exporter.read();
+    EXPECT_EQ('}', (*p)[p->size() - 2]);
+    EXPECT_EQ('\n', (*p)[p->size() - 1]);
+    EXPECT_EQ("", *exporter.read(4096));
 }
 
 TEST_F(ExportTest, test) {
     JSONExport exporter(context);
-    std::string p;
+    phosphor::StringPtr p;
     do {
         p = exporter.read(80);
-        EXPECT_LE(p.size(), 80);
-    } while (p.size());
-    EXPECT_EQ("", exporter.read(4096));
+        EXPECT_LE(p->size(), 80);
+    } while (p->size());
+    EXPECT_EQ("", *exporter.read(4096));
 }
 
 class MockFileStopCallback : public FileStopCallback {
@@ -193,7 +205,8 @@ TEST_F(FileStopCallbackTest, test_to_file) {
     filename = "filecallbacktest.json";
 
     log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 80000)
-                  .setStoppedCallback(FileStopCallback(filename)));
+                  .setStoppedCallback(
+                      std::make_shared<FileStopCallback>(filename)));
     while (log.isEnabled()) {
         log.logEvent(
             &tpi, phosphor::TraceEvent::Type::Instant, 0);
@@ -204,6 +217,7 @@ TEST_F(FileStopCallbackTest, file_open_fail) {
     phosphor::TraceLog log;
     filename = "";
     log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 80000)
-                  .setStoppedCallback(FileStopCallback(filename)));
+                  .setStoppedCallback(
+                      std::make_shared<FileStopCallback>(filename)));
     EXPECT_THROW(log.stop(), std::runtime_error);
 }
