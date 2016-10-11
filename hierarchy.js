@@ -7,7 +7,6 @@ var hierarchy =
     [ "gsl_p::dyn_array< phosphor::TraceChunk >", "structgsl__p_1_1dyn__array.html", null ],
     [ "gsl_p::dyn_array< std::atomic< bool > >", "structgsl__p_1_1dyn__array.html", null ],
     [ "phosphor::utils::FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", null ],
-    [ "phosphor::tools::FileStopCallback", "classphosphor_1_1tools_1_1_file_stop_callback.html", null ],
     [ "phosphor::inline_zstring< max_length >", "classphosphor_1_1inline__zstring.html", null ],
     [ "phosphor::inline_zstring< 8 >", "classphosphor_1_1inline__zstring.html", null ],
     [ "iterator", null, [
@@ -21,6 +20,7 @@ var hierarchy =
       [ "phosphor::RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", null ]
     ] ],
     [ "phosphor::Sentinel", "classphosphor_1_1_sentinel.html", null ],
+    [ "phosphor::StringPtrDeleter", "structphosphor_1_1_string_ptr_deleter.html", null ],
     [ "phosphor::TraceEvent::ToJsonResult", "classphosphor_1_1_trace_event_1_1_to_json_result.html", null ],
     [ "phosphor::TraceArgument", "unionphosphor_1_1_trace_argument.html", null ],
     [ "phosphor::TraceArgumentConversion< T >", "classphosphor_1_1_trace_argument_conversion.html", null ],
@@ -35,5 +35,8 @@ var hierarchy =
     [ "phosphor::TraceEvent", "classphosphor_1_1_trace_event.html", null ],
     [ "phosphor::TraceLog", "classphosphor_1_1_trace_log.html", null ],
     [ "phosphor::TraceLogConfig", "classphosphor_1_1_trace_log_config.html", null ],
-    [ "phosphor::tracepoint_info", "structphosphor_1_1tracepoint__info.html", null ]
+    [ "phosphor::tracepoint_info", "structphosphor_1_1tracepoint__info.html", null ],
+    [ "phosphor::TracingStoppedCallback", "classphosphor_1_1_tracing_stopped_callback.html", [
+      [ "phosphor::tools::FileStopCallback", "classphosphor_1_1tools_1_1_file_stop_callback.html", null ]
+    ] ]
 ];

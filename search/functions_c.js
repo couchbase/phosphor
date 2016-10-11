@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['read',['read',['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#aee5e3bbc1e2ff24a9a35799da2fe4f69',1,'phosphor::tools::JSONExport::read(char *out, size_t length)'],['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#a6c882ca178ecc739ca8ff9d0f67a222c',1,'phosphor::tools::JSONExport::read(size_t length)'],['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#a949fc1cc59be0d2dc717671a303a7f45',1,'phosphor::tools::JSONExport::read()']]],
+  ['read',['read',['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#aee5e3bbc1e2ff24a9a35799da2fe4f69',1,'phosphor::tools::JSONExport::read(char *out, size_t length)'],['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#a80651e8b1e9e3209f2a13c14f47bb411',1,'phosphor::tools::JSONExport::read(size_t length)'],['../classphosphor_1_1tools_1_1_j_s_o_n_export.html#a7aee3405727184818a8e3d788c5c8a10',1,'phosphor::tools::JSONExport::read()']]],
   ['registerthread',['registerThread',['../classphosphor_1_1_trace_log.html#a1e05392fcb945933fd9e4a86254409e9',1,'phosphor::TraceLog']]],
   ['release',['release',['../classphosphor_1_1_sentinel.html#ac72905e7efc8bb93349eef2b394f3551',1,'phosphor::Sentinel']]],
   ['reopen',['reopen',['../classphosphor_1_1_sentinel.html#a7ead8e098b98397cf731e5e5733a9215',1,'phosphor::Sentinel']]],

@@ -117,13 +117,22 @@ $(document).ready(function(){initNavTree('classphosphor_1_1tools_1_1_file_stop_c
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="export_8h_source.html">export.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for phosphor::tools::FileStopCallback:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classphosphor_1_1tools_1_1_file_stop_callback.png" usemap="#phosphor::tools::FileStopCallback_map" alt=""/>
+  <map id="phosphor::tools::FileStopCallback_map" name="phosphor::tools::FileStopCallback_map">
+<area href="classphosphor_1_1_tracing_stopped_callback.html" alt="phosphor::TracingStoppedCallback" shape="rect" coords="0,0,209,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abab6d4389eeaf0ab061213877b81a043"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_file_stop_callback.html#abab6d4389eeaf0ab061213877b81a043">FileStopCallback</a> (const std::string &amp;_file_path=&quot;phosphor.%p.json&quot;)</td></tr>
 <tr class="separator:abab6d4389eeaf0ab061213877b81a043"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20095c4813a82c6c4b60374ccff68dfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_file_stop_callback.html#a20095c4813a82c6c4b60374ccff68dfa">operator()</a> (<a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &amp;log, std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;lh)</td></tr>
-<tr class="separator:a20095c4813a82c6c4b60374ccff68dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afee88a1e38477822f0e68222dfaa1985"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1tools_1_1_file_stop_callback.html#afee88a1e38477822f0e68222dfaa1985">operator()</a> (<a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &amp;log, std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;lh) override</td></tr>
+<tr class="separator:afee88a1e38477822f0e68222dfaa1985"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -164,9 +173,12 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>file_path</b><
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a20095c4813a82c6c4b60374ccff68dfa"></a>
+<a class="anchor" id="afee88a1e38477822f0e68222dfaa1985"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void phosphor::tools::FileStopCallback::operator() </td>
@@ -186,6 +198,11 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>file_path</b><
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Callback method called by <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a></p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -195,6 +212,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>file_path</b><
   </table>
   </dd>
 </dl>
+
+<p>Implements <a class="el" href="classphosphor_1_1_tracing_stopped_callback.html">phosphor::TracingStoppedCallback</a>.</p>
 
 </div>
 </div>

@@ -2,7 +2,7 @@ var searchData=
 [
   ['to_5fjson',['to_json',['../classphosphor_1_1_trace_event.html#aebdead39e1b2137a5699c136c9ee2274',1,'phosphor::TraceEvent']]],
   ['to_5fstring',['to_string',['../unionphosphor_1_1_trace_argument.html#aa5cb5d9df6a03df39aaa590337e7130d',1,'phosphor::TraceArgument::to_string()'],['../classphosphor_1_1_trace_event.html#acbf61956951d90799160e3c9fe41b3c2',1,'phosphor::TraceEvent::to_string()']]],
-  ['tostring',['toString',['../classphosphor_1_1_trace_config.html#a247dd8a84e17bb8c9762ec1d536c57e9',1,'phosphor::TraceConfig']]],
+  ['tostring',['toString',['../classphosphor_1_1_trace_config.html#af8cf4792a608c7a8b46457e242a586f7',1,'phosphor::TraceConfig']]],
   ['traceargument',['TraceArgument',['../unionphosphor_1_1_trace_argument.html#ab8a52bc60df5f3fbd7d690aad1e290da',1,'phosphor::TraceArgument::TraceArgument()=default'],['../unionphosphor_1_1_trace_argument.html#a722d5d8a2fcf6d0c7addb0eb0bcb9609',1,'phosphor::TraceArgument::TraceArgument(T src)']]],
   ['tracechunk',['TraceChunk',['../classphosphor_1_1_trace_chunk.html#a3501cea696562c03ea2f501031027459',1,'phosphor::TraceChunk']]],
   ['traceconfig',['TraceConfig',['../classphosphor_1_1_trace_config.html#ac63adad510f75b0438393cbd87336354',1,'phosphor::TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)'],['../classphosphor_1_1_trace_config.html#aeb643952f63708283e156943825179e5',1,'phosphor::TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory, size_t _buffer_size)']]],

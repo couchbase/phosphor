@@ -19,6 +19,7 @@ var annotated_dup =
       [ "RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", "classphosphor_1_1_relaxed_atomic_c_string" ],
       [ "RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", "classphosphor_1_1_ring_trace_buffer" ],
       [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ],
+      [ "StringPtrDeleter", "structphosphor_1_1_string_ptr_deleter.html", "structphosphor_1_1_string_ptr_deleter" ],
       [ "TraceArgument", "unionphosphor_1_1_trace_argument.html", "unionphosphor_1_1_trace_argument" ],
       [ "TraceArgumentConversion", "classphosphor_1_1_trace_argument_conversion.html", null ],
       [ "TraceArgumentConversion< T * >", "classphosphor_1_1_trace_argument_conversion_3_01_t_01_5_01_4.html", null ],
@@ -29,6 +30,7 @@ var annotated_dup =
       [ "TraceEvent", "classphosphor_1_1_trace_event.html", "classphosphor_1_1_trace_event" ],
       [ "TraceLog", "classphosphor_1_1_trace_log.html", "classphosphor_1_1_trace_log" ],
       [ "TraceLogConfig", "classphosphor_1_1_trace_log_config.html", "classphosphor_1_1_trace_log_config" ],
-      [ "tracepoint_info", "structphosphor_1_1tracepoint__info.html", "structphosphor_1_1tracepoint__info" ]
+      [ "tracepoint_info", "structphosphor_1_1tracepoint__info.html", "structphosphor_1_1tracepoint__info" ],
+      [ "TracingStoppedCallback", "classphosphor_1_1_tracing_stopped_callback.html", "classphosphor_1_1_tracing_stopped_callback" ]
     ] ]
 ];
