@@ -14,19 +14,19 @@ and manage tracing using the management API described in
 The following is an example of hypothetical instrumentation in memcached:
 
     void performSet(ENGINE_HANDLE* engine, const char* key, const char* value) {
-        TRACE_EVENT_START("Memcached:Operation", "performSet", key)
+        TRACE_EVENT_START("Memcached:Operation", "performSet", key);
         // Perform a set operation
-        TRACE_EVENT_END0("Memcached:Operation", "performSet")
+        TRACE_EVENT_END0("Memcached:Operation", "performSet");
     }
 
 The following is an example of enabling tracing with a fixed-style 5MB buffer:
 
-
-    phosphor::TraceLog::getInstance().start(TraceConfig(BufferMode::fixed, 5))
+    phosphor::TraceConfig config(phosphor::BufferMode::fixed, 5 * 1024 * 1024);
+    phosphor::TraceLog::getInstance().start(config);
 
 Once the trace buffer becomes full you can retrieve it and iterate over it:
 
-    auto trace_buffer = phosphor::TraceLog::getInstance().getBuffer()
+    auto trace_buffer = phosphor::TraceLog::getInstance().getBuffer();
     for(auto& event : *trace_buffer) {
         std::cout << event << '\n';
     }
