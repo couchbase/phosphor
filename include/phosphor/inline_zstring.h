@@ -49,10 +49,17 @@ namespace phosphor {
         }
 
         /**
-         * Explicit constructor from const char*
+         * Explicit constructor from const char* (null-terminated).
          */
         explicit inline_zstring(const char* s) {
             strncpy(_s, s, max_length);
+        }
+
+        /**
+         * Explicit constructor from const char* of a specific length.
+         */
+        explicit inline_zstring(const char* s, size_t len) {
+            strncpy(_s, s, std::min(len, max_length));
         }
 
         /**

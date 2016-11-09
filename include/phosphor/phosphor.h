@@ -84,6 +84,7 @@
  * longer than 8 bytes will be truncated.
  */
 #define PHOSPHOR_INLINE_STR(arg) phosphor::inline_zstring<8>(arg)
+#define PHOSPHOR_INLINE_STR_N(arg, len) phosphor::inline_zstring<8>(arg, len)
 
 #if !defined(PHOSPHOR_DISABLED)
 #define PHOSPHOR_DISABLED 0
