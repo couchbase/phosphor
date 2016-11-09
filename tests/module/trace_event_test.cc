@@ -21,6 +21,7 @@
 #include <gtest/gtest.h>
 
 #include "phosphor/trace_event.h"
+#include "phosphor/platform/thread.h"
 
 using phosphor::TraceEvent;
 using phosphor::TraceArgument;
@@ -98,11 +99,15 @@ TEST(TraceEvent, toJSON) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-        "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
+        "\"ts\":[0-9]+,\"pid\":" +
+        std::to_string(phosphor::platform::getCurrentProcessID()) +
+        ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false\\}\\}");
 #else
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-        "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
+        "\"ts\":\\d+,\"pid\":" +
+        std::to_string(phosphor::platform::getCurrentProcessID()) +
+        ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false\\}\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);
@@ -119,11 +124,15 @@ TEST(TraceEvent, toJSONAlt) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-        "\"ts\":[0-9]+,\"pid\":0,\"tid\":0,"
+        "\"ts\":[0-9]+,\"pid\":" +
+        std::to_string(phosphor::platform::getCurrentProcessID()) +
+        ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
 #else
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-        "\"ts\":\\d+,\"pid\":0,\"tid\":0,"
+        "\"ts\":\\d+,\"pid\":" +
+        std::to_string(phosphor::platform::getCurrentProcessID()) +
+        ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
 #endif
     EXPECT_THAT(event.to_json(), event_regex);

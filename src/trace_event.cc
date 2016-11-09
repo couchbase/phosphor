@@ -16,6 +16,8 @@
  */
 
 #include "phosphor/trace_event.h"
+
+#include "phosphor/platform/thread.h"
 #include "utils/string_utils.h"
 
 namespace phosphor {
@@ -80,7 +82,7 @@ namespace phosphor {
         output += type_converted.extras;
 
         output += ",\"ts\":" + std::to_string(time / 1000);
-        output += ",\"pid\":0";
+        output += ",\"pid\":" + std::to_string(platform::getCurrentProcessID()),
         output += ",\"tid\":" + std::to_string(thread_id);
 
         output += ",\"args\":{";

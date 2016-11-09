@@ -30,8 +30,9 @@ namespace phosphor {
         std::string threadAssociationToString(
                 const std::pair<uint64_t, std::string>& assoc) {
             return utils::format_string(
-                "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": 0, "
+                "{\"name\": \"thread_name\", \"ph\": \"M\", \"pid\": %d, "
                 "\"tid\": %d, \"args\": { \"name\" : \"%s\"}}",
+                platform::getCurrentProcessID(),
                 assoc.first, assoc.second.c_str());
         }
 
