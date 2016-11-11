@@ -123,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afafd87430d93afbdff29556ec58c8dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6fd24378d6ad04af87195b19e5227bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1inline__zstring.html#ad6fd24378d6ad04af87195b19e5227bf">inline_zstring</a> (const char *s)</td></tr>
 <tr class="separator:ad6fd24378d6ad04af87195b19e5227bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a812d466a21cec2e41f6eb5ce5529ff89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1inline__zstring.html#a812d466a21cec2e41f6eb5ce5529ff89">inline_zstring</a> (const char *s, size_t len)</td></tr>
+<tr class="separator:a812d466a21cec2e41f6eb5ce5529ff89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78eb69cfeb3baa1b40f9ef7711a39b44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1inline__zstring.html#a78eb69cfeb3baa1b40f9ef7711a39b44">operator std::string</a> () const </td></tr>
 <tr class="separator:a78eb69cfeb3baa1b40f9ef7711a39b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -193,7 +195,44 @@ template&lt;size_t max_length&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Explicit constructor from const char* </p>
+<p>Explicit constructor from const char* (null-terminated). </p>
+
+</div>
+</div>
+<a class="anchor" id="a812d466a21cec2e41f6eb5ce5529ff89"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t max_length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classphosphor_1_1inline__zstring.html">phosphor::inline_zstring</a>&lt; max_length &gt;::<a class="el" href="classphosphor_1_1inline__zstring.html">inline_zstring</a> </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Explicit constructor from const char* of a specific length. </p>
 
 </div>
 </div>
