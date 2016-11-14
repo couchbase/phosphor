@@ -51,15 +51,18 @@
     const phosphor::AtomicCategoryStatus* PHOSPHOR_INTERNAL_UID(category_enabled_temp) \
         = PHOSPHOR_INTERNAL_UID(category_enabled).load(std::memory_order_acquire); \
 
-#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
-    if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \
-        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &PHOSPHOR_INSTANCE.getCategoryStatus(category); \
-        PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \
-        PHOSPHOR_INTERNAL_UID(tpi) = { \
+#define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, argA, argB) \
+        PHOSPHOR_INTERNAL_UID(tpi_name) = { \
             category, \
             name, \
             {{argA, argB}} \
         }; \
+
+#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
+    if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \
+        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &PHOSPHOR_INSTANCE.getCategoryStatus(category); \
+        PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \
+        PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \
     } \
 
 /*
@@ -88,4 +91,19 @@
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
           != phosphor::CategoryStatus::Disabled) { \
         PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi), type); \
+    }
+
+/*
+ * For when additional trace events are created in the same scope.
+ * Therefore the tpi name must be made unique i.e. second_tpi, third_tpi.
+ * Note PHOSPHOR_INTERNAL_CATEGORY_INFO need not be called as the
+ * category_enabled and category_enabled_temp are defined when creating the
+ * first trace event.
+ */
+#define PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(tpi_name, category, name, type) \
+    static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi_name); \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, "arg1", "arg2") \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
+          != phosphor::CategoryStatus::Disabled) { \
+        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi_name), type); \
     }

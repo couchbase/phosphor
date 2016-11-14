@@ -18,6 +18,7 @@
 #include <functional>
 #include <vector>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <phosphor/phosphor.h>
@@ -63,6 +64,12 @@ public:
 
 protected:
     std::vector<std::function<void(const phosphor::TraceEvent&)>> verifications;
+};
+
+class MockUniqueLock : std::unique_lock<std::mutex> {
+public:
+    MOCK_METHOD0(lock, void());
+    MOCK_METHOD0(unlock, void());
 };
 
 TEST_F(MacroTraceEventTest, Synchronous) {
@@ -316,6 +323,33 @@ TEST_F(MacroTraceEventTest, Scoped) {
         });
         verifications.emplace_back([](const phosphor::TraceEvent &event) {
             EXPECT_STREQ("name", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
+        });
+    }
+    {
+        testing::InSequence dummy;
+        MockUniqueLock m;
+        EXPECT_CALL(m, lock()).Times(1);
+        EXPECT_CALL(m, unlock()).Times(1);
+        TRACE_LOCKGUARD(m, "category", "name");
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
+            EXPECT_STREQ("name.acquire", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
+        });
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
+            EXPECT_STREQ("name.acquire", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
+        });
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
+            EXPECT_STREQ("name.held", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
+        });
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
+            EXPECT_STREQ("name.held", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
         });

@@ -196,6 +196,21 @@
  *     } // Automatically log a synchronous end event on function exit
  *       // (Through return or exception)
  *
+ * The TRACE_LOCKGUARD macro measures for a given mutex both the duration for
+ * acquiring the lock and the duration the lock is held.  This is achieved
+ * by issuing two pairs of TRACE_EVENT_START0 / TRACE_EVENT_END0 events.
+ *
+ * Example:
+ *
+ *    TRACE_LOCKGUARD(mutex, "category", "lock_name");
+ *
+ * This example will produce the following 4 events:
+ *
+ * 1) START_EVENT "cat" = "category" "name" = "lock_name.acquire"
+ * 2) END_EVENT   "cat" = "category" "name" = "lock_name.acquire"
+ * 3) START_EVENT "cat" = "category" "name" = "lock_name.held"
+ * 4) END_EVENT   "cat" = "category" "name" = "lock_name.held"
+ *
  * @{
  */
 #define TRACE_EVENT(category, name, ...)                              \
@@ -245,6 +260,22 @@
 
 #define TRACE_FUNCTION2(category, arg1_name, arg1, arg2_name, arg2) \
     TRACE_EVENT2(category, PH__func__, arg1_name, arg1, arg2_name, arg2)
+
+#define TRACE_LOCKGUARD(mutex, category, name)                                \
+    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name ".held";  \
+    static decltype(mutex)& PHOSPHOR_INTERNAL_UID(lk)(mutex);            \
+    TRACE_EVENT_START0(category, name ".acquire");                       \
+    PHOSPHOR_INTERNAL_UID(lk).lock();                                    \
+    PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(                               \
+        second_tpi, category, name ".acquire", phosphor::TraceEvent::Type::SyncEnd); \
+    PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(                                \
+        third_tpi, category, name ".held", phosphor::TraceEvent::Type::SyncStart);  \
+    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                       \
+        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                       \
+            PHOSPHOR_INTERNAL_UID(lk).unlock();                          \
+            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));      \
+        }                                                                \
+    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
 /** @} */
 
 /**
@@ -435,6 +466,8 @@
 #define TRACE_FUNCTION0(category)
 #define TRACE_FUNCTION1(category, name, arg1_name, arg1)
 #define TRACE_FUNCTION2(category, name, arg1_name, arg1, arg2_name, arg2)
+
+#define TRACE_LOCKGUARD(mutex, category, name)
 
 #define TRACE_ASYNC_START(category, name, id, ...)
 #define TRACE_ASYNC_START0(category, name, id)
