@@ -181,5 +181,9 @@ namespace phosphor {
             utils::string_replace(target, "%d", timestamp);
             return target;
         }
+
+        StringPtr FileStopCallback::generateFilePathAsPtr() {
+            return make_String(generateFilePath());
+        }
     }
 }

@@ -133,6 +133,12 @@ namespace phosphor {
             void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) override;
 
         protected:
+            /*
+             * Exposed for testing
+             */
+            StringPtr generateFilePathAsPtr();
+
+        private:
             std::string file_path;
             std::string generateFilePath();
         };

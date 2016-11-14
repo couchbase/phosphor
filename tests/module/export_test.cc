@@ -157,14 +157,14 @@ public:
     MockFileStopCallback(Args&&... args)
         : FileStopCallback(std::forward<Args>(args)...) {}
 
-    std::string generateFilePath() {
-        return FileStopCallback::generateFilePath();
+    StringPtr generateFilePathAsPtr() {
+        return FileStopCallback::generateFilePathAsPtr();
     }
 };
 
 TEST(MockFileStopCallbackTest, valid_name) {
     MockFileStopCallback callback("test.json");
-    EXPECT_EQ("test.json", callback.generateFilePath());
+    EXPECT_EQ("test.json", *callback.generateFilePathAsPtr());
 
     callback = MockFileStopCallback("test.%p.json");
     auto filename_pid_regex = testing::MatchesRegex(
@@ -174,7 +174,7 @@ TEST(MockFileStopCallbackTest, valid_name) {
         "test.\\d+.json");
 #endif
 
-    EXPECT_THAT(callback.generateFilePath(), filename_pid_regex);
+    EXPECT_THAT(*callback.generateFilePathAsPtr(), filename_pid_regex);
 
     callback = MockFileStopCallback("test.%d.json");
     auto filename_date_regex = testing::MatchesRegex(
@@ -184,7 +184,7 @@ TEST(MockFileStopCallbackTest, valid_name) {
         "test.\\d+.\\d+.\\d+T\\d+.\\d+.\\d+Z.json");
 #endif
 
-    EXPECT_THAT(callback.generateFilePath(), filename_date_regex);
+    EXPECT_THAT(*callback.generateFilePathAsPtr(), filename_date_regex);
 }
 
 class FileStopCallbackTest : public testing::Test {
