@@ -18,6 +18,7 @@
 #include <benchmark/benchmark.h>
 #include <gsl_p/dyn_array.h>
 
+#include "bench_common.h"
 #include "phosphor/sentinel.h"
 #include "utils/memory.h"
 
@@ -31,7 +32,7 @@ void AcquireRelease(benchmark::State& state) {
         sentinel.release();
     }
 }
-BENCHMARK(AcquireRelease)->ThreadRange(1, 32);
+BENCHMARK(AcquireRelease)->ThreadRange(1, phosphor::benchNumThreads());
 
 void AcquireReleaseShared(benchmark::State& state) {
     /* Setup sentinel array */
@@ -56,7 +57,7 @@ void AcquireReleaseShared(benchmark::State& state) {
         sentinels.release();
     }
 }
-BENCHMARK(AcquireReleaseShared)->Threads(32)->RangeMultiplier(2)->Range(1, 128);
+BENCHMARK(AcquireReleaseShared)->Threads(phosphor::benchNumThreads())->RangeMultiplier(2)->Range(1, 128);
 BENCHMARK(AcquireReleaseShared)
     ->Threads(128)
     ->RangeMultiplier(2)

@@ -17,6 +17,7 @@
 
 #include <benchmark/benchmark.h>
 
+#include "bench_common.h"
 #include "phosphor/trace_log.h"
 #include "utils/memory.h"
 
@@ -44,7 +45,7 @@ void NaiveSharedTenants(benchmark::State& state) {
         log.stop();
     }
 }
-BENCHMARK(NaiveSharedTenants)->ThreadRange(1, 32);
+BENCHMARK(NaiveSharedTenants)->ThreadRange(1, phosphor::benchNumThreads());
 
 void SingleChunkTenant(benchmark::State& state) {
     static phosphor::TraceLog log(
@@ -64,7 +65,7 @@ void SingleChunkTenant(benchmark::State& state) {
         log.stop();
     }
 }
-BENCHMARK(SingleChunkTenant)->ThreadRange(1, 32);
+BENCHMARK(SingleChunkTenant)->ThreadRange(1, phosphor::benchNumThreads());
 
 void RegisterThread(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
@@ -83,6 +84,6 @@ void RegisterThread(benchmark::State& state) {
         log.stop();
     }
 }
-BENCHMARK(RegisterThread)->ThreadRange(1, 32);
+BENCHMARK(RegisterThread)->ThreadRange(1, phosphor::benchNumThreads());
 
 BENCHMARK_MAIN()

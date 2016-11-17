@@ -2,6 +2,7 @@ MACRO (M_ADD_LIBRARY_BENCHMARK name)
     ADD_EXECUTABLE(
             ${name}
             ${ARGN}
+            bench_common.cc
     )
     TARGET_LINK_LIBRARIES(${name}
             benchmark
@@ -13,6 +14,7 @@ MACRO (M_ADD_MODULE_BENCHMARK name)
     ADD_EXECUTABLE(
             ${name}
             ${ARGN}
+            bench_common.cc
     )
     TARGET_LINK_LIBRARIES(${name}
             benchmark)

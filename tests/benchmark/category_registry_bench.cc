@@ -21,6 +21,8 @@
 #include <phosphor/category_registry.h>
 #include <utils/memory.h>
 
+#include "bench_common.h"
+
 using namespace phosphor;
 
 /*
@@ -66,6 +68,6 @@ void NewCategories(benchmark::State& state) {
     }
 }
 
-BENCHMARK(NewCategories)->ThreadRange(1, 32);
+BENCHMARK(NewCategories)->ThreadRange(1, phosphor::benchNumThreads());
 
 BENCHMARK_MAIN()
