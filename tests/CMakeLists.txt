@@ -10,12 +10,12 @@ ENDIF()
 MACRO (M_ADD_LIBRARY_GTEST name)
     ADD_EXECUTABLE(
             ${name}
+            ${phosphor_SOURCE_DIR}/tests/test_main.cc
             ${ARGN}
     )
     TARGET_LINK_LIBRARIES(${name}
             gmock
             gtest
-            gtest_main
             ${_extra_test_libs}
             phosphor)
     ADD_TEST(NAME ${name} COMMAND ${name})
