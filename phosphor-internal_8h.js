@@ -1,6 +1,8 @@
 var phosphor_internal_8h =
 [
+    [ "PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0", "phosphor-internal_8h.html#ac5eb628dcba2c7f6c2283290b48b9cfd", null ],
     [ "PHOSPHOR_INTERNAL_CATEGORY_INFO", "phosphor-internal_8h.html#a13a0fa6c6389a79c4b48abcf3e3b9cf7", null ],
+    [ "PHOSPHOR_INTERNAL_INITIALIZE_TPI", "phosphor-internal_8h.html#a43478b58e96360389b1c145a2e89bda8", null ],
     [ "PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT", "phosphor-internal_8h.html#a1444175bd4c32c44f06ebf6d340cc39f", null ],
     [ "PHOSPHOR_INTERNAL_TRACE_EVENT", "phosphor-internal_8h.html#ac2e9567d82fa514036e9cf76a4b36c7c", null ],
     [ "PHOSPHOR_INTERNAL_TRACE_EVENT0", "phosphor-internal_8h.html#adbef9ca962d58b38dd9c02cec2aa3ade", null ],

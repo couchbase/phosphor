@@ -127,6 +127,8 @@ Macros</h2></td></tr>
 <tr class="memitem:gae27a2665b91c16f22623b861cd7111de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae27a2665b91c16f22623b861cd7111de"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION2</b>(category,  arg1_name,  arg1,  arg2_name,  arg2)&#160;&#160;&#160;TRACE_EVENT2(category, PH__func__, arg1_name, arg1, arg2_name, arg2)</td></tr>
 <tr class="separator:gae27a2665b91c16f22623b861cd7111de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad60f59ee4a463730557f5b54e46dff88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LOCKGUARD</b>(mutex,  category,  name)                                                            </td></tr>
+<tr class="separator:gad60f59ee4a463730557f5b54e46dff88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Scoped events are used for events that should log synchronously both a start and an end event automatically according to a scope.</p>
@@ -139,7 +141,13 @@ Macros</h2></td></tr>
     ...
 
 } // Automatically log a synchronous end event on function exit
-  // (Through return or exception)</pre><h2 class="groupheader">Macro Definition Documentation</h2>
+  // (Through return or exception)
+</pre><p>The TRACE_LOCKGUARD macro measures for a given mutex both the duration for acquiring the lock and the duration the lock is held. This is achieved by issuing two pairs of TRACE_EVENT_START0 / TRACE_EVENT_END0 events.</p>
+<p>Example:</p>
+<p>TRACE_LOCKGUARD(mutex, "category", "lock_name");</p>
+<p>This example will produce the following 4 events:</p>
+<p>1) START_EVENT "cat" = "category" "name" = "lock_name.acquire" 2) END_EVENT "cat" = "category" "name" = "lock_name.acquire" 3) START_EVENT "cat" = "category" "name" = "lock_name.held" 4) END_EVENT "cat" = "category" "name" = "lock_name.held" </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ga2609c5355bde4c8c39d77caf0fd048de"></a>
 <div class="memitem">
 <div class="memproto">
@@ -284,6 +292,38 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> PHOSPHOR_INTERNAL_UID(nme) = name;       \</div><div class="line">    TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2); \</div><div class="line">    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \</div><div class="line">        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \</div><div class="line">            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \</div><div class="line">        }                                                             \</div><div class="line">    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);</div></div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="gad60f59ee4a463730557f5b54e46dff88"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TRACE_LOCKGUARD</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">mutex, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">category, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">name&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> PHOSPHOR_INTERNAL_UID(nme) = name <span class="stringliteral">&quot;.held&quot;</span>;  \</div><div class="line">    static decltype(mutex)&amp; PHOSPHOR_INTERNAL_UID(lk)(mutex);            \</div><div class="line">    TRACE_EVENT_START0(category, name <span class="stringliteral">&quot;.acquire&quot;</span>);                       \</div><div class="line">    PHOSPHOR_INTERNAL_UID(lk).lock();                                    \</div><div class="line">    PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(                               \</div><div class="line">        second_tpi, category, name <span class="stringliteral">&quot;.acquire&quot;</span>, phosphor::TraceEvent::Type::SyncEnd); \</div><div class="line">    PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(                                \</div><div class="line">        third_tpi, category, name <span class="stringliteral">&quot;.held&quot;</span>, phosphor::TraceEvent::Type::SyncStart);  \</div><div class="line">    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                       \</div><div class="line">        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                       \</div><div class="line">            PHOSPHOR_INTERNAL_UID(lk).unlock();                          \</div><div class="line">            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));      \</div><div class="line">        }                                                                \</div><div class="line">    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
