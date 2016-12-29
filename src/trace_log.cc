@@ -82,6 +82,16 @@ namespace phosphor {
         stop(lh, shutdown);
     }
 
+    void TraceLog::maybe_stop() {
+        // If we can't acquire the lock then don't bother waiting around
+        // as it probably means another thread is in the middle of shutting
+        // down.
+        if (mutex.try_lock()) {
+            std::lock_guard<TraceLog> lh(*this, std::adopt_lock);
+            stop(lh);
+        }
+    }
+
     void TraceLog::stop(std::lock_guard<TraceLog>& lh, bool shutdown) {
         if (enabled.exchange(false)) {
             registry.disableAll();
@@ -227,7 +237,7 @@ namespace phosphor {
         if (!cs.chunk || cs.chunk->isFull()) {
             if (!replaceChunk(cs)) {
                 cs.sentinel->release();
-                stop();
+                maybe_stop();
                 return nullptr;
             }
         }

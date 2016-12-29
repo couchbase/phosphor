@@ -23,6 +23,9 @@
 
 #include "phosphor/trace_buffer.h"
 #include "phosphor/trace_log.h"
+#include "utils/memory.h"
+
+#include "mock_buffer.h"
 
 using namespace phosphor;
 
@@ -265,6 +268,33 @@ TEST_F(TraceLogTest, testDoneCallback) {
     // TraceLog should already be null
     EXPECT_EQ(nullptr, trace_log.getTraceContext().getBuffer());
     EXPECT_TRUE(callback->invoked);
+}
+
+TEST_F(TraceLogTest, nonBlockingStop) {
+    auto buffer = phosphor::utils::make_unique<MockTraceBuffer>();
+
+    auto* buffer_ptr = buffer.get();
+
+    // Return nullptr to indicate buffer is full
+    EXPECT_CALL(*buffer_ptr, getChunk())
+        .WillRepeatedly(testing::Return(nullptr));
+
+    trace_log.start(
+        TraceConfig([&buffer](size_t generation,
+                              size_t buffer_size) { return std::move(buffer); },
+                    min_buffer_size * 4));
+
+    {
+        std::lock_guard<TraceLog> lg(trace_log);
+
+        // Tracing shouldn't be stopped while lock is held separately
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
+        EXPECT_TRUE(trace_log.isEnabled());
+    }
+
+    // Tracing should be stopped now that no one else is holding the lock
+    trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
+    EXPECT_FALSE(trace_log.isEnabled());
 }
 
 TEST(TraceLogAltTest, FromEnvironmentConstructor) {

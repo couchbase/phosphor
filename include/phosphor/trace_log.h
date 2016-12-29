@@ -395,6 +395,11 @@ namespace phosphor {
         void clearDeregisteredThreads();
 
         /**
+         * Attempts to stop tracing without waiting for internal lock
+         */
+        void maybe_stop();
+
+        /**
          * The shared ChunkTenants which are used by default when a thread
          * has not been registered.
          *
