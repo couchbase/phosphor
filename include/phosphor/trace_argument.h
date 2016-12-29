@@ -32,6 +32,12 @@
 namespace phosphor {
 
     /**
+     * Special empty tag type used to signify that no argument has been given
+     */
+    struct NoneType {
+    };
+
+    /**
      * A union which represents a single trace argument.
      *
      * Has various methods / constructors for tidily creating
@@ -59,6 +65,7 @@ namespace phosphor {
         const char* as_string;
         const void* as_pointer;
         inline_zstring<8> as_istring;
+        NoneType as_none;
 
         /**
          * Default constructor
@@ -169,6 +176,8 @@ namespace phosphor {
     ARGUMENT_CONVERSION(const char*, string)
 
     ARGUMENT_CONVERSION(inline_zstring<8>, istring)
+
+    ARGUMENT_CONVERSION(NoneType, none)
 
 #undef ARGUMENT_CONVERSION
 

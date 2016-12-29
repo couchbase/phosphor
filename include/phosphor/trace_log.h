@@ -173,20 +173,7 @@ namespace phosphor {
         void logEvent(const tracepoint_info* tpi,
                       TraceEvent::Type type,
                       T argA) {
-            if (!enabled)
-                return;
-            ChunkTenant* cs = getChunkTenant();
-            if (cs == nullptr)
-                return;
-
-            cs->chunk->addEvent() = TraceEvent(
-                tpi,
-                type,
-                platform::getCurrentThreadIDCached(),
-                {{TraceArgumentConversion<T>::asArgument(argA), 0}},
-                {{TraceArgumentConversion<T>::getType(),
-                  TraceArgument::Type::is_none}});
-            cs->sentinel->release();
+            logEvent(tpi, type, argA, NoneType());
         }
 
         /**
@@ -203,19 +190,7 @@ namespace phosphor {
          */
         void logEvent(const tracepoint_info* tpi,
                       TraceEvent::Type type) {
-            if (!enabled)
-                return;
-            ChunkTenant* cs = getChunkTenant();
-            if (cs == nullptr)
-                return;
-
-            cs->chunk->addEvent() = TraceEvent(
-                tpi,
-                type,
-                platform::getCurrentThreadIDCached(),
-                {{0, 0}},
-                {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
-            cs->sentinel->release();
+            logEvent(tpi, type, NoneType(), NoneType());
         }
 
         /**
