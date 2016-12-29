@@ -170,9 +170,7 @@ namespace phosphor {
         RingTraceBuffer(size_t generation_, size_t buffer_size_)
             : actual_count(0),
               buffer(buffer_size_),
-              loaned(buffer_size_),
               return_queue(upper_power_of_two(buffer_size_)),
-              in_queue(0),
               generation(generation_) {}
 
         ~RingTraceBuffer() override = default;
@@ -185,32 +183,20 @@ namespace phosphor {
             // Once we've handed out more chunks than the buffer size, start
             // pulling chunks from the queue
             if (offset >= buffer.size()) {
-                assert(in_queue > 0);
                 while (!return_queue.dequeue(chunk)) {
                 }
-                --in_queue;
             } else {
                 chunk = &buffer[offset];
-                loaned[chunk - &buffer[0]] = false;
             }
 
             chunk->reset();
-            chunk->generation = generation;
-
-            assert(!loaned[chunk - &buffer[0]]);
-            loaned[chunk - &buffer[0]] = true;
 
             return chunk;
         }
 
         void returnChunk(TraceChunk& chunk) override {
-            assert(chunk.generation == generation);
-            assert(loaned[&chunk - &buffer[0]]);
-            loaned[&chunk - &buffer[0]] = false;
             while (!return_queue.enqueue(&chunk))
                 ;
-            ++in_queue;
-            assert(in_queue <= buffer.size());
         }
 
         bool isFull() const override {
@@ -254,13 +240,8 @@ namespace phosphor {
     protected:
         // This is the total number of chunks ever handed out
         std::atomic<size_t> actual_count;
-
         gsl_p::dyn_array<TraceChunk> buffer;
-        gsl_p::dyn_array<std::atomic<bool>> loaned;
-
         dvyukov::mpmc_bounded_queue<TraceChunk*> return_queue;
-        std::atomic<size_t> in_queue;
-
         size_t generation;
 
     private:

@@ -113,8 +113,6 @@ namespace phosphor {
          */
         const_iterator end() const;
 
-        size_t generation;
-
     private:
         unsigned short next_free;
         event_array chunk;
