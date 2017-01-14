@@ -15,3 +15,6 @@ ENDIF()
 
 M_ADD_LIBRARY_GTEST(macro_test
             macro_test.cc)
+
+M_ADD_LIBRARY_GTEST(threaded_test
+        threaded_test.cc)
