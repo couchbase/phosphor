@@ -37,6 +37,7 @@ M_ADD_MODULE_GTEST(trace_argument_test
 M_ADD_MODULE_GTEST(trace_event_test
         trace_event_test.cc
         ${phosphor_SOURCE_DIR}/src/trace_event.cc
+        ${phosphor_SOURCE_DIR}/src/platform/thread.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
 M_ADD_MODULE_GTEST(trace_buffer_test
@@ -44,6 +45,7 @@ M_ADD_MODULE_GTEST(trace_buffer_test
         ${phosphor_SOURCE_DIR}/src/sentinel.cc
         ${phosphor_SOURCE_DIR}/src/trace_event.cc
         ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
+        ${phosphor_SOURCE_DIR}/src/platform/thread.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
 M_ADD_LIBRARY_GTEST(trace_config_test
