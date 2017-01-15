@@ -397,7 +397,7 @@ namespace phosphor {
         /**
          * Attempts to stop tracing without waiting for internal lock
          */
-        void maybe_stop();
+        void maybe_stop(size_t _generation);
 
         /**
          * The shared ChunkTenants which are used by default when a thread
@@ -455,7 +455,7 @@ namespace phosphor {
          * tracing is stopped and is passed into the TraceBuffer when it is
          * constructed in order to 'uniquely' identify it.
          */
-        size_t generation = 0;
+        std::atomic<size_t> generation;
 
         /**
          * The set of sentinels that have been registered to this TraceLog.

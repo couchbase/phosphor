@@ -40,7 +40,9 @@ namespace phosphor {
      */
     THREAD_LOCAL TraceLog::ChunkTenant thread_chunk = {0, 0};
 
-    TraceLog::TraceLog(const TraceLogConfig& _config) : enabled(false) {
+    TraceLog::TraceLog(const TraceLogConfig& _config)
+        : enabled(false),
+          generation(0) {
         configure(_config);
     }
 
@@ -82,12 +84,19 @@ namespace phosphor {
         stop(lh, shutdown);
     }
 
-    void TraceLog::maybe_stop() {
+    void TraceLog::maybe_stop(size_t _generation) {
         // If we can't acquire the lock then don't bother waiting around
         // as it probably means another thread is in the middle of shutting
         // down.
         if (mutex.try_lock()) {
             std::lock_guard<TraceLog> lh(*this, std::adopt_lock);
+
+            // The generation has been updated since we started waiting for
+            // the lock and so we don't need to stop tracing anymore
+            if (generation != _generation) {
+                return;
+            }
+
             stop(lh);
         }
     }
@@ -236,8 +245,9 @@ namespace phosphor {
         // State is busy
         if (!cs.chunk || cs.chunk->isFull()) {
             if (!replaceChunk(cs)) {
+                size_t current = generation.load(std::memory_order_acquire);
                 cs.sentinel->release();
-                maybe_stop();
+                maybe_stop(current);
                 return nullptr;
             }
         }
