@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"classphosphor_1_1inline__zstring.html#aa91b2256009ef94ac59ffcc72fa14ad6":[7,0,1,4,0],
 "classphosphor_1_1inline__zstring.html#ad6fd24378d6ad04af87195b19e5227bf":[7,0,1,4,2],
 "classphosphor_1_1inline__zstring.html#afafd87430d93afbdff29556ec58c8dd9":[7,0,1,4,1],
 "classphosphor_1_1tools_1_1_file_stop_callback.html":[7,0,1,0,0],

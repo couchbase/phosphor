@@ -20,6 +20,7 @@ var classphosphor_1_1_trace_log =
     [ "logEvent", "classphosphor_1_1_trace_log.html#a2076a6825bd1ab9a7b65679f8fcdf563", null ],
     [ "logEvent", "classphosphor_1_1_trace_log.html#a107bb7ad2e15b5d9ccc71b79582b5b05", null ],
     [ "logEvent", "classphosphor_1_1_trace_log.html#a371a3adf28b1306745aa9b81d4bb5678", null ],
+    [ "maybe_stop", "classphosphor_1_1_trace_log.html#aadbfa61a2e404f0e101c242a655831e4", null ],
     [ "registerThread", "classphosphor_1_1_trace_log.html#a1e05392fcb945933fd9e4a86254409e9", null ],
     [ "replaceChunk", "classphosphor_1_1_trace_log.html#aac3501043f159ac129c97cf03b302041", null ],
     [ "resetChunk", "classphosphor_1_1_trace_log.html#a7072d5d2fa370d231b6c93490d2180ca", null ],
