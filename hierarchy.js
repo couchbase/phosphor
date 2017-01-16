@@ -5,7 +5,6 @@ var hierarchy =
     [ "phosphor::TraceLog::ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", null ],
     [ "gsl_p::dyn_array< _Tp >", "structgsl__p_1_1dyn__array.html", null ],
     [ "gsl_p::dyn_array< phosphor::TraceChunk >", "structgsl__p_1_1dyn__array.html", null ],
-    [ "gsl_p::dyn_array< std::atomic< bool > >", "structgsl__p_1_1dyn__array.html", null ],
     [ "phosphor::utils::FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", null ],
     [ "phosphor::inline_zstring< max_length >", "classphosphor_1_1inline__zstring.html", null ],
     [ "phosphor::inline_zstring< 8 >", "classphosphor_1_1inline__zstring.html", null ],
@@ -15,6 +14,7 @@ var hierarchy =
     [ "phosphor::tools::JSONExport", "classphosphor_1_1tools_1_1_j_s_o_n_export.html", null ],
     [ "gsl_p::multidimensional_iterator< T >", "classgsl__p_1_1multidimensional__iterator.html", null ],
     [ "gsl_p::multidimensional_iterator< chunk_iterator >", "classgsl__p_1_1multidimensional__iterator.html", null ],
+    [ "phosphor::NoneType", "structphosphor_1_1_none_type.html", null ],
     [ "phosphor::RelaxedAtomic< T >", "classphosphor_1_1_relaxed_atomic.html", null ],
     [ "phosphor::RelaxedAtomic< const char * >", "classphosphor_1_1_relaxed_atomic.html", [
       [ "phosphor::RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", null ]

@@ -15,7 +15,5 @@ var classphosphor_1_1_ring_trace_buffer =
     [ "actual_count", "classphosphor_1_1_ring_trace_buffer.html#a4220ed00a5ae352a8c67a1fb3be338d3", null ],
     [ "buffer", "classphosphor_1_1_ring_trace_buffer.html#aa95abe1715e6976eedaa6293326df3ac", null ],
     [ "generation", "classphosphor_1_1_ring_trace_buffer.html#ad55a3ea70c3db8dbf6d4c073e1568d9e", null ],
-    [ "in_queue", "classphosphor_1_1_ring_trace_buffer.html#a4c5af0f1210a26f3e6fa84ad4be99c3b", null ],
-    [ "loaned", "classphosphor_1_1_ring_trace_buffer.html#a477bb55a68061494e72369d714312b46", null ],
     [ "return_queue", "classphosphor_1_1_ring_trace_buffer.html#aacfa2becb29a55d09db6e99f613d5b22", null ]
 ];

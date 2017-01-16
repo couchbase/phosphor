@@ -17,6 +17,7 @@ var unionphosphor_1_1_trace_argument =
     [ "as_double", "unionphosphor_1_1_trace_argument.html#a82a80bf8e6998f643c55a6746c260a97", null ],
     [ "as_int", "unionphosphor_1_1_trace_argument.html#abb58a716f5c7a48f8dbd343aedfa6845", null ],
     [ "as_istring", "unionphosphor_1_1_trace_argument.html#a6689f10fd167071f9d563e738f262cd1", null ],
+    [ "as_none", "unionphosphor_1_1_trace_argument.html#acaae234635c0b4c98c4402b768b6709e", null ],
     [ "as_pointer", "unionphosphor_1_1_trace_argument.html#ae2cfa162c4a5d052037ab80db4e5a341", null ],
     [ "as_string", "unionphosphor_1_1_trace_argument.html#a17fcf32b625b4e0a254390abc631cba2", null ],
     [ "as_uint", "unionphosphor_1_1_trace_argument.html#ae6732c92d15f1b493abd267f70346a9b", null ]
