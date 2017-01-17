@@ -21,7 +21,8 @@
 #include <dvyukov/mpmc_bounded_queue.h>
 #include <gsl_p/dyn_array.h>
 
-#include "phosphor/trace_buffer.h"
+#include <phosphor/stats_callback.h>
+#include <phosphor/trace_buffer.h>
 #include "utils/memory.h"
 
 namespace phosphor {
@@ -99,7 +100,11 @@ namespace phosphor {
     class FixedTraceBuffer : public TraceBuffer {
     public:
         FixedTraceBuffer(size_t generation_, size_t buffer_size_)
-            : buffer(buffer_size_), issued(0), generation(generation_) {}
+            : buffer(buffer_size_),
+              issued(0),
+              on_loan(0),
+              generation(generation_) {
+        }
 
         ~FixedTraceBuffer() override = default;
 
@@ -110,15 +115,30 @@ namespace phosphor {
             }
             TraceChunk& chunk = buffer[offset];
             chunk.reset();
+            ++on_loan;
             return &chunk;
         }
 
         void returnChunk(TraceChunk& chunk) override {
+            --on_loan;
             (void)chunk;
         }
 
         bool isFull() const override {
             return issued >= buffer.size();
+        }
+
+        void getStats(StatsCallback& addStats) const override {
+            using gsl_p::make_span;
+
+            addStats("buffer_name", make_span("FixedTraceBuffer"));
+            addStats("buffer_is_full", isFull());
+            auto count = chunk_count();
+            addStats("buffer_chunk_count", count);
+            addStats("buffer_total_loaned", count);
+            addStats("buffer_loaned_chunks", on_loan);
+            addStats("buffer_size", buffer.size());
+            addStats("buffer_generation", generation);
         }
 
         size_t getGeneration() const override {
@@ -152,7 +172,10 @@ namespace phosphor {
 
     protected:
         gsl_p::dyn_array<TraceChunk> buffer;
+        // This is the total number of chunks loaned out
         std::atomic<size_t> issued;
+        // This is the number of chunks currently loaned out
+        RelaxedAtomic<size_t> on_loan;
         size_t generation;
     };
 
@@ -169,6 +192,7 @@ namespace phosphor {
     public:
         RingTraceBuffer(size_t generation_, size_t buffer_size_)
             : actual_count(0),
+              on_loan(0),
               buffer(buffer_size_),
               return_queue(upper_power_of_two(buffer_size_)),
               generation(generation_) {}
@@ -190,17 +214,32 @@ namespace phosphor {
             }
 
             chunk->reset();
-
+            ++on_loan;
             return chunk;
         }
 
         void returnChunk(TraceChunk& chunk) override {
             while (!return_queue.enqueue(&chunk))
                 ;
+            --on_loan;
         }
 
         bool isFull() const override {
             return false;
+        }
+
+        void getStats(StatsCallback& addStats) const override {
+            using gsl_p::make_span;
+
+            addStats("buffer_name", make_span("RingTraceBuffer"));
+            addStats("buffer_is_full", isFull());
+            addStats("buffer_chunk_count",
+                     std::min(actual_count.load(std::memory_order_relaxed),
+                              buffer.size()));
+            addStats("buffer_total_loaned", actual_count);
+            addStats("buffer_loaned_chunks", on_loan);
+            addStats("buffer_size", buffer.size());
+            addStats("buffer_generation", generation);
         }
 
         size_t getGeneration() const override {
@@ -240,6 +279,8 @@ namespace phosphor {
     protected:
         // This is the total number of chunks ever handed out
         std::atomic<size_t> actual_count;
+        // This is the number of chunks currently loaned out
+        RelaxedAtomic<size_t> on_loan;
         gsl_p::dyn_array<TraceChunk> buffer;
         dvyukov::mpmc_bounded_queue<TraceChunk*> return_queue;
         size_t generation;

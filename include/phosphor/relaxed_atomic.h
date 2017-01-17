@@ -72,6 +72,22 @@ namespace phosphor {
             return *this;
         }
 
+        T operator++() {
+            return value.fetch_add(1, std::memory_order_relaxed) + 1;
+        }
+
+        T operator++(int) {
+            return value.fetch_add(1, std::memory_order_relaxed);
+        }
+
+        T operator--() {
+            return value.fetch_sub(1, std::memory_order_relaxed) - 1;
+        }
+
+        T operator--(int) {
+            return value.fetch_sub(1, std::memory_order_relaxed);
+        }
+
     protected:
         std::atomic<T> value;
     };

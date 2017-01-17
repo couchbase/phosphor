@@ -118,6 +118,9 @@ namespace phosphor {
         event_array chunk;
     };
 
+    // Forward decl
+    class StatsCallback;
+
     /**
      * Abstract base-class for a buffer of TraceEvents
      *
@@ -176,6 +179,29 @@ namespace phosphor {
          *         otherwise
          */
         virtual bool isFull() const = 0;
+
+        /**
+         * Callback for retrieving stats from the Buffer implementation
+         *
+         * Implementations MUST supply the following stats as minimum:
+         *
+         * - buffer_name <cstring_span>: Textual representation of buffer type
+         * - buffer_is_full <bool>: True if the buffer is full
+         * - buffer_chunk_count <size_t>: Chunks that are returned or loaned
+         * - buffer_loaned_chunks <size_t>: Currently loaned chunks
+         * - buffer_total_loaned <size_t>: Count of all chunks ever loaned
+         * - buffer_size <size_t>: Max number of chunks that fit in the buffer
+         * - buffer_generation <size_t>: Generation number of the buffer
+         *
+         * On a non-rotating buffer, if buffer_chunk_count is equal to
+         * buffer-size then that must suggest the buffer is full and
+         * there are no more chunks to be loaned. On a rotating buffer
+         * it suggests that chunks are being reused.
+         *
+         * Buffer implementations may include other relevant stats but
+         * end-users SHOULD NOT assume the existence of those stats.
+         */
+        virtual void getStats(StatsCallback& addStats) const = 0;
 
         /**
          * Used for accessing TraceChunks in the buffer

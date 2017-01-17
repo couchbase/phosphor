@@ -17,6 +17,9 @@
 
 #pragma once
 
+#include <cstddef>
+#include <type_traits>
+
 #include "visibility.h"
 
 #if defined(__GNUC__) || defined(__clang__)
@@ -54,3 +57,9 @@
 #define CONSTEXPR_F constexpr
 #define PH__func__ __func__
 #endif
+
+namespace phosphor {
+    // Introducing cross-platform ssize_t (doesn't exist on windows)
+    // as future-proofing if e.g. negative statistics are ever needed
+    using ssize_t = std::make_signed<size_t>::type;
+}

@@ -18,6 +18,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+#include <phosphor/stats_callback.h>
 #include <phosphor/trace_buffer.h>
 
 class MockTraceBuffer : public phosphor::TraceBuffer {
@@ -25,6 +26,7 @@ public:
     MOCK_METHOD0(getChunk, phosphor::TraceChunk*());
     MOCK_METHOD1(returnChunk, void(phosphor::TraceChunk&));
     MOCK_CONST_METHOD0(isFull, bool());
+    MOCK_CONST_METHOD1(getStats, void(phosphor::StatsCallback&));
 
     // Delegate for mockable method name
     virtual const phosphor::TraceChunk& operator[](const int index) const {
