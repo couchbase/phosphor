@@ -34,7 +34,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"classphosphor_1_1tools_1_1_file_stop_callback.html"
+"classphosphor_1_1_tracing_stopped_callback.html#a7dc699bcd569fa63137566d171ccdab1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

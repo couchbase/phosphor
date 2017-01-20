@@ -20,6 +20,7 @@ var hierarchy =
       [ "phosphor::RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", null ]
     ] ],
     [ "phosphor::Sentinel", "classphosphor_1_1_sentinel.html", null ],
+    [ "gsl_p::span< T >", "classgsl__p_1_1span.html", null ],
     [ "phosphor::StringPtrDeleter", "structphosphor_1_1_string_ptr_deleter.html", null ],
     [ "phosphor::TraceEvent::ToJsonResult", "classphosphor_1_1_trace_event_1_1_to_json_result.html", null ],
     [ "phosphor::TraceArgument", "unionphosphor_1_1_trace_argument.html", null ],

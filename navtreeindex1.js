@@ -1,5 +1,13 @@
 var NAVTREEINDEX1 =
 {
+"classphosphor_1_1_tracing_stopped_callback.html#a7dc699bcd569fa63137566d171ccdab1":[7,0,1,22,1],
+"classphosphor_1_1inline__zstring.html":[7,0,1,4],
+"classphosphor_1_1inline__zstring.html#a5de0deda66e7cb0f74a67bae0682430d":[7,0,1,4,5],
+"classphosphor_1_1inline__zstring.html#a78eb69cfeb3baa1b40f9ef7711a39b44":[7,0,1,4,4],
+"classphosphor_1_1inline__zstring.html#a812d466a21cec2e41f6eb5ce5529ff89":[7,0,1,4,3],
+"classphosphor_1_1inline__zstring.html#aa91b2256009ef94ac59ffcc72fa14ad6":[7,0,1,4,0],
+"classphosphor_1_1inline__zstring.html#ad6fd24378d6ad04af87195b19e5227bf":[7,0,1,4,2],
+"classphosphor_1_1inline__zstring.html#afafd87430d93afbdff29556ec58c8dd9":[7,0,1,4,1],
 "classphosphor_1_1tools_1_1_file_stop_callback.html":[7,0,1,0,0],
 "classphosphor_1_1tools_1_1_file_stop_callback.html#a937d93628f34e9d94ea7adebf9a9ae9c":[7,0,1,0,0,2],
 "classphosphor_1_1tools_1_1_file_stop_callback.html#abab6d4389eeaf0ab061213877b81a043":[7,0,1,0,0,0],
@@ -126,6 +134,7 @@ var NAVTREEINDEX1 =
 "sorting__algorithm_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627":[8,0,0,0,0],
 "sorting__algorithm_8cc.html#ae2f0c0ff7ead2e862bcb2c8431c1681f":[8,0,0,0,2],
 "sorting__algorithm_8cc.html#af8cbe922f79c231500db6d2aa2ef5821":[8,0,0,0,1],
+"span_8h_source.html":[8,0,1,0,2],
 "src_2utils_2string__utils_8h_source.html":[8,0,2,0,1],
 "statistics_8cc.html":[8,0,0,1],
 "statistics_8cc.html#a3480d17f7783c24181b67be1e54cf412":[8,0,0,1,1],
