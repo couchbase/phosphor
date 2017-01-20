@@ -12,6 +12,7 @@ var classphosphor_1_1_trace_buffer =
     [ "end", "classphosphor_1_1_trace_buffer.html#a21e5fee4516976127d6242b0631f0ae5", null ],
     [ "getChunk", "classphosphor_1_1_trace_buffer.html#ad6694eb1489bf79362befa8abfe723df", null ],
     [ "getGeneration", "classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55", null ],
+    [ "getStats", "classphosphor_1_1_trace_buffer.html#a30ae9b7b25d9fdea02c951ce6b59fd3b", null ],
     [ "isFull", "classphosphor_1_1_trace_buffer.html#aed684d9119a5b64ecb295ecb2ef6d209", null ],
     [ "operator[]", "classphosphor_1_1_trace_buffer.html#a0536e48a01e77d96fed8376186a34449", null ],
     [ "returnChunk", "classphosphor_1_1_trace_buffer.html#a46459969a3c87d2b756a00bbd3184305", null ]

@@ -9,11 +9,13 @@ var classphosphor_1_1_ring_trace_buffer =
     [ "end", "classphosphor_1_1_ring_trace_buffer.html#a8874442e50a26ca101909d5a4cab272c", null ],
     [ "getChunk", "classphosphor_1_1_ring_trace_buffer.html#a4f31f7fb7541404871c55b2fe774174c", null ],
     [ "getGeneration", "classphosphor_1_1_ring_trace_buffer.html#aa10fac1d2c6a062614040c87afd826cf", null ],
+    [ "getStats", "classphosphor_1_1_ring_trace_buffer.html#a007e30352db2a74d8a54c07a9ba36f2b", null ],
     [ "isFull", "classphosphor_1_1_ring_trace_buffer.html#ad35fed1a1f21e29a948c7368b99b4ad2", null ],
     [ "operator[]", "classphosphor_1_1_ring_trace_buffer.html#ae24622739a65726701b9c509c1a9ed9b", null ],
     [ "returnChunk", "classphosphor_1_1_ring_trace_buffer.html#aa84948f04f3e8748d0ba8780e2c35c33", null ],
     [ "actual_count", "classphosphor_1_1_ring_trace_buffer.html#a4220ed00a5ae352a8c67a1fb3be338d3", null ],
     [ "buffer", "classphosphor_1_1_ring_trace_buffer.html#aa95abe1715e6976eedaa6293326df3ac", null ],
     [ "generation", "classphosphor_1_1_ring_trace_buffer.html#ad55a3ea70c3db8dbf6d4c073e1568d9e", null ],
+    [ "on_loan", "classphosphor_1_1_ring_trace_buffer.html#a6a284baeb459c965055183463af2faf6", null ],
     [ "return_queue", "classphosphor_1_1_ring_trace_buffer.html#aacfa2becb29a55d09db6e99f613d5b22", null ]
 ];

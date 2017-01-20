@@ -16,6 +16,7 @@ var dir_1c88311f8fdc2818688f49103ed32664 =
     [ "sentinel.h", "sentinel_8h.html", [
       [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ]
     ] ],
+    [ "stats_callback.h", "stats__callback_8h_source.html", null ],
     [ "trace_argument.h", "trace__argument_8h.html", "trace__argument_8h" ],
     [ "trace_buffer.h", "trace__buffer_8h.html", "trace__buffer_8h" ],
     [ "trace_config.h", "trace__config_8h_source.html", null ],

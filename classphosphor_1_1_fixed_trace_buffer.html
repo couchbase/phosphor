@@ -135,6 +135,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afc9b66b570050686a4072d1cd1d03113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1414bd2c3b88df604414efbc24732be2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a1414bd2c3b88df604414efbc24732be2">isFull</a> () const  override</td></tr>
 <tr class="separator:a1414bd2c3b88df604414efbc24732be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d0f1c257857da393c62bcc1d20e6342"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2d0f1c257857da393c62bcc1d20e6342">getStats</a> (<a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;addStats) const  override</td></tr>
+<tr class="separator:a2d0f1c257857da393c62bcc1d20e6342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4530c5502ee0ee493f04315555b629a6"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6">getGeneration</a> () const  override</td></tr>
 <tr class="separator:a4530c5502ee0ee493f04315555b629a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b0a3721d99140d9cd4d94fc3f0737e3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a9b0a3721d99140d9cd4d94fc3f0737e3">operator[]</a> (const int index) const  override</td></tr>
@@ -163,6 +165,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a4ad9d7a3a27bc6827c77accc87f457a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ad9d7a3a27bc6827c77accc87f457a2"></a>
 std::atomic&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>issued</b></td></tr>
 <tr class="separator:a4ad9d7a3a27bc6827c77accc87f457a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aa7788e5f190b152a36efe3e5ed7305"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1aa7788e5f190b152a36efe3e5ed7305"></a>
+<a class="el" href="classphosphor_1_1_relaxed_atomic.html">RelaxedAtomic</a>&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>on_loan</b></td></tr>
+<tr class="separator:a1aa7788e5f190b152a36efe3e5ed7305"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac76034ebd28a847665861b402cc02f35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac76034ebd28a847665861b402cc02f35"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>generation</b></td></tr>
 <tr class="separator:ac76034ebd28a847665861b402cc02f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -357,6 +362,45 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The generation number of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
 <p>Implements <a class="el" href="classphosphor_1_1_trace_buffer.html#a3fe36be1d5fa43a635b6c9369cc3ce55">phosphor::TraceBuffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2d0f1c257857da393c62bcc1d20e6342"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::FixedTraceBuffer::getStats </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>addStats</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Callback for retrieving stats from the Buffer implementation</p>
+<p>Implementations MUST supply the following stats as minimum:</p>
+<ul>
+<li>buffer_name &lt;cstring_span&gt;: Textual representation of buffer type</li>
+<li>buffer_is_full &lt;bool&gt;: True if the buffer is full</li>
+<li>buffer_chunk_count &lt;size_t&gt;: Chunks that are returned or loaned</li>
+<li>buffer_loaned_chunks &lt;size_t&gt;: Currently loaned chunks</li>
+<li>buffer_total_loaned &lt;size_t&gt;: Count of all chunks ever loaned</li>
+<li>buffer_size &lt;size_t&gt;: Max number of chunks that fit in the buffer</li>
+<li>buffer_generation &lt;size_t&gt;: Generation number of the buffer</li>
+</ul>
+<p>On a non-rotating buffer, if buffer_chunk_count is equal to buffer-size then that must suggest the buffer is full and there are no more chunks to be loaned. On a rotating buffer it suggests that chunks are being reused.</p>
+<p>Buffer implementations may include other relevant stats but end-users SHOULD NOT assume the existence of those stats. </p>
+
+<p>Implements <a class="el" href="classphosphor_1_1_trace_buffer.html#a30ae9b7b25d9fdea02c951ce6b59fd3b">phosphor::TraceBuffer</a>.</p>
 
 </div>
 </div>

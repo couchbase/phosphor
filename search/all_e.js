@@ -9,6 +9,7 @@ var searchData=
   ['relaxed_5fatomic_2eh',['relaxed_atomic.h',['../relaxed__atomic_8h.html',1,'']]],
   ['relaxedatomic',['RelaxedAtomic',['../classphosphor_1_1_relaxed_atomic.html',1,'phosphor']]],
   ['relaxedatomic_3c_20const_20char_20_2a_20_3e',['RelaxedAtomic&lt; const char * &gt;',['../classphosphor_1_1_relaxed_atomic.html',1,'phosphor']]],
+  ['relaxedatomic_3c_20size_5ft_20_3e',['RelaxedAtomic&lt; size_t &gt;',['../classphosphor_1_1_relaxed_atomic.html',1,'phosphor']]],
   ['relaxedatomiccstring',['RelaxedAtomicCString',['../classphosphor_1_1_relaxed_atomic_c_string.html',1,'phosphor']]],
   ['release',['release',['../classphosphor_1_1_sentinel.html#ac72905e7efc8bb93349eef2b394f3551',1,'phosphor::Sentinel']]],
   ['reopen',['reopen',['../classphosphor_1_1_sentinel.html#a7ead8e098b98397cf731e5e5733a9215',1,'phosphor::Sentinel']]],

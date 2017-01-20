@@ -150,6 +150,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a46459969a3c87d2b756a00bbd3184305"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed684d9119a5b64ecb295ecb2ef6d209"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#aed684d9119a5b64ecb295ecb2ef6d209">isFull</a> () const  =0</td></tr>
 <tr class="separator:aed684d9119a5b64ecb295ecb2ef6d209"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30ae9b7b25d9fdea02c951ce6b59fd3b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a30ae9b7b25d9fdea02c951ce6b59fd3b">getStats</a> (<a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;addStats) const  =0</td></tr>
+<tr class="separator:a30ae9b7b25d9fdea02c951ce6b59fd3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0536e48a01e77d96fed8376186a34449"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a0536e48a01e77d96fed8376186a34449">operator[]</a> (const int index) const  =0</td></tr>
 <tr class="separator:a0536e48a01e77d96fed8376186a34449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c3bdb8c429f1dc21381ff33a5cd21da"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_buffer.html#a9c3bdb8c429f1dc21381ff33a5cd21da">chunk_count</a> () const  =0</td></tr>
@@ -432,6 +434,45 @@ for(const auto&amp; event : trace_buffer) {
 <dl class="section return"><dt>Returns</dt><dd>The generation number of the <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a> </dd></dl>
 
 <p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#aa10fac1d2c6a062614040c87afd826cf">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a4530c5502ee0ee493f04315555b629a6">phosphor::FixedTraceBuffer</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a30ae9b7b25d9fdea02c951ce6b59fd3b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void phosphor::TraceBuffer::getStats </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>addStats</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Callback for retrieving stats from the Buffer implementation</p>
+<p>Implementations MUST supply the following stats as minimum:</p>
+<ul>
+<li>buffer_name &lt;cstring_span&gt;: Textual representation of buffer type</li>
+<li>buffer_is_full &lt;bool&gt;: True if the buffer is full</li>
+<li>buffer_chunk_count &lt;size_t&gt;: Chunks that are returned or loaned</li>
+<li>buffer_loaned_chunks &lt;size_t&gt;: Currently loaned chunks</li>
+<li>buffer_total_loaned &lt;size_t&gt;: Count of all chunks ever loaned</li>
+<li>buffer_size &lt;size_t&gt;: Max number of chunks that fit in the buffer</li>
+<li>buffer_generation &lt;size_t&gt;: Generation number of the buffer</li>
+</ul>
+<p>On a non-rotating buffer, if buffer_chunk_count is equal to buffer-size then that must suggest the buffer is full and there are no more chunks to be loaned. On a rotating buffer it suggests that chunks are being reused.</p>
+<p>Buffer implementations may include other relevant stats but end-users SHOULD NOT assume the existence of those stats. </p>
+
+<p>Implemented in <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a007e30352db2a74d8a54c07a9ba36f2b">phosphor::RingTraceBuffer</a>, and <a class="el" href="classphosphor_1_1_fixed_trace_buffer.html#a2d0f1c257857da393c62bcc1d20e6342">phosphor::FixedTraceBuffer</a>.</p>
 
 </div>
 </div>
