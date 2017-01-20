@@ -6,7 +6,6 @@ var NAVTREE =
     [ "Event Tracing Instrumentation API Spec", "md_docs_design_Instrumentation-API.html", null ],
     [ "One-pager: Tracing in KV-Engine", "md_docs_design_One-pager.html", null ],
     [ "Couchbase Event Tracing Functional Requirements", "md_docs_design_Requirements.html", null ],
-    [ "Roadmap", "md_ROADMAP.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -35,7 +34,7 @@ var NAVTREEINDEX =
 [
 ".html",
 "classphosphor_1_1_trace_log.html#af0b34e540994efaabe4ce310070287cb",
-"unionphosphor_1_1_trace_argument.html#abb58a716f5c7a48f8dbd343aedfa6845"
+"unionphosphor_1_1_trace_argument.html#acaae234635c0b4c98c4402b768b6709e"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
