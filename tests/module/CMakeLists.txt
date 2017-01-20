@@ -16,6 +16,10 @@ M_ADD_MODULE_GTEST(category_registry_test
         ${phosphor_SOURCE_DIR}/src/category_registry.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
+M_ADD_MODULE_GTEST(chunk_lock_test
+        chunk_lock_test.cc
+        ${phosphor_SOURCE_DIR}/src/chunk_lock.cc)
+
 M_ADD_LIBRARY_GTEST(export_test
         export_test.cc)
 
