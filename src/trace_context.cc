@@ -40,12 +40,12 @@ namespace phosphor {
 
     TraceContext::TraceContext(TraceContext&& other)
         : trace_buffer(std::move(other.trace_buffer)),
-        thread_names(other.thread_names) {
+        thread_names(std::move(other.thread_names)) {
     }
 
     TraceContext& TraceContext::operator=(TraceContext&& other) {
         trace_buffer = std::move(other.trace_buffer);
-        thread_names = other.thread_names;
+        thread_names = std::move(other.thread_names);
         return *this;
     }
 
