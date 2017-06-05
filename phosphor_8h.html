@@ -48,6 +48,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -157,16 +158,16 @@ Macros</h2></td></tr>
 <tr class="memitem:ga749d99e1da740a68b2577883b899adef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_EVENT2</b>(category,  name,  arg1_name,  arg1,  arg2_name,  arg2)</td></tr>
 <tr class="separator:ga749d99e1da740a68b2577883b899adef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION</b>(category, ...)&#160;&#160;&#160;TRACE_EVENT(category, PH__func__, __VA_ARGS__)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION</b>(category, ...)&#160;&#160;&#160;TRACE_EVENT(category, __func__, __VA_ARGS__)</td></tr>
 <tr class="separator:ga38f5e3e2bf88bc153aa024e8d7e8fc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION0</b>(category)&#160;&#160;&#160;TRACE_EVENT0(category, PH__func__)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION0</b>(category)&#160;&#160;&#160;TRACE_EVENT0(category, __func__)</td></tr>
 <tr class="separator:ga3ea82db4ad2733dbfbdcea914c20194a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8e485f330f77ee5cfd93955e8b89effb"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION1</b>(category,  arg1_name,  arg1)&#160;&#160;&#160;TRACE_EVENT1(category, PH__func__, arg1_name, arg1)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION1</b>(category,  arg1_name,  arg1)&#160;&#160;&#160;TRACE_EVENT1(category, __func__, arg1_name, arg1)</td></tr>
 <tr class="separator:ga8e485f330f77ee5cfd93955e8b89effb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae27a2665b91c16f22623b861cd7111de"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION2</b>(category,  arg1_name,  arg1,  arg2_name,  arg2)&#160;&#160;&#160;TRACE_EVENT2(category, PH__func__, arg1_name, arg1, arg2_name, arg2)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_FUNCTION2</b>(category,  arg1_name,  arg1,  arg2_name,  arg2)&#160;&#160;&#160;TRACE_EVENT2(category, __func__, arg1_name, arg1, arg2_name, arg2)</td></tr>
 <tr class="separator:gae27a2665b91c16f22623b861cd7111de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad60f59ee4a463730557f5b54e46dff88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRACE_LOCKGUARD</b>(mutex,  category,  name)                                                            </td></tr>
 <tr class="separator:gad60f59ee4a463730557f5b54e46dff88"><td class="memSeparator" colspan="2">&#160;</td></tr>

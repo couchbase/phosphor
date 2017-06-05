@@ -4,7 +4,7 @@ var searchData=
   ['registered_5fsentinels',['registered_sentinels',['../classphosphor_1_1_trace_log.html#a254ad893c602a1c54a7c7347c6495925',1,'phosphor::TraceLog']]],
   ['registerthread',['registerThread',['../classphosphor_1_1_trace_log.html#a1e05392fcb945933fd9e4a86254409e9',1,'phosphor::TraceLog']]],
   ['registry',['registry',['../classphosphor_1_1_trace_log.html#af0b34e540994efaabe4ce310070287cb',1,'phosphor::TraceLog']]],
-  ['registry_5fsize',['registry_size',['../classphosphor_1_1_category_registry.html#a900d851f1a76309133f449ac1e8eb14d',1,'phosphor::CategoryRegistry']]],
+  ['registry_5fsize',['registry_size',['../classphosphor_1_1_category_registry.html#aecac432d7943bc31ec0272548f82c366',1,'phosphor::CategoryRegistry']]],
   ['relaxed_5fatomic_2eh',['relaxed_atomic.h',['../relaxed__atomic_8h.html',1,'']]],
   ['relaxedatomic',['RelaxedAtomic',['../classphosphor_1_1_relaxed_atomic.html',1,'phosphor']]],
   ['relaxedatomic_3c_20const_20char_20_2a_20_3e',['RelaxedAtomic&lt; const char * &gt;',['../classphosphor_1_1_relaxed_atomic.html',1,'phosphor']]],

@@ -7,6 +7,13 @@ var NAVTREE =
     [ "One-pager: Tracing in KV-Engine", "md_docs_design_One-pager.html", null ],
     [ "Couchbase Event Tracing Functional Requirements", "md_docs_design_Requirements.html", null ],
     [ "Modules", "modules.html", "modules" ],
+    [ "Namespaces", null, [
+      [ "Namespace List", "namespaces.html", "namespaces" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Functions", "namespacemembers_func.html", null ]
+      ] ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -33,8 +40,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"classphosphor_1_1_trace_log.html#af0b34e540994efaabe4ce310070287cb",
-"unionphosphor_1_1_trace_argument.html#acaae234635c0b4c98c4402b768b6709e"
+"classphosphor_1_1_trace_log.html#af2df1c20bf288ee486ad043dc61c3b09",
+"unionphosphor_1_1_trace_argument.html#aa5cb5d9df6a03df39aaa590337e7130d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

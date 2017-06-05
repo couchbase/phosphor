@@ -48,6 +48,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -271,7 +272,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &amp;<a class="code" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>.getCategoryStatus(category); \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \</div><div class="line">        PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \</div><div class="line">    } \</div><div class="ttc" id="phosphor_8h_html_a5c3acfbde298bed30fb871e7ef3fecf3"><div class="ttname"><a href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a></div><div class="ttdeci">#define PHOSPHOR_INSTANCE</div><div class="ttdef"><b>Definition:</b> phosphor.h:73</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &amp;<a class="code" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>.getCategoryStatus(category); \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled).store( \</div><div class="line">            PHOSPHOR_INTERNAL_UID(category_enabled_temp), std::memory_order_release); \</div><div class="line">        PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \</div><div class="line">    } \</div><div class="ttc" id="phosphor_8h_html_a5c3acfbde298bed30fb871e7ef3fecf3"><div class="ttname"><a href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a></div><div class="ttdeci">#define PHOSPHOR_INSTANCE</div><div class="ttdef"><b>Definition:</b> phosphor.h:73</div></div>
 </div><!-- fragment -->
 </div>
 </div>

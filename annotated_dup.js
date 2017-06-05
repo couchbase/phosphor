@@ -1,10 +1,6 @@
 var annotated_dup =
 [
-    [ "gsl_p", null, [
-      [ "dyn_array", "structgsl__p_1_1dyn__array.html", "structgsl__p_1_1dyn__array" ],
-      [ "multidimensional_iterator", "classgsl__p_1_1multidimensional__iterator.html", "classgsl__p_1_1multidimensional__iterator" ],
-      [ "span", "classgsl__p_1_1span.html", "classgsl__p_1_1span" ]
-    ] ],
+    [ "gsl_p", "namespacegsl__p.html", "namespacegsl__p" ],
     [ "phosphor", null, [
       [ "tools", null, [
         [ "FileStopCallback", "classphosphor_1_1tools_1_1_file_stop_callback.html", "classphosphor_1_1tools_1_1_file_stop_callback" ],

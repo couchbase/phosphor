@@ -11,7 +11,7 @@ var searchData=
   ['trace_5fconfig',['trace_config',['../classphosphor_1_1_trace_log.html#a366b267a03ceffcc9aaa4daf2561cbaf',1,'phosphor::TraceLog']]],
   ['trace_5fevent_2eh',['trace_event.h',['../trace__event_8h.html',1,'']]],
   ['traceargument',['TraceArgument',['../unionphosphor_1_1_trace_argument.html',1,'phosphor']]],
-  ['traceargument',['TraceArgument',['../unionphosphor_1_1_trace_argument.html#ab8a52bc60df5f3fbd7d690aad1e290da',1,'phosphor::TraceArgument::TraceArgument()=default'],['../unionphosphor_1_1_trace_argument.html#a722d5d8a2fcf6d0c7addb0eb0bcb9609',1,'phosphor::TraceArgument::TraceArgument(T src)']]],
+  ['traceargument',['TraceArgument',['../unionphosphor_1_1_trace_argument.html#ab8a52bc60df5f3fbd7d690aad1e290da',1,'phosphor::TraceArgument::TraceArgument()=default'],['../unionphosphor_1_1_trace_argument.html#a23d67b5aa316302b3c7f2d40b17ecba1',1,'phosphor::TraceArgument::TraceArgument(T src)']]],
   ['traceargumentconversion',['TraceArgumentConversion',['../classphosphor_1_1_trace_argument_conversion.html',1,'phosphor']]],
   ['traceargumentconversion_3c_20t_20_2a_20_3e',['TraceArgumentConversion&lt; T * &gt;',['../classphosphor_1_1_trace_argument_conversion_3_01_t_01_5_01_4.html',1,'phosphor']]],
   ['tracebuffer',['TraceBuffer',['../classphosphor_1_1_trace_buffer.html',1,'phosphor']]],
