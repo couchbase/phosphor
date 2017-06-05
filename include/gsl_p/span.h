@@ -28,26 +28,26 @@ namespace gsl_p {
 template <typename T>
 class span {
 public:
-    CONSTEXPR_F span() = default;
+    constexpr span() = default;
 
-    CONSTEXPR_F span(T* _d, size_t _s)
+    constexpr span(T* _d, size_t _s)
         : _data(_d),
           _size(_s) {
     }
 
-    CONSTEXPR_F T* data() const {
+    constexpr T* data() const {
         return _data;
     }
 
-    CONSTEXPR_F size_t size() const {
+    constexpr size_t size() const {
         return _size;
     }
 
-    CONSTEXPR_F T* begin() const {
+    constexpr T* begin() const {
         return _data;
     }
 
-    CONSTEXPR_F T* end() const {
+    constexpr T* end() const {
         return _data + _size;
     }
 
@@ -84,7 +84,7 @@ bool operator==(span<CharT> lhs, span<CharT> rhs) {
  * @return span of the array
  */
 template <typename T, size_t N>
-CONSTEXPR_F span<T> make_span(T (&s)[N]) {
+constexpr span<T> make_span(T (&s)[N]) {
     return {s, N};
 }
 
@@ -94,7 +94,7 @@ CONSTEXPR_F span<T> make_span(T (&s)[N]) {
  * @return span of the string literal
  */
 template <size_t N>
-CONSTEXPR_F span<const char> make_span(const char (&s)[N]) {
+constexpr span<const char> make_span(const char (&s)[N]) {
     return {s, N - 1};
 }
 

@@ -74,7 +74,6 @@ namespace phosphor {
     }
 
     TraceLog& TraceLog::getInstance() {
-        // TODO: Not thread-safe on Windows
         static TraceLog log_instance;
         return log_instance;
     }

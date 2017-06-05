@@ -85,7 +85,7 @@ namespace phosphor {
          *
          */
         template <class T>
-        inline CONSTEXPR_F TraceArgument(T src);
+        inline constexpr TraceArgument(T src);
 
         /**
          * Converts the TraceArgument to string
@@ -110,13 +110,13 @@ namespace phosphor {
         /**
          * @return The enum-form type of the argument
          */
-        inline static CONSTEXPR_F TraceArgument::Type getType();
+        inline static constexpr TraceArgument::Type getType();
 
         /**
          * @param T The argument to be converted to a TraceArgument
          * @return The argument wrapped as a TraceArgument
          */
-        inline static CONSTEXPR_F TraceArgument asArgument(T arg);
+        inline static constexpr TraceArgument asArgument(T arg);
     };
 
     static_assert(sizeof(TraceArgument) <= 8,
@@ -132,15 +132,15 @@ namespace phosphor {
  */
 #define ARGUMENT_CONVERSION(src, dst) \
     template <> \
-    inline CONSTEXPR_F TraceArgument::TraceArgument(src arg) : as_##dst(arg) {} \
+    inline constexpr TraceArgument::TraceArgument(src arg) : as_##dst(arg) {} \
     template<> \
     class TraceArgumentConversion<src> { \
         public:\
-        inline static CONSTEXPR_F TraceArgument::Type getType() { \
+        inline static constexpr TraceArgument::Type getType() { \
             return TraceArgument::Type::is_##dst; \
         } \
         \
-        inline static CONSTEXPR_F TraceArgument asArgument(src arg) { \
+        inline static constexpr TraceArgument asArgument(src arg) { \
             return TraceArgument(arg); \
         } \
     };
@@ -188,11 +188,11 @@ namespace phosphor {
     class TraceArgumentConversion<T*> {
         public:
 
-        inline static CONSTEXPR_F TraceArgument::Type getType() {
+        inline static constexpr TraceArgument::Type getType() {
             return TraceArgument::Type::is_pointer;
         }
 
-        inline static CONSTEXPR_F TraceArgument asArgument(T* arg) {
+        inline static constexpr TraceArgument asArgument(T* arg) {
 
             // This relies on the 'const void*' -> pointer
             // conversion defined above.

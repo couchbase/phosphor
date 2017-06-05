@@ -250,16 +250,16 @@
     } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
 
 #define TRACE_FUNCTION(category, ...) \
-    TRACE_EVENT(category, PH__func__, __VA_ARGS__)
+    TRACE_EVENT(category, __func__, __VA_ARGS__)
 
 #define TRACE_FUNCTION0(category) \
-    TRACE_EVENT0(category, PH__func__)
+    TRACE_EVENT0(category, __func__)
 
 #define TRACE_FUNCTION1(category, arg1_name, arg1) \
-    TRACE_EVENT1(category, PH__func__, arg1_name, arg1)
+    TRACE_EVENT1(category, __func__, arg1_name, arg1)
 
 #define TRACE_FUNCTION2(category, arg1_name, arg1, arg2_name, arg2) \
-    TRACE_EVENT2(category, PH__func__, arg1_name, arg1, arg2_name, arg2)
+    TRACE_EVENT2(category, __func__, arg1_name, arg1, arg2_name, arg2)
 
 #define TRACE_LOCKGUARD(mutex, category, name)                                \
     static const char* const PHOSPHOR_INTERNAL_UID(nme) = name ".held";  \

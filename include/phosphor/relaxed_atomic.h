@@ -31,23 +31,12 @@ namespace phosphor {
         RelaxedAtomic() = default;
 
         RelaxedAtomic(const T& initial) {
-            // These ifdefs are requires as MCVC2013 has a standard
-            // library bug which means an atomic store can't be performed
-            // with memory ordering
-#if defined(_MSC_VER) && _MSC_VER < 1900
-            value = initial;
-#else
             value.store(initial, std::memory_order_relaxed);
-#endif
         }
 
         RelaxedAtomic(const RelaxedAtomic& other) {
-#if defined(_MSC_VER) && _MSC_VER < 1900
-            value = other.value.load(std::memory_order_relaxed);
-#else
             value.store(other.value.load(std::memory_order_relaxed),
                         std::memory_order_relaxed);
-#endif
         }
 
         operator T() const {
@@ -59,11 +48,7 @@ namespace phosphor {
         }
 
         RelaxedAtomic& operator=(const RelaxedAtomic& rhs) {
-#if defined(_MSC_VER) && _MSC_VER < 1900
-            value = rhs.value.load(std::memory_order_relaxed);
-#else
             value.store(rhs.load(), std::memory_order_relaxed);
-#endif
             return *this;
         }
 
@@ -97,20 +82,11 @@ namespace phosphor {
         RelaxedAtomicCString() = default;
 
         RelaxedAtomicCString(const char* initial) {
-#if defined(_MSC_VER) && _MSC_VER < 1900
-            value = initial;
-#else
             value.store(initial, std::memory_order_relaxed);
-#endif
         }
 
         RelaxedAtomicCString(const RelaxedAtomicCString& other) {
-#if defined(_MSC_VER) && _MSC_VER < 1900
-            value = other.value.load(std::memory_order_relaxed);
-#else
-            value.store(other.value.load(std::memory_order_relaxed),
-                        std::memory_order_relaxed);
-#endif
+            value.store(other.load(), std::memory_order_relaxed);
         }
 
         operator std::string() const {

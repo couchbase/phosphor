@@ -47,7 +47,7 @@ namespace phosphor {
         /**
          * Number of unique category permutations that a registry supports
          */
-        static CONSTEXPR int registry_size = 250;
+        static constexpr int registry_size = 250;
 
         /**
          * Default constructor
@@ -115,9 +115,9 @@ namespace phosphor {
         std::mutex mutex;
 
         std::array<std::string, registry_size> groups;
-        static CONSTEXPR int index_category_limit = 1;
-        static CONSTEXPR int index_metadata = 2;
-        static CONSTEXPR int index_non_default_categories = 3;
+        static constexpr int index_category_limit = 1;
+        static constexpr int index_metadata = 2;
+        static constexpr int index_non_default_categories = 3;
 
         std::array<AtomicCategoryStatus, registry_size> group_statuses;
         std::atomic<size_t> group_count;

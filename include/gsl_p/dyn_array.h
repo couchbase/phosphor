@@ -244,12 +244,6 @@
 #ifndef _GSLP_dyn_array
 #define _GSLP_dyn_array
 
-#if defined(_MSC_VER) && _MSC_VER < 1900
-#define NOEXCEPT
-#else
-#define NOEXCEPT noexcept
-#endif
-
 /*
     dyn_array synopsis
 
@@ -363,7 +357,7 @@ public:
 private:
     size_t                  __size_;
     value_type *            __base_;
-    dyn_array () NOEXCEPT :  __size_(0), __base_(nullptr) {}
+    dyn_array () noexcept :  __size_(0), __base_(nullptr) {}
 
     static inline value_type* __allocate ( size_t count )
     {
@@ -374,7 +368,7 @@ private:
         return static_cast<value_type *> (::operator new(sizeof(value_type) * count));
     }
 
-    static inline void __deallocate ( value_type* __ptr ) NOEXCEPT
+    static inline void __deallocate ( value_type* __ptr ) noexcept
     {
         ::operator delete(static_cast<void *> (__ptr));
     }
@@ -389,24 +383,24 @@ public:
     ~dyn_array();
 
     // iterators:
-    inline iterator       begin()        NOEXCEPT { return iterator(data()); }
-    inline const_iterator begin()  const NOEXCEPT { return const_iterator(data()); }
-    inline const_iterator cbegin() const NOEXCEPT { return const_iterator(data()); }
-    inline iterator       end()          NOEXCEPT { return iterator(data() + __size_); }
-    inline const_iterator end()    const NOEXCEPT { return const_iterator(data() + __size_); }
-    inline const_iterator cend()   const NOEXCEPT { return const_iterator(data() + __size_); }
+    inline iterator       begin()        noexcept { return iterator(data()); }
+    inline const_iterator begin()  const noexcept { return const_iterator(data()); }
+    inline const_iterator cbegin() const noexcept { return const_iterator(data()); }
+    inline iterator       end()          noexcept { return iterator(data() + __size_); }
+    inline const_iterator end()    const noexcept { return const_iterator(data() + __size_); }
+    inline const_iterator cend()   const noexcept { return const_iterator(data() + __size_); }
 
-    inline reverse_iterator       rbegin()        NOEXCEPT { return reverse_iterator(end()); }
-    inline const_reverse_iterator rbegin()  const NOEXCEPT { return const_reverse_iterator(end()); }
-    inline const_reverse_iterator crbegin() const NOEXCEPT { return const_reverse_iterator(end()); }
-    inline reverse_iterator       rend()          NOEXCEPT { return reverse_iterator(begin()); }
-    inline const_reverse_iterator rend()    const NOEXCEPT { return const_reverse_iterator(begin()); }
-    inline const_reverse_iterator crend()   const NOEXCEPT { return const_reverse_iterator(begin()); }
+    inline reverse_iterator       rbegin()        noexcept { return reverse_iterator(end()); }
+    inline const_reverse_iterator rbegin()  const noexcept { return const_reverse_iterator(end()); }
+    inline const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator(end()); }
+    inline reverse_iterator       rend()          noexcept { return reverse_iterator(begin()); }
+    inline const_reverse_iterator rend()    const noexcept { return const_reverse_iterator(begin()); }
+    inline const_reverse_iterator crend()   const noexcept { return const_reverse_iterator(begin()); }
 
     // capacity:
-    inline size_type size()     const NOEXCEPT { return __size_; }
-    inline size_type max_size() const NOEXCEPT { return __size_; }
-    inline bool      empty()    const NOEXCEPT { return __size_ == 0; }
+    inline size_type size()     const noexcept { return __size_; }
+    inline size_type max_size() const noexcept { return __size_; }
+    inline bool      empty()    const noexcept { return __size_ == 0; }
 
     // element access:
     inline reference       operator[](size_type __n)       { return data()[__n]; }
@@ -421,8 +415,8 @@ public:
     inline reference       at(size_type __n);
 
     // data access:
-    inline _Tp*       data()       NOEXCEPT { return __base_; }
-    inline const _Tp* data() const NOEXCEPT { return __base_; }
+    inline _Tp*       data()       noexcept { return __base_; }
+    inline const _Tp* data() const noexcept { return __base_; }
 
     // mutating member functions:
     inline  void fill(const value_type& __v) { std::fill_n(begin(), __size_, __v); }

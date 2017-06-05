@@ -22,11 +22,11 @@
 #include "core.h"
 
 #if __APPLE__
-/* Apple's clang is awkward and disables thread_local keyword support */
+/*
+ * Apple's clang is awkward and disables thread_local keyword support
+ * @todo Fixed in XCode 8 (MacOS 10.11.5 / 10.12 or later)
+ */
 #define THREAD_LOCAL __thread
-#elif defined(_MSC_VER) && _MSC_VER < 1900
-/* MSVC 2012 sucks and doesn't have thread_local */
-#define THREAD_LOCAL __declspec(thread)
 #else
 #define THREAD_LOCAL thread_local
 #endif

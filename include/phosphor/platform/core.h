@@ -39,25 +39,6 @@
 #define unlikely(x) (x)
 #endif
 
-// Various macro definitions to allow MSVC2013 to work
-#if defined(_MSC_VER) && _MSC_VER < 1900
-
-// Constexpr if available, otherwise const
-// useful for defining static constants
-#define CONSTEXPR const
-
-// Constexpr if available, otherwise nothing
-// useful for defining constexpr-able functions
-#define CONSTEXPR_F
-
-#define alignas(x)
-#define PH__func__ __FUNCTION__
-#else
-#define CONSTEXPR constexpr
-#define CONSTEXPR_F constexpr
-#define PH__func__ __func__
-#endif
-
 namespace phosphor {
     // Introducing cross-platform ssize_t (doesn't exist on windows)
     // as future-proofing if e.g. negative statistics are ever needed

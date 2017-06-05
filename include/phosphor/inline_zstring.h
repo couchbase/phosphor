@@ -38,7 +38,7 @@ namespace phosphor {
     template<size_t max_length>
     class inline_zstring {
     public:
-        CONSTEXPR_F inline_zstring() = default;
+        constexpr inline_zstring() = default;
 
         /**
          * Explicit constructor from std::string

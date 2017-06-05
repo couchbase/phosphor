@@ -32,9 +32,7 @@ tracepoint_info tpi = {
 
 class MockTraceContext : public phosphor::TraceContext {
 public:
-
-    MockTraceContext(std::unique_ptr<TraceBuffer>&& buffer)
-        : TraceContext(std::move(buffer)) {}
+    using TraceContext::TraceContext;
 
     // Expose normally protected method as public for testing.
     void public_addThreadName(uint64_t id, const std::string& name) {
@@ -153,9 +151,7 @@ TEST_F(ExportTest, test) {
 
 class MockFileStopCallback : public FileStopCallback {
 public:
-    template <class... Args>
-    MockFileStopCallback(Args&&... args)
-        : FileStopCallback(std::forward<Args>(args)...) {}
+    using FileStopCallback::FileStopCallback;
 
     StringPtr generateFilePathAsPtr() {
         return FileStopCallback::generateFilePathAsPtr();

@@ -39,11 +39,6 @@
  * This makes a slight optimisation by storing the result of loading
  * category_enabled into category_enabled_temp which saves a second
  * load in the calling macro.
- *
- * TODO: MB-20466 MSVC2013 cannot support a store operation on a
- *       const atomic pointer due to a bug in the stdlib header.
- *       Once MSVC is upgraded, move to using a store using
- *       std::memory_order_release instead of assignment operator.
  */
 #define PHOSPHOR_INTERNAL_CATEGORY_INFO \
     static std::atomic<const phosphor::AtomicCategoryStatus*> \
@@ -61,7 +56,8 @@
 #define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
     if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \
         PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &PHOSPHOR_INSTANCE.getCategoryStatus(category); \
-        PHOSPHOR_INTERNAL_UID(category_enabled) = PHOSPHOR_INTERNAL_UID(category_enabled_temp); \
+        PHOSPHOR_INTERNAL_UID(category_enabled).store( \
+            PHOSPHOR_INTERNAL_UID(category_enabled_temp), std::memory_order_release); \
         PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \
     } \
 

@@ -35,7 +35,7 @@
 
 namespace phosphor {
 
-    CONSTEXPR auto arg_count = 2;
+    constexpr auto arg_count = 2;
 
     class PHOSPHOR_API TraceEvent {
     public:
