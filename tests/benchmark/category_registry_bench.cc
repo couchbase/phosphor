@@ -15,7 +15,9 @@
  *   limitations under the License.
  */
 
+#include <condition_variable>
 #include <string>
+#include <thread>
 
 #include <benchmark/benchmark.h>
 #include <phosphor/category_registry.h>
@@ -36,8 +38,12 @@ void NewCategories(benchmark::State& state) {
     // Registry comes with 3 items already in it
     static std::array<std::string, (CategoryRegistry::registry_size - 3)> categories;
     static std::unique_ptr<CategoryRegistry> registry;
-    static std::atomic<int> paused;
+
+    int generation = 0;
+    static int barrier_generation;
+    static int paused;
     static std::mutex mutex;
+    static std::condition_variable cv;
 
     if (state.thread_index == 0) {
         size_t i = 1;
@@ -45,25 +51,37 @@ void NewCategories(benchmark::State& state) {
             category = std::string("A", i++);
         }
         registry = utils::make_unique<CategoryRegistry>();
-    }
+        paused = 0;
+        barrier_generation = 0;
+}
 
     while (state.KeepRunning()) {
         for (const auto& category : categories) {
             registry->getStatus(category.c_str());
         }
         state.PauseTiming();
-        ++paused;
 
+        // Wait for all the threads to sync up so we can reset
+        // the category registry.
         {
-            std::lock_guard<std::mutex> lh(mutex);
-            if (paused > 0) {
-                while(paused != state.threads) {
-
-                }
+            std::unique_lock<std::mutex> lh(mutex);
+            ++paused;
+            if (paused == state.threads) {
                 registry = utils::make_unique<CategoryRegistry>();
                 paused = 0;
+                ++barrier_generation;
+                cv.notify_all();
+            } else {
+                cv.wait(lh, [&generation]() {
+                    // We use the barrier generation instead of the
+                    // number of paused threads to allow the barrier
+                    // to be reused.
+                    return barrier_generation == generation + 1;
+                });
             }
+            ++generation;
         }
+
         state.ResumeTiming();
     }
 }
