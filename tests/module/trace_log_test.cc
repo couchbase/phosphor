@@ -26,6 +26,7 @@
 #include "utils/memory.h"
 
 #include "mock_buffer.h"
+#include "mock_stats_callback.h"
 
 using namespace phosphor;
 
@@ -369,4 +370,38 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     context = trace_log.getTraceContext();
     EXPECT_EQ(0, context.getThreadNames().size());
 
+}
+
+TEST_F(TraceLogTest, StatsTest) {
+    using namespace testing;
+
+    NiceMock<MockStatsCallback> callback;
+
+    EXPECT_CALL(callback, callB(gsl_p::make_span("log_has_buffer"), false));
+    EXPECT_CALL(callback, callB(gsl_p::make_span("log_is_enabled"), false));
+
+    // we don't register/deregister any threads in this test so both should be 0
+    EXPECT_CALL(callback,
+                callU(gsl_p::make_span("log_thread_names"), 0));
+    EXPECT_CALL(callback,
+                callU(gsl_p::make_span("log_deregistered_threads"), 0));
+
+    // this is just the amount of groups the registry starts with by default
+    EXPECT_CALL(callback, callU(gsl_p::make_span("registry_group_count"), 3));
+
+    // PITA to check for correct values here so just make sure they exist
+    EXPECT_CALL(callback, callU(gsl_p::make_span("log_registered_tenants"), _));
+    EXPECT_CALL(callback, callU(gsl_p::make_span("log_shared_tenants"), _));
+    trace_log.getStats(callback);
+    Mock::VerifyAndClearExpectations(&callback);
+
+    start_basic();
+    callback.expectAny();
+    EXPECT_CALL(callback, callB(gsl_p::make_span("log_has_buffer"), true));
+    EXPECT_CALL(callback, callB(gsl_p::make_span("log_is_enabled"), true));
+
+    // Check that we have at least one of the buffer stats
+    EXPECT_CALL(callback, callS(gsl_p::make_span("buffer_name"), _));
+    trace_log.getStats(callback);
+    Mock::VerifyAndClearExpectations(&callback);
 }

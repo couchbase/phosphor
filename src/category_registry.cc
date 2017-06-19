@@ -21,6 +21,7 @@
 #include "utils/string_utils.h"
 
 #include "phosphor/category_registry.h"
+#include "phosphor/stats_callback.h"
 
 namespace phosphor {
 
@@ -132,5 +133,11 @@ namespace phosphor {
             group_statuses[i].store(CategoryStatus::Disabled,
                                     std::memory_order_relaxed);
         }
+    }
+
+    void CategoryRegistry::getStats(StatsCallback& addStats) const {
+        std::lock_guard<std::mutex> lh(mutex);
+        addStats("registry_group_count",
+                 group_count.load(std::memory_order_relaxed));
     }
 }

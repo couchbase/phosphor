@@ -20,6 +20,7 @@
 #include <string>
 
 #include "phosphor/platform/thread.h"
+#include "phosphor/stats_callback.h"
 #include "phosphor/tools/export.h"
 #include "phosphor/trace_log.h"
 #include "utils/memory.h"
@@ -173,7 +174,7 @@ namespace phosphor {
         return TraceContext(std::move(buffer), thread_names);
     }
 
-    bool TraceLog::isEnabled() {
+    bool TraceLog::isEnabled() const {
         return enabled;
     }
 
@@ -228,6 +229,23 @@ namespace phosphor {
     TraceConfig TraceLog::getTraceConfig() const {
         std::lock_guard<std::mutex> lh(mutex);
         return trace_config;
+    }
+
+    void TraceLog::getStats(StatsCallback& addStats) const {
+        std::lock_guard<std::mutex> lh(mutex);
+        using gsl_p::make_span;
+
+        registry.getStats(addStats);
+        if (buffer) {
+            buffer->getStats(addStats);
+        }
+
+        addStats("log_is_enabled", isEnabled());
+        addStats("log_has_buffer", buffer != nullptr);
+        addStats("log_thread_names", thread_names.size());
+        addStats("log_deregistered_threads", deregistered_threads.size());
+        addStats("log_registered_tenants", registered_sentinels.size());
+        addStats("log_shared_tenants", shared_chunks.size());
     }
 
     TraceLog::ChunkTenant* TraceLog::getChunkTenant() {

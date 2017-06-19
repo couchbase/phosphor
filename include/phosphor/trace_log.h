@@ -249,7 +249,7 @@ namespace phosphor {
          *
          * @return True if tracing is enabled, False if tracing is disabled
          */
-        bool isEnabled();
+        bool isEnabled() const;
 
         /**
          * Registers the current thread for tracing (Optional)
@@ -309,6 +309,13 @@ namespace phosphor {
         };
 
         TraceConfig getTraceConfig() const;
+
+        /**
+         * Invokes methods on the callback to supply various
+         * stats about the TraceLog, the active trace buffer
+         * and the category registry.
+         */
+        void getStats(StatsCallback& addStats) const;
 
     protected:
 

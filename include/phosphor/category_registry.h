@@ -38,6 +38,9 @@ namespace phosphor {
 
     using AtomicCategoryStatus = std::atomic<CategoryStatus>;
 
+    // Forward declare
+    class StatsCallback;
+
     /**
      * CategoryRegistry encapsulates the logic for enabling/disabling
      * of various tracing categories
@@ -101,6 +104,12 @@ namespace phosphor {
                 const std::vector<std::string>& enabled,
                 const std::vector<std::string>& disabled);
 
+        /**
+         * Invokes methods on the callback to supply various
+         * stats about the category registry.
+         */
+        void getStats(StatsCallback& addStats) const;
+
     protected:
         /**
          * Calculates whether or not a given group index should
@@ -112,7 +121,7 @@ namespace phosphor {
          */
         CategoryStatus calculateEnabled(size_t index);
 
-        std::mutex mutex;
+        mutable std::mutex mutex;
 
         std::array<std::string, registry_size> groups;
         static constexpr int index_category_limit = 1;
