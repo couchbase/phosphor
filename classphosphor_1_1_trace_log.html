@@ -160,8 +160,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a788fdc1d44ef074dfc4f3fa68830a1b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e1214bab281962bccc6029be63c8755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_context.html">TraceContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a0e1214bab281962bccc6029be63c8755">getTraceContext</a> (std::lock_guard&lt; <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> &gt; &amp;)</td></tr>
 <tr class="separator:a0e1214bab281962bccc6029be63c8755"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ae5cc67e6a17aec48a3b5beb1acb28d5f">isEnabled</a> ()</td></tr>
-<tr class="separator:ae5cc67e6a17aec48a3b5beb1acb28d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dc482de0ee398dd3260da9637c0aaeb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a7dc482de0ee398dd3260da9637c0aaeb">isEnabled</a> () const </td></tr>
+<tr class="separator:a7dc482de0ee398dd3260da9637c0aaeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e05392fcb945933fd9e4a86254409e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a1e05392fcb945933fd9e4a86254409e9">registerThread</a> (const std::string &amp;thread_name=&quot;&quot;)</td></tr>
 <tr class="separator:a1e05392fcb945933fd9e4a86254409e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91fcc4d0476fa6d815975fb9e6f056ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a91fcc4d0476fa6d815975fb9e6f056ef">deregisterThread</a> ()</td></tr>
@@ -173,6 +173,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad214f6f2f7881800d1ac6dd243806679"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad214f6f2f7881800d1ac6dd243806679"></a>
 <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getTraceConfig</b> () const </td></tr>
 <tr class="separator:ad214f6f2f7881800d1ac6dd243806679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b928218b3a29236d0c7cedd38c92a5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a55b928218b3a29236d0c7cedd38c92a5">getStats</a> (<a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;addStats) const </td></tr>
+<tr class="separator:a55b928218b3a29236d0c7cedd38c92a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -494,6 +496,23 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 
 </div>
 </div>
+<a class="anchor" id="a55b928218b3a29236d0c7cedd38c92a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::TraceLog::getStats </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>addStats</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invokes methods on the callback to supply various stats about the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a>, the active trace buffer and the category registry. </p>
+
+</div>
+</div>
 <a class="anchor" id="a788fdc1d44ef074dfc4f3fa68830a1b4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -541,7 +560,7 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 
 </div>
 </div>
-<a class="anchor" id="ae5cc67e6a17aec48a3b5beb1acb28d5f"></a>
+<a class="anchor" id="a7dc482de0ee398dd3260da9637c0aaeb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -549,7 +568,7 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
           <td class="memname">bool phosphor::TraceLog::isEnabled </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">

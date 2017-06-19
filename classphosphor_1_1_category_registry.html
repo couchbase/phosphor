@@ -132,6 +132,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a238b7dca9c6f7284357c045f73263707"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae68ce1824aae7dcc45c7f896dc573ebe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#ae68ce1824aae7dcc45c7f896dc573ebe">disableAll</a> ()</td></tr>
 <tr class="separator:ae68ce1824aae7dcc45c7f896dc573ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dfbb9c7eae7123289bccb76c4a510a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_category_registry.html#a5dfbb9c7eae7123289bccb76c4a510a4">getStats</a> (<a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;addStats) const </td></tr>
+<tr class="separator:a5dfbb9c7eae7123289bccb76c4a510a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -298,6 +300,23 @@ static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><b>index
 <p>Disables all category groups</p>
 <p>Equivalent to: </p><pre class="fragment">CategoryRegistry::updateEnabled({{}}, {{}});
 </pre><p>Except a bit more efficient as it doesn't bother with calculations </p>
+
+</div>
+</div>
+<a class="anchor" id="a5dfbb9c7eae7123289bccb76c4a510a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void phosphor::CategoryRegistry::getStats </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classphosphor_1_1_stats_callback.html">StatsCallback</a> &amp;&#160;</td>
+          <td class="paramname"><em>addStats</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invokes methods on the callback to supply various stats about the category registry. </p>
 
 </div>
 </div>
