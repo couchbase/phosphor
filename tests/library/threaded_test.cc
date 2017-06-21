@@ -25,42 +25,8 @@
 #include <gtest/gtest.h>
 
 #include <phosphor/phosphor.h>
+#include "barrier.h"
 #include "utils/memory.h"
-
-// Unashamedly stolen from ep-engine's checkpoint test
-class ThreadGate {
-public:
-    ThreadGate()
-        : n_threads(0) {
-    }
-
-    /** Create a ThreadGate.
-     *  @param n_threads Total number of threads to wait for.
-     */
-    ThreadGate(size_t n_threads_)
-            : n_threads(n_threads_) {
-    }
-
-    /*
-     * atomically increment a threadCount
-     * if the calling thread is the last one up, notify_all
-     * if the calling thread is not the last one up, wait (in the function)
-     */
-    void threadUp() {
-        std::unique_lock<std::mutex> lh(m);
-        if (++thread_count != n_threads) {
-            cv.wait(lh, [this](){return thread_count == n_threads;});
-        } else {
-            cv.notify_all(); // all threads accounted for, begin
-        }
-    }
-
-private:
-    const size_t n_threads;
-    size_t thread_count {0};
-    std::mutex m;
-    std::condition_variable cv;
-};
 
 class ThreadedTest : public ::testing::Test {
 public:
@@ -70,17 +36,18 @@ public:
 
     void startWorkload(size_t thread_count, std::function<void()> workload) {
         ASSERT_FALSE(running);
-        gate = phosphor::utils::make_unique<ThreadGate>(thread_count + 1);
         running = true;
+
+        barrier.reset(thread_count + 1);
         for (size_t i = 0; i < thread_count; ++i) {
             threads.emplace_back([workload, this]() {
-                gate->threadUp();
+                barrier.wait();
                 do {
                     workload();
                 } while(running);
             });
         }
-        gate->threadUp();
+        barrier.wait();
     }
 
     void stopWorkload() {
@@ -95,7 +62,7 @@ private:
     std::vector<std::thread> threads;
     std::atomic<bool> running;
 
-    std::unique_ptr<ThreadGate> gate;
+    Barrier barrier;
 
 
 };

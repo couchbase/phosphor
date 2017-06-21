@@ -23,6 +23,7 @@
 #include <phosphor/category_registry.h>
 #include <utils/memory.h>
 
+#include "barrier.h"
 #include "bench_common.h"
 
 using namespace phosphor;
@@ -38,12 +39,7 @@ void NewCategories(benchmark::State& state) {
     // Registry comes with 3 items already in it
     static std::array<std::string, (CategoryRegistry::registry_size - 3)> categories;
     static std::unique_ptr<CategoryRegistry> registry;
-
-    int generation = 0;
-    static int barrier_generation;
-    static int paused;
-    static std::mutex mutex;
-    static std::condition_variable cv;
+    static Barrier barrier{0};
 
     if (state.thread_index == 0) {
         size_t i = 1;
@@ -51,9 +47,8 @@ void NewCategories(benchmark::State& state) {
             category = std::string("A", i++);
         }
         registry = utils::make_unique<CategoryRegistry>();
-        paused = 0;
-        barrier_generation = 0;
-}
+        barrier.reset(state.threads);
+    }
 
     while (state.KeepRunning()) {
         for (const auto& category : categories) {
@@ -63,24 +58,9 @@ void NewCategories(benchmark::State& state) {
 
         // Wait for all the threads to sync up so we can reset
         // the category registry.
-        {
-            std::unique_lock<std::mutex> lh(mutex);
-            ++paused;
-            if (paused == state.threads) {
-                registry = utils::make_unique<CategoryRegistry>();
-                paused = 0;
-                ++barrier_generation;
-                cv.notify_all();
-            } else {
-                cv.wait(lh, [&generation]() {
-                    // We use the barrier generation instead of the
-                    // number of paused threads to allow the barrier
-                    // to be reused.
-                    return barrier_generation == generation + 1;
-                });
-            }
-            ++generation;
-        }
+        barrier.wait([](){
+            registry = utils::make_unique<CategoryRegistry>();
+        });
 
         state.ResumeTiming();
     }

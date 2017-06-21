@@ -21,6 +21,9 @@ MACRO (M_ADD_LIBRARY_GTEST name)
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()
 
+INCLUDE_DIRECTORIES(AFTER
+            ${phosphor_SOURCE_DIR}/tests/include)
+
 IF(DEFINED gtest_SOURCE_DIR)
     INCLUDE_DIRECTORIES(AFTER
             ${gtest_SOURCE_DIR}/include
@@ -40,6 +43,3 @@ Benchmarking will not be representative with code coverage enabled. It has a \
             ${benchmark_SOURCE_DIR}/include)
     ADD_SUBDIRECTORY(benchmark)
 ENDIF ()
-
-ADD_EXECUTABLE(playground playground.cc)
-TARGET_LINK_LIBRARIES(playground phosphor)
