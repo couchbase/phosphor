@@ -39,11 +39,10 @@ namespace phosphor {
      * has been registered as it requires resources allocated
      * that are only referred to from thread-local storage.
      */
-    THREAD_LOCAL TraceLog::ChunkTenant thread_chunk = {0, 0};
+    THREAD_LOCAL ChunkTenant thread_chunk;
 
     TraceLog::TraceLog(const TraceLogConfig& _config)
-        : enabled(false),
-          generation(0) {
+        : enabled(false), generation(0) {
         configure(_config);
     }
 
@@ -51,22 +50,17 @@ namespace phosphor {
 
     TraceLog::~TraceLog() {
         stop(true);
-        for (auto& chunk : shared_chunks) {
-            delete chunk.sentinel;
-        }
     }
 
     void TraceLog::configure(const TraceLogConfig& _config) {
         std::lock_guard<TraceLog> lh(*this);
 
         shared_chunks.reserve(_config.getSentinelCount());
-        registered_sentinels.reserve(_config.getSentinelCount());
+        registered_chunk_tenants.reserve(_config.getSentinelCount());
         for (size_t i = shared_chunks.size(); i < _config.getSentinelCount();
              ++i) {
-            shared_chunks.emplace_back();
-            shared_chunks[i].sentinel = new Sentinel;
-            shared_chunks[i].chunk = nullptr;
-            registered_sentinels.insert(shared_chunks[i].sentinel);
+            shared_chunks.emplace_back(non_trivial_constructor);
+            registered_chunk_tenants.insert(&shared_chunks.back());
         }
 
         if (auto* startup_trace = _config.getStartupTrace()) {
@@ -181,13 +175,13 @@ namespace phosphor {
     void TraceLog::registerThread(const std::string& thread_name) {
         std::lock_guard<TraceLog> lh(*this);
 
-        if (thread_chunk.sentinel) {
+        if (thread_chunk.initialised) {
             throw std::logic_error("TraceLog::registerThread: Thread is "
                                    "already registered");
         }
 
-        thread_chunk.sentinel = new Sentinel;
-        registered_sentinels.insert(thread_chunk.sentinel);
+        thread_chunk.initialised = true;
+        registered_chunk_tenants.insert(&thread_chunk);
 
         if (thread_name != "") {
             // Unconditionally set the name of the thread, even for the unlikely
@@ -203,7 +197,7 @@ namespace phosphor {
     void TraceLog::deregisterThread() {
         std::lock_guard<TraceLog> lh(*this);
 
-        if (!thread_chunk.sentinel) {
+        if (!thread_chunk.initialised) {
             throw std::logic_error(
                 "phosphor::TraceLog::deregisterThread: This thread has "
                 "not been previously registered");
@@ -215,9 +209,8 @@ namespace phosphor {
             }
             thread_chunk.chunk = nullptr;
         }
-        registered_sentinels.erase(thread_chunk.sentinel);
-        delete thread_chunk.sentinel;
-        thread_chunk.sentinel = nullptr;
+        registered_chunk_tenants.erase(&thread_chunk);
+        thread_chunk.initialised = false;
 
         if (isEnabled()) {
             deregistered_threads.emplace(platform::getCurrentThreadIDCached());
@@ -244,32 +237,41 @@ namespace phosphor {
         addStats("log_has_buffer", buffer != nullptr);
         addStats("log_thread_names", thread_names.size());
         addStats("log_deregistered_threads", deregistered_threads.size());
-        addStats("log_registered_tenants", registered_sentinels.size());
+        addStats("log_registered_tenants", registered_chunk_tenants.size());
         addStats("log_shared_tenants", shared_chunks.size());
     }
 
-    TraceLog::ChunkTenant* TraceLog::getChunkTenant() {
+    std::unique_lock<ChunkTenant> TraceLog::getChunkTenant() {
         auto shared_index =
                 platform::getCurrentThreadIDCached() % shared_chunks.size();
 
-        ChunkTenant& cs = (thread_chunk.sentinel)
-                          ? thread_chunk
-                          : shared_chunks[shared_index];
+        ChunkTenant& cs = (thread_chunk.initialised)
+                                  ? thread_chunk
+                                  : shared_chunks[shared_index];
 
-        while (!cs.sentinel->acquire()) {
-            resetChunk(cs);
+        std::unique_lock<ChunkTenant> cl{cs, std::try_to_lock};
+
+        // If we didn't acquire the lock then we're stopping so bail out
+        if (!cl) {
+            return {};
         }
-        // State is busy
+
         if (!cs.chunk || cs.chunk->isFull()) {
+            // If we're missing our chunk then it might be because we're
+            // meant to be stopping right now.
+            if (!enabled) {
+                return {};
+            }
+
             if (!replaceChunk(cs)) {
-                size_t current = generation.load(std::memory_order_acquire);
-                cs.sentinel->release();
+                size_t current = generation;
+                cl.unlock();
                 maybe_stop(current);
-                return nullptr;
+                return {};
             }
         }
 
-        return &cs;
+        return cl;
     }
 
     bool TraceLog::replaceChunk(ChunkTenant& ct) {
@@ -277,19 +279,14 @@ namespace phosphor {
             buffer->returnChunk(*ct.chunk);
             ct.chunk = nullptr;
         }
-        return buffer && (ct.chunk = buffer->getChunk());
-    }
-
-    void TraceLog::resetChunk(ChunkTenant& ct) {
-        if (ct.sentinel->reopen()) {
-            ct.chunk = nullptr;
-            ct.sentinel->release();
-        }
+        return enabled && buffer && (ct.chunk = buffer->getChunk());
     }
 
     void TraceLog::evictThreads(std::lock_guard<TraceLog>& lh) {
-        for (auto& sentinel : registered_sentinels) {
-            sentinel->close();
+        for (auto* chunk_tenant : registered_chunk_tenants) {
+            chunk_tenant->lck.master().lock();
+            chunk_tenant->chunk = nullptr;
+            chunk_tenant->lck.master().unlock();
         }
     }
 

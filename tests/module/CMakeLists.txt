@@ -46,7 +46,7 @@ M_ADD_MODULE_GTEST(trace_event_test
 
 M_ADD_MODULE_GTEST(trace_buffer_test
         trace_buffer_test.cc
-        ${phosphor_SOURCE_DIR}/src/sentinel.cc
+        ${phosphor_SOURCE_DIR}/src/chunk_lock.cc
         ${phosphor_SOURCE_DIR}/src/trace_event.cc
         ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
         ${phosphor_SOURCE_DIR}/src/platform/thread.cc

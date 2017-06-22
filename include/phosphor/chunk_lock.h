@@ -165,4 +165,45 @@ public:
     void unlock();
 };
 
+struct PHOSPHOR_API ChunkTenant {
+    /**
+     * ChunkTenant is trivially constructible to allow for use in
+     * MacOS compatible `thread_local` variables.
+     *
+     * ChunkTenant is 'constructed' by memsetting to zero
+     */
+    ChunkTenant() = default;
+
+    /**
+     * Non-trivial constructor for regular use
+     */
+    ChunkTenant(non_trivial_constructor_t t);
+
+    void lock() {
+        lck.slave().lock();
+    }
+
+    bool try_lock() {
+        return lck.slave().try_lock();
+    }
+
+    void unlock() {
+        lck.slave().unlock();
+    }
+
+    ChunkLock lck;
+    TraceChunk* chunk;
+
+    /**
+     * Special variable for use when registering a thread to tell if it's
+     * already been registered (and not just that the tenant is unlocked
+     * and isn't holding a chunk)
+     */
+    bool initialised;
+};
+
+// @todo Remove requirement when moving to XCode 8 (10.11.5 / 10.12 or later)
+static_assert(std::is_trivially_constructible<ChunkTenant>::value,
+              "ChunkTenant must be trivially constructible as MacOS"
+              "only supports trivially constructible thread_locals");
 }
