@@ -4,6 +4,7 @@ var dir_1c88311f8fdc2818688f49103ed32664 =
     [ "tools", "dir_59cbd45c5633c9b02a951633b4bdd009.html", "dir_59cbd45c5633c9b02a951633b4bdd009" ],
     [ "utils", "dir_6f91e335e26c44c48b1e6ff8cda6a3c1.html", "dir_6f91e335e26c44c48b1e6ff8cda6a3c1" ],
     [ "category_registry.h", "category__registry_8h.html", "category__registry_8h" ],
+    [ "chunk_lock.h", "chunk__lock_8h.html", "chunk__lock_8h" ],
     [ "inline_zstring.h", "inline__zstring_8h.html", [
       [ "inline_zstring", "classphosphor_1_1inline__zstring.html", "classphosphor_1_1inline__zstring" ]
     ] ],

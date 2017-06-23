@@ -2,6 +2,10 @@ var hierarchy =
 [
     [ "phosphor::CategoryRegistry", "classphosphor_1_1_category_registry.html", null ],
     [ "phosphor::TraceBuffer::chunk_iterable", "classphosphor_1_1_trace_buffer_1_1chunk__iterable.html", null ],
+    [ "phosphor::ChunkLock", "classphosphor_1_1_chunk_lock.html", [
+      [ "phosphor::MasterChunkLock", "classphosphor_1_1_master_chunk_lock.html", null ],
+      [ "phosphor::SlaveChunkLock", "classphosphor_1_1_slave_chunk_lock.html", null ]
+    ] ],
     [ "phosphor::TraceLog::ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", null ],
     [ "gsl_p::dyn_array< _Tp >", "structgsl__p_1_1dyn__array.html", null ],
     [ "gsl_p::dyn_array< phosphor::TraceChunk >", "structgsl__p_1_1dyn__array.html", null ],
@@ -14,6 +18,7 @@ var hierarchy =
     [ "phosphor::tools::JSONExport", "classphosphor_1_1tools_1_1_j_s_o_n_export.html", null ],
     [ "gsl_p::multidimensional_iterator< T >", "classgsl__p_1_1multidimensional__iterator.html", null ],
     [ "gsl_p::multidimensional_iterator< chunk_iterator >", "classgsl__p_1_1multidimensional__iterator.html", null ],
+    [ "phosphor::non_trivial_constructor_t", "structphosphor_1_1non__trivial__constructor__t.html", null ],
     [ "phosphor::NoneType", "structphosphor_1_1_none_type.html", null ],
     [ "phosphor::RelaxedAtomic< T >", "classphosphor_1_1_relaxed_atomic.html", null ],
     [ "phosphor::RelaxedAtomic< const char * >", "classphosphor_1_1_relaxed_atomic.html", [

@@ -9,6 +9,8 @@ var searchData=
   ['setstoppedcallback',['setStoppedCallback',['../classphosphor_1_1_trace_config.html#a14a08581c5a1160f7854275f70db2015',1,'phosphor::TraceConfig']]],
   ['setstoptracingondestruct',['setStopTracingOnDestruct',['../classphosphor_1_1_trace_config.html#a8a2af9e6a5fe7e09a82032b9dce0b56e',1,'phosphor::TraceConfig']]],
   ['shared_5fchunks',['shared_chunks',['../classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5',1,'phosphor::TraceLog']]],
+  ['slave',['slave',['../classphosphor_1_1_chunk_lock.html#a9c0e8e9ec462a00b43efc7a5e1530f6c',1,'phosphor::ChunkLock']]],
+  ['slavechunklock',['SlaveChunkLock',['../classphosphor_1_1_slave_chunk_lock.html',1,'phosphor']]],
   ['sorting_5falgorithm_2ecc',['sorting_algorithm.cc',['../sorting__algorithm_8cc.html',1,'']]],
   ['span',['span',['../classgsl__p_1_1span.html',1,'gsl_p']]],
   ['start',['start',['../classphosphor_1_1_trace_log.html#a22fde18331507432721f09e70f35822e',1,'phosphor::TraceLog::start(const TraceConfig &amp;_trace_config)'],['../classphosphor_1_1_trace_log.html#ad39c97c1cc03aac3d7ebd2294ae46a1a',1,'phosphor::TraceLog::start(std::lock_guard&lt; TraceLog &gt; &amp;, const TraceConfig &amp;_trace_config)']]],

@@ -29,6 +29,7 @@ var searchData=
   ['tracepoint_5finfo',['tracepoint_info',['../structphosphor_1_1tracepoint__info.html',1,'phosphor']]],
   ['tracepoint_5finfo_2eh',['tracepoint_info.h',['../tracepoint__info_8h.html',1,'']]],
   ['tracingstoppedcallback',['TracingStoppedCallback',['../classphosphor_1_1_tracing_stopped_callback.html',1,'phosphor']]],
+  ['trylockslave',['tryLockSlave',['../classphosphor_1_1_chunk_lock.html#aee9efe00c00fd8ef06ab0804583a2e4f',1,'phosphor::ChunkLock']]],
   ['type',['Type',['../unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89',1,'phosphor::TraceArgument::Type()'],['../classphosphor_1_1_trace_event.html#a360f1bd13c99c0ece9d49367e7fc312b',1,'phosphor::TraceEvent::Type()']]],
   ['typetojson',['typeToJSON',['../classphosphor_1_1_trace_event.html#a6b3621142bc14656b077e84350bb643f',1,'phosphor::TraceEvent']]],
   ['typetostring',['typeToString',['../classphosphor_1_1_trace_event.html#af2f430675e1dc5fc8abbcf332d82ee01',1,'phosphor::TraceEvent']]]

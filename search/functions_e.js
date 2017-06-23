@@ -9,6 +9,7 @@ var searchData=
   ['traceevent',['TraceEvent',['../classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0',1,'phosphor::TraceEvent::TraceEvent()=default'],['../classphosphor_1_1_trace_event.html#a6f7c4e71d04a685661a2018518486aa4',1,'phosphor::TraceEvent::TraceEvent(const tracepoint_info *_tpi, Type _type, uint32_t _thread_id, std::array&lt; TraceArgument, arg_count &gt; &amp;&amp;_args, std::array&lt; TraceArgument::Type, arg_count &gt; &amp;&amp;_arg_types)']]],
   ['tracelog',['TraceLog',['../classphosphor_1_1_trace_log.html#a9084ab48cd9916adfea0420c6962e40c',1,'phosphor::TraceLog::TraceLog(const TraceLogConfig &amp;_config)'],['../classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231',1,'phosphor::TraceLog::TraceLog()']]],
   ['tracelogconfig',['TraceLogConfig',['../classphosphor_1_1_trace_log_config.html#ad51578097552a617f85b3fa5f7dc081e',1,'phosphor::TraceLogConfig']]],
+  ['trylockslave',['tryLockSlave',['../classphosphor_1_1_chunk_lock.html#aee9efe00c00fd8ef06ab0804583a2e4f',1,'phosphor::ChunkLock']]],
   ['typetojson',['typeToJSON',['../classphosphor_1_1_trace_event.html#a6b3621142bc14656b077e84350bb643f',1,'phosphor::TraceEvent']]],
   ['typetostring',['typeToString',['../classphosphor_1_1_trace_event.html#af2f430675e1dc5fc8abbcf332d82ee01',1,'phosphor::TraceEvent']]]
 ];
