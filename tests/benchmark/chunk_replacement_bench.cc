@@ -28,13 +28,15 @@ public:
     using phosphor::TraceLog::TraceLog;
 
     void replaceChunk() {
-        auto ctl = getChunkTenant();
-        if (!ctl) {
+        ChunkTenant* cs = getChunkTenant();
+        if (!cs) {
             return;
         }
-        phosphor::TraceLog::replaceChunk(*ctl.mutex());
-        if (!ctl.mutex()->chunk) {
-            ctl.unlock();
+        phosphor::TraceLog::replaceChunk(*cs);
+        if (cs->chunk) {
+            cs->sentinel->release();
+        } else {
+            cs->sentinel->release();
             stop();
         }
     }

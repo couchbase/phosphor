@@ -25,11 +25,11 @@
 #include <unordered_set>
 
 #include "category_registry.h"
-#include "chunk_lock.h"
 #include "platform/thread.h"
-#include "trace_buffer.h"
+#include "sentinel.h"
 #include "trace_config.h"
 #include "trace_context.h"
+#include "trace_buffer.h"
 #include "trace_event.h"
 
 namespace phosphor {
@@ -139,20 +139,21 @@ namespace phosphor {
                       TraceEvent::Type type,
                       T argA,
                       U argB) {
-            if (!enabled) {
+            if (!enabled)
                 return;
-            }
-            auto cl = getChunkTenant();
-            if (cl) {
-                cl.mutex()->chunk->addEvent() = TraceEvent(
-                        tpi,
-                        type,
-                        platform::getCurrentThreadIDCached(),
-                        {{TraceArgumentConversion<T>::asArgument(argA),
-                          TraceArgumentConversion<U>::asArgument(argB)}},
-                        {{TraceArgumentConversion<T>::getType(),
-                          TraceArgumentConversion<U>::getType()}});
-            }
+            ChunkTenant* cs = getChunkTenant();
+            if (cs == nullptr)
+                return;
+
+            cs->chunk->addEvent() = TraceEvent(
+                tpi,
+                type,
+                platform::getCurrentThreadIDCached(),
+                {{TraceArgumentConversion<T>::asArgument(argA),
+                  TraceArgumentConversion<U>::asArgument(argB)}},
+                {{TraceArgumentConversion<T>::getType(),
+                  TraceArgumentConversion<U>::getType()}});
+            cs->sentinel->release();
         }
 
         /**
@@ -302,6 +303,11 @@ namespace phosphor {
             mutex.unlock();
         }
 
+        struct ChunkTenant {
+            Sentinel* sentinel;
+            TraceChunk* chunk;
+        };
+
         TraceConfig getTraceConfig() const;
 
         /**
@@ -320,7 +326,7 @@ namespace phosphor {
          * @return A valid ChunkTenant with available events or a
          *         nullptr if a valid ChunkTenant could not be acquired.
          */
-        std::unique_lock<ChunkTenant> getChunkTenant();
+        ChunkTenant* getChunkTenant();
 
         /**
          * Replaces the current chunk held by the ChunkTenant with a new chunk
@@ -335,6 +341,18 @@ namespace phosphor {
          *              replaced, false otherwise
          */
         bool replaceChunk(ChunkTenant& ct);
+
+        /**
+         * Resets the current chunk held by the ChunkTenant
+         * (because the ChunkTenant has been evicted by the buffer)
+         *
+         * This function should be called when the ChunkTenant
+         * is found to be closed. This is so that the eviction from the buffer
+         * can be acknowledged and the reference to the chunk removed. Once
+         * this has been done the chunk can be transitioned back into the Open
+         * state.
+         */
+        void resetChunk(ChunkTenant& ct);
 
         /**
          * Used for evicting all ChunkTenants from the log
@@ -424,7 +442,7 @@ namespace phosphor {
         /**
          * The set of sentinels that have been registered to this TraceLog.
          */
-        std::unordered_set<ChunkTenant*> registered_chunk_tenants;
+        std::unordered_set<Sentinel*> registered_sentinels;
 
         /**
          * Category registry which manages the enabled / disabled categories

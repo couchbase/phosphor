@@ -109,7 +109,4 @@ void MasterChunkLock::unlock() {
     unlockMaster();
 }
 
-ChunkTenant::ChunkTenant(non_trivial_constructor_t t)
-    : lck(non_trivial_constructor), chunk(nullptr), initialised(true) {
-}
 }
