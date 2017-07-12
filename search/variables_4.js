@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['initialised',['initialised',['../structphosphor_1_1_chunk_tenant.html#ad3cd7142147e6d664c704732a655490a',1,'phosphor::ChunkTenant']]]
+  ['mutex',['mutex',['../classphosphor_1_1_trace_log.html#a51a113a9a75825d65aa7d235eeefd4fb',1,'phosphor::TraceLog']]]
 ];

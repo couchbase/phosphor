@@ -1,5 +1,6 @@
 var classphosphor_1_1_trace_log =
 [
+    [ "ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", "structphosphor_1_1_trace_log_1_1_chunk_tenant" ],
     [ "TraceLog", "classphosphor_1_1_trace_log.html#a9084ab48cd9916adfea0420c6962e40c", null ],
     [ "TraceLog", "classphosphor_1_1_trace_log.html#ae86d34004e257bd6a45442a634370231", null ],
     [ "~TraceLog", "classphosphor_1_1_trace_log.html#a73b5bd190085f7133b32ee172fed699d", null ],
@@ -10,7 +11,7 @@ var classphosphor_1_1_trace_log =
     [ "getBuffer", "classphosphor_1_1_trace_log.html#a47bd45e0cec58a6315aeab78a0562469", null ],
     [ "getBuffer", "classphosphor_1_1_trace_log.html#ae5041e833872a887191ec8ca8ef95d6d", null ],
     [ "getCategoryStatus", "classphosphor_1_1_trace_log.html#ac9c0245c0bc2e15e5268a154785aa987", null ],
-    [ "getChunkTenant", "classphosphor_1_1_trace_log.html#aca8bac676c35e1873e9d1ad61ea7f021", null ],
+    [ "getChunkTenant", "classphosphor_1_1_trace_log.html#a30cd12f4e9970f7347efe63986638227", null ],
     [ "getStats", "classphosphor_1_1_trace_log.html#a55b928218b3a29236d0c7cedd38c92a5", null ],
     [ "getTraceConfig", "classphosphor_1_1_trace_log.html#ad214f6f2f7881800d1ac6dd243806679", null ],
     [ "getTraceContext", "classphosphor_1_1_trace_log.html#a788fdc1d44ef074dfc4f3fa68830a1b4", null ],
@@ -23,6 +24,7 @@ var classphosphor_1_1_trace_log =
     [ "maybe_stop", "classphosphor_1_1_trace_log.html#a1ca3a32f796b163c00718b260d4c5d9c", null ],
     [ "registerThread", "classphosphor_1_1_trace_log.html#a1e05392fcb945933fd9e4a86254409e9", null ],
     [ "replaceChunk", "classphosphor_1_1_trace_log.html#aac3501043f159ac129c97cf03b302041", null ],
+    [ "resetChunk", "classphosphor_1_1_trace_log.html#a7072d5d2fa370d231b6c93490d2180ca", null ],
     [ "start", "classphosphor_1_1_trace_log.html#a22fde18331507432721f09e70f35822e", null ],
     [ "start", "classphosphor_1_1_trace_log.html#ad39c97c1cc03aac3d7ebd2294ae46a1a", null ],
     [ "stop", "classphosphor_1_1_trace_log.html#ada1fdb38d3c191ad833a828bbaf06a72", null ],
@@ -33,7 +35,7 @@ var classphosphor_1_1_trace_log =
     [ "enabled", "classphosphor_1_1_trace_log.html#aa4b650b4031a9c1b03c42b4bf99c33a7", null ],
     [ "generation", "classphosphor_1_1_trace_log.html#a8187206258102e3fc248d4d0c2a0a66e", null ],
     [ "mutex", "classphosphor_1_1_trace_log.html#a51a113a9a75825d65aa7d235eeefd4fb", null ],
-    [ "registered_chunk_tenants", "classphosphor_1_1_trace_log.html#af4b4a41b3c7f338262d64c1850b0bdbe", null ],
+    [ "registered_sentinels", "classphosphor_1_1_trace_log.html#a254ad893c602a1c54a7c7347c6495925", null ],
     [ "registry", "classphosphor_1_1_trace_log.html#af0b34e540994efaabe4ce310070287cb", null ],
     [ "shared_chunks", "classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5", null ],
     [ "thread_names", "classphosphor_1_1_trace_log.html#a2ede59541a91a1b67b86a151753da6b5", null ],

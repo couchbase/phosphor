@@ -6,7 +6,7 @@ var hierarchy =
       [ "phosphor::MasterChunkLock", "classphosphor_1_1_master_chunk_lock.html", null ],
       [ "phosphor::SlaveChunkLock", "classphosphor_1_1_slave_chunk_lock.html", null ]
     ] ],
-    [ "phosphor::ChunkTenant", "structphosphor_1_1_chunk_tenant.html", null ],
+    [ "phosphor::TraceLog::ChunkTenant", "structphosphor_1_1_trace_log_1_1_chunk_tenant.html", null ],
     [ "gsl_p::dyn_array< _Tp >", "structgsl__p_1_1dyn__array.html", null ],
     [ "gsl_p::dyn_array< phosphor::TraceChunk >", "structgsl__p_1_1dyn__array.html", null ],
     [ "phosphor::utils::FILEDeleter", "structphosphor_1_1utils_1_1_f_i_l_e_deleter.html", null ],

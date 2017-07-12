@@ -148,7 +148,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>cacheline_pad</b> [64
 <tr class="separator:a7da0819440823dbd29e7aafc9f000186"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> is used to encapsulate the logic behind locking of a TraceLog::ChunkTenant. It is used to safely handle transitions between various states that a <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> might be in.</p>
+<div class="textblock"><p><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> is used to encapsulate the logic behind locking of a <a class="el" href="structphosphor_1_1_trace_log_1_1_chunk_tenant.html">TraceLog::ChunkTenant</a>. It is used to safely handle transitions between various states that a ChunkTenant might be in.</p>
 <p><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> is conceptually a tri-state spin-lock, there are 3 states:</p>
 <ul>
 <li>Open, equivalent to unlocked</li>
@@ -203,7 +203,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>cacheline_pad</b> [64
       </table>
 </div><div class="memdoc">
 <p>Acquire is used to take the lock from 'Open' to 'Busy'</p>
-<p>Acquire should be used by the users of a <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> before using the chunk pointer in the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>. Once the lock is acquired and use of the chunk is finished then the sentinel should be released().</p>
+<p>Acquire should be used by the users of a ChunkTenant before using the chunk pointer in the ChunkTenant. Once the lock is acquired and use of the chunk is finished then the sentinel should be released().</p>
 <dl class="section return"><dt>Returns</dt><dd>true if the lock has been acquired, false if the lock failed to be acquired due to the <a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> being in the closed state. </dd></dl>
 
 </div>
@@ -221,7 +221,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>cacheline_pad</b> [64
       </table>
 </div><div class="memdoc">
 <p>Close is used to take the lock from 'Open' to 'Closed'</p>
-<p>The closing process effectively sends a message to the threads using the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> that the current chunk pointer should not be used.</p>
+<p>The closing process effectively sends a message to the threads using the ChunkTenant that the current chunk pointer should not be used.</p>
 <p>Once the <a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> has transitioned to Closed then the current chunk pointer MUST not be used until it is reopened.</p>
 <p>n.b. It is generally expected that this will be called while holding the global lock but is not currently required </p>
 
@@ -240,7 +240,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>cacheline_pad</b> [64
       </table>
 </div><div class="memdoc">
 <p>Release is used to take the lock from 'Busy' to 'Open'</p>
-<p>This operation is used to indicate that the callee no longer requires access to the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> and that another thread may acquire it or close the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>.</p>
+<p>This operation is used to indicate that the callee no longer requires access to the ChunkTenant and that another thread may acquire it or close the ChunkTenant.</p>
 <p>Release should only be used while holding the Busy lock (the <a class="el" href="classphosphor_1_1_sentinel.html#ac72905e7efc8bb93349eef2b394f3551">release()</a> call does not verify this for performance). </p>
 
 </div>
@@ -258,7 +258,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><b>cacheline_pad</b> [64
       </table>
 </div><div class="memdoc">
 <p>Reopen is used to take the lock from 'Closed' to 'Busy'</p>
-<p>The reopening process essentially signifies 'accepting' that the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>'s current chunk pointer should no longer be used. The callee should subsequently clear the chunk pointer and may optionally get a new chunk.</p>
+<p>The reopening process essentially signifies 'accepting' that the ChunkTenant's current chunk pointer should no longer be used. The callee should subsequently clear the chunk pointer and may optionally get a new chunk.</p>
 <p>Once the process is complete the callee may either log an event as usual or they can immediately Release.</p>
 <p>Reopen uses compare_exchange_strong as it should not be used in a loop, if it fails then someone else has already made the transition and the process of 'reopening' should not be taken.</p>
 <dl class="section return"><dt>Returns</dt><dd>True if the transition was taken by the callee, False if it was not taken (Either taken by someone else or an invalid transition) </dd></dl>

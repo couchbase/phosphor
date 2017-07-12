@@ -11,7 +11,6 @@ var annotated_dup =
       ] ],
       [ "CategoryRegistry", "classphosphor_1_1_category_registry.html", "classphosphor_1_1_category_registry" ],
       [ "ChunkLock", "classphosphor_1_1_chunk_lock.html", "classphosphor_1_1_chunk_lock" ],
-      [ "ChunkTenant", "structphosphor_1_1_chunk_tenant.html", "structphosphor_1_1_chunk_tenant" ],
       [ "FixedTraceBuffer", "classphosphor_1_1_fixed_trace_buffer.html", "classphosphor_1_1_fixed_trace_buffer" ],
       [ "inline_zstring", "classphosphor_1_1inline__zstring.html", "classphosphor_1_1inline__zstring" ],
       [ "MasterChunkLock", "classphosphor_1_1_master_chunk_lock.html", "classphosphor_1_1_master_chunk_lock" ],

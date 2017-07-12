@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['initialised',['initialised',['../structphosphor_1_1_chunk_tenant.html#ad3cd7142147e6d664c704732a655490a',1,'phosphor::ChunkTenant']]],
   ['inline_5fzstring',['inline_zstring',['../classphosphor_1_1inline__zstring.html',1,'phosphor']]],
   ['inline_5fzstring',['inline_zstring',['../classphosphor_1_1inline__zstring.html#afafd87430d93afbdff29556ec58c8dd9',1,'phosphor::inline_zstring::inline_zstring(const std::string &amp;s)'],['../classphosphor_1_1inline__zstring.html#ad6fd24378d6ad04af87195b19e5227bf',1,'phosphor::inline_zstring::inline_zstring(const char *s)'],['../classphosphor_1_1inline__zstring.html#a812d466a21cec2e41f6eb5ce5529ff89',1,'phosphor::inline_zstring::inline_zstring(const char *s, size_t len)']]],
   ['inline_5fzstring_2eh',['inline_zstring.h',['../inline__zstring_8h.html',1,'']]],
