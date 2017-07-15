@@ -27,6 +27,7 @@
 #include <thread>
 #include <type_traits>
 #include <vector>
+#include <functional>
 
 #include <gsl_p/iterator.h>
 
