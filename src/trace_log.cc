@@ -55,9 +55,9 @@ namespace phosphor {
     void TraceLog::configure(const TraceLogConfig& _config) {
         std::lock_guard<TraceLog> lh(*this);
 
-        shared_chunks.reserve(_config.getSentinelCount());
-        registered_chunk_tenants.reserve(_config.getSentinelCount());
-        for (size_t i = shared_chunks.size(); i < _config.getSentinelCount();
+        shared_chunks.reserve(_config.getChunkLockCount());
+        registered_chunk_tenants.reserve(_config.getChunkLockCount());
+        for (size_t i = shared_chunks.size(); i < _config.getChunkLockCount();
              ++i) {
             shared_chunks.emplace_back(non_trivial_constructor);
             registered_chunk_tenants.insert(&shared_chunks.back());

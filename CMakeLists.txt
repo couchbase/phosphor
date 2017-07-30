@@ -23,7 +23,6 @@ SET(phosphor_HEADER_FILES
         ${phosphor_SOURCE_DIR}/include/phosphor/phosphor.h
         ${phosphor_SOURCE_DIR}/include/phosphor/phosphor-internal.h
         ${phosphor_SOURCE_DIR}/include/phosphor/relaxed_atomic.h
-        ${phosphor_SOURCE_DIR}/include/phosphor/sentinel.h
         ${phosphor_SOURCE_DIR}/include/phosphor/stats_callback.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_argument.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_buffer.h
@@ -40,7 +39,6 @@ SET(phosphor_HEADER_FILES
 SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/category_registry.cc
         ${phosphor_SOURCE_DIR}/src/chunk_lock.cc
-        ${phosphor_SOURCE_DIR}/src/sentinel.cc
         ${phosphor_SOURCE_DIR}/src/trace_buffer.cc
         ${phosphor_SOURCE_DIR}/src/trace_config.cc
         ${phosphor_SOURCE_DIR}/src/trace_context.cc

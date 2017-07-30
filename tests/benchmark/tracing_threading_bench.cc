@@ -49,7 +49,7 @@ BENCHMARK(NaiveSharedTenants)->ThreadRange(1, phosphor::benchNumThreads());
 
 void SingleChunkTenant(benchmark::State& state) {
     static phosphor::TraceLog log(
-        phosphor::TraceLogConfig().setSentinelCount(1));
+        phosphor::TraceLogConfig().setChunkLockCount(1));
     if (state.thread_index == 0) {
         log.start(phosphor::TraceConfig(
             phosphor::BufferMode::ring,

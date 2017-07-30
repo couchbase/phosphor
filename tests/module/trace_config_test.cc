@@ -28,10 +28,10 @@ using namespace phosphor;
 int setenv(const char* name, const char* value, int overwrite);
 #endif
 
-TEST(TraceLogConfigTest, sentinel_count) {
+TEST(TraceLogConfigTest, chunk_lock_count) {
     TraceLogConfig config;
-    EXPECT_EQ(88, config.setSentinelCount(88).getSentinelCount());
-    EXPECT_EQ(33, config.setSentinelCount(33).getSentinelCount());
+    EXPECT_EQ(88, config.setChunkLockCount(88).getChunkLockCount());
+    EXPECT_EQ(33, config.setChunkLockCount(33).getChunkLockCount());
 }
 
 TEST(TraceLogConfigTest, startup_trace) {
@@ -48,16 +48,16 @@ TEST(TraceLogConfigTest, startup_trace) {
 }
 
 TEST(TraceLogConfigTest, from_environment) {
-    setenv("PHOSPHOR_SENTINEL_COUNT", "5", true);
+    setenv("PHOSPHOR_CHUNK_LOCK_COUNT", "5", true);
     TraceLogConfig config;
     config.fromEnvironment();
-    EXPECT_EQ(5, config.getSentinelCount());
+    EXPECT_EQ(5, config.getChunkLockCount());
 
     for (const auto& str : {"abdc", "99999999999999999", "-1"}) {
-        setenv("PHOSPHOR_SENTINEL_COUNT", str, true);
+        setenv("PHOSPHOR_CHUNK_LOCK_COUNT", str, true);
         EXPECT_THROW(config.fromEnvironment(), std::invalid_argument);
     }
-    setenv("PHOSPHOR_SENTINEL_COUNT", "", true);
+    setenv("PHOSPHOR_CHUNK_LOCK_COUNT", "", true);
     EXPECT_NO_THROW(config.fromEnvironment());
 }
 

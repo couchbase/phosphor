@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
     std::cout << "\nStructure Sizes\n";
     std::cout << "===================\n";
 
-    std::cout << "Sentinel: " << sizeof(Sentinel) << " bytes\n";
+    std::cout << "ChunkLock: " << sizeof(ChunkLock) << " bytes\n";
     std::cout << "TraceArgument: " << sizeof(TraceArgument) << " bytes\n";
     std::cout << "TraceEvent: " << sizeof(TraceEvent) << " bytes\n";
     std::cout << "TraceChunk: " << sizeof(TraceChunk) << " bytes\n";

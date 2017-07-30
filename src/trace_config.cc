@@ -53,17 +53,17 @@ namespace phosphor {
  * TraceLogConfig implementation
  */
     TraceLogConfig::TraceLogConfig()
-// Benchmarking suggests that 4x the number of logical
-// cores is the sweetspot for the number to share.
-            : sentinel_count(std::thread::hardware_concurrency() * 4) {}
+    // Benchmarking suggests that 4x the number of logical
+    // cores is the sweetspot for the number to share.
+    : chunk_lock_count(std::thread::hardware_concurrency() * 4) {}
 
-    TraceLogConfig &TraceLogConfig::setSentinelCount(unsigned _sentinel_count) {
-        sentinel_count = _sentinel_count;
+    TraceLogConfig &TraceLogConfig::setChunkLockCount(unsigned _chunk_lock_count) {
+        chunk_lock_count = _chunk_lock_count;
         return *this;
     }
 
-    unsigned TraceLogConfig::getSentinelCount() const {
-        return sentinel_count;
+    unsigned TraceLogConfig::getChunkLockCount() const {
+        return chunk_lock_count;
     }
 
     TraceLogConfig &TraceLogConfig::setStartupTrace(
@@ -82,28 +82,28 @@ namespace phosphor {
     }
 
     TraceLogConfig &TraceLogConfig::fromEnvironment() {
-        const char *sentinel_count_s = std::getenv("PHOSPHOR_SENTINEL_COUNT");
-        if (sentinel_count_s && strlen(sentinel_count_s)) {
-            int sentinel_count;
+        const char *chunk_lock_count_s = std::getenv("PHOSPHOR_CHUNK_LOCK_COUNT");
+        if (chunk_lock_count_s && strlen(chunk_lock_count_s)) {
+            int chunk_lock_count;
             try {
-                sentinel_count = std::stoi(sentinel_count_s);
+                chunk_lock_count = std::stoi(chunk_lock_count_s);
             } catch (std::invalid_argument &) {
                 throw std::invalid_argument(
                         "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_SENTINEL_COUNT was not a valid integer");
+                        "PHOSPHOR_CHUNK_LOCK_COUNT was not a valid integer");
             } catch (std::out_of_range &) {
                 throw std::invalid_argument(
                         "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_SENTINEL_COUNT was too large");
+                        "PHOSPHOR_CHUNK_LOCK_COUNT was too large");
             }
 
-            if (sentinel_count < 0) {
+            if (chunk_lock_count < 0) {
                 throw std::invalid_argument(
                         "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_SENTINEL_COUNT cannot be negative");
+                        "PHOSPHOR_CHUNK_LOCK_COUNT cannot be negative");
             }
 
-            this->setSentinelCount(static_cast<unsigned>(sentinel_count));
+            this->setChunkLockCount(static_cast<unsigned>(chunk_lock_count));
         }
 
         const char *startup_config = std::getenv("PHOSPHOR_TRACING_START");

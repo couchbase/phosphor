@@ -26,10 +26,6 @@ M_ADD_LIBRARY_GTEST(export_test
 M_ADD_MODULE_GTEST(memory_test
         memory_test.cc)
 
-M_ADD_MODULE_GTEST(sentinel_test
-        sentinel_test.cc
-        ${phosphor_SOURCE_DIR}/src/sentinel.cc)
-
 M_ADD_MODULE_GTEST(string_utils_test
         string_utils_test.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)

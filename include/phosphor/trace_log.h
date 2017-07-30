@@ -279,8 +279,6 @@ namespace phosphor {
          * This MUST be called from registered threads before they shutdown to
          * prevent memory-leaks as the only reference to resources they allocate
          * are in thread local storage.
-         *
-         * @param instance The TraceLog instance that the sentinel is using
          */
         void deregisterThread();
 
@@ -326,8 +324,7 @@ namespace phosphor {
          * Replaces the current chunk held by the ChunkTenant with a new chunk
          * (typically because it is full).
          *
-         * This function must be called while the ChunkTenant sentinel is held
-         * in the 'Busy' state (via Sentinel::acquire or Sentinel::reopen).
+         * This function must be called while the ChunkTenant lock is held.
          *
          * @param ct The ChunkTenant that should have it's chunk returned
          *           and replaced
@@ -339,7 +336,7 @@ namespace phosphor {
         /**
          * Used for evicting all ChunkTenants from the log
          *
-         * This will use the set of sentinels established from
+         * This will use the set of ChunkTenants established from
          * the calls to registerThread and deregisterThread and
          * call close() on them.
          *
@@ -398,7 +395,7 @@ namespace phosphor {
          *
          * It is not required to be acquired when modifying a loaned out
          * TraceChunk contained within a ChunkTenant, this is
-         * protected by the ChunkTenant's sentinel lock instead.
+         * protected by the ChunkTenant's ChunkLock lock instead.
          */
         mutable std::mutex mutex;
 
@@ -422,7 +419,7 @@ namespace phosphor {
         std::atomic<size_t> generation;
 
         /**
-         * The set of sentinels that have been registered to this TraceLog.
+         * The set of ChunkTenants that have been registered to this TraceLog.
          */
         std::unordered_set<ChunkTenant*> registered_chunk_tenants;
 

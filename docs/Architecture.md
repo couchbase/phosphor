@@ -59,31 +59,19 @@ ChunkTenants distributed by thread id. A ChunkTenant has two main parts
 
  - A pointer to the currently borrowed chunk (Or nullptr if not currently
    borrowing one).
- - A chunk sentinel
+ - A ChunkLock
 
-#### Chunk `Sentinel`
+#### ChunkLock
 
-The sentinel is used to guard access to a Chunk. It is principally a tri-state
-lock:
+The ChunkLock is used to guard access to a Chunk. It is conceptually similar to
+a reader/writer lock that only allows a single reader. It has three states:
 
- * Open: the chunk is currently unlocked and the current pointer is either null
-         or it is safe to use
- * Busy: the chunk is currently locked and the pointer is either safe to use or
-         being made safe by the person who locked the sentinel.
- * Closed: the chunk is currently unlocked but the current pointer is not safe
-           to use. A TraceLog transitions a sentinel into this third state to
-           indicate that the next user of the ChunkTenant should replace or
-           at least nullify the chunk.
+ * Unlocked
+ * SlaveLocked, locked by the TraceLog::logEvent frontend
+ * MasterLocked, locked by the TraceLog::evictThreads backend
 
-The TraceLog will transition the chunk sentinel to closed when the trace buffer
-gets full or when tracing is stopped, this is usually because the trace buffer
-ownership will be transferred away and the chunk 'loans' need to be revoked.
-This transition can only be done when the sentinel is open and will block until
-it is in this state.
-
-A thread using a ChunkTenant will try to transition its sentinel to busy when
-they need to log an event and back to open when it's done. It will fail to do
-this if the sentinel is currently closed. In this event the chunk tenant will
-transition the sentinel to busy in another way and be aware that it needs to
-replace the chunk it had before.
-
+There are two distinct lock states as front-end consumers via logEvent will not
+be blocked by the `MasterLocked` state (it uses try_lock). The reason for this
+is that if the ChunkLock has been locked via the `evictThreads` route then
+tracing will be shut down and front-end consumers don't need to acquire the
+lock.
