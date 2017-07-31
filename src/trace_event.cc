@@ -94,7 +94,7 @@ namespace phosphor {
                 output += ",";
             }
 
-            output += utils::to_json(tpi->argument_names[i].load()) + ":";
+            output += utils::to_json(tpi->argument_names[i]) + ":";
             output += args[i].to_string(arg_types[i]);
         }
         output += "}";
@@ -147,7 +147,7 @@ namespace phosphor {
         return arg_types;
     }
 
-    const std::array<RelaxedAtomicCString, arg_count>&
+    const std::array<const char*, arg_count>&
             TraceEvent::getArgNames() const {
         return tpi->argument_names;
     }

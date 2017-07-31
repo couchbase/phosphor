@@ -29,8 +29,8 @@ namespace phosphor {
      * is static for a given tracepoint.
      */
     struct tracepoint_info {
-        RelaxedAtomicCString category;
-        RelaxedAtomicCString name;
-        std::array<RelaxedAtomicCString, 2> argument_names;
+        const char* category;
+        const char* name;
+        std::array<const char*, 2> argument_names;
     };
 }

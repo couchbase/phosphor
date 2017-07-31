@@ -214,7 +214,7 @@
  * @{
  */
 #define TRACE_EVENT(category, name, ...)                              \
-    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
+    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
     TRACE_EVENT_START(category, name, __VA_ARGS__);                   \
     struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
         ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
@@ -223,7 +223,7 @@
     } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
 
 #define TRACE_EVENT0(category, name)                                  \
-    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
+    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
     TRACE_EVENT_START0(category, name);                               \
     struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
         ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
@@ -232,7 +232,7 @@
     } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
 
 #define TRACE_EVENT1(category, name, arg1_name, arg1)                 \
-    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
+    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
     TRACE_EVENT_START1(category, name, arg1_name, arg1);              \
     struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
         ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
@@ -241,7 +241,7 @@
     } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
 
 #define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name;       \
+    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
     TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2); \
     struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
         ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
@@ -262,7 +262,7 @@
     TRACE_EVENT2(category, __func__, arg1_name, arg1, arg2_name, arg2)
 
 #define TRACE_LOCKGUARD(mutex, category, name)                                \
-    static const char* const PHOSPHOR_INTERNAL_UID(nme) = name ".held";  \
+    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name ".held";  \
     static decltype(mutex)& PHOSPHOR_INTERNAL_UID(lk)(mutex);            \
     TRACE_EVENT_START0(category, name ".acquire");                       \
     PHOSPHOR_INTERNAL_UID(lk).lock();                                    \

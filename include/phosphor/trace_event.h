@@ -124,7 +124,7 @@ namespace phosphor {
         /**
          * @return the names of the arguments of the event
          */
-        const std::array<RelaxedAtomicCString, arg_count>& getArgNames() const;
+        const std::array<const char*, arg_count>& getArgNames() const;
 
         /**
          * @return the timestamp of the event measured in

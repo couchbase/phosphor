@@ -47,18 +47,18 @@
         = PHOSPHOR_INTERNAL_UID(category_enabled).load(std::memory_order_acquire); \
 
 #define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, argA, argB) \
-        PHOSPHOR_INTERNAL_UID(tpi_name) = { \
-            category, \
-            name, \
-            {{argA, argB}} \
-        }; \
+    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi_name) = { \
+        category, \
+        name, \
+        {{argA, argB}} \
+    }; \
 
 #define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \
     if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \
         PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &PHOSPHOR_INSTANCE.getCategoryStatus(category); \
         PHOSPHOR_INTERNAL_UID(category_enabled).store( \
             PHOSPHOR_INTERNAL_UID(category_enabled_temp), std::memory_order_release); \
-        PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \
     } \
 
 /*
@@ -69,7 +69,6 @@
  * on the disabled path when compiled.
  */
 #define PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, argA, argB, type, ...) \
-    static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi); \
     PHOSPHOR_INTERNAL_CATEGORY_INFO \
     PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
@@ -81,7 +80,6 @@
  * Traces an event of a specified type with zero arguments
  */
 #define PHOSPHOR_INTERNAL_TRACE_EVENT0(category, name, type) \
-    static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi); \
     PHOSPHOR_INTERNAL_CATEGORY_INFO \
     PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, "arg1", "arg2") \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
@@ -97,7 +95,6 @@
  * first trace event.
  */
 #define PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(tpi_name, category, name, type) \
-    static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi_name); \
     PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, "arg1", "arg2") \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
           != phosphor::CategoryStatus::Disabled) { \
