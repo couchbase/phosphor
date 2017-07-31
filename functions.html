@@ -141,9 +141,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
 
 <h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
-<li>acquire()
-: <a class="el" href="classphosphor_1_1_sentinel.html#ae63eab2f17eec6b5530bfa56da1b27eb">phosphor::Sentinel</a>
-</li>
 <li>addEvent()
 : <a class="el" href="classphosphor_1_1_trace_chunk.html#a7c08f938911ee5197a8682428bc6135e">phosphor::TraceChunk</a>
 </li>
@@ -202,16 +199,13 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="classphosphor_1_1_trace_buffer.html#aa8b82981d2e7bdc3d3b07d2ef153abe0">phosphor::TraceBuffer</a>
 </li>
 <li>ChunkTenant()
-: <a class="el" href="structphosphor_1_1_chunk_tenant.html#a298c1bf56d733087d659b947955e19e2">phosphor::ChunkTenant</a>
+: <a class="el" href="structphosphor_1_1_chunk_tenant.html#a45d17048ffbb45183e35667162e5f885">phosphor::ChunkTenant</a>
 </li>
 <li>clearDeregisteredThreads()
 : <a class="el" href="classphosphor_1_1_trace_log.html#a243cb7cbf1a8ff5ef83209dc7f70717e">phosphor::TraceLog</a>
 </li>
 <li>clearStartupTrace()
 : <a class="el" href="classphosphor_1_1_trace_log_config.html#a0cd0bca300b9e640e35e0551b5ba2f5f">phosphor::TraceLogConfig</a>
-</li>
-<li>close()
-: <a class="el" href="classphosphor_1_1_sentinel.html#a0b7b85aa2d04ad7bddbcef7a2c944877">phosphor::Sentinel</a>
 </li>
 <li>configure()
 : <a class="el" href="classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32">phosphor::TraceLog</a>
@@ -308,6 +302,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 , <a class="el" href="classphosphor_1_1_ring_trace_buffer.html#a4f31f7fb7541404871c55b2fe774174c">phosphor::RingTraceBuffer</a>
 , <a class="el" href="classphosphor_1_1_trace_buffer.html#ad6694eb1489bf79362befa8abfe723df">phosphor::TraceBuffer</a>
 </li>
+<li>getChunkLockCount()
+: <a class="el" href="classphosphor_1_1_trace_log_config.html#ac00f40eb262217f63f4b0a72bc1606bf">phosphor::TraceLogConfig</a>
+</li>
 <li>getChunkTenant()
 : <a class="el" href="classphosphor_1_1_trace_log.html#aca8bac676c35e1873e9d1ad61ea7f021">phosphor::TraceLog</a>
 </li>
@@ -327,9 +324,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </li>
 <li>getName()
 : <a class="el" href="classphosphor_1_1_trace_event.html#a2e5f75b9724df9aea7736cf5fa70406e">phosphor::TraceEvent</a>
-</li>
-<li>getSentinelCount()
-: <a class="el" href="classphosphor_1_1_trace_log_config.html#afe2aa44ad93032be982e2058bf62923e">phosphor::TraceLogConfig</a>
 </li>
 <li>getStartupTrace()
 : <a class="el" href="classphosphor_1_1_trace_log_config.html#aac73090f040e5abc80f024b8ecc016fc">phosphor::TraceLogConfig</a>
@@ -463,12 +457,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>registry_size
 : <a class="el" href="classphosphor_1_1_category_registry.html#aecac432d7943bc31ec0272548f82c366">phosphor::CategoryRegistry</a>
 </li>
-<li>release()
-: <a class="el" href="classphosphor_1_1_sentinel.html#ac72905e7efc8bb93349eef2b394f3551">phosphor::Sentinel</a>
-</li>
-<li>reopen()
-: <a class="el" href="classphosphor_1_1_sentinel.html#a7ead8e098b98397cf731e5e5733a9215">phosphor::Sentinel</a>
-</li>
 <li>replaceChunk()
 : <a class="el" href="classphosphor_1_1_trace_log.html#aac3501043f159ac129c97cf03b302041">phosphor::TraceLog</a>
 </li>
@@ -487,8 +475,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>setCategories()
 : <a class="el" href="classphosphor_1_1_trace_config.html#a06350570334ce91209b01b27b35708ec">phosphor::TraceConfig</a>
 </li>
-<li>setSentinelCount()
-: <a class="el" href="classphosphor_1_1_trace_log_config.html#ae24069f60fd6d7323ee898a65b87fe26">phosphor::TraceLogConfig</a>
+<li>setChunkLockCount()
+: <a class="el" href="classphosphor_1_1_trace_log_config.html#ac817dac23644509ba9dfcb26027ff665">phosphor::TraceLogConfig</a>
 </li>
 <li>setStartupTrace()
 : <a class="el" href="classphosphor_1_1_trace_log_config.html#aac1cd06b2988348c7d9d0cc4d7db121a">phosphor::TraceLogConfig</a>
@@ -508,11 +496,8 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>start()
 : <a class="el" href="classphosphor_1_1_trace_log.html#ad39c97c1cc03aac3d7ebd2294ae46a1a">phosphor::TraceLog</a>
 </li>
-<li>State
-: <a class="el" href="classphosphor_1_1_sentinel.html#ae6f53f281b01994dd400779099372707">phosphor::Sentinel</a>
-</li>
 <li>stop()
-: <a class="el" href="classphosphor_1_1_trace_log.html#a1c65ef1f9ee2e0edb9d6c64b8782c17f">phosphor::TraceLog</a>
+: <a class="el" href="classphosphor_1_1_trace_log.html#ada1fdb38d3c191ad833a828bbaf06a72">phosphor::TraceLog</a>
 </li>
 </ul>
 

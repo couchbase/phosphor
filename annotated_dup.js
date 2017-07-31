@@ -20,7 +20,6 @@ var annotated_dup =
       [ "RelaxedAtomic", "classphosphor_1_1_relaxed_atomic.html", "classphosphor_1_1_relaxed_atomic" ],
       [ "RelaxedAtomicCString", "classphosphor_1_1_relaxed_atomic_c_string.html", "classphosphor_1_1_relaxed_atomic_c_string" ],
       [ "RingTraceBuffer", "classphosphor_1_1_ring_trace_buffer.html", "classphosphor_1_1_ring_trace_buffer" ],
-      [ "Sentinel", "classphosphor_1_1_sentinel.html", "classphosphor_1_1_sentinel" ],
       [ "SlaveChunkLock", "classphosphor_1_1_slave_chunk_lock.html", "classphosphor_1_1_slave_chunk_lock" ],
       [ "StatsCallback", "classphosphor_1_1_stats_callback.html", "classphosphor_1_1_stats_callback" ],
       [ "StringPtrDeleter", "structphosphor_1_1_string_ptr_deleter.html", "structphosphor_1_1_string_ptr_deleter" ],

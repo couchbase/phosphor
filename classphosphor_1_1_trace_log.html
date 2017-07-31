@@ -321,13 +321,7 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
       </table>
 </div><div class="memdoc">
 <p>De-registers the current thread</p>
-<p>De-registering will free up any resources associated with the thread. This MUST be called from registered threads before they shutdown to prevent memory-leaks as the only reference to resources they allocate are in thread local storage.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">instance</td><td>The <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> instance that the sentinel is using </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>De-registering will free up any resources associated with the thread. This MUST be called from registered threads before they shutdown to prevent memory-leaks as the only reference to resources they allocate are in thread local storage. </p>
 
 </div>
 </div>
@@ -353,7 +347,7 @@ TraceLog::getInstance().start(TraceConfig(BufferMode::fixed,
 </table>
 </div><div class="memdoc">
 <p>Used for evicting all ChunkTenants from the log</p>
-<p>This will use the set of sentinels established from the calls to registerThread and deregisterThread and call close() on them.</p>
+<p>This will use the set of ChunkTenants established from the calls to registerThread and deregisterThread and call close() on them.</p>
 <p>This will effectively send a message to all ChunkTenants that their current references to chunks in their possession are no longer valid.</p>
 <p>Once this function returns the buffer that the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> had SHOULD be safe to be freed / iterated etc. </p>
 
@@ -830,7 +824,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Replaces the current chunk held by the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> with a new chunk (typically because it is full).</p>
-<p>This function must be called while the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> sentinel is held in the 'Busy' state (via <a class="el" href="classphosphor_1_1_sentinel.html#ae63eab2f17eec6b5530bfa56da1b27eb">Sentinel::acquire</a> or <a class="el" href="classphosphor_1_1_sentinel.html#a7ead8e098b98397cf731e5e5733a9215">Sentinel::reopen</a>).</p>
+<p>This function must be called while the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> lock is held.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ct</td><td>The <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> that should have it's chunk returned and replaced </td></tr>
@@ -1079,7 +1073,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>mutex is the 'global' lock for the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> and should be acquired when modifying the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> itself or the current <a class="el" href="classphosphor_1_1_trace_buffer.html">TraceBuffer</a>.</p>
-<p>It is not required to be acquired when modifying a loaned out <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> contained within a <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>, this is protected by the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>'s sentinel lock instead. </p>
+<p>It is not required to be acquired when modifying a loaned out <a class="el" href="classphosphor_1_1_trace_chunk.html">TraceChunk</a> contained within a <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>, this is protected by the <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>'s <a class="el" href="classphosphor_1_1_chunk_lock.html">ChunkLock</a> lock instead. </p>
 
 </div>
 </div>
@@ -1100,7 +1094,7 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The set of sentinels that have been registered to this <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a>. </p>
+<p>The set of ChunkTenants that have been registered to this <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a>. </p>
 
 </div>
 </div>

@@ -122,10 +122,10 @@ $(document).ready(function(){initNavTree('classphosphor_1_1_trace_log_config.htm
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad51578097552a617f85b3fa5f7dc081e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#ad51578097552a617f85b3fa5f7dc081e">TraceLogConfig</a> ()</td></tr>
 <tr class="separator:ad51578097552a617f85b3fa5f7dc081e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae24069f60fd6d7323ee898a65b87fe26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#ae24069f60fd6d7323ee898a65b87fe26">setSentinelCount</a> (unsigned _sentinel_count)</td></tr>
-<tr class="separator:ae24069f60fd6d7323ee898a65b87fe26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe2aa44ad93032be982e2058bf62923e"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#afe2aa44ad93032be982e2058bf62923e">getSentinelCount</a> () const </td></tr>
-<tr class="separator:afe2aa44ad93032be982e2058bf62923e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac817dac23644509ba9dfcb26027ff665"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#ac817dac23644509ba9dfcb26027ff665">setChunkLockCount</a> (unsigned _chunk_lock_count)</td></tr>
+<tr class="separator:ac817dac23644509ba9dfcb26027ff665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac00f40eb262217f63f4b0a72bc1606bf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#ac00f40eb262217f63f4b0a72bc1606bf">getChunkLockCount</a> () const </td></tr>
+<tr class="separator:ac00f40eb262217f63f4b0a72bc1606bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac1cd06b2988348c7d9d0cc4d7db121a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#aac1cd06b2988348c7d9d0cc4d7db121a">setStartupTrace</a> (const <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &amp;_startup_trace)</td></tr>
 <tr class="separator:aac1cd06b2988348c7d9d0cc4d7db121a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0cd0bca300b9e640e35e0551b5ba2f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log_config.html#a0cd0bca300b9e640e35e0551b5ba2f5f">clearStartupTrace</a> ()</td></tr>
@@ -137,15 +137,15 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:afde204061366e2abdc49f142038a70ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afde204061366e2abdc49f142038a70ab"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>sentinel_count</b></td></tr>
-<tr class="separator:afde204061366e2abdc49f142038a70ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3ce847bc29d855d9a2050f88a4dd467"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad3ce847bc29d855d9a2050f88a4dd467"></a>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><b>chunk_lock_count</b></td></tr>
+<tr class="separator:ad3ce847bc29d855d9a2050f88a4dd467"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17d4138f27a03523f3ff3533b98bafbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17d4138f27a03523f3ff3533b98bafbf"></a>
 std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>startup_trace</b></td></tr>
 <tr class="separator:a17d4138f27a03523f3ff3533b98bafbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> is used to perform a one-time config of a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> for anything that must be set only once e.g. the number of shared sentinels to create.</p>
+<div class="textblock"><p>The <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> is used to perform a one-time config of a <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> for anything that must be set only once e.g. the number of shared chunk locks to create.</p>
 <p>The <a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> can either be passed in when the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is created, or by using the <a class="el" href="classphosphor_1_1_trace_log.html#ab61da1a235de557b8321bf542defae32">TraceLog::configure()</a> method <em>prior</em> to the first time the <a class="el" href="classphosphor_1_1_trace_log.html">TraceLog</a> is started. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ad51578097552a617f85b3fa5f7dc081e"></a>
@@ -161,7 +161,7 @@ std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_config.html">Tra
       </table>
 </div><div class="memdoc">
 <p>Default constructor establishes sensible default values for one-time config.</p>
-<p><a class="el" href="classphosphor_1_1_sentinel.html">Sentinel</a> Count: x4 number of logical cores </p>
+<p><a class="el" href="classphosphor_1_1_chunk_lock.html">ChunkLock</a> Count: x4 number of logical cores </p>
 
 </div>
 </div>
@@ -206,19 +206,19 @@ std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_config.html">Tra
 
 </div>
 </div>
-<a class="anchor" id="afe2aa44ad93032be982e2058bf62923e"></a>
+<a class="anchor" id="ac00f40eb262217f63f4b0a72bc1606bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned phosphor::TraceLogConfig::getSentinelCount </td>
+          <td class="memname">unsigned phosphor::TraceLogConfig::getChunkLockCount </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>The number of sentinels to be created </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of chunk locks to be created </dd></dl>
 
 </div>
 </div>
@@ -238,24 +238,24 @@ std::unique_ptr&lt; <a class="el" href="classphosphor_1_1_trace_config.html">Tra
 
 </div>
 </div>
-<a class="anchor" id="ae24069f60fd6d7323ee898a65b87fe26"></a>
+<a class="anchor" id="ac817dac23644509ba9dfcb26027ff665"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp; phosphor::TraceLogConfig::setSentinelCount </td>
+          <td class="memname"><a class="el" href="classphosphor_1_1_trace_log_config.html">TraceLogConfig</a> &amp; phosphor::TraceLogConfig::setChunkLockCount </td>
           <td>(</td>
           <td class="paramtype">unsigned&#160;</td>
-          <td class="paramname"><em>_sentinel_count</em></td><td>)</td>
+          <td class="paramname"><em>_chunk_lock_count</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Set the number of sentinels to create to be shared by threads when they do not register.</p>
-<p>Example use: </p><pre class="fragment">TraceLogConfig()-&gt;setSentinelCount(48);
+<p>Set the number of chunk locks to create to be shared by threads when they do not register.</p>
+<p>Example use: </p><pre class="fragment">TraceLogConfig()-&gt;setChunkLockCount(48);
 </pre><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">_sentinel_count</td><td>The number of sentinels </td></tr>
+    <tr><td class="paramname">_chunk_lock_count</td><td>The number of chunk locks </td></tr>
   </table>
   </dd>
 </dl>
