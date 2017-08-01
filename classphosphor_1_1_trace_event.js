@@ -11,7 +11,7 @@ var classphosphor_1_1_trace_event =
     ] ],
     [ "TraceEvent", "classphosphor_1_1_trace_event.html#a10a9f62b1f28691baa3d4926a89790d0", null ],
     [ "TraceEvent", "classphosphor_1_1_trace_event.html#a6f7c4e71d04a685661a2018518486aa4", null ],
-    [ "getArgNames", "classphosphor_1_1_trace_event.html#a22819e6b89614e826869ff8149426b2b", null ],
+    [ "getArgNames", "classphosphor_1_1_trace_event.html#a5737ef659648e4d6d1cab092d0d9ab3f", null ],
     [ "getArgs", "classphosphor_1_1_trace_event.html#af96e39a22f30e1148c9c25bd5e22846a", null ],
     [ "getArgTypes", "classphosphor_1_1_trace_event.html#ab3666f566b86edfd8d16ab97fe6eb130", null ],
     [ "getCategory", "classphosphor_1_1_trace_event.html#a119b357ef0c900abbd6c42b2cae305ed", null ],

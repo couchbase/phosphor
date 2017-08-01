@@ -177,8 +177,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a> PHOSPHOR_INTERNAL_UID(tpi_name); \</div><div class="line">    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, <span class="stringliteral">&quot;arg1&quot;</span>, <span class="stringliteral">&quot;arg2&quot;</span>) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_relaxed) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi_name), type); \</div><div class="line">    }</div><div class="ttc" id="structphosphor_1_1tracepoint__info_html"><div class="ttname"><a href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a></div><div class="ttdef"><b>Definition:</b> tracepoint_info.h:31</div></div>
-</div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, <span class="stringliteral">&quot;arg1&quot;</span>, <span class="stringliteral">&quot;arg2&quot;</span>) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_relaxed) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi_name), type); \</div><div class="line">    }</div></div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a13a0fa6c6389a79c4b48abcf3e3b9cf7"></a>
@@ -234,7 +233,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_UID(tpi_name) = { \</div><div class="line">            category, \</div><div class="line">            name, \</div><div class="line">            {{argA, argB}} \</div><div class="line">        }; \</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">constexpr <span class="keyword">static</span> <a class="code" href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a> PHOSPHOR_INTERNAL_UID(tpi_name) = { \</div><div class="line">        category, \</div><div class="line">        name, \</div><div class="line">        {{argA, argB}} \</div><div class="line">    }; \</div><div class="ttc" id="structphosphor_1_1tracepoint__info_html"><div class="ttname"><a href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a></div><div class="ttdef"><b>Definition:</b> tracepoint_info.h:31</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="a1444175bd4c32c44f06ebf6d340cc39f"></a>
@@ -272,7 +272,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &amp;<a class="code" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>.getCategoryStatus(category); \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled).store( \</div><div class="line">            PHOSPHOR_INTERNAL_UID(category_enabled_temp), std::memory_order_release); \</div><div class="line">        PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \</div><div class="line">    } \</div><div class="ttc" id="phosphor_8h_html_a5c3acfbde298bed30fb871e7ef3fecf3"><div class="ttname"><a href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a></div><div class="ttdeci">#define PHOSPHOR_INSTANCE</div><div class="ttdef"><b>Definition:</b> phosphor.h:73</div></div>
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \</div><div class="line">    if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &amp;<a class="code" href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a>.getCategoryStatus(category); \</div><div class="line">        PHOSPHOR_INTERNAL_UID(category_enabled).store( \</div><div class="line">            PHOSPHOR_INTERNAL_UID(category_enabled_temp), std::memory_order_release); \</div><div class="line">    } \</div><div class="ttc" id="phosphor_8h_html_a5c3acfbde298bed30fb871e7ef3fecf3"><div class="ttname"><a href="phosphor_8h.html#a5c3acfbde298bed30fb871e7ef3fecf3">PHOSPHOR_INSTANCE</a></div><div class="ttdeci">#define PHOSPHOR_INSTANCE</div><div class="ttdef"><b>Definition:</b> phosphor.h:73</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -323,8 +323,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a> PHOSPHOR_INTERNAL_UID(tpi); \</div><div class="line">    PHOSPHOR_INTERNAL_CATEGORY_INFO \</div><div class="line">    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_acquire) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi), type, __VA_ARGS__); \</div><div class="line">    }</div><div class="ttc" id="structphosphor_1_1tracepoint__info_html"><div class="ttname"><a href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a></div><div class="ttdef"><b>Definition:</b> tracepoint_info.h:31</div></div>
-</div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_CATEGORY_INFO \</div><div class="line">    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_acquire) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi), type, __VA_ARGS__); \</div><div class="line">    }</div></div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="adbef9ca962d58b38dd9c02cec2aa3ade"></a>
@@ -356,8 +355,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a> PHOSPHOR_INTERNAL_UID(tpi); \</div><div class="line">    PHOSPHOR_INTERNAL_CATEGORY_INFO \</div><div class="line">    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, <span class="stringliteral">&quot;arg1&quot;</span>, <span class="stringliteral">&quot;arg2&quot;</span>) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_relaxed) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi), type); \</div><div class="line">    }</div><div class="ttc" id="structphosphor_1_1tracepoint__info_html"><div class="ttname"><a href="structphosphor_1_1tracepoint__info.html">phosphor::tracepoint_info</a></div><div class="ttdef"><b>Definition:</b> tracepoint_info.h:31</div></div>
-</div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line">PHOSPHOR_INTERNAL_CATEGORY_INFO \</div><div class="line">    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, <span class="stringliteral">&quot;arg1&quot;</span>, <span class="stringliteral">&quot;arg2&quot;</span>) \</div><div class="line">    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)-&gt;load(std::memory_order_relaxed) \</div><div class="line">          != phosphor::CategoryStatus::Disabled) { \</div><div class="line">        PHOSPHOR_INSTANCE.logEvent(&amp;PHOSPHOR_INTERNAL_UID(tpi), type); \</div><div class="line">    }</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
