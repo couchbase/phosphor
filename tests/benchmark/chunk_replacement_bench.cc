@@ -40,23 +40,6 @@ public:
     }
 };
 
-void NaiveSharedTenants(benchmark::State& state) {
-    static MockTraceLog log{phosphor::TraceLogConfig()};
-    if (state.thread_index == 0) {
-        log.start(phosphor::TraceConfig(
-            phosphor::BufferMode::ring,
-            (sizeof(phosphor::TraceChunk) * (10 * state.threads))));
-    }
-
-    while (state.KeepRunning()) {
-        log.replaceChunk();
-    }
-    if (state.thread_index == 0) {
-        log.stop();
-    }
-}
-BENCHMARK(NaiveSharedTenants)->ThreadRange(1, phosphor::benchNumThreads());
-
 void RegisterTenants(benchmark::State& state) {
     static MockTraceLog log{phosphor::TraceLogConfig()};
     log.registerThread();

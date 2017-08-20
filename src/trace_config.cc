@@ -52,20 +52,6 @@ namespace phosphor {
 /*
  * TraceLogConfig implementation
  */
-    TraceLogConfig::TraceLogConfig()
-    // Benchmarking suggests that 4x the number of logical
-    // cores is the sweetspot for the number to share.
-    : chunk_lock_count(std::thread::hardware_concurrency() * 4) {}
-
-    TraceLogConfig &TraceLogConfig::setChunkLockCount(unsigned _chunk_lock_count) {
-        chunk_lock_count = _chunk_lock_count;
-        return *this;
-    }
-
-    unsigned TraceLogConfig::getChunkLockCount() const {
-        return chunk_lock_count;
-    }
-
     TraceLogConfig &TraceLogConfig::setStartupTrace(
             const TraceConfig &_startup_trace) {
         startup_trace = utils::make_unique<TraceConfig>(_startup_trace);
@@ -82,30 +68,6 @@ namespace phosphor {
     }
 
     TraceLogConfig &TraceLogConfig::fromEnvironment() {
-        const char *chunk_lock_count_s = std::getenv("PHOSPHOR_CHUNK_LOCK_COUNT");
-        if (chunk_lock_count_s && strlen(chunk_lock_count_s)) {
-            int chunk_lock_count;
-            try {
-                chunk_lock_count = std::stoi(chunk_lock_count_s);
-            } catch (std::invalid_argument &) {
-                throw std::invalid_argument(
-                        "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_CHUNK_LOCK_COUNT was not a valid integer");
-            } catch (std::out_of_range &) {
-                throw std::invalid_argument(
-                        "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_CHUNK_LOCK_COUNT was too large");
-            }
-
-            if (chunk_lock_count < 0) {
-                throw std::invalid_argument(
-                        "TraceLogConfig::fromEnviroment: "
-                        "PHOSPHOR_CHUNK_LOCK_COUNT cannot be negative");
-            }
-
-            this->setChunkLockCount(static_cast<unsigned>(chunk_lock_count));
-        }
-
         const char *startup_config = std::getenv("PHOSPHOR_TRACING_START");
         if (startup_config && strlen(startup_config)) {
             this->setStartupTrace(TraceConfig::fromString(startup_config));

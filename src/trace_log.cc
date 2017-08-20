@@ -55,14 +55,6 @@ namespace phosphor {
     void TraceLog::configure(const TraceLogConfig& _config) {
         std::lock_guard<TraceLog> lh(*this);
 
-        shared_chunks.reserve(_config.getChunkLockCount());
-        registered_chunk_tenants.reserve(_config.getChunkLockCount());
-        for (size_t i = shared_chunks.size(); i < _config.getChunkLockCount();
-             ++i) {
-            shared_chunks.emplace_back(non_trivial_constructor);
-            registered_chunk_tenants.insert(&shared_chunks.back());
-        }
-
         if (auto* startup_trace = _config.getStartupTrace()) {
             start(lh, *startup_trace);
         }
@@ -238,32 +230,24 @@ namespace phosphor {
         addStats("log_thread_names", thread_names.size());
         addStats("log_deregistered_threads", deregistered_threads.size());
         addStats("log_registered_tenants", registered_chunk_tenants.size());
-        addStats("log_shared_tenants", shared_chunks.size());
     }
 
     std::unique_lock<ChunkTenant> TraceLog::getChunkTenant() {
-        auto shared_index =
-                platform::getCurrentThreadIDCached() % shared_chunks.size();
-
-        ChunkTenant& cs = (thread_chunk.initialised)
-                                  ? thread_chunk
-                                  : shared_chunks[shared_index];
-
-        std::unique_lock<ChunkTenant> cl{cs, std::try_to_lock};
+        std::unique_lock<ChunkTenant> cl{thread_chunk, std::try_to_lock};
 
         // If we didn't acquire the lock then we're stopping so bail out
         if (!cl) {
             return {};
         }
 
-        if (!cs.chunk || cs.chunk->isFull()) {
+        if (!thread_chunk.chunk || thread_chunk.chunk->isFull()) {
             // If we're missing our chunk then it might be because we're
             // meant to be stopping right now.
             if (!enabled) {
                 return {};
             }
 
-            if (!replaceChunk(cs)) {
+            if (!replaceChunk(thread_chunk)) {
                 size_t current = generation;
                 cl.unlock();
                 maybe_stop(current);
@@ -275,6 +259,12 @@ namespace phosphor {
     }
 
     bool TraceLog::replaceChunk(ChunkTenant& ct) {
+        // Temporary addition until ChunkTenant initialisation
+        // is guaranteed by C++11 `thread_local`
+        if (!ct.initialised) {
+            registerThread();
+        }
+
         if (ct.chunk) {
             buffer->returnChunk(*ct.chunk);
             ct.chunk = nullptr;

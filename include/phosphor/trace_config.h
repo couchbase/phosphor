@@ -113,8 +113,8 @@ namespace phosphor {
 
     /**
      * The TraceLogConfig is used to perform a one-time config of a
-     * TraceLog for anything that must be set only once e.g. the number
-     * of shared chunk locks to create.
+     * TraceLog for anything that must be set only once e.g. the config
+     * to automatically use on startup.
      *
      * The TraceLogConfig can either be passed in when the TraceLog is
      * created, or by using the TraceLog::configure() method *prior* to
@@ -123,30 +123,10 @@ namespace phosphor {
     class PHOSPHOR_API TraceLogConfig {
     public:
         /**
-         * Default constructor establishes sensible default values for
-         * one-time config.
-         *
-         *  ChunkLock Count: x4 number of logical cores
+         * Default constructor
          */
-        TraceLogConfig();
-
-        /**
-         * Set the number of chunk locks to create to be shared by
-         * threads when they do not register.
-         *
-         * Example use:
-         *
-         *     TraceLogConfig()->setChunkLockCount(48);
-         *
-         * @param _chunk_lock_count The number of chunk locks
-         * @return A reference to this config (For chaining)
-         */
-        TraceLogConfig& setChunkLockCount(unsigned _chunk_lock_count);
-
-        /**
-         * @return The number of chunk locks to be created
-         */
-        unsigned getChunkLockCount() const;
+        TraceLogConfig() {
+        }
 
         /**
          * Sets the TraceLog to start tracing immediately on construction
@@ -184,7 +164,6 @@ namespace phosphor {
         TraceLogConfig& fromEnvironment();
 
     protected:
-        unsigned chunk_lock_count;
         std::unique_ptr<TraceConfig> startup_trace;
     };
 

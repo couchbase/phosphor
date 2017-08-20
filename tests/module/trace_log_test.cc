@@ -52,8 +52,12 @@ class TraceLogTest : public testing::Test {
 public:
     static const int min_buffer_size = sizeof(TraceChunk);
 
-    TraceLogTest() {}
-    virtual ~TraceLogTest() = default;
+    TraceLogTest() {
+        trace_log.registerThread();
+    }
+    virtual ~TraceLogTest() {
+        trace_log.deregisterThread();
+    }
 
     void start_basic() {
         trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size));
@@ -331,6 +335,7 @@ TEST(TraceLogAltTest, stopOnDestruct) {
 
 TEST_F(TraceLogTest, RegisterDeregisterRegister) {
 
+    trace_log.deregisterThread();
     trace_log.registerThread("name1");
     auto context = trace_log.getTraceContext();
     ASSERT_NE(0, context.getThreadNames().size());
@@ -370,6 +375,7 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     context = trace_log.getTraceContext();
     EXPECT_EQ(0, context.getThreadNames().size());
 
+    trace_log.registerThread();
 }
 
 TEST_F(TraceLogTest, StatsTest) {
@@ -391,7 +397,6 @@ TEST_F(TraceLogTest, StatsTest) {
 
     // PITA to check for correct values here so just make sure they exist
     EXPECT_CALL(callback, callU(gsl_p::make_span("log_registered_tenants"), _));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("log_shared_tenants"), _));
     trace_log.getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 

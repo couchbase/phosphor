@@ -361,15 +361,6 @@ namespace phosphor {
         void maybe_stop(size_t _generation);
 
         /**
-         * The shared ChunkTenants which are used by default when a thread
-         * has not been registered.
-         *
-         * This is because we need to guarantee that the resources in the
-         * thread-specific chunk will be at some point freed up.
-         */
-        std::vector<ChunkTenant> shared_chunks;
-
-        /**
          * The current or last-used TraceConfig of the TraceLog, this
          * is only ever set by the start() method.
          *

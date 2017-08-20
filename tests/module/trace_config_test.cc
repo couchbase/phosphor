@@ -28,12 +28,6 @@ using namespace phosphor;
 int setenv(const char* name, const char* value, int overwrite);
 #endif
 
-TEST(TraceLogConfigTest, chunk_lock_count) {
-    TraceLogConfig config;
-    EXPECT_EQ(88, config.setChunkLockCount(88).getChunkLockCount());
-    EXPECT_EQ(33, config.setChunkLockCount(33).getChunkLockCount());
-}
-
 TEST(TraceLogConfigTest, startup_trace) {
     TraceLogConfig config;
     TraceConfig trace_config(BufferMode::fixed, 10000);
@@ -45,20 +39,6 @@ TEST(TraceLogConfigTest, startup_trace) {
               config.setStartupTrace(trace_config)
                       .clearStartupTrace()
                       .getStartupTrace());
-}
-
-TEST(TraceLogConfigTest, from_environment) {
-    setenv("PHOSPHOR_CHUNK_LOCK_COUNT", "5", true);
-    TraceLogConfig config;
-    config.fromEnvironment();
-    EXPECT_EQ(5, config.getChunkLockCount());
-
-    for (const auto& str : {"abdc", "99999999999999999", "-1"}) {
-        setenv("PHOSPHOR_CHUNK_LOCK_COUNT", str, true);
-        EXPECT_THROW(config.fromEnvironment(), std::invalid_argument);
-    }
-    setenv("PHOSPHOR_CHUNK_LOCK_COUNT", "", true);
-    EXPECT_NO_THROW(config.fromEnvironment());
 }
 
 TEST(TraceConfigTest, defaultConstructor) {
