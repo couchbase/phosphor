@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['phosphor_20examples',['Phosphor Examples',['../index.html',1,'']]],
+  ['phosphor',['Phosphor',['../index.html',1,'']]],
   ['phosphor_20architecture',['Phosphor Architecture',['../md_docs_Architecture.html',1,'']]],
+  ['phosphor_20examples',['Phosphor Examples',['../md_examples_README.html',1,'']]],
   ['phosphor_2dinternal_2eh',['phosphor-internal.h',['../phosphor-internal_8h.html',1,'']]],
   ['phosphor_2eh',['phosphor.h',['../phosphor_8h.html',1,'']]],
   ['phosphor_5finline_5fstr',['PHOSPHOR_INLINE_STR',['../phosphor_8h.html#a52119d371fc5085346fd00c2ee2ef4df',1,'phosphor.h']]],
