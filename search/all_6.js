@@ -11,7 +11,6 @@ var searchData=
   ['getcategory',['getCategory',['../classphosphor_1_1_trace_event.html#a119b357ef0c900abbd6c42b2cae305ed',1,'phosphor::TraceEvent']]],
   ['getcategorystatus',['getCategoryStatus',['../classphosphor_1_1_trace_log.html#ac9c0245c0bc2e15e5268a154785aa987',1,'phosphor::TraceLog']]],
   ['getchunk',['getChunk',['../classphosphor_1_1_trace_buffer.html#ad6694eb1489bf79362befa8abfe723df',1,'phosphor::TraceBuffer::getChunk()'],['../classphosphor_1_1_fixed_trace_buffer.html#a6e535fa187d0ec2e78e949b988a41948',1,'phosphor::FixedTraceBuffer::getChunk()'],['../classphosphor_1_1_ring_trace_buffer.html#a4f31f7fb7541404871c55b2fe774174c',1,'phosphor::RingTraceBuffer::getChunk()']]],
-  ['getchunklockcount',['getChunkLockCount',['../classphosphor_1_1_trace_log_config.html#ac00f40eb262217f63f4b0a72bc1606bf',1,'phosphor::TraceLogConfig']]],
   ['getchunktenant',['getChunkTenant',['../classphosphor_1_1_trace_log.html#aca8bac676c35e1873e9d1ad61ea7f021',1,'phosphor::TraceLog']]],
   ['getdisabledcategories',['getDisabledCategories',['../classphosphor_1_1_trace_config.html#a8198d188e20880b6344593915a6d6b5f',1,'phosphor::TraceConfig']]],
   ['getenabledcategories',['getEnabledCategories',['../classphosphor_1_1_trace_config.html#a09d32bbeb531167bf499e402b3e9165f',1,'phosphor::TraceConfig']]],

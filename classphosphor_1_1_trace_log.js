@@ -35,7 +35,6 @@ var classphosphor_1_1_trace_log =
     [ "mutex", "classphosphor_1_1_trace_log.html#a51a113a9a75825d65aa7d235eeefd4fb", null ],
     [ "registered_chunk_tenants", "classphosphor_1_1_trace_log.html#af4b4a41b3c7f338262d64c1850b0bdbe", null ],
     [ "registry", "classphosphor_1_1_trace_log.html#af0b34e540994efaabe4ce310070287cb", null ],
-    [ "shared_chunks", "classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5", null ],
     [ "thread_names", "classphosphor_1_1_trace_log.html#a2ede59541a91a1b67b86a151753da6b5", null ],
     [ "trace_config", "classphosphor_1_1_trace_log.html#a366b267a03ceffcc9aaa4daf2561cbaf", null ]
 ];

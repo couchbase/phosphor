@@ -1,9 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"trace__event_8h.html":[8,0,1,1,14],
-"trace__event_8h.html#a16c2478069af052d402472d9e55d409b":[8,0,1,1,14,3],
-"trace__event_8h.html#ae9770b487b4868e69bb09fff5dd63d5b":[8,0,1,1,14,2],
-"trace__event_8h_source.html":[8,0,1,1,14],
 "trace__log_8h_source.html":[8,0,1,1,15],
 "tracepoint__info_8h.html":[8,0,1,1,16],
 "tracepoint__info_8h_source.html":[8,0,1,1,16],

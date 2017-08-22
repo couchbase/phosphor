@@ -190,8 +190,6 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ad628d76546aac802f047e8ee786e6ab5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#ad628d76546aac802f047e8ee786e6ab5">shared_chunks</a></td></tr>
-<tr class="separator:ad628d76546aac802f047e8ee786e6ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a366b267a03ceffcc9aaa4daf2561cbaf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classphosphor_1_1_trace_config.html">TraceConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#a366b267a03ceffcc9aaa4daf2561cbaf">trace_config</a></td></tr>
 <tr class="separator:a366b267a03ceffcc9aaa4daf2561cbaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4b650b4031a9c1b03c42b4bf99c33a7"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classphosphor_1_1_trace_log.html#aa4b650b4031a9c1b03c42b4bf99c33a7">enabled</a></td></tr>
@@ -1116,28 +1114,6 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Category registry which manages the enabled / disabled categories </p>
-
-</div>
-</div>
-<a class="anchor" id="ad628d76546aac802f047e8ee786e6ab5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structphosphor_1_1_chunk_tenant.html">ChunkTenant</a>&gt; phosphor::TraceLog::shared_chunks</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The shared ChunkTenants which are used by default when a thread has not been registered.</p>
-<p>This is because we need to guarantee that the resources in the thread-specific chunk will be at some point freed up. </p>
 
 </div>
 </div>

@@ -41,7 +41,7 @@ var NAVTREEINDEX =
 [
 ".html",
 "classphosphor_1_1_trace_log.html#a7dc482de0ee398dd3260da9637c0aaeb",
-"trace__event_8h.html"
+"trace__log_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
