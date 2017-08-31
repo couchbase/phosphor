@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -172,6 +173,11 @@ namespace phosphor {
     ARGUMENT_CONVERSION(double, double)
 
     ARGUMENT_CONVERSION(const void*, pointer)
+
+    // A nullptr isn't particulary useful to store in the trace event;
+    // but aids in use with generic code where a pointer type ends up
+    // as nullptr.
+    ARGUMENT_CONVERSION(std::nullptr_t, pointer)
 
     ARGUMENT_CONVERSION(const char*, string)
 
