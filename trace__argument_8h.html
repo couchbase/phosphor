@@ -112,7 +112,8 @@ $(document).ready(function(){initNavTree('trace__argument_8h.html','');});
 <div class="title">trace_argument.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;sstream&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
@@ -163,7 +164,7 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt; \</div><div class="line">    inline constexpr TraceArgument::TraceArgument(src arg) : as_##dst(arg) {} \</div><div class="line">    template&lt;&gt; \</div><div class="line">    class TraceArgumentConversion&lt;src&gt; { \</div><div class="line">        public:\</div><div class="line">        inline <span class="keyword">static</span> constexpr <a class="code" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a> getType() { \</div><div class="line">            return TraceArgument::Type::is_##dst; \</div><div class="line">        } \</div><div class="line">        \</div><div class="line">        inline <span class="keyword">static</span> constexpr TraceArgument asArgument(src arg) { \</div><div class="line">            return TraceArgument(arg); \</div><div class="line">        } \</div><div class="line">    };</div><div class="ttc" id="unionphosphor_1_1_trace_argument_html_a362ed414b8ec7999b52aabe30e0f8a89"><div class="ttname"><a href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">phosphor::TraceArgument::Type</a></div><div class="ttdeci">Type</div><div class="ttdef"><b>Definition:</b> trace_argument.h:50</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;&gt; \</div><div class="line">    inline constexpr TraceArgument::TraceArgument(src arg) : as_##dst(arg) {} \</div><div class="line">    template&lt;&gt; \</div><div class="line">    class TraceArgumentConversion&lt;src&gt; { \</div><div class="line">        public:\</div><div class="line">        inline <span class="keyword">static</span> constexpr <a class="code" href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">TraceArgument::Type</a> getType() { \</div><div class="line">            return TraceArgument::Type::is_##dst; \</div><div class="line">        } \</div><div class="line">        \</div><div class="line">        inline <span class="keyword">static</span> constexpr TraceArgument asArgument(src arg) { \</div><div class="line">            return TraceArgument(arg); \</div><div class="line">        } \</div><div class="line">    };</div><div class="ttc" id="unionphosphor_1_1_trace_argument_html_a362ed414b8ec7999b52aabe30e0f8a89"><div class="ttname"><a href="unionphosphor_1_1_trace_argument.html#a362ed414b8ec7999b52aabe30e0f8a89">phosphor::TraceArgument::Type</a></div><div class="ttdeci">Type</div><div class="ttdef"><b>Definition:</b> trace_argument.h:51</div></div>
 </div><!-- fragment --><p>Used for defining the constructor and type-to-enum constexpr for a given type.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
