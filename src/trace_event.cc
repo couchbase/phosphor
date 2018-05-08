@@ -35,12 +35,29 @@ namespace phosphor {
           time(
               duration_cast<nanoseconds>(steady_clock::now().time_since_epoch())
                   .count()),
+          duration(0),
           thread_id(_thread_id),
           arg_types(_arg_types),
           type(_type) {}
 
+    TraceEvent::TraceEvent(
+            const tracepoint_info* _tpi,
+            uint32_t _thread_id,
+            std::chrono::steady_clock::time_point _start,
+            std::chrono::steady_clock::duration _duration,
+            std::array<TraceArgument, arg_count>&& _args,
+            std::array<TraceArgument::Type, arg_count>&& _arg_types)
+        : tpi(_tpi),
+          args(_args),
+          time(_start.time_since_epoch().count()),
+          duration(_duration.count()),
+          thread_id(_thread_id),
+          arg_types(_arg_types),
+          type(Type::Complete) {
+    }
+
     std::string TraceEvent::to_string() const {
-        typedef duration<
+        typedef std::chrono::duration<
             int,
             std::ratio_multiply<hours::period, std::ratio<24> >::type>
             days;
@@ -117,6 +134,8 @@ namespace phosphor {
             return "Instant";
         case Type::GlobalInstant:
             return "GlobalInstant";
+        case Type::Complete:
+            return "Complete";
         }
         throw std::invalid_argument(
             "TraceEvent::typeToString: "
@@ -156,6 +175,10 @@ namespace phosphor {
         return time;
     }
 
+    uint64_t TraceEvent::getDuration() const {
+        return duration;
+    }
+
     TraceEvent::ToJsonResult TraceEvent::typeToJSON() const {
         TraceEvent::ToJsonResult res;
 
@@ -185,6 +208,11 @@ namespace phosphor {
         case Type::GlobalInstant:
             res.type = "i";
             res.extras = ",\"s\":\"g\"";
+            return res;
+        case Type::Complete:
+            res.type = "X";
+            const double duration_us = duration / 1000.0;
+            res.extras = utils::format_string(",\"dur\":%.3f", duration_us);
             return res;
         }
         throw std::invalid_argument(

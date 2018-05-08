@@ -84,6 +84,8 @@ TEST(TraceEvent, typeToString) {
     EXPECT_STREQ("Instant", TraceEvent::typeToString(TraceEvent::Type::Instant));
     EXPECT_STREQ("GlobalInstant",
                  TraceEvent::typeToString(TraceEvent::Type::GlobalInstant));
+    EXPECT_STREQ("Complete",
+                 TraceEvent::typeToString(TraceEvent::Type::Complete));
     EXPECT_THROW(TraceEvent::typeToString(static_cast<TraceEvent::Type>(0xFF)),
                  std::invalid_argument);
 }
@@ -153,6 +155,21 @@ public:
                      _thread_id,
                      std::move(_args),
                      std::move(_arg_types)) {}
+
+    MockTraceEvent(
+            const phosphor::tracepoint_info* _tpi,
+            uint64_t _thread_id,
+            std::chrono::steady_clock::time_point _start,
+            std::chrono::steady_clock::duration _duration,
+            std::array<TraceArgument, phosphor::arg_count>&& _args,
+            std::array<TraceArgument::Type, phosphor::arg_count>&& _arg_types)
+        : TraceEvent(_tpi,
+                     _thread_id,
+                     _start,
+                     _duration,
+                     std::move(_args),
+                     std::move(_arg_types)) {
+    }
 };
 
 TEST(TraceEventTypeToJSON, Instant) {
@@ -225,6 +242,19 @@ TEST(TraceEventTypeToJSON, GlobalInstant) {
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.type));
     EXPECT_EQ(",\"s\":\"g\"", res.extras);
+}
+
+TEST(TraceEventTypeToJSON, Complete) {
+    MockTraceEvent event(
+            &tpi,
+            0,
+            std::chrono::steady_clock::now(),
+            std::chrono::microseconds(1),
+            {{0, 0}},
+            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+    auto res = event.typeToJSON();
+    EXPECT_EQ("X", std::string(res.type));
+    EXPECT_EQ(",\"dur\":1.000", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, Invalid) {

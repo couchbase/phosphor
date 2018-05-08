@@ -48,7 +48,8 @@ namespace phosphor {
             SyncStart,
             SyncEnd,
             Instant,
-            GlobalInstant
+            GlobalInstant,
+            Complete
         };
 
         /**
@@ -67,6 +68,18 @@ namespace phosphor {
         TraceEvent(const tracepoint_info* _tpi,
                    Type _type,
                    uint32_t _thread_id,
+                   std::array<TraceArgument, arg_count>&& _args,
+                   std::array<TraceArgument::Type, arg_count>&& _arg_types);
+
+        /**
+         * Constructor for Complete events.
+         * 'Complete' event includes both start time + duration; which are
+         * both specified by the caller.
+         */
+        TraceEvent(const tracepoint_info* _tpi,
+                   uint32_t _thread_id,
+                   std::chrono::steady_clock::time_point _start,
+                   std::chrono::steady_clock::duration _duration,
                    std::array<TraceArgument, arg_count>&& _args,
                    std::array<TraceArgument::Type, arg_count>&& _arg_types);
 
@@ -132,6 +145,11 @@ namespace phosphor {
          */
         int64_t getTime() const;
 
+        /**
+         * @return the duration of the event measured in nanoseconds.
+         */
+        uint64_t getDuration() const;
+
     protected:
         class ToJsonResult {
         public:
@@ -153,6 +171,12 @@ namespace phosphor {
         const tracepoint_info* tpi;
         std::array<TraceArgument, arg_count> args;
         uint64_t time;
+
+        /**
+         * Only used by Type::Complete events to specify the duration (in
+         * nanoseconds). Unused by other Types.
+         */
+        uint64_t duration;
 
         uint32_t thread_id;
         std::array<TraceArgument::Type, arg_count> arg_types;
@@ -177,4 +201,4 @@ namespace phosphor {
     static_assert(
         sizeof(TraceEvent) <= 64,
         "TraceEvent should fit inside a cache-line for performance reasons");
-}
+    } // namespace phosphor

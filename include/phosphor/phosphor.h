@@ -446,6 +446,60 @@
         arg2)
 /** @} */
 
+/**
+ * \defgroup sync Complete events
+ *
+ * Complete events logically combine a pair of SyncStart and SyncEnd events
+ * into a single event.
+ *
+ * Note: You typically don't want to use these low-level macros - consider
+ *       TRACE_EVENT*() / TRACE_FUNCTION*() instead.
+ *
+ * Their are two main use-cases over individual SyncStart / SyncEnd events:
+ * 1. Space-efficiency - only a single Complete event is needed instead of
+ *    a pair of SyncStart / SyncEnd events.
+ * 2. Deferring trace decision until the end of an operation - for example
+ *    you can measure the duration of an operation, but only emit a trace
+ *    event if it exceeded some limit.
+ *
+ * The caller must first record a start time; which is then provided to the
+ * macro.
+ *
+ * Example:
+ *
+ *     const auto start = std::chrono::steady_clock::now();
+ *     // Perform some operation ...
+ *     const auto end = std::chrono::steady_clock::now();
+ *     TRACE_COMPLETE("Memcached:Frontend", "SetKey", start, end);
+ *
+ * Or with arguments:
+ *
+ *     TRACE_COMPLETE("my_category", "name", start, end, "vbid", 0);
+ * @{
+ */
+#define TRACE_COMPLETE(category, name, start, end, ...) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(                      \
+            category, name, "arg1", "arg2", start, (end - start), __VA_ARGS__)
+
+#define TRACE_COMPLETE0(category, name, start, end) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, "", "", start, (end - start))
+
+#define TRACE_COMPLETE1(category, name, start, end, arg1_name, arg1) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(                                   \
+            category, name, arg1_name, "", start, (end - start), arg1)
+
+#define TRACE_COMPLETE2(                                              \
+        category, name, start, end, arg1_name, arg1, arg2_name, arg2) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT(category,                           \
+                                  name,                               \
+                                  arg1_name,                          \
+                                  arg2_name,                          \
+                                  start,                              \
+                                  (end - start),                      \
+                                  arg1,                               \
+                                  arg2)
+/** @} */
+
 #else // if: defined(PHOSPHOR_DISABLED) && PHOSPHOR_DISABLED != 0
 
 #define TRACE_EVENT_START(category, name, ...)
@@ -485,5 +539,11 @@
 #define TRACE_GLOBAL0(category, name)
 #define TRACE_GLOBAL1(category, name, arg1_name, arg1)
 #define TRACE_GLOBAL2(category, name, arg1_name, arg1, arg2_name, arg2)
+
+#define TRACE_COMPLETE(category, name, start, end, ...)
+#define TRACE_COMPLETE0(category, name, start, end)
+#define TRACE_COMPLETE1(category, name, start, end, arg1_name, arg1)
+#define TRACE_COMPLETE2( \
+        category, name, start, end, arg1_name, arg1, arg2_name, arg2)
 
 #endif // PHOSPHOR_DISABLED
