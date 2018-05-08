@@ -18,6 +18,7 @@
 #pragma once
 
 #include "phosphor-internal.h"
+#include "scoped_event_guard.h"
 #include "trace_log.h"
 
 /** \file
@@ -180,6 +181,9 @@
  * Scoped events are used for events that should log synchronously both
  * a start and an end event automatically according to a scope.
  *
+ * They are preferred over a pair of EVENT_START / EVENT_END macros as only one
+ * trace event needs to be allocated in Phosphor instead of two.
+ *
  * The TRACE_FUNCTION event macros are identical to the TRACE_EVENT
  * macros except they don't accept a name parameter and the name is
  * predefined as the function name (using `__func__`).
@@ -188,7 +192,7 @@
  *
  *     void defragment_part(int vbucket) {
  *         // Set up a scoped event and log the start event
- *         TRACE_EVENT("ep-engine:vbucket", "defragment_part", vbucket);
+ *         TRACE_EVENT0("ep-engine:vbucket", "defragment_part", vbucket);
  *
  *         // Perform the de-fragmentation and take some time doing it
  *         ...
@@ -213,44 +217,42 @@
  *
  * @{
  */
-#define TRACE_EVENT(category, name, ...)                              \
-    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
-    TRACE_EVENT_START(category, name, __VA_ARGS__);                   \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
-            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \
-        }                                                             \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
+#define TRACE_EVENT0(category, name)                                     \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, "", "")      \
+    phosphor::ScopedEventGuard<phosphor::NoneType, phosphor::NoneType>   \
+            PHOSPHOR_INTERNAL_UID(guard)(                                \
+                    &PHOSPHOR_INTERNAL_UID(tpi),                         \
+                    PHOSPHOR_INTERNAL_UID(category_enabled_temp)         \
+                                    ->load(std::memory_order_acquire) != \
+                            phosphor::CategoryStatus::Disabled,          \
+                    phosphor::NoneType(),                                \
+                    phosphor::NoneType());
 
-#define TRACE_EVENT0(category, name)                                  \
-    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
-    TRACE_EVENT_START0(category, name);                               \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
-            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));\
-        }                                                             \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
+#define TRACE_EVENT1(category, name, arg1_name, arg1)                      \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                        \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, arg1_name, "") \
+    phosphor::ScopedEventGuard<decltype(arg1), phosphor::NoneType>         \
+            PHOSPHOR_INTERNAL_UID(guard)(                                  \
+                    &PHOSPHOR_INTERNAL_UID(tpi),                           \
+                    PHOSPHOR_INTERNAL_UID(category_enabled_temp)           \
+                                    ->load(std::memory_order_acquire) !=   \
+                            phosphor::CategoryStatus::Disabled,            \
+                    arg1,                                                  \
+                    phosphor::NoneType());
 
-#define TRACE_EVENT1(category, name, arg1_name, arg1)                 \
-    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
-    TRACE_EVENT_START1(category, name, arg1_name, arg1);              \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
-            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \
-        }                                                             \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
-
-#define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name;   \
-    TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2); \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                    \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                    \
-            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));   \
-        }                                                             \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
-
-#define TRACE_FUNCTION(category, ...) \
-    TRACE_EVENT(category, __func__, __VA_ARGS__)
+#define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2)   \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                             \
+            category, name, arg1_name, arg2_name)                        \
+    phosphor::ScopedEventGuard<decltype(arg1), decltype(arg2)>           \
+            PHOSPHOR_INTERNAL_UID(guard)(                                \
+                    &PHOSPHOR_INTERNAL_UID(tpi),                         \
+                    PHOSPHOR_INTERNAL_UID(category_enabled_temp)         \
+                                    ->load(std::memory_order_acquire) != \
+                            phosphor::CategoryStatus::Disabled,          \
+                    arg1,                                                \
+                    arg2);
 
 #define TRACE_FUNCTION0(category) \
     TRACE_EVENT0(category, __func__)

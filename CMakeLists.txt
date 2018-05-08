@@ -23,6 +23,7 @@ SET(phosphor_HEADER_FILES
         ${phosphor_SOURCE_DIR}/include/phosphor/phosphor.h
         ${phosphor_SOURCE_DIR}/include/phosphor/phosphor-internal.h
         ${phosphor_SOURCE_DIR}/include/phosphor/relaxed_atomic.h
+        ${phosphor_SOURCE_DIR}/include/phosphor/scoped_event_guard.h
         ${phosphor_SOURCE_DIR}/include/phosphor/stats_callback.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_argument.h
         ${phosphor_SOURCE_DIR}/include/phosphor/trace_buffer.h
