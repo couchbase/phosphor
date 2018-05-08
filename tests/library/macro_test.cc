@@ -306,22 +306,12 @@ TEST_F(MacroTraceEventTest, Scoped) {
         verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("name.acquire", event.getName());
             EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-        });
-        verifications.emplace_back([](const phosphor::TraceEvent& event) {
-            EXPECT_STREQ("name.acquire", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
+            EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
         });
         verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("name.held", event.getName());
             EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncStart, event.getType());
-        });
-        verifications.emplace_back([](const phosphor::TraceEvent& event) {
-            EXPECT_STREQ("name.held", event.getName());
-            EXPECT_STREQ("category", event.getCategory());
-            EXPECT_EQ(phosphor::TraceEvent::Type::SyncEnd, event.getType());
+            EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
         });
     }
 }

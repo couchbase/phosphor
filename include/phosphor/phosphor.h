@@ -200,21 +200,6 @@
  *     } // Automatically log a synchronous end event on function exit
  *       // (Through return or exception)
  *
- * The TRACE_LOCKGUARD macro measures for a given mutex both the duration for
- * acquiring the lock and the duration the lock is held.  This is achieved
- * by issuing two pairs of TRACE_EVENT_START0 / TRACE_EVENT_END0 events.
- *
- * Example:
- *
- *    TRACE_LOCKGUARD(mutex, "category", "lock_name");
- *
- * This example will produce the following 4 events:
- *
- * 1) START_EVENT "cat" = "category" "name" = "lock_name.acquire"
- * 2) END_EVENT   "cat" = "category" "name" = "lock_name.acquire"
- * 3) START_EVENT "cat" = "category" "name" = "lock_name.held"
- * 4) END_EVENT   "cat" = "category" "name" = "lock_name.held"
- *
  * @{
  */
 #define TRACE_EVENT0(category, name)                                     \
@@ -262,22 +247,49 @@
 
 #define TRACE_FUNCTION2(category, arg1_name, arg1, arg2_name, arg2) \
     TRACE_EVENT2(category, __func__, arg1_name, arg1, arg2_name, arg2)
+/** @} */
 
-#define TRACE_LOCKGUARD(mutex, category, name)                                \
-    static constexpr const char* PHOSPHOR_INTERNAL_UID(nme) = name ".held";  \
-    static decltype(mutex)& PHOSPHOR_INTERNAL_UID(lk)(mutex);            \
-    TRACE_EVENT_START0(category, name ".acquire");                       \
-    PHOSPHOR_INTERNAL_UID(lk).lock();                                    \
-    PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(                               \
-        second_tpi, category, name ".acquire", phosphor::TraceEvent::Type::SyncEnd); \
-    PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(                                \
-        third_tpi, category, name ".held", phosphor::TraceEvent::Type::SyncStart);  \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                       \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                       \
-            PHOSPHOR_INTERNAL_UID(lk).unlock();                          \
-            TRACE_EVENT_END0(category, PHOSPHOR_INTERNAL_UID(nme));      \
-        }                                                                \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst);
+/**
+ * \defgroup scoped Lock Events
+ *
+ * The TRACE_LOCKGUARD macro measures for a given mutex both the duration for
+ * acquiring the lock and the duration the lock is held.  This is achieved
+ * by issuing two TRACE_EVENT events.
+ *
+ * Example:
+ *
+ *    TRACE_LOCKGUARD(mutex, "category", "lock_name");
+ *
+ * This example will acquire the given lock; unlocking it when the guard
+ * goes out of scope (same as std::lock_guard). Additionally it will produce
+ * the following 2 events:
+ *
+ * 1) TRACE_EVENT "cat" = "category" "name" = "lock_name.acquire"
+ * 2) START_EVENT "cat" = "category" "name" = "lock_name.held"
+ *
+ * @{
+ */
+#define TRACE_LOCKGUARD(mutex, category, name)                         \
+    static decltype(mutex)& PHOSPHOR_INTERNAL_UID(lk)(mutex);          \
+    const auto PHOSPHOR_INTERNAL_UID(start) =                          \
+            std::chrono::steady_clock::now();                          \
+    PHOSPHOR_INTERNAL_UID(lk).lock();                                  \
+    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                     \
+        PHOSPHOR_INTERNAL_UID(scoped_trace_t)                          \
+        (std::chrono::steady_clock::time_point start)                  \
+            : start(start), locked(std::chrono::steady_clock::now()) { \
+            TRACE_COMPLETE0(category, name ".acquire", start, locked); \
+        }                                                              \
+        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                     \
+            PHOSPHOR_INTERNAL_UID(lk).unlock();                        \
+            TRACE_COMPLETE0(category,                                  \
+                            name ".held",                              \
+                            locked,                                    \
+                            std::chrono::steady_clock::now());         \
+        }                                                              \
+        const std::chrono::steady_clock::time_point start;             \
+        const std::chrono::steady_clock::time_point locked;            \
+    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst)(PHOSPHOR_INTERNAL_UID(start));
 /** @} */
 
 /**
