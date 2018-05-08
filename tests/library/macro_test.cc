@@ -269,7 +269,7 @@ TEST_F(MacroTraceEventTest, Global) {
 TEST_F(MacroTraceEventTest, Scoped) {
     {
         TRACE_EVENT0("category", "name");
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("name", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
@@ -277,7 +277,7 @@ TEST_F(MacroTraceEventTest, Scoped) {
     }
     {
         TRACE_EVENT1("category", "name", "my_arg1", 3);
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("name", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
@@ -287,7 +287,7 @@ TEST_F(MacroTraceEventTest, Scoped) {
     }
     {
         TRACE_EVENT2("category", "name", "my_arg1", 3, "my_arg2", 4);
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("name", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
@@ -297,6 +297,9 @@ TEST_F(MacroTraceEventTest, Scoped) {
             EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
         });
     }
+}
+
+TEST_F(MacroTraceEventTest, LockGuard) {
     {
         testing::InSequence dummy;
         MockUniqueLock m;
@@ -304,7 +307,7 @@ TEST_F(MacroTraceEventTest, Scoped) {
         EXPECT_CALL(m, unlock()).Times(1);
         TRACE_LOCKGUARD(m, "category", "name");
         verifications.emplace_back([](const phosphor::TraceEvent& event) {
-            EXPECT_STREQ("name.acquire", event.getName());
+            EXPECT_STREQ("name.wait", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
         });
@@ -314,6 +317,40 @@ TEST_F(MacroTraceEventTest, Scoped) {
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
         });
     }
+}
+
+/// Test where we specify a tiny limit for the lock guard; so should be traced.
+TEST_F(MacroTraceEventTest, LockGuardTimedSlow) {
+    {
+        testing::InSequence dummy;
+        MockUniqueLock m;
+        EXPECT_CALL(m, lock()).Times(1);
+        EXPECT_CALL(m, unlock()).Times(1);
+        TRACE_LOCKGUARD_TIMED(m, "category", "name", std::chrono::nanoseconds(0));
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
+            EXPECT_STREQ("name.wait", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
+        });
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
+            EXPECT_STREQ("name.held", event.getName());
+            EXPECT_STREQ("category", event.getCategory());
+            EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
+        });
+    }
+}
+
+/// Test where we specify a huge limit for the lock guard; so should not be
+/// traced.
+TEST_F(MacroTraceEventTest, LockGuardTimedFast) {
+    testing::InSequence dummy;
+    MockUniqueLock m;
+    EXPECT_CALL(m, lock()).Times(1);
+    EXPECT_CALL(m, unlock()).Times(1);
+    TRACE_LOCKGUARD_TIMED(m, "category", "name", std::chrono::seconds(100));
+    // empty vector of verifications - to check that we shouldn't expect
+    // any trace events.
+    verifications.clear();
 }
 
 void macro_test_functionA() {

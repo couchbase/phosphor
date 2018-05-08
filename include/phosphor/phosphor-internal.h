@@ -40,26 +40,29 @@
  * category_enabled into category_enabled_temp which saves a second
  * load in the calling macro.
  */
-#define PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    static std::atomic<const phosphor::AtomicCategoryStatus*> \
-            PHOSPHOR_INTERNAL_UID(category_enabled); \
-    const phosphor::AtomicCategoryStatus* PHOSPHOR_INTERNAL_UID(category_enabled_temp) \
-        = PHOSPHOR_INTERNAL_UID(category_enabled).load(std::memory_order_acquire); \
+#define PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
+    static std::atomic<const phosphor::AtomicCategoryStatus*>                \
+            PHOSPHOR_INTERNAL_UID(category_enabled);                         \
+    const phosphor::AtomicCategoryStatus* PHOSPHOR_INTERNAL_UID(             \
+            category_enabled_temp) = PHOSPHOR_INTERNAL_UID(category_enabled) \
+                                             .load(std::memory_order_acquire);
 
 #define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, argA, argB) \
-    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(tpi_name) = { \
-        category, \
-        name, \
-        {{argA, argB}} \
-    }; \
+    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(          \
+            tpi_name) = {category, name, {{argA, argB}}};
 
 #define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB); \
-    if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) { \
-        PHOSPHOR_INTERNAL_UID(category_enabled_temp) = &PHOSPHOR_INSTANCE.getCategoryStatus(category); \
-        PHOSPHOR_INTERNAL_UID(category_enabled).store( \
-            PHOSPHOR_INTERNAL_UID(category_enabled_temp), std::memory_order_release); \
-    } \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB);      \
+    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)
+
+#define PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)      \
+    if (unlikely(!PHOSPHOR_INTERNAL_UID(category_enabled_temp))) {   \
+        PHOSPHOR_INTERNAL_UID(category_enabled_temp) =               \
+                &PHOSPHOR_INSTANCE.getCategoryStatus(category);      \
+        PHOSPHOR_INTERNAL_UID(category_enabled)                      \
+                .store(PHOSPHOR_INTERNAL_UID(category_enabled_temp), \
+                       std::memory_order_release);                   \
+    }
 
 /*
  * Traces an event of a specified type with one or more arguments

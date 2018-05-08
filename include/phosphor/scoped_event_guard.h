@@ -57,4 +57,78 @@ struct ScopedEventGuard {
     std::chrono::steady_clock::time_point start;
 };
 
+/**
+ * RAII-style object to record events for acquiring and locking a mutex.
+ * Locks the underlying mutex on construction, unlocks when it goes out of
+ * scope; measuring two timespans:
+ * 1. Time taken to acquire the mutex.
+ * 2. Time the mutex is held for.
+ *
+ * @tparam Mutex Type of mutex to guard.
+ */
+template <class Mutex>
+class MutexEventGuard {
+public:
+    /**
+     * Acquires ownership of the specified mutex.
+     *
+     * If enabled is true, records the time spent waiting for the lock. Upon
+     * destruction, events will be logged with the specified details.
+     * @threshold Minimum duration that either the lock or acquire span must
+     * take for events to be logged.
+     */
+    MutexEventGuard(const tracepoint_info* tpiWait_,
+                    const tracepoint_info* tpiHeld_,
+                    bool enabled_,
+                    Mutex& mutex_,
+                    std::chrono::steady_clock::duration threshold_ =
+                            std::chrono::steady_clock::duration::zero())
+        : tpiWait(tpiWait_),
+          tpiHeld(tpiHeld_),
+          enabled(enabled_),
+          mutex(mutex_),
+          threshold(threshold_) {
+        if (enabled) {
+            start = std::chrono::steady_clock::now();
+            mutex.lock();
+            lockedAt = std::chrono::steady_clock::now();
+        } else {
+            mutex.lock();
+        }
+    }
+
+    /// Unlocks the mutex, and records trace events if enabled.
+    ~MutexEventGuard() {
+        mutex.unlock();
+        if (enabled) {
+            releasedAt = std::chrono::steady_clock::now();
+            const auto waitTime = lockedAt - start;
+            const auto heldTime = releasedAt - lockedAt;
+            if (waitTime > threshold || heldTime > threshold) {
+                auto& traceLog = TraceLog::getInstance();
+                traceLog.logEvent(tpiWait,
+                                  start,
+                                  waitTime,
+                                  reinterpret_cast<void*>(&mutex),
+                                  NoneType());
+                traceLog.logEvent(tpiHeld,
+                                  lockedAt,
+                                  heldTime,
+                                  reinterpret_cast<void*>(&mutex),
+                                  NoneType());
+            }
+        }
+    }
+
+private:
+    const tracepoint_info* tpiWait;
+    const tracepoint_info* tpiHeld;
+    const bool enabled;
+    Mutex& mutex;
+    const std::chrono::steady_clock::duration threshold;
+    std::chrono::steady_clock::time_point start;
+    std::chrono::steady_clock::time_point lockedAt;
+    std::chrono::steady_clock::time_point releasedAt;
+};
+
 } // namespace phosphor

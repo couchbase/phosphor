@@ -252,9 +252,9 @@
 /**
  * \defgroup scoped Lock Events
  *
- * The TRACE_LOCKGUARD macro measures for a given mutex both the duration for
- * acquiring the lock and the duration the lock is held.  This is achieved
- * by issuing two TRACE_EVENT events.
+ * The TRACE_LOCKGUARD macro measures for a given mutex both the duration
+ * waiting to acquire the lock and the duration the lock is held.  This is
+ * achieved by issuing two TRACE_EVENT events.
  *
  * Example:
  *
@@ -264,32 +264,58 @@
  * goes out of scope (same as std::lock_guard). Additionally it will produce
  * the following 2 events:
  *
- * 1) TRACE_EVENT "cat" = "category" "name" = "lock_name.acquire"
+ * 1) TRACE_EVENT "cat" = "category" "name" = "lock_name.wait"
  * 2) START_EVENT "cat" = "category" "name" = "lock_name.held"
+ *
+ *
+ * The TRACE_LOCKGUARD_TIMED is similar to TRACE_LOCKGUARD, except that
+ * the trace events are only recorded if the wait or held durations exceed
+ * the specified value, otherwise no events are recorded. In the event either
+ * stage of the lock takes longer than the limit, *both* events are recorded.
+ *
+ * This is intended for profiling locks which are /normally/ quick; but
+ * exhibit occasional slowness; therefore it would be too costly (in terms of
+ * trace storage space) to unconditionally log them.
+ *
+ * Example:
+ *
+ *    TRACE_LOCKGUARD_TIMED(mutex, "category", "lock_name",
+ *                          std::chrono::milliseconds(10));
+ *
+ * If either of the acquire or held durations exceed 10ms, then trace events
+ * are recorded.
  *
  * @{
  */
-#define TRACE_LOCKGUARD(mutex, category, name)                         \
-    static decltype(mutex)& PHOSPHOR_INTERNAL_UID(lk)(mutex);          \
-    const auto PHOSPHOR_INTERNAL_UID(start) =                          \
-            std::chrono::steady_clock::now();                          \
-    PHOSPHOR_INTERNAL_UID(lk).lock();                                  \
-    struct PHOSPHOR_INTERNAL_UID(scoped_trace_t) {                     \
-        PHOSPHOR_INTERNAL_UID(scoped_trace_t)                          \
-        (std::chrono::steady_clock::time_point start)                  \
-            : start(start), locked(std::chrono::steady_clock::now()) { \
-            TRACE_COMPLETE0(category, name ".acquire", start, locked); \
-        }                                                              \
-        ~PHOSPHOR_INTERNAL_UID(scoped_trace_t)() {                     \
-            PHOSPHOR_INTERNAL_UID(lk).unlock();                        \
-            TRACE_COMPLETE0(category,                                  \
-                            name ".held",                              \
-                            locked,                                    \
-                            std::chrono::steady_clock::now());         \
-        }                                                              \
-        const std::chrono::steady_clock::time_point start;             \
-        const std::chrono::steady_clock::time_point locked;            \
-    } PHOSPHOR_INTERNAL_UID(scoped_trace_inst)(PHOSPHOR_INTERNAL_UID(start));
+#define TRACE_LOCKGUARD(mutex, category, name)                                 \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                            \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_wait, category, name ".wait", "", "") \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_held, category, name ".held", "", "") \
+    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                    \
+    phosphor::MutexEventGuard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)(   \
+            &PHOSPHOR_INTERNAL_UID(tpi_wait),                                  \
+            &PHOSPHOR_INTERNAL_UID(tpi_held),                                  \
+            PHOSPHOR_INTERNAL_UID(category_enabled_temp)                       \
+                            ->load(std::memory_order_acquire) !=               \
+                    phosphor::CategoryStatus::Disabled,                        \
+            mutex);
+
+#define TRACE_LOCKGUARD_TIMED(mutex, category, name, limit)                  \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
+            tpi_wait, category, name ".wait", "this", "");                   \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
+            tpi_held, category, name ".held", "", "");                       \
+    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                  \
+    phosphor::MutexEventGuard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)( \
+            &PHOSPHOR_INTERNAL_UID(tpi_wait),                                \
+            &PHOSPHOR_INTERNAL_UID(tpi_held),                                \
+            PHOSPHOR_INTERNAL_UID(category_enabled_temp)                     \
+                            ->load(std::memory_order_acquire) !=             \
+                    phosphor::CategoryStatus::Disabled,                      \
+            mutex,                                                           \
+            limit);
+
 /** @} */
 
 /**
