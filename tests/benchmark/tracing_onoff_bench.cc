@@ -76,7 +76,7 @@ void TracingOnOffMacro(benchmark::State& state) {
         // It's likely that the benchmark management overhead will be the
         // significant factor in this instance so run it multiple times
         for (int i = 0; i < 100; i++) {
-            TRACE_INSTANT0("category", "name");
+            TRACE_EVENT0("category", "name");
         }
     }
     PHOSPHOR_INSTANCE.deregisterThread();
