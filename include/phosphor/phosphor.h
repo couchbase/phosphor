@@ -561,8 +561,10 @@
 #define TRACE_FUNCTION1(category, name, arg1_name, arg1)
 #define TRACE_FUNCTION2(category, name, arg1_name, arg1, arg2_name, arg2)
 
-#define TRACE_LOCKGUARD(mutex, category, name)
-#define TRACE_LOCKGUARD_TIMED(mutex, category, name, limit)
+#define TRACE_LOCKGUARD(mutex, category, name) \
+    std::lock_guard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)(mutex);
+#define TRACE_LOCKGUARD_TIMED(mutex, category, name, limit) \
+    std::lock_guard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)(mutex);
 
 #define TRACE_ASYNC_START(category, name, id, ...)
 #define TRACE_ASYNC_START0(category, name, id)

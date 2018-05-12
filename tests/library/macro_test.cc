@@ -15,62 +15,7 @@
  *   limitations under the License.
  */
 
-#include <functional>
-#include <vector>
-
-#include <gmock/gmock.h>
-#include <gtest/gtest.h>
-
-#include <phosphor/phosphor.h>
-
-/*
- * The MacroTraceEventTest class is used to test that macros behave as
- * expected. That when called they will trace events and that from a
- * single thread they will be appropriately ordered.
- *
- * The class contains a vector of functions `verifications`, which should be
- * added to from a testcase. This vector of functions will be called on each
- * event in the buffer in order and is used to verify that the event appears
- * as it should (has the right category/name/type/arguments).
- */
-class MacroTraceEventTest : public testing::Test {
-public:
-    MacroTraceEventTest() {
-        PHOSPHOR_INSTANCE.start(
-                phosphor::TraceConfig(phosphor::BufferMode::fixed,
-                                      sizeof(phosphor::TraceChunk))
-                        .setCategories({{"category"}, {"ex*"}},
-                                       {{"excluded"}}));
-    }
-
-    ~MacroTraceEventTest() {
-        PHOSPHOR_INSTANCE.stop();
-        auto buffer = PHOSPHOR_INSTANCE.getBuffer();
-        auto event = buffer->begin();
-        auto verification = verifications.begin();
-
-        while(event != buffer->end() && verification != verifications.end()) {
-            (*verification)(*event);
-            ++event;
-            ++verification;
-        }
-
-        EXPECT_EQ(buffer->end(), event) << "Too many events in buffer!";
-        EXPECT_EQ(verifications.end(), verification)
-                            << "Too many verifications left ("
-                            << std::distance(verification,
-                                             verifications.end()) << ")";
-    }
-
-protected:
-    std::vector<std::function<void(const phosphor::TraceEvent&)>> verifications;
-};
-
-class MockUniqueLock : std::unique_lock<std::mutex> {
-public:
-    MOCK_METHOD0(lock, void());
-    MOCK_METHOD0(unlock, void());
-};
+#include "macro_test.h"
 
 TEST_F(MacroTraceEventTest, Synchronous) {
     TRACE_EVENT_START0("category", "name");

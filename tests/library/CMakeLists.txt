@@ -14,7 +14,9 @@ IF (NOT (CB_THREADSANITIZER OR CB_ADDRESSSANITIZER))
 ENDIF()
 
 M_ADD_LIBRARY_GTEST(macro_test
-            macro_test.cc)
+            macro_disabled_test.cc
+            macro_test.cc
+            macro_test.h)
 
 M_ADD_LIBRARY_GTEST(threaded_test
         threaded_test.cc)
