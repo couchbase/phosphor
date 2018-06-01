@@ -40,6 +40,9 @@ M_ADD_MODULE_BENCHMARK(tracing_threading_bench_16
         ${phosphor_SOURCE_FILES})
 set_target_properties(tracing_threading_bench_16 PROPERTIES COMPILE_DEFINITIONS "PHOSPHOR_CHUNK_PAGE_COUNT=16")
 
+M_ADD_LIBRARY_BENCHMARK(category_onoff_bench
+        category_onoff_bench.cc)
+
 M_ADD_LIBRARY_BENCHMARK(tracing_onoff_bench
         tracing_onoff_bench.cc)
 
