@@ -280,8 +280,19 @@ namespace phosphor {
         const std::vector<std::string>& getDisabledCategories() const;
 
         /**
-         * Generate a TraceConfig from a config string (Usually set from
-         * an environment variable).
+         * Update a pre-existing TraceConfig from a config string
+         *
+         * Example:
+         *
+         *     config.updateFromString("buffer-mode:fixed,buffer-size:1024");
+         *
+         * @param config Config string to be used to update the TraceConfig
+         * @throws std::invalid_argument
+         */
+        void updateFromString(const std::string& config);
+
+        /**
+         * Generate a TraceConfig from a config string
          *
          * Example:
          *
@@ -289,6 +300,7 @@ namespace phosphor {
          *
          * @param config Config string to be used to generate the TraceConfig
          * @return Generated TraceConfig
+         * @throws std::invalid_argument
          */
         static TraceConfig fromString(const std::string& config);
 

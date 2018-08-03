@@ -108,6 +108,25 @@ TEST(TraceConfigTest, CategoryConfig) {
     EXPECT_THAT(config.getDisabledCategories(), testing::ElementsAre("world"));
 }
 
+TEST(TraceConfigTest, updateFromString) {
+    TraceConfig config(BufferMode::fixed, 1337);
+
+    config.updateFromString(
+            "buffer-mode:ring;"
+            "buffer-size:1024;"
+            "save-on-stop:out.json;"
+            "enabled-categories:hello,world;"
+            "disabled-categories:*rld");
+
+    EXPECT_EQ(BufferMode::ring, config.getBufferMode());
+    EXPECT_EQ(1024, config.getBufferSize());
+    EXPECT_TRUE(config.getStoppedCallback());
+    EXPECT_TRUE(config.getStopTracingOnDestruct());
+    EXPECT_THAT(config.getEnabledCategories(),
+                testing::ElementsAre("hello", "world"));
+    EXPECT_THAT(config.getDisabledCategories(), testing::ElementsAre("*rld"));
+}
+
 TEST(TraceConfigTest, fromString) {
     TraceConfig config = TraceConfig::fromString(
             "buffer-mode:ring;"

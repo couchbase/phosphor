@@ -164,14 +164,8 @@ namespace phosphor {
         return disabled_categories;
     }
 
-    TraceConfig TraceConfig::fromString(const std::string &config) {
+    void TraceConfig::updateFromString(const std::string& config) {
         auto arguments(phosphor::utils::split_string(config, ';'));
-
-        BufferMode mode = BufferMode::fixed;
-        int buffer_size = 1024 * 1024 * 8;
-        std::string filename = "";
-        std::string enabled_categories = "*";
-        std::string disabled_categories = "";
 
         for (const std::string &argument : arguments) {
             auto kv(phosphor::utils::split_string(argument, ':'));
@@ -189,17 +183,18 @@ namespace phosphor {
 
             if (key == "buffer-mode") {
                 if (value == "fixed") {
-                    mode = BufferMode::fixed;
+                    buffer_mode = BufferMode::fixed;
                 } else if (value == "ring") {
-                    mode = BufferMode::ring;
+                    buffer_mode = BufferMode::ring;
                 } else {
                     throw std::invalid_argument(
                             "TraceConfig::fromString: "
                                     "Invalid buffer mode given");
                 }
             } else if (key == "buffer-size") {
+                int size;
                 try {
-                    buffer_size = std::stoi(value);
+                    size = std::stoi(value);
                 } catch (std::invalid_argument &e) {
                     throw std::invalid_argument(
                             "TraceConfig::fromString: "
@@ -210,28 +205,29 @@ namespace phosphor {
                                     "buffer size was too large");
                 }
 
-                if (buffer_size < 0) {
+                if (size < 0) {
                     throw std::invalid_argument(
                             "TraceConfig::fromString: "
                                     "buffer size cannot be negative");
                 }
+                buffer_size = size;
             } else if (key == "save-on-stop") {
-                filename = value;
+                tracing_stopped_callback =
+                    std::make_shared<tools::FileStopCallback>(value);
+                stop_tracing = true;
             } else if (key == "enabled-categories") {
-                enabled_categories = value;
+                enabled_categories = utils::split_string(value, ',');
             } else if (key == "disabled-categories") {
-                disabled_categories = value;
+                disabled_categories = utils::split_string(value, ',');
             }
         }
+    }
 
-        TraceConfig config_obj(mode, static_cast<size_t>(buffer_size));
-        if (filename != "") {
-            config_obj.setStoppedCallback(
-                std::make_shared<tools::FileStopCallback>(filename));
-            config_obj.setStopTracingOnDestruct(true);
-        }
-        config_obj.setCategories(utils::split_string(enabled_categories, ','),
-                                 utils::split_string(disabled_categories, ','));
+    TraceConfig TraceConfig::fromString(const std::string& config) {
+        TraceConfig config_obj(BufferMode::fixed,
+                               static_cast<size_t>(1024 * 1024 * 8));
+        config_obj.setCategories({"*"}, {});
+        config_obj.updateFromString(config);
         return config_obj;
     }
 
