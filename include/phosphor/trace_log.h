@@ -156,43 +156,6 @@ namespace phosphor {
         }
 
         /**
-         * Logs an event in the current buffer (if applicable)
-         *
-         * This method should not be used directly, instead the
-         * macros contained within phosphor.h should be used instead.
-         *
-         * @param category The category to log the event into. This (and
-         *        the name) should usually be a string literal as the
-         *        pointer should remain valid until the buffer is freed.
-         * @param name The name of the event
-         * @param type The type of the event
-         * @param argA Argument to be saved with the event
-         */
-        template <typename T>
-        void logEvent(const tracepoint_info* tpi,
-                      TraceEvent::Type type,
-                      T argA) {
-            logEvent(tpi, type, argA, NoneType());
-        }
-
-        /**
-         * Logs an event in the current buffer (if applicable)
-         *
-         * This method should not be used directly, instead the
-         * macros contained within phosphor.h should be used instead.
-         *
-         * @param category The category to log the event into. This (and
-         *        the name) should usually be a string literal as the
-         *        pointer should remain valid until the buffer is freed.
-         * @param name The name of the event
-         * @param type The type of the event
-         */
-        void logEvent(const tracepoint_info* tpi,
-                      TraceEvent::Type type) {
-            logEvent(tpi, type, NoneType(), NoneType());
-        }
-
-        /**
          * Logs a Complete event in the current buffer (if applicable)
          *
          * This method should not be used directly, instead the
@@ -225,43 +188,6 @@ namespace phosphor {
                         {{TraceArgumentConversion<T>::getType(),
                           TraceArgumentConversion<U>::getType()}});
             }
-        }
-
-        /**
-         * Logs a Complete event in the current buffer (if applicable)
-         *
-         * This method should not be used directly, instead the
-         * macros contained within phosphor.h should be used instead.
-         *
-         * @param tpi Tracepoint information (name, category, ...)
-         * @param start Start time of the event
-         * @param duration Duration of the event
-         * @param argA Argument to be saved with the event
-         */
-        template <typename T>
-        void logEvent(const tracepoint_info* tpi,
-                      std::chrono::steady_clock::time_point start,
-                      std::chrono::steady_clock::duration duration,
-                      T argA) {
-            logEvent(tpi, start, duration, argA, NoneType());
-        }
-
-        /**
-         * Logs an event in the current buffer (if applicable)
-         *
-         * This method should not be used directly, instead the
-         * macros contained within phosphor.h should be used instead.
-         *
-         * @param category The category to log the event into. This (and
-         *        the name) should usually be a string literal as the
-         *        pointer should remain valid until the buffer is freed.
-         * @param name The name of the event
-         * @param type The type of the event
-         */
-        void logEvent(const tracepoint_info* tpi,
-                      std::chrono::steady_clock::time_point start,
-                      std::chrono::steady_clock::duration duration) {
-            logEvent(tpi, start, duration, NoneType(), NoneType());
         }
 
         /**

@@ -120,7 +120,7 @@ TEST_P(MemoryTrackingTest, full_log) {
                                      GetParam() * MEGABYTE));
     while (log->isEnabled()) {
         log->logEvent(
-            &tpi, phosphor::TraceEvent::Type::Instant, 0);
+            &tpi, phosphor::TraceEvent::Type::Instant, 0, phosphor::NoneType());
     }
     size_t overhead{memory_change()};
 

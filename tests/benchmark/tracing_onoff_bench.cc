@@ -46,7 +46,7 @@ void TracingOnOff(benchmark::State& state) {
         // significant factor in this instance so run it multiple times
         for (int i = 0; i < 100; i++) {
             log.logEvent(
-                &tpi, phosphor::TraceEvent::Type::Instant, 0);
+                &tpi, phosphor::TraceEvent::Type::Instant, 0, phosphor::NoneType());
         }
     }
     log.deregisterThread();

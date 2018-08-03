@@ -39,7 +39,7 @@ void RegisterThread(benchmark::State& state) {
     log.registerThread();
     while (state.KeepRunning()) {
         log.logEvent(
-            &tpi, phosphor::TraceEvent::Type::Instant, 0);
+            &tpi, phosphor::TraceEvent::Type::Instant, 0, phosphor::NoneType());
     }
     log.deregisterThread();
     if (state.thread_index == 0) {

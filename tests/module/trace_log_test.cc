@@ -69,8 +69,8 @@ public:
 
     void log_event_all_types() {
         trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, 0);
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0);
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, NoneType());
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
     }
 
 protected:
@@ -179,7 +179,7 @@ TEST_F(TraceLogTest, logTillFullThreaded) {
 TEST_F(TraceLogTest, StopRestartVerify) {
     // Start tracing and ensure we've taken a chunk from it
     start_basic();
-    trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
+    trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
 
     // Stop tracing (and invalidate the chunk we're currently holding)
     trace_log.stop();
@@ -192,7 +192,7 @@ TEST_F(TraceLogTest, StopRestartVerify) {
         "name",
         {{}}
     };
-    trace_log.logEvent(&tpi2, TraceEvent::Type::Instant);
+    trace_log.logEvent(&tpi2, TraceEvent::Type::Instant, NoneType(), NoneType());
 
     // Fetch the buffer and ensure that it contains our second event
     // (i.e. we didn't lose the event in the
@@ -293,12 +293,12 @@ TEST_F(TraceLogTest, nonBlockingStop) {
         std::lock_guard<TraceLog> lg(trace_log);
 
         // Tracing shouldn't be stopped while lock is held separately
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
+        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
         EXPECT_TRUE(trace_log.isEnabled());
     }
 
     // Tracing should be stopped now that no one else is holding the lock
-    trace_log.logEvent(&tpi, TraceEvent::Type::Instant);
+    trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
     EXPECT_FALSE(trace_log.isEnabled());
 }
 

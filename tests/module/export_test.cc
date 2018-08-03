@@ -205,7 +205,7 @@ TEST_F(FileStopCallbackTest, test_to_file) {
                       std::make_shared<FileStopCallback>(filename)));
     while (log.isEnabled()) {
         log.logEvent(
-            &tpi, phosphor::TraceEvent::Type::Instant, 0);
+            &tpi, phosphor::TraceEvent::Type::Instant, 0, NoneType());
     }
 }
 
