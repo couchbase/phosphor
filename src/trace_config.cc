@@ -176,6 +176,14 @@ namespace phosphor {
         for (const std::string &argument : arguments) {
             auto kv(phosphor::utils::split_string(argument, ':'));
 
+            if (kv.size() != 2) {
+                // if split_string does not return a key and a value (2 items)
+                throw std::invalid_argument(
+                        "TraceConfig::fromString: "
+                        "Invalid arguments provided. Arguments must be "
+                        "given in as 'key:value;' pairs");
+            };
+
             std::string key(kv[0]);
             std::string value(kv[1]);
 

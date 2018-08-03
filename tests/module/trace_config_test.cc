@@ -136,6 +136,8 @@ TEST(TraceConfigTest, fromString) {
                  std::invalid_argument);
     EXPECT_THROW(TraceConfig::fromString("buffer-size:abcd"),
                  std::invalid_argument);
+    EXPECT_THROW(TraceConfig::fromString("disabled-categories:"),
+                 std::invalid_argument);
 }
 
 TEST(TraceConfigTest, toString) {
