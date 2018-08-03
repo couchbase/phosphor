@@ -118,41 +118,39 @@
         category, name, phosphor::TraceEvent::Type::SyncEnd)
 
 #define TRACE_EVENT_START1(category, name, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1( \
         category, \
         name, \
-        arg1_name, \
-        "", \
         phosphor::TraceEvent::Type::SyncStart, \
+        arg1_name, \
         arg1)
 
 #define TRACE_EVENT_END1(category, name, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1( \
         category, \
         name, \
-        arg1_name, \
-        "", \
         phosphor::TraceEvent::Type::SyncEnd, \
+        arg1_name, \
         arg1)
 
 #define TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
         category, \
         name, \
-        arg1_name, \
-        arg2_name, \
         phosphor::TraceEvent::Type::SyncStart, \
+        arg1_name, \
         arg1, \
+        arg2_name, \
         arg2)
 
 #define TRACE_EVENT_END2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
+    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
         category, \
         name, \
-        arg1_name, \
-        arg2_name, \
         phosphor::TraceEvent::Type::SyncEnd, \
+        arg1_name, \
         arg1, \
+        arg2_name, \
         arg2)
 /** @} */
 
@@ -317,41 +315,39 @@
  * @{
  */
 #define TRACE_ASYNC_START0(category, name, id)  \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
         category, \
         name, \
-        "id", \
-        "", \
         phosphor::TraceEvent::Type::AsyncStart, \
+        "id", \
         id)
 
 #define TRACE_ASYNC_START1(category, name, id, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
         category, \
         name, \
-        "id", \
-        arg1_name, \
         phosphor::TraceEvent::Type::AsyncStart, \
+        "id", \
         id, \
+        arg1_name, \
         arg1)
 
 #define TRACE_ASYNC_END0(category, name, id)    \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
         category, \
         name, \
-        "id_end", \
-        "", \
         phosphor::TraceEvent::Type::AsyncEnd, \
+        "id_end", \
         id)
 
 #define TRACE_ASYNC_END1(category, name, id, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
         category, \
         name, \
-        "id_end", \
-        arg1_name, \
         phosphor::TraceEvent::Type::AsyncEnd, \
+        "id_end", \
         id, \
+        arg1_name, \
         arg1)
 /** @} */
 
@@ -372,22 +368,21 @@
         category, name, phosphor::TraceEvent::Type::Instant)
 
 #define TRACE_INSTANT1(category, name, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
         category, \
         name, \
-        arg1_name, \
-        "", \
         phosphor::TraceEvent::Type::Instant, \
+        arg1_name, \
         arg1)
 
 #define TRACE_INSTANT2(category, name, arg1_name, arg1, arg2_name, arg2) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
         category, \
         name, \
-        arg1_name, \
-        arg2_name, \
         phosphor::TraceEvent::Type::Instant, \
+        arg1_name, \
         arg1, \
+        arg2_name, \
         arg2)
 /** @} */
 
@@ -410,22 +405,21 @@
 
 
 #define TRACE_GLOBAL1(category, name, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
         category, \
         name, \
-        arg1_name, \
-        "", \
         phosphor::TraceEvent::Type::GlobalInstant, \
+        arg1_name, \
         arg1)
 
 #define TRACE_GLOBAL2(category, name, arg1_name, arg1, arg2_name, arg2) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
+     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
         category, \
         name, \
-        arg1_name, \
-        arg2_name, \
         phosphor::TraceEvent::Type::GlobalInstant, \
+        arg1_name, \
         arg1, \
+        arg2_name, \
         arg2)
 /** @} */
 
@@ -461,21 +455,31 @@
  * @{
  */
 #define TRACE_COMPLETE0(category, name, start, end) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, "", "", start, (end - start))
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE0(category,                          \
+                                  name,                               \
+                                  phosphor::TraceEvent::Type::Complete, \
+                                  start,                              \
+                                  (end - start))
 
 #define TRACE_COMPLETE1(category, name, start, end, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT(                                   \
-            category, name, arg1_name, "", start, (end - start), arg1)
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE1(category,                          \
+                                  name,                               \
+                                  phosphor::TraceEvent::Type::Complete, \
+                                  start,                              \
+                                  (end - start),                      \
+                                  arg1_name,                          \
+                                  arg1)
 
 #define TRACE_COMPLETE2(                                              \
         category, name, start, end, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT(category,                           \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category,                          \
                                   name,                               \
-                                  arg1_name,                          \
-                                  arg2_name,                          \
+                                  phosphor::TraceEvent::Type::Complete, \
                                   start,                              \
                                   (end - start),                      \
+                                  arg1_name,                          \
                                   arg1,                               \
+                                  arg2_name,                          \
                                   arg2)
 /** @} */
 

@@ -47,12 +47,14 @@
             category_enabled_temp) = PHOSPHOR_INTERNAL_UID(category_enabled) \
                                              .load(std::memory_order_acquire);
 
-#define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, argA, argB) \
-    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(          \
-            tpi_name) = {category, name, {{argA, argB}}};
+#define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, \
+                                         argNameA, argNameB) \
+    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID( \
+            tpi_name) = {category, name, {{argNameA, argNameB}}};
 
-#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argA, argB);      \
+#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, \
+                                                argNameA, argNameB) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argNameA, argNameB); \
     PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)
 
 #define PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)      \
@@ -65,41 +67,65 @@
     }
 
 /*
- * Traces an event of a specified type with one or more arguments
+ * Traces an event of a specified type with two arguments
  *
  * This compares '!=' to disabled instead of '==' to enabled as it allows
  * for comparison to 0 rather than comparison to 1 which saves an instruction
  * on the disabled path when compiled.
  */
-#define PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, argA, argB, type, ...) \
+#define PHOSPHOR_INTERNAL_TRACE_EVENT2(category, name, type, \
+                                       argNameA, argA, argNameB, argB) \
     PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argA, argB) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argNameA, argNameB) \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
           != phosphor::CategoryStatus::Disabled) { \
-        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi), type, __VA_ARGS__); \
+        PHOSPHOR_INSTANCE.logEvent( \
+            &PHOSPHOR_INTERNAL_UID(tpi), type, argA, argB); \
     }
+
+/*
+ * Traces an event of a specified type with one argument
+ */
+#define PHOSPHOR_INTERNAL_TRACE_EVENT1(category, name, type, argNameA, argA) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
+        category, name, type, argNameA, argA, "", phosphor::NoneType())
 
 /*
  * Traces an event of a specified type with zero arguments
  */
 #define PHOSPHOR_INTERNAL_TRACE_EVENT0(category, name, type) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
+        category, name, type, \
+        "", phosphor::NoneType(), "", phosphor::NoneType())
+
+/*
+ * Traces a complete event of a specified type with two arguments
+ */
+// NOTE: `type` is currently unecessarily passed into here. This is to allow for
+// moving `type` from the TraceEvent object into the tpi in a future commit.
+#define PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category, name, type, start, duration, \
+                                          argNameA, argA, argNameB, argB) \
     PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, "arg1", "arg2") \
-    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argNameA, argNameB) \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
           != phosphor::CategoryStatus::Disabled) { \
-        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi), type); \
+        PHOSPHOR_INSTANCE.logEvent( \
+            &PHOSPHOR_INTERNAL_UID(tpi), start, duration, argA, argB); \
     }
 
 /*
- * For when additional trace events are created in the same scope.
- * Therefore the tpi name must be made unique i.e. second_tpi, third_tpi.
- * Note PHOSPHOR_INTERNAL_CATEGORY_INFO need not be called as the
- * category_enabled and category_enabled_temp are defined when creating the
- * first trace event.
+ * Traces a complete event of a specified type with one argument
  */
-#define PHOSPHOR_INTERNAL_ADDITIONAL_TRACE_EVENT0(tpi_name, category, name, type) \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, "arg1", "arg2") \
-    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_relaxed) \
-          != phosphor::CategoryStatus::Disabled) { \
-        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi_name), type); \
-    }
+#define PHOSPHOR_INTERNAL_TRACE_COMPLETE1(category, name, type, start, duration, \
+                                          argNameA, argA) \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE2( \
+        category, name, type, start, duration, \
+        argNameA, argA, "", phosphor::NoneType())
+
+/*
+ * Traces a complete event of a specified type with zero arguments
+ */
+#define PHOSPHOR_INTERNAL_TRACE_COMPLETE0(category, name, type, start, duration) \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE2( \
+        category, name, type, start, duration, \
+        "", phosphor::NoneType(), "", phosphor::NoneType())
