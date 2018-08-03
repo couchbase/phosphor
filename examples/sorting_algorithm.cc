@@ -26,7 +26,9 @@
 template <class T>
 std::vector<T> merge(const std::vector<T>&& left,
                      const std::vector<T>&& right) {
-    TRACE_EVENT("merge_sort", "merge", left.size(), right.size());
+    TRACE_EVENT2("merge_sort", "merge",
+                 "left_size", left.size(),
+                 "right_size", right.size());
 
     std::vector<T> result;
     auto left_iter = left.begin();
@@ -53,7 +55,7 @@ std::vector<T> merge(const std::vector<T>&& left,
 
 template <class T>
 std::vector<T> merge_sort(const std::vector<T>& input) {
-    TRACE_EVENT("merge_sort", "merge_sort", input.size());
+    TRACE_EVENT1("merge_sort", "merge_sort", "input_size", input.size());
 
     if (input.size() > 1) {
         std::vector<T> left{merge_sort(

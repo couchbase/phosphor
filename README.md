@@ -14,7 +14,7 @@ and manage tracing using the management API described in
 The following is an example of hypothetical instrumentation in memcached:
 
     void performSet(ENGINE_HANDLE* engine, const char* key, const char* value) {
-        TRACE_EVENT_START("Memcached:Operation", "performSet", key);
+        TRACE_EVENT_START1("Memcached:Operation", "performSet", "key", key);
         // Perform a set operation
         TRACE_EVENT_END0("Memcached:Operation", "performSet");
     }

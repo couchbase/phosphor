@@ -109,28 +109,9 @@
  *
  * @{
  */
-
-#define TRACE_EVENT_START(category, name, ...)  \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1", \
-        "arg2", \
-        phosphor::TraceEvent::Type::SyncStart, \
-        __VA_ARGS__)
-
 #define TRACE_EVENT_START0(category, name)      \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::SyncStart)
-
-#define TRACE_EVENT_END(category, name, ...)    \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1_end", \
-        "arg2_end", \
-        phosphor::TraceEvent::Type::SyncEnd, \
-        __VA_ARGS__)
 
 #define TRACE_EVENT_END0(category, name)        \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
@@ -335,16 +316,6 @@
  *
  * @{
  */
-#define TRACE_ASYNC_START(category, name, id, ...) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id", \
-        "arg1", \
-        phosphor::TraceEvent::Type::AsyncStart, \
-        id, \
-        __VA_ARGS__)
-
 #define TRACE_ASYNC_START0(category, name, id)  \
      PHOSPHOR_INTERNAL_TRACE_EVENT( \
         category, \
@@ -363,16 +334,6 @@
         phosphor::TraceEvent::Type::AsyncStart, \
         id, \
         arg1)
-
-#define TRACE_ASYNC_END(category, name, id, ...) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "id_end", \
-        "arg1_end", \
-        phosphor::TraceEvent::Type::AsyncEnd, \
-        id, \
-        __VA_ARGS__)
 
 #define TRACE_ASYNC_END0(category, name, id)    \
      PHOSPHOR_INTERNAL_TRACE_EVENT( \
@@ -406,15 +367,6 @@
  *
  *  @{
  */
-#define TRACE_INSTANT(category, name, ...) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1", \
-        "arg2", \
-        phosphor::TraceEvent::Type::Instant, \
-        __VA_ARGS__)
-
 #define TRACE_INSTANT0(category, name)          \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::Instant)
@@ -452,15 +404,6 @@
  *
  *  @{
  */
-#define TRACE_GLOBAL(category, name, ...)          \
-    PHOSPHOR_INTERNAL_TRACE_EVENT( \
-        category, \
-        name, \
-        "arg1", \
-        "arg2", \
-        phosphor::TraceEvent::Type::GlobalInstant, \
-        __VA_ARGS__)
-
 #define TRACE_GLOBAL0(category, name)           \
     PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
         category, name, phosphor::TraceEvent::Type::GlobalInstant)
@@ -517,10 +460,6 @@
  *     TRACE_COMPLETE("my_category", "name", start, end, "vbid", 0);
  * @{
  */
-#define TRACE_COMPLETE(category, name, start, end, ...) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT(                      \
-            category, name, "arg1", "arg2", start, (end - start), __VA_ARGS__)
-
 #define TRACE_COMPLETE0(category, name, start, end) \
     PHOSPHOR_INTERNAL_TRACE_EVENT(category, name, "", "", start, (end - start))
 
@@ -542,21 +481,17 @@
 
 #else // if: defined(PHOSPHOR_DISABLED) && PHOSPHOR_DISABLED != 0
 
-#define TRACE_EVENT_START(category, name, ...)
 #define TRACE_EVENT_START0(category, name)
 #define TRACE_EVENT_START1(category, name, arg1_name, arg1)
 #define TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2)
-#define TRACE_EVENT_END(category, name, ...)
 #define TRACE_EVENT_END0(category, name)
 #define TRACE_EVENT_END1(category, name, arg1_name, arg1)
 #define TRACE_EVENT_END2(category, name, arg1_name, arg1, arg2_name, arg2)
 
-#define TRACE_EVENT(category, name, ...)
 #define TRACE_EVENT0(category, name)
 #define TRACE_EVENT1(category, name, arg1_name, arg1)
 #define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2)
 
-#define TRACE_FUNCTION(category, ...)
 #define TRACE_FUNCTION0(category)
 #define TRACE_FUNCTION1(category, name, arg1_name, arg1)
 #define TRACE_FUNCTION2(category, name, arg1_name, arg1, arg2_name, arg2)
@@ -566,24 +501,19 @@
 #define TRACE_LOCKGUARD_TIMED(mutex, category, name, limit) \
     std::lock_guard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)(mutex);
 
-#define TRACE_ASYNC_START(category, name, id, ...)
 #define TRACE_ASYNC_START0(category, name, id)
 #define TRACE_ASYNC_START1(category, name, id, arg1_name, arg1)
-#define TRACE_ASYNC_END(category, name, id, ...)
 #define TRACE_ASYNC_END0(category, name, id)
 #define TRACE_ASYNC_END1(category, name, id, arg1_name, arg1)
 
-#define TRACE_INSTANT(category, name, ...)
 #define TRACE_INSTANT0(category, name)
 #define TRACE_INSTANT1(category, name, arg1_name, arg1)
 #define TRACE_INSTANT2(category, name, arg1_name, arg1, arg2_name, arg2)
 
-#define TRACE_GLOBAL(category, name, ...)
 #define TRACE_GLOBAL0(category, name)
 #define TRACE_GLOBAL1(category, name, arg1_name, arg1)
 #define TRACE_GLOBAL2(category, name, arg1_name, arg1, arg2_name, arg2)
 
-#define TRACE_COMPLETE(category, name, start, end, ...)
 #define TRACE_COMPLETE0(category, name, start, end)
 #define TRACE_COMPLETE1(category, name, start, end, arg1_name, arg1)
 #define TRACE_COMPLETE2( \
