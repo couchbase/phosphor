@@ -29,6 +29,7 @@
 
 #include "inline_zstring.h"
 #include "platform/core.h"
+#include "tracepoint_info.h"
 
 namespace phosphor {
 
@@ -45,19 +46,7 @@ namespace phosphor {
      * and printing the TraceArgument.
      */
     union TraceArgument {
-        /**
-         * Enumeration of the possible types of a TraceArgument
-         */
-        enum class Type : char {
-            is_bool,
-            is_uint,
-            is_int,
-            is_double,
-            is_pointer,
-            is_string,
-            is_istring,
-            is_none
-        };
+        using Type = TraceArgumentType;
 
         bool as_bool;
         unsigned long long as_uint;
@@ -133,18 +122,20 @@ namespace phosphor {
  */
 #define ARGUMENT_CONVERSION(src, dst) \
     template <> \
-    inline constexpr TraceArgument::TraceArgument(src arg) : as_##dst(arg) {} \
+    inline constexpr TraceArgument::TraceArgument(const src arg) : as_##dst(arg) {} \
     template<> \
-    class TraceArgumentConversion<src> { \
+    class TraceArgumentConversion<const src> { \
         public:\
         inline static constexpr TraceArgument::Type getType() { \
             return TraceArgument::Type::is_##dst; \
         } \
         \
-        inline static constexpr TraceArgument asArgument(src arg) { \
+        inline static constexpr TraceArgument asArgument(const src arg) { \
             return TraceArgument(arg); \
         } \
-    };
+    }; \
+    template<> \
+    class TraceArgumentConversion<src> : public TraceArgumentConversion<const src> {};
 
     ARGUMENT_CONVERSION(bool, bool)
 
@@ -172,14 +163,14 @@ namespace phosphor {
 
     ARGUMENT_CONVERSION(double, double)
 
-    ARGUMENT_CONVERSION(const void*, pointer)
+    ARGUMENT_CONVERSION(void*, pointer)
 
     // A nullptr isn't particulary useful to store in the trace event;
     // but aids in use with generic code where a pointer type ends up
     // as nullptr.
     ARGUMENT_CONVERSION(std::nullptr_t, pointer)
 
-    ARGUMENT_CONVERSION(const char*, string)
+    ARGUMENT_CONVERSION(char*, string)
 
     ARGUMENT_CONVERSION(inline_zstring<8>, istring)
 

@@ -35,12 +35,28 @@ int setenv(const char* name, const char* value, int overwrite);
 #endif
 
 /*
- * Basic tracepoint_info used in tests
+ * Basic tracepoint_infos used in tests
  */
-phosphor::tracepoint_info tpi = {
+phosphor::tracepoint_info tpi0 = {
         "category",
         "name",
-        {{"arg1", "arg2"}}
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+};
+phosphor::tracepoint_info tpi1 = {
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_int, TraceArgument::Type::is_none}}
+};
+phosphor::tracepoint_info tpi2 = {
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_int, TraceArgument::Type::is_int}}
 };
 
 class MockTraceLog : public TraceLog {
@@ -64,13 +80,13 @@ public:
     }
 
     void log_event() {
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, 0);
+        trace_log.logEvent(&tpi2, 0, 0);
     }
 
     void log_event_all_types() {
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, 0);
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, NoneType());
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
+        trace_log.logEvent(&tpi0, 0, 0);
+        trace_log.logEvent(&tpi1, 0, 0);
+        trace_log.logEvent(&tpi2, 0, 0);
     }
 
 protected:
@@ -179,7 +195,7 @@ TEST_F(TraceLogTest, logTillFullThreaded) {
 TEST_F(TraceLogTest, StopRestartVerify) {
     // Start tracing and ensure we've taken a chunk from it
     start_basic();
-    trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
+    trace_log.logEvent(&tpi0, 0, 0);
 
     // Stop tracing (and invalidate the chunk we're currently holding)
     trace_log.stop();
@@ -187,12 +203,14 @@ TEST_F(TraceLogTest, StopRestartVerify) {
     // Restart tracing and attempt to log an event
     start_basic();
 
-    static tracepoint_info tpi2 = {
+    static tracepoint_info tpi0_alt = {
         "category2",
         "name",
-        {{}}
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
     };
-    trace_log.logEvent(&tpi2, TraceEvent::Type::Instant, NoneType(), NoneType());
+    trace_log.logEvent(&tpi0_alt, 0, 0);
 
     // Fetch the buffer and ensure that it contains our second event
     // (i.e. we didn't lose the event in the
@@ -248,7 +266,7 @@ TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
     TraceLog trace_log;
     trace_log.start(TraceConfig(BufferMode::fixed, sizeof(TraceChunk)));
     trace_log.registerThread();
-    trace_log.logEvent(&tpi, TraceEvent::Type::Instant, 0, 0);
+    trace_log.logEvent(&tpi2, 0, 0);
     EXPECT_NO_THROW(trace_log.deregisterThread());
 }
 
@@ -293,12 +311,12 @@ TEST_F(TraceLogTest, nonBlockingStop) {
         std::lock_guard<TraceLog> lg(trace_log);
 
         // Tracing shouldn't be stopped while lock is held separately
-        trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
+        trace_log.logEvent(&tpi0, 0, 0);
         EXPECT_TRUE(trace_log.isEnabled());
     }
 
     // Tracing should be stopped now that no one else is holding the lock
-    trace_log.logEvent(&tpi, TraceEvent::Type::Instant, NoneType(), NoneType());
+    trace_log.logEvent(&tpi0, 0, 0);
     EXPECT_FALSE(trace_log.isEnabled());
 }
 

@@ -27,7 +27,9 @@
 phosphor::tracepoint_info tpi = {
     "category",
     "name",
-    {{"arg1", "arg2"}}
+    phosphor::TraceEvent::Type::Instant,
+    {{"arg1", "arg2"}},
+    {{phosphor::TraceArgument::Type::is_none, phosphor::TraceArgument::Type::is_none}}
 };
 
 int main(int argc, char** argv) {
@@ -47,7 +49,7 @@ int main(int argc, char** argv) {
     TraceLog log;
     log.start(TraceConfig(BufferMode::fixed, 100 * 1024 * 1024));
     while(log.isEnabled()) {
-        log.logEvent(&tpi, TraceEvent::Type::Instant);
+        log.logEvent(&tpi, NoneType(), NoneType());
     }
     auto buffer = log.getBuffer();
 

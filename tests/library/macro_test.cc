@@ -376,3 +376,17 @@ TEST_F(MacroTraceEventTest, CategoryFiltering) {
         EXPECT_EQ(4, event.getArgs()[1].as_int);
     });
 }
+
+// Ensures that const values can be processed by the macros
+TEST_F(MacroTraceEventTest, ConstArgument) {
+    const int x = 5;
+    constexpr int y = 6;
+    TRACE_INSTANT2("category", "name", "const", x, "constexpr", y);
+    verifications.emplace_back([](const phosphor::TraceEvent& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
+        EXPECT_EQ(5, event.getArgs()[0].as_int);
+        EXPECT_EQ(6, event.getArgs()[1].as_int);
+    });
+}

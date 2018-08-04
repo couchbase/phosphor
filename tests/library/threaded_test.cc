@@ -24,7 +24,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <phosphor/phosphor.h>
+#include <phosphor/trace_log.h>
 #include "barrier.h"
 #include "utils/memory.h"
 
@@ -69,15 +69,17 @@ private:
 
 TEST_F(ThreadedTest, ThreadedStop) {
     const phosphor::tracepoint_info tpi = {
-            "category",
-            "name",
-            {{"arg1", "arg2"}}
+        "category",
+        "name",
+        phosphor::TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_int}}
     };
 
     phosphor::TraceLog log;
 
     startWorkload(4, [&log, &tpi]() {
-        log.logEvent(&tpi, phosphor::TraceEvent::Type::Instant, 0, 0);
+        log.logEvent(&tpi, 0, 0);
     });
 
     log.start(phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
@@ -92,15 +94,17 @@ TEST_F(ThreadedTest, ThreadedStop) {
 
 TEST_F(ThreadedTest, ThreadedInternalStop) {
     const phosphor::tracepoint_info tpi = {
-            "category",
-            "name",
-            {{"arg1", "arg2"}}
+        "category",
+        "name",
+        phosphor::TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_int}}
     };
 
     phosphor::TraceLog log;
 
     startWorkload(4, [&log, &tpi]() {
-        log.logEvent(&tpi, phosphor::TraceEvent::Type::Instant, 0, 0);
+        log.logEvent(&tpi, 0, 0);
     });
 
     log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 1024 * 1024));

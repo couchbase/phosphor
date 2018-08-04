@@ -126,17 +126,12 @@ namespace phosphor {
          * This method should not be used directly, instead the
          * macros contained within phosphor.h should be used instead.
          *
-         * @param category The category to log the event into. This (and
-         *        the name) should usually be a string literal as the
-         *        pointer should remain valid until the buffer is freed.
-         * @param name The name of the event
-         * @param type The type of the event
+         * @param tpi Tracepoint info (name, category, etc) of the event.
          * @param argA Argument to be saved with the event
          * @param argB Argument to be saved with the event
          */
         template <typename T, typename U>
         void logEvent(const tracepoint_info* tpi,
-                      TraceEvent::Type type,
                       T argA,
                       U argB) {
             if (!enabled) {
@@ -146,12 +141,9 @@ namespace phosphor {
             if (cl) {
                 cl.mutex()->chunk->addEvent() = TraceEvent(
                         tpi,
-                        type,
                         platform::getCurrentThreadIDCached(),
                         {{TraceArgumentConversion<T>::asArgument(argA),
-                          TraceArgumentConversion<U>::asArgument(argB)}},
-                        {{TraceArgumentConversion<T>::getType(),
-                          TraceArgumentConversion<U>::getType()}});
+                          TraceArgumentConversion<U>::asArgument(argB)}});
             }
         }
 
@@ -184,9 +176,7 @@ namespace phosphor {
                         start,
                         duration,
                         {{TraceArgumentConversion<T>::asArgument(argA),
-                          TraceArgumentConversion<U>::asArgument(argB)}},
-                        {{TraceArgumentConversion<T>::getType(),
-                          TraceArgumentConversion<U>::getType()}});
+                          TraceArgumentConversion<U>::asArgument(argB)}});
             }
         }
 

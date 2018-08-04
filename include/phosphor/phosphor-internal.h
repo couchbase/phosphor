@@ -47,14 +47,17 @@
             category_enabled_temp) = PHOSPHOR_INTERNAL_UID(category_enabled) \
                                              .load(std::memory_order_acquire);
 
-#define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, \
-                                         argNameA, argNameB) \
-    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID( \
-            tpi_name) = {category, name, {{argNameA, argNameB}}};
+#define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, type, \
+                                         argNameA, argTypeA, argNameB, argTypeB) \
+    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(          \
+            tpi_name) = {category, name, type, {{argNameA, argNameB}}, \
+                         {{phosphor::TraceArgumentConversion<argTypeA>::getType(), \
+                           phosphor::TraceArgumentConversion<argTypeB>::getType()}}};
 
-#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, \
-                                                argNameA, argNameB) \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, argNameA, argNameB); \
+#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, type, \
+                                                argNameA, argTypeA, argNameB, argTypeB) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, type, \
+                                     argNameA, argTypeA, argNameB, argTypeB); \
     PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)
 
 #define PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)      \
@@ -76,11 +79,11 @@
 #define PHOSPHOR_INTERNAL_TRACE_EVENT2(category, name, type, \
                                        argNameA, argA, argNameB, argB) \
     PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argNameA, argNameB) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT( \
+        category, name, type, argNameA, decltype(argA), argNameB, decltype(argB)) \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
           != phosphor::CategoryStatus::Disabled) { \
-        PHOSPHOR_INSTANCE.logEvent( \
-            &PHOSPHOR_INTERNAL_UID(tpi), type, argA, argB); \
+        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi), argA, argB); \
     }
 
 /*
@@ -106,7 +109,8 @@
 #define PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category, name, type, start, duration, \
                                           argNameA, argA, argNameB, argB) \
     PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, argNameA, argNameB) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT( \
+        category, name, type, argNameA, decltype(argA), argNameB, decltype(argB)) \
     if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
           != phosphor::CategoryStatus::Disabled) { \
         PHOSPHOR_INSTANCE.logEvent( \

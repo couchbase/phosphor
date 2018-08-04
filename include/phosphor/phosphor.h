@@ -183,7 +183,9 @@
  */
 #define TRACE_EVENT0(category, name)                                     \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, "", "")      \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                             \
+            category, name, phosphor::TraceEvent::Type::Complete, \
+            "", phosphor::NoneType, "", phosphor::NoneType) \
     phosphor::ScopedEventGuard<phosphor::NoneType, phosphor::NoneType>   \
             PHOSPHOR_INTERNAL_UID(guard)(                                \
                     &PHOSPHOR_INTERNAL_UID(tpi),                         \
@@ -195,7 +197,9 @@
 
 #define TRACE_EVENT1(category, name, arg1_name, arg1)                      \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                        \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, arg1_name, "") \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                               \
+            category, name, phosphor::TraceEvent::Type::Complete, \
+            arg1_name, decltype(arg1),"", phosphor::NoneType) \
     phosphor::ScopedEventGuard<decltype(arg1), phosphor::NoneType>         \
             PHOSPHOR_INTERNAL_UID(guard)(                                  \
                     &PHOSPHOR_INTERNAL_UID(tpi),                           \
@@ -208,7 +212,8 @@
 #define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2)   \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
     PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                             \
-            category, name, arg1_name, arg2_name)                        \
+            category, name, phosphor::TraceEvent::Type::Complete, \
+            arg1_name, decltype(arg1), arg2_name, decltype(arg2)) \
     phosphor::ScopedEventGuard<decltype(arg1), decltype(arg2)>           \
             PHOSPHOR_INTERNAL_UID(guard)(                                \
                     &PHOSPHOR_INTERNAL_UID(tpi),                         \
@@ -268,8 +273,14 @@
  */
 #define TRACE_LOCKGUARD(mutex, category, name)                                 \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                            \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_wait, category, name ".wait", "", "") \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_held, category, name ".held", "", "") \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
+            tpi_wait, category, name ".wait", \
+            phosphor::TraceEvent::Type::Complete, \
+            "this", void*, "", phosphor::NoneType); \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
+            tpi_held, category, name ".held", \
+            phosphor::TraceEvent::Type::Complete, \
+            "", void*, "", phosphor::NoneType); \
     PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                    \
     phosphor::MutexEventGuard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)(   \
             &PHOSPHOR_INTERNAL_UID(tpi_wait),                                  \
@@ -282,9 +293,13 @@
 #define TRACE_LOCKGUARD_TIMED(mutex, category, name, limit)                  \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
     PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
-            tpi_wait, category, name ".wait", "this", "");                   \
+            tpi_wait, category, name ".wait", \
+            phosphor::TraceEvent::Type::Complete, \
+            "this", void*, "", phosphor::NoneType); \
     PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
-            tpi_held, category, name ".held", "", "");                       \
+            tpi_held, category, name ".held", \
+            phosphor::TraceEvent::Type::Complete, \
+            "", void*, "", phosphor::NoneType); \
     PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                  \
     phosphor::MutexEventGuard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)( \
             &PHOSPHOR_INTERNAL_UID(tpi_wait),                                \

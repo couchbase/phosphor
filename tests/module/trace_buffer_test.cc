@@ -33,7 +33,9 @@ using namespace phosphor;
 phosphor::tracepoint_info tpi = {
         "category",
         "name",
-        {{"arg1", "arg2"}}
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
 };
 
 TEST(TraceChunkTest, fillAndOverfillAndCount) {
@@ -45,10 +47,8 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
         EXPECT_EQ(count, chunk.count());
         chunk.addEvent() = TraceEvent(
             &tpi,
-            TraceEvent::Type::Instant,
             0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+            {{0, 0}});
         count++;
     }
     EXPECT_EQ(count, chunk.count());
@@ -63,10 +63,8 @@ TEST(TraceChunkTest, string_check) {
     while (!chunk.isFull()) {
         chunk.addEvent() = TraceEvent(
             &tpi,
-            TraceEvent::Type::Instant,
             0,
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+            {{0, 0}});
     }
 
     auto event_regex = testing::MatchesRegex(

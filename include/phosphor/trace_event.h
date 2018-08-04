@@ -39,19 +39,7 @@ namespace phosphor {
 
     class PHOSPHOR_API TraceEvent {
     public:
-        /**
-         * The enumeration representing the different types of TraceEvents
-         */
-        enum class Type : char {
-            AsyncStart,
-            AsyncEnd,
-            SyncStart,
-            SyncEnd,
-            Instant,
-            GlobalInstant,
-            Complete
-        };
-
+        using Type = TraceEventType;
         /**
          * Default constructor for efficient TraceChunk initialisation
          */
@@ -66,10 +54,8 @@ namespace phosphor {
          * @param _arg_types An array of argument types
          */
         TraceEvent(const tracepoint_info* _tpi,
-                   Type _type,
                    uint32_t _thread_id,
-                   std::array<TraceArgument, arg_count>&& _args,
-                   std::array<TraceArgument::Type, arg_count>&& _arg_types);
+                   std::array<TraceArgument, arg_count>&& _args);
 
         /**
          * Constructor for Complete events.
@@ -80,8 +66,7 @@ namespace phosphor {
                    uint32_t _thread_id,
                    std::chrono::steady_clock::time_point _start,
                    std::chrono::steady_clock::duration _duration,
-                   std::array<TraceArgument, arg_count>&& _args,
-                   std::array<TraceArgument::Type, arg_count>&& _arg_types);
+                   std::array<TraceArgument, arg_count>&& _args);
 
         /**
          * Used to get a string representation of the TraceEvent
@@ -179,8 +164,6 @@ namespace phosphor {
         uint64_t duration;
 
         uint32_t thread_id;
-        std::array<TraceArgument::Type, arg_count> arg_types;
-        Type type;
     };
 
     /**

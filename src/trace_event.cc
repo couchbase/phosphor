@@ -26,34 +26,28 @@ namespace phosphor {
 
     TraceEvent::TraceEvent(
         const tracepoint_info* _tpi,
-        Type _type,
         uint32_t _thread_id,
-        std::array<TraceArgument, arg_count>&& _args,
-        std::array<TraceArgument::Type, arg_count>&& _arg_types)
+        std::array<TraceArgument, arg_count>&& _args)
         : tpi(_tpi),
           args(_args),
           time(
               duration_cast<nanoseconds>(steady_clock::now().time_since_epoch())
                   .count()),
           duration(0),
-          thread_id(_thread_id),
-          arg_types(_arg_types),
-          type(_type) {}
+          thread_id(_thread_id) {
+    }
 
     TraceEvent::TraceEvent(
             const tracepoint_info* _tpi,
             uint32_t _thread_id,
             std::chrono::steady_clock::time_point _start,
             std::chrono::steady_clock::duration _duration,
-            std::array<TraceArgument, arg_count>&& _args,
-            std::array<TraceArgument::Type, arg_count>&& _arg_types)
+            std::array<TraceArgument, arg_count>&& _args)
         : tpi(_tpi),
           args(_args),
           time(_start.time_since_epoch().count()),
           duration(_duration.count()),
-          thread_id(_thread_id),
-          arg_types(_arg_types),
-          type(Type::Complete) {
+          thread_id(_thread_id) {
     }
 
     std::string TraceEvent::to_string() const {
@@ -83,10 +77,10 @@ namespace phosphor {
             us.count(),
             getCategory(),
             getName(),
-            typeToString(type),
+            typeToString(tpi->type),
             thread_id,
-            args[0].to_string(arg_types[0]).c_str(),
-            args[1].to_string(arg_types[1]).c_str());
+            args[0].to_string(tpi->argument_types[0]).c_str(),
+            args[1].to_string(tpi->argument_types[1]).c_str());
     }
 
     std::string TraceEvent::to_json() const {
@@ -104,7 +98,7 @@ namespace phosphor {
 
         output += ",\"args\":{";
         for (int i = 0; i < arg_count; ++i) {
-            if (arg_types[i] == TraceArgument::Type::is_none) {
+            if (tpi->argument_types[i] == TraceArgument::Type::is_none) {
                 break;
             }
             if (i != 0) {
@@ -112,7 +106,7 @@ namespace phosphor {
             }
 
             output += utils::to_json(tpi->argument_names[i]) + ":";
-            output += args[i].to_string(arg_types[i]);
+            output += args[i].to_string(tpi->argument_types[i]);
         }
         output += "}";
 
@@ -151,7 +145,7 @@ namespace phosphor {
     }
 
     TraceEvent::Type TraceEvent::getType() const {
-        return type;
+        return tpi->type;
     }
 
     uint64_t TraceEvent::getThreadID() const {
@@ -163,7 +157,7 @@ namespace phosphor {
     }
 
     const std::array<TraceArgument::Type, arg_count>& TraceEvent::getArgTypes() const {
-        return arg_types;
+        return tpi->argument_types;
     }
 
     const std::array<const char*, arg_count>&
@@ -182,7 +176,7 @@ namespace phosphor {
     TraceEvent::ToJsonResult TraceEvent::typeToJSON() const {
         TraceEvent::ToJsonResult res;
 
-        switch (type) {
+        switch (tpi->type) {
         case Type::AsyncStart:
             res.type = "b";
             res.extras =

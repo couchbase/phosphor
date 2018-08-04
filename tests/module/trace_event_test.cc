@@ -26,33 +26,36 @@
 using phosphor::TraceEvent;
 using phosphor::TraceArgument;
 
-/*
- * Basic tracepoint_info used in tests
- */
-phosphor::tracepoint_info tpi = {
-    "category",
-    "name",
-    {{"arg1", "arg2"}}
-};
-
 TEST(TraceEvent, create) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     TraceEvent def;
     (void)def;
     TraceEvent event(
         &tpi,
-        TraceEvent::Type::Instant,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
 }
 
 TEST(TraceEvent, string_check) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     TraceEvent event(
         &tpi,
-        TraceEvent::Type::Instant,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
@@ -91,12 +94,18 @@ TEST(TraceEvent, typeToString) {
 }
 
 TEST(TraceEvent, toJSON) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_bool, TraceArgument::Type::is_none}}
+    };
+
     TraceEvent event(
         &tpi,
-        TraceEvent::Type::Instant,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_bool, TraceArgument::Type::is_none}});
+        {{0, 0}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
@@ -116,12 +125,18 @@ TEST(TraceEvent, toJSON) {
 }
 
 TEST(TraceEvent, toJSONAlt) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::SyncEnd,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_bool, TraceArgument::Type::is_bool}}
+    };
+
     TraceEvent event(
         &tpi,
-        TraceEvent::Type::SyncEnd,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_bool, TraceArgument::Type::is_bool}});
+        {{0, 0}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
@@ -143,7 +158,9 @@ TEST(TraceEvent, toJSONAlt) {
 class MockTraceEvent : public TraceEvent {
 public:
     using TraceEvent::typeToJSON;
+    using TraceEvent::TraceEvent;
 
+/*
     MockTraceEvent(
         const phosphor::tracepoint_info* _tpi,
         Type _type,
@@ -169,101 +186,150 @@ public:
                      _duration,
                      std::move(_args),
                      std::move(_arg_types)) {
-    }
+    }*/
 };
 
 TEST(TraceEventTypeToJSON, Instant) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
         &tpi,
-        TraceEvent::Type::Instant,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.type));
     EXPECT_EQ(",\"s\":\"t\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, SyncStart) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::SyncStart,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
         &tpi,
-        TraceEvent::Type::SyncStart,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("B", std::string(res.type));
     EXPECT_EQ("", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, SyncEnd) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::SyncEnd,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
         &tpi,
-        TraceEvent::Type::SyncEnd,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("E", std::string(res.type));
     EXPECT_EQ("", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, AsyncStart) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::AsyncStart,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
         &tpi,
-        TraceEvent::Type::AsyncStart,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("b", std::string(res.type));
     EXPECT_EQ(",\"id\": \"0x0\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, AsyncEnd) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::AsyncEnd,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
         &tpi,
-        TraceEvent::Type::AsyncEnd,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("e", std::string(res.type));
     EXPECT_EQ(",\"id\": \"0x0\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, GlobalInstant) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::GlobalInstant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
         &tpi,
-        TraceEvent::Type::GlobalInstant,
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.type));
     EXPECT_EQ(",\"s\":\"g\"", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, Complete) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        TraceEvent::Type::Complete,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
             &tpi,
             0,
             std::chrono::steady_clock::now(),
             std::chrono::microseconds(1),
-            {{0, 0}},
-            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+            {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("X", std::string(res.type));
     EXPECT_EQ(",\"dur\":1.000", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, Invalid) {
+    constexpr phosphor::tracepoint_info tpi = {
+        "category",
+        "name",
+        static_cast<TraceEvent::Type>(0xFF),
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
+    };
+
     MockTraceEvent event(
         &tpi,
-        static_cast<TraceEvent::Type>(0xFF),
         0,
-        {{0, 0}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}});
+        {{0, 0}});
     EXPECT_THROW(event.typeToJSON(), std::invalid_argument);
 }
 
@@ -273,15 +339,15 @@ TEST(TraceEventTypeToJSON, testProperties) {
     phosphor::tracepoint_info tpi2 = {
         "my_category",
         "my_name",
-        {{"my_arg1", "my_arg2"}}
+        TraceEvent::Type::Instant,
+        {{"my_arg1", "my_arg2"}},
+        {{TraceArgument::Type::is_int, TraceArgument::Type::is_double}}
     };
 
     TraceEvent event(
             &tpi2,
-            TraceEvent::Type::Instant,
             0,
-            {{0, 4.5}},
-            {{TraceArgument::Type::is_int, TraceArgument::Type::is_double}});
+            {{0, 4.5}});
     EXPECT_STREQ("my_category", event.getCategory());
     EXPECT_STREQ("my_name", event.getName());
     EXPECT_THAT(event.getArgNames(), testing::ElementsAre(StrEq("my_arg1"),

@@ -22,9 +22,11 @@
 #include "utils/memory.h"
 
 phosphor::tracepoint_info tpi = {
-    "category",
-    "name",
-    {{"arg1", "arg2"}}
+        "category",
+        "name",
+        phosphor::TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_none}}
 };
 
 /*
@@ -46,7 +48,7 @@ void TracingOnOff(benchmark::State& state) {
         // significant factor in this instance so run it multiple times
         for (int i = 0; i < 100; i++) {
             log.logEvent(
-                &tpi, phosphor::TraceEvent::Type::Instant, 0, phosphor::NoneType());
+                &tpi, 0, phosphor::NoneType());
         }
     }
     log.deregisterThread();

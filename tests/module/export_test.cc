@@ -27,7 +27,9 @@ using namespace phosphor;
 tracepoint_info tpi = {
     "category",
     "name",
-    {{"arg1", "arg2"}}
+    TraceEvent::Type::Instant,
+    {{"arg1", "arg2"}},
+    {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
 };
 
 class MockTraceContext : public phosphor::TraceContext {
@@ -51,11 +53,8 @@ public:
             while (!chunk->isFull()) {
                 chunk->addEvent() = phosphor::TraceEvent(
                         &tpi,
-                        phosphor::TraceEvent::Type::Instant,
                         0,
-                        {{0, 0}},
-                        {{phosphor::TraceArgument::Type::is_none,
-                                 phosphor::TraceArgument::Type::is_none}});
+                        {{0, 0}});
             }
         }
     }
@@ -64,11 +63,8 @@ public:
         auto* chunk = context.getBuffer()->getChunk();
         chunk->addEvent() = phosphor::TraceEvent(
                 &tpi,
-                phosphor::TraceEvent::Type::Instant,
                 0,
-                {{0, 0}},
-                {{phosphor::TraceArgument::Type::is_none,
-                         phosphor::TraceArgument::Type::is_none}});
+                {{0, 0}});
     }
 
     void addThreadsToContext(size_t count) {
@@ -205,7 +201,7 @@ TEST_F(FileStopCallbackTest, test_to_file) {
                       std::make_shared<FileStopCallback>(filename)));
     while (log.isEnabled()) {
         log.logEvent(
-            &tpi, phosphor::TraceEvent::Type::Instant, 0, NoneType());
+            &tpi, 0, NoneType());
     }
 }
 
