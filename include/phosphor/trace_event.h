@@ -54,7 +54,6 @@ namespace phosphor {
          * @param _arg_types An array of argument types
          */
         TraceEvent(const tracepoint_info* _tpi,
-                   uint32_t _thread_id,
                    std::array<TraceArgument, arg_count>&& _args);
 
         /**
@@ -63,7 +62,6 @@ namespace phosphor {
          * both specified by the caller.
          */
         TraceEvent(const tracepoint_info* _tpi,
-                   uint32_t _thread_id,
                    std::chrono::steady_clock::time_point _start,
                    std::chrono::steady_clock::duration _duration,
                    std::array<TraceArgument, arg_count>&& _args);
@@ -78,9 +76,14 @@ namespace phosphor {
         /**
          * Used to get a JSON object representation of the TraceEvent
          *
+         * This differs from to_string as it additionally takes a
+         * thread_id argument which should originate from the
+         * parent TraceChunk
+         *
+         * @param thread_id id of the thread that generated the event
          * @return JSON object representing the TraceEvent
          */
-        std::string to_json() const;
+        std::string to_json(uint32_t thread_id) const;
 
         /**
          * Converts a TraceEvent::Type to a cstring
@@ -103,11 +106,6 @@ namespace phosphor {
          * @return the type of the event
          */
         Type getType() const;
-
-        /**
-         * @return the thread id of the event
-         */
-        uint64_t getThreadID() const;
 
         /**
          * @return the arguments of the event
@@ -162,8 +160,6 @@ namespace phosphor {
          * nanoseconds). Unused by other Types.
          */
         uint64_t duration;
-
-        uint32_t thread_id;
     };
 
     /**

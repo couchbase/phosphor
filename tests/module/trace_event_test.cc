@@ -39,7 +39,6 @@ TEST(TraceEvent, create) {
     (void)def;
     TraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
 }
 
@@ -54,17 +53,16 @@ TEST(TraceEvent, string_check) {
 
     TraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
         "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-        "category, name, type=Instant, thread_id=0, "
+        "category, name, type=Instant, "
         "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
         "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-        "category, name, type=Instant, thread_id=0, "
+        "category, name, type=Instant, "
         "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 
@@ -104,7 +102,6 @@ TEST(TraceEvent, toJSON) {
 
     TraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
 
     auto event_regex = testing::MatchesRegex(
@@ -121,7 +118,7 @@ TEST(TraceEvent, toJSON) {
         ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false\\}\\}");
 #endif
-    EXPECT_THAT(event.to_json(), event_regex);
+    EXPECT_THAT(event.to_json(0), event_regex);
 }
 
 TEST(TraceEvent, toJSONAlt) {
@@ -135,7 +132,6 @@ TEST(TraceEvent, toJSONAlt) {
 
     TraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
 
     auto event_regex = testing::MatchesRegex(
@@ -152,7 +148,7 @@ TEST(TraceEvent, toJSONAlt) {
         ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
 #endif
-    EXPECT_THAT(event.to_json(), event_regex);
+    EXPECT_THAT(event.to_json(0), event_regex);
 }
 
 class MockTraceEvent : public TraceEvent {
@@ -200,7 +196,6 @@ TEST(TraceEventTypeToJSON, Instant) {
 
     MockTraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.type));
@@ -218,7 +213,6 @@ TEST(TraceEventTypeToJSON, SyncStart) {
 
     MockTraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("B", std::string(res.type));
@@ -236,7 +230,6 @@ TEST(TraceEventTypeToJSON, SyncEnd) {
 
     MockTraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("E", std::string(res.type));
@@ -254,7 +247,6 @@ TEST(TraceEventTypeToJSON, AsyncStart) {
 
     MockTraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("b", std::string(res.type));
@@ -272,7 +264,6 @@ TEST(TraceEventTypeToJSON, AsyncEnd) {
 
     MockTraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("e", std::string(res.type));
@@ -290,7 +281,6 @@ TEST(TraceEventTypeToJSON, GlobalInstant) {
 
     MockTraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.type));
@@ -308,7 +298,6 @@ TEST(TraceEventTypeToJSON, Complete) {
 
     MockTraceEvent event(
             &tpi,
-            0,
             std::chrono::steady_clock::now(),
             std::chrono::microseconds(1),
             {{0, 0}});
@@ -328,7 +317,6 @@ TEST(TraceEventTypeToJSON, Invalid) {
 
     MockTraceEvent event(
         &tpi,
-        0,
         {{0, 0}});
     EXPECT_THROW(event.typeToJSON(), std::invalid_argument);
 }
@@ -346,7 +334,6 @@ TEST(TraceEventTypeToJSON, testProperties) {
 
     TraceEvent event(
             &tpi2,
-            0,
             {{0, 4.5}});
     EXPECT_STREQ("my_category", event.getCategory());
     EXPECT_STREQ("my_name", event.getName());

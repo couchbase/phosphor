@@ -50,6 +50,7 @@ namespace gsl_p {
         using __self = multidimensional_iterator<T>;
         using U = decltype((*((T*)nullptr))->begin());
         using child_value_type = typename std::iterator_traits<U>::value_type;
+        using parent_value_type = typename std::iterator_traits<T>::value_type;
 
     public:
         multidimensional_iterator(T parent_, T parent_end_)
@@ -82,6 +83,10 @@ namespace gsl_p {
 
         bool operator!=(const __self& other) const {
             return !(*this == other);
+        }
+
+        const parent_value_type& getParent() const {
+            return *parent;
         }
 
     protected:

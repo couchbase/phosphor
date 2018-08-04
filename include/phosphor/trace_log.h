@@ -26,7 +26,6 @@
 
 #include "category_registry.h"
 #include "chunk_lock.h"
-#include "platform/thread.h"
 #include "trace_buffer.h"
 #include "trace_config.h"
 #include "trace_context.h"
@@ -141,7 +140,6 @@ namespace phosphor {
             if (cl) {
                 cl.mutex()->chunk->addEvent() = TraceEvent(
                         tpi,
-                        platform::getCurrentThreadIDCached(),
                         {{TraceArgumentConversion<T>::asArgument(argA),
                           TraceArgumentConversion<U>::asArgument(argB)}});
             }
@@ -172,7 +170,6 @@ namespace phosphor {
             if (cl) {
                 cl.mutex()->chunk->addEvent() = TraceEvent(
                         tpi,
-                        platform::getCurrentThreadIDCached(),
                         start,
                         duration,
                         {{TraceArgumentConversion<T>::asArgument(argA),

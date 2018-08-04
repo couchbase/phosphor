@@ -69,7 +69,7 @@ namespace phosphor {
          * This should be called before the TraceChunk is first used
          * as TraceChunk is a trivial type and requires initialisation.
          */
-        void reset();
+        void reset(uint32_t thread_id);
 
         /**
          * Used for adding TraceEvents to the chunk
@@ -105,6 +105,11 @@ namespace phosphor {
         size_t count() const;
 
         /**
+         * @return The id of the thread that owns this chunk
+         */
+        uint32_t threadID() const;
+
+        /**
          * @return Const iterator to the start of the chunk
          */
         const_iterator begin() const;
@@ -115,7 +120,10 @@ namespace phosphor {
         const_iterator end() const;
 
     private:
+        // Index into event array of next free element
         unsigned short next_free;
+        // System generated id for the thread this chunk belongs to
+        uint32_t thread_id;
         event_array chunk;
     };
 

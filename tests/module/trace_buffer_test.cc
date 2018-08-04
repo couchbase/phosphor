@@ -40,14 +40,13 @@ phosphor::tracepoint_info tpi = {
 
 TEST(TraceChunkTest, fillAndOverfillAndCount) {
     TraceChunk chunk;
-    chunk.reset();
+    chunk.reset(0);
 
     int count = 0;
     while (!chunk.isFull()) {
         EXPECT_EQ(count, chunk.count());
         chunk.addEvent() = TraceEvent(
             &tpi,
-            0,
             {{0, 0}});
         count++;
     }
@@ -58,23 +57,22 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
 
 TEST(TraceChunkTest, string_check) {
     TraceChunk chunk;
-    chunk.reset();
+    chunk.reset(0);
 
     while (!chunk.isFull()) {
         chunk.addEvent() = TraceEvent(
             &tpi,
-            0,
             {{0, 0}});
     }
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
         "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-        "category, name, type=Instant, thread_id=0, "
+        "category, name, type=Instant, "
         "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
         "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-        "category, name, type=Instant, thread_id=0, "
+        "category, name, type=Instant, "
         "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 

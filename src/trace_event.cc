@@ -26,28 +26,24 @@ namespace phosphor {
 
     TraceEvent::TraceEvent(
         const tracepoint_info* _tpi,
-        uint32_t _thread_id,
         std::array<TraceArgument, arg_count>&& _args)
         : tpi(_tpi),
           args(_args),
           time(
               duration_cast<nanoseconds>(steady_clock::now().time_since_epoch())
                   .count()),
-          duration(0),
-          thread_id(_thread_id) {
+          duration(0) {
     }
 
     TraceEvent::TraceEvent(
             const tracepoint_info* _tpi,
-            uint32_t _thread_id,
             std::chrono::steady_clock::time_point _start,
             std::chrono::steady_clock::duration _duration,
             std::array<TraceArgument, arg_count>&& _args)
         : tpi(_tpi),
           args(_args),
           time(_start.time_since_epoch().count()),
-          duration(_duration.count()),
-          thread_id(_thread_id) {
+          duration(_duration.count()) {
     }
 
     std::string TraceEvent::to_string() const {
@@ -69,7 +65,7 @@ namespace phosphor {
 
         return utils::format_string(
             "TraceEvent<%dd %02ld:%02ld:%02lld.%09lld, %s, %s, type=%s, "
-            "thread_id=%d, arg1=%s, arg2=%s>",
+            "arg1=%s, arg2=%s>",
             d.count(),
             h.count(),
             m.count(),
@@ -78,12 +74,11 @@ namespace phosphor {
             getCategory(),
             getName(),
             typeToString(tpi->type),
-            thread_id,
             args[0].to_string(tpi->argument_types[0]).c_str(),
             args[1].to_string(tpi->argument_types[1]).c_str());
     }
 
-    std::string TraceEvent::to_json() const {
+    std::string TraceEvent::to_json(uint32_t thread_id) const {
         std::string output;
         output += "{\"name\":" + utils::to_json(getName());
         output += ",\"cat\":" + utils::to_json(getCategory());
@@ -146,10 +141,6 @@ namespace phosphor {
 
     TraceEvent::Type TraceEvent::getType() const {
         return tpi->type;
-    }
-
-    uint64_t TraceEvent::getThreadID() const {
-        return thread_id;
     }
 
     const std::array<TraceArgument, arg_count>& TraceEvent::getArgs() const {

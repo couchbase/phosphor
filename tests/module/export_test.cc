@@ -53,7 +53,6 @@ public:
             while (!chunk->isFull()) {
                 chunk->addEvent() = phosphor::TraceEvent(
                         &tpi,
-                        0,
                         {{0, 0}});
             }
         }
@@ -63,7 +62,6 @@ public:
         auto* chunk = context.getBuffer()->getChunk();
         chunk->addEvent() = phosphor::TraceEvent(
                 &tpi,
-                0,
                 {{0, 0}});
     }
 

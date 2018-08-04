@@ -74,7 +74,7 @@ namespace phosphor {
                 case State::other_events:
                     cache += ",\n";
                 case State::first_event:
-                    event_json = it->to_json();
+                    event_json = it->to_json(it.getParent().threadID());
                     ++it;
                     cache += event_json;
                     state = State::other_events;

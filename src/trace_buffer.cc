@@ -21,6 +21,7 @@
 #include <dvyukov/mpmc_bounded_queue.h>
 #include <gsl_p/dyn_array.h>
 
+#include <phosphor/platform/thread.h>
 #include <phosphor/stats_callback.h>
 #include <phosphor/trace_buffer.h>
 #include "utils/memory.h"
@@ -31,8 +32,9 @@ namespace phosphor {
      * TraceChunk implementation
      */
 
-    void TraceChunk::reset() {
+    void TraceChunk::reset(uint32_t _thread_id) {
         next_free = 0;
+        thread_id = _thread_id;
     }
 
     bool TraceChunk::isFull() const {
@@ -54,6 +56,10 @@ namespace phosphor {
 
     const TraceEvent& TraceChunk::operator[](const int index) const {
         return chunk[index];
+    }
+
+    uint32_t TraceChunk::threadID() const {
+        return thread_id;
     }
 
     TraceChunk::const_iterator TraceChunk::begin() const {
@@ -114,7 +120,7 @@ namespace phosphor {
                 return nullptr;
             }
             TraceChunk& chunk = buffer[offset];
-            chunk.reset();
+            chunk.reset(platform::getCurrentThreadIDCached());
             ++on_loan;
             return &chunk;
         }
@@ -213,7 +219,7 @@ namespace phosphor {
                 chunk = &buffer[offset];
             }
 
-            chunk->reset();
+            chunk->reset(platform::getCurrentThreadIDCached());
             ++on_loan;
             return chunk;
         }
