@@ -78,6 +78,12 @@ namespace phosphor {
         inline constexpr TraceArgument(T src);
 
         /**
+         * SFINAE constructor for pointers
+         */
+        template <class T>
+        inline constexpr TraceArgument(T* src) : as_pointer(src) {}
+
+        /**
          * Converts the TraceArgument to string
          *
          * @param type The enum which describes the type of the TraceArgument

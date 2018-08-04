@@ -129,21 +129,9 @@ namespace phosphor {
          * @param argA Argument to be saved with the event
          * @param argB Argument to be saved with the event
          */
-        template <typename T, typename U>
         void logEvent(const tracepoint_info* tpi,
-                      T argA,
-                      U argB) {
-            if (!enabled) {
-                return;
-            }
-            auto cl = getChunkTenant();
-            if (cl) {
-                cl.mutex()->chunk->addEvent() = TraceEvent(
-                        tpi,
-                        {{TraceArgumentConversion<T>::asArgument(argA),
-                          TraceArgumentConversion<U>::asArgument(argB)}});
-            }
-        }
+                      TraceArgument argA,
+                      TraceArgument argB);
 
         /**
          * Logs a Complete event in the current buffer (if applicable)
@@ -157,25 +145,11 @@ namespace phosphor {
          * @param argA Argument to be saved with the event
          * @param argB Argument to be saved with the event
          */
-        template <typename T, typename U>
         void logEvent(const tracepoint_info* tpi,
                       std::chrono::steady_clock::time_point start,
                       std::chrono::steady_clock::duration duration,
-                      T argA,
-                      U argB) {
-            if (!enabled) {
-                return;
-            }
-            auto cl = getChunkTenant();
-            if (cl) {
-                cl.mutex()->chunk->addEvent() = TraceEvent(
-                        tpi,
-                        start,
-                        duration,
-                        {{TraceArgumentConversion<T>::asArgument(argA),
-                          TraceArgumentConversion<U>::asArgument(argB)}});
-            }
-        }
+                      TraceArgument argA,
+                      TraceArgument argB);
 
         /**
          * Used to get a reference to a reusable CategoryStatus. This should

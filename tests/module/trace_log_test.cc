@@ -320,6 +320,15 @@ TEST_F(TraceLogTest, nonBlockingStop) {
     EXPECT_FALSE(trace_log.isEnabled());
 }
 
+TEST_F(TraceLogTest, logExoticPointer) {
+    start_basic();
+
+    struct Exotic {};
+    Exotic e;
+
+    trace_log.logEvent(&tpi0, &e, 0);
+}
+
 TEST(TraceLogAltTest, FromEnvironmentConstructor) {
     setenv("PHOSPHOR_TRACING_START", "buffer-mode:fixed;buffer-size:80000", 1);
     TraceLog trace_log;

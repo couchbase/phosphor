@@ -126,6 +126,38 @@ namespace phosphor {
         enabled.store(true);
     }
 
+    void TraceLog::logEvent(const tracepoint_info* tpi,
+                            TraceArgument argA,
+                            TraceArgument argB) {
+        if (!enabled) {
+            return;
+        }
+        auto cl = getChunkTenant();
+        if (cl) {
+            cl.mutex()->chunk->addEvent() = TraceEvent(
+                    tpi,
+                    {{argA, argB}});
+        }
+    }
+
+    void TraceLog::logEvent(const tracepoint_info* tpi,
+                            std::chrono::steady_clock::time_point start,
+                            std::chrono::steady_clock::duration duration,
+                            TraceArgument argA,
+                            TraceArgument argB) {
+        if (!enabled) {
+            return;
+        }
+        auto cl = getChunkTenant();
+        if (cl) {
+            cl.mutex()->chunk->addEvent() = TraceEvent(
+                    tpi,
+                    start,
+                    duration,
+                    {{argA, argB}});
+        }
+    }
+
     const AtomicCategoryStatus& TraceLog::getCategoryStatus(
         const char* category_group) {
         return registry.getStatus(category_group);
