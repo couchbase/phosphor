@@ -36,6 +36,7 @@ public:
 
     MOCK_CONST_METHOD0(chunk_count, size_t());
     MOCK_CONST_METHOD0(getGeneration, size_t());
+    MOCK_CONST_METHOD0(bufferMode, phosphor::BufferMode());
 
     MOCK_CONST_METHOD0(chunk_begin, chunk_iterator());
     MOCK_CONST_METHOD0(chunk_end, chunk_iterator());

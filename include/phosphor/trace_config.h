@@ -64,19 +64,6 @@ namespace phosphor {
     };
 
     /**
-     * The mode of a TraceBuffer implementation
-     *
-     *   - Custom mode signifies a custom implementation given by the user
-     *   - Fixed mode uses a fixed amount of space and will get full
-     *   - Ring mode never runs out of space as it will reuse old chunks
-     */
-    enum class BufferMode : char {
-        custom = 0,
-        fixed,
-        ring,
-    };
-
-    /**
      * ostream operator overload for BufferMode
      */
     PHOSPHOR_API
@@ -315,20 +302,29 @@ namespace phosphor {
         StringPtr toString() const;
 
     protected:
-        /**
-         * Get the trace buffer factory for the given mode.
-         *
-         * Cannot be used for the custom mode
-         *
-         * @param mode The trace buffer mode to convert
-         * @return The trace buffer factory for
-         * @throw std::invalid argument if given mode is invalid
-         */
-        static trace_buffer_factory modeToFactory(BufferMode mode);
+        // Utility class to simplify maintenance of the mode/factory invariants
+        struct BufferFactoryContainer {
+            BufferFactoryContainer(BufferMode m);
+            BufferFactoryContainer(trace_buffer_factory f);
 
-        BufferMode buffer_mode = BufferMode::fixed;
+            /**
+             * Get the trace buffer factory for the given mode.
+             *
+             * Cannot be used for the custom mode
+             *
+             * @param mode The trace buffer mode to convert
+             * @return The trace buffer factory for
+             * @throw std::invalid argument if given mode is invalid
+             */
+            static trace_buffer_factory modeToFactory(BufferMode mode);
+
+            BufferMode mode;
+            trace_buffer_factory factory;
+        };
+
+        BufferFactoryContainer buffer_factory_container{BufferMode::fixed};
         size_t buffer_size = 0;
-        trace_buffer_factory buffer_factory = nullptr;
+
         std::shared_ptr<TracingStoppedCallback> tracing_stopped_callback;
         bool stop_tracing = false;
 

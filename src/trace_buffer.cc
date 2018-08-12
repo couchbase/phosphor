@@ -151,6 +151,10 @@ namespace phosphor {
             return generation;
         }
 
+        BufferMode bufferMode() const override {
+            return BufferMode::fixed;
+        }
+
         const TraceChunk& operator[](const int index) const override {
             return buffer[index];
         }
@@ -250,6 +254,10 @@ namespace phosphor {
 
         size_t getGeneration() const override {
             return generation;
+        }
+
+        BufferMode bufferMode() const override {
+            return BufferMode::ring;
         }
 
         const TraceChunk& operator[](const int index) const override {

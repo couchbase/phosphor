@@ -176,3 +176,17 @@ TEST(TraceConfigTest, toString) {
                       "enabled-categories:*;disabled-categories:",
               *config3.toString());
 }
+
+TEST(TraceConfigTest, getBufferFactoryReturnsCorrectFactoryForBuiltIns) {
+    TraceConfig cfga(BufferMode::fixed, 1337);
+    EXPECT_EQ(BufferMode::fixed, cfga.getBufferFactory()(0, 1)->bufferMode());
+
+    TraceConfig cfgb(BufferMode::ring, 1337);
+    EXPECT_EQ(BufferMode::ring, cfgb.getBufferFactory()(0, 1)->bufferMode());
+
+    cfga.updateFromString("buffer-mode:ring");
+    EXPECT_EQ(BufferMode::ring, cfga.getBufferFactory()(0, 1)->bufferMode());
+
+    cfgb.updateFromString("buffer-mode:fixed");
+    EXPECT_EQ(BufferMode::fixed, cfgb.getBufferFactory()(0, 1)->bufferMode());
+}

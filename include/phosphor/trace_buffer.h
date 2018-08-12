@@ -127,6 +127,19 @@ namespace phosphor {
         event_array chunk;
     };
 
+    /**
+     * The mode of a TraceBuffer implementation
+     *
+     *   - Custom mode signifies a custom implementation given by the user
+     *   - Fixed mode uses a fixed amount of space and will get full
+     *   - Ring mode never runs out of space as it will reuse old chunks
+     */
+    enum class BufferMode : char {
+        custom = 0,
+        fixed,
+        ring,
+    };
+
     // Forward decl
     class StatsCallback;
 
@@ -236,6 +249,12 @@ namespace phosphor {
          * @return The generation number of the TraceBuffer
          */
         virtual size_t getGeneration() const = 0;
+
+        /**
+         * @return The buffer mode of the TraceBuffer (non-core implementations
+         *         MUST return BufferMode::custom)
+         */
+        virtual BufferMode bufferMode() const = 0;
 
         /**
          * Const bi-directional iterator over the TraceChunks in a TraceBuffer

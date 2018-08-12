@@ -90,19 +90,17 @@ namespace phosphor {
     TraceConfig::~TraceConfig() = default;
 
     TraceConfig::TraceConfig(BufferMode _buffer_mode, size_t _buffer_size)
-            : buffer_mode(_buffer_mode),
+            : buffer_factory_container(_buffer_mode),
               buffer_size(_buffer_size),
-              buffer_factory(modeToFactory(_buffer_mode)),
               enabled_categories({{"*"}}) {}
 
     TraceConfig::TraceConfig(trace_buffer_factory _buffer_factory,
                              size_t _buffer_size)
-            : buffer_mode(BufferMode::custom),
+            : buffer_factory_container(_buffer_factory),
               buffer_size(_buffer_size),
-              buffer_factory(_buffer_factory),
               enabled_categories({{"*"}}) {}
 
-    trace_buffer_factory TraceConfig::modeToFactory(BufferMode mode) {
+    trace_buffer_factory TraceConfig::BufferFactoryContainer::modeToFactory(BufferMode mode) {
         switch (mode) {
             case BufferMode::fixed:
                 return trace_buffer_factory(make_fixed_buffer);
@@ -110,19 +108,20 @@ namespace phosphor {
                 return trace_buffer_factory(make_ring_buffer);
             case BufferMode::custom:
                 throw std::invalid_argument(
-                        "phosphor::TraceConfig::modeToFactory: "
-                                "Cannot get factory for Custom Mode");
+                        "phosphor::TraceConfig::BufferFactoryContainer::modeToFactory: "
+                        "Cannot get factory for Custom Mode");
         }
         throw std::invalid_argument(
-                "phosphor::TraceConfig::modeToFactory:Invalid buffer mode");
+                "phosphor::TraceConfig::BufferFactoryContainer::modeToFactory: "
+                "Invalid buffer mode");
     }
 
     BufferMode TraceConfig::getBufferMode() const {
-        return buffer_mode;
+        return buffer_factory_container.mode;
     }
 
     trace_buffer_factory TraceConfig::getBufferFactory() const {
-        return buffer_factory;
+        return buffer_factory_container.factory;
     }
 
     size_t TraceConfig::getBufferSize() const {
@@ -183,9 +182,9 @@ namespace phosphor {
 
             if (key == "buffer-mode") {
                 if (value == "fixed") {
-                    buffer_mode = BufferMode::fixed;
+                    buffer_factory_container = BufferMode::fixed;
                 } else if (value == "ring") {
-                    buffer_mode = BufferMode::ring;
+                    buffer_factory_container = BufferMode::ring;
                 } else {
                     throw std::invalid_argument(
                             "TraceConfig::fromString: "
@@ -234,7 +233,7 @@ namespace phosphor {
     StringPtr TraceConfig::toString() const {
         std::stringstream result;
 
-        result << "buffer-mode:" << buffer_mode << ";";
+        result << "buffer-mode:" << buffer_factory_container.mode << ";";
         result << "buffer-size:" << buffer_size << ";";
         result << "enabled-categories:"
                << utils::join_string(enabled_categories, ',') << ";";
@@ -245,4 +244,15 @@ namespace phosphor {
 
         return make_String(result.str());
     }
+
+    TraceConfig::BufferFactoryContainer::BufferFactoryContainer(BufferMode m)
+      : mode(m),
+        factory(modeToFactory(m)) {
+    }
+
+    TraceConfig::BufferFactoryContainer::BufferFactoryContainer(trace_buffer_factory f)
+      : mode(BufferMode::custom),
+        factory(f) {
+    }
+
 }
