@@ -6,3 +6,6 @@ TARGET_LINK_LIBRARIES(statistics phosphor)
 
 ADD_EXECUTABLE(solo solo.cc)
 TARGET_LINK_LIBRARIES(solo phosphor)
+
+ADD_EXECUTABLE(loop loop.cc)
+TARGET_LINK_LIBRARIES(loop phosphor)
