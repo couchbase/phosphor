@@ -59,6 +59,24 @@ INSTALL(TARGETS phosphor
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib)
 
+# To allow targets which depend on phosphor, but don't themselves
+# support running under Sanitizers (e.g. Erlang NIFs use platform
+# which uses phosphor), add a variant library 'phosphor_unsanitized'
+# which has Sanitizers disabled on it.
+IF(CB_SANITIZERS)
+  ADD_LIBRARY(phosphor_unsanitized SHARED
+    ${phosphor_HEADER_FILES}
+    ${phosphor_SOURCE_FILES})
+  REMOVE_SANITIZERS(phosphor_unsanitized)
+
+  INSTALL(TARGETS phosphor_unsanitized
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+ELSE()
+  ADD_LIBRARY(phosphor_unsanitized ALIAS phosphor)
+ENDIF()
+
 SET(PHOSPHOR_LIB phosphor)
 GET_DIRECTORY_PROPERTY(hasParent PARENT_DIRECTORY)
 IF(hasParent)
