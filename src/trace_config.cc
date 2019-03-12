@@ -194,11 +194,11 @@ namespace phosphor {
                 int size;
                 try {
                     size = std::stoi(value);
-                } catch (std::invalid_argument &e) {
+                } catch (std::invalid_argument &) {
                     throw std::invalid_argument(
                             "TraceConfig::fromString: "
                                     "buffer size was not a valid integer");
-                } catch (std::out_of_range &e) {
+                } catch (std::out_of_range &) {
                     throw std::invalid_argument(
                             "TraceConfig::fromString: "
                                     "buffer size was too large");
