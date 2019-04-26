@@ -278,7 +278,6 @@ namespace phosphor {
             using _self = chunk_iterator;
 
         public:
-            chunk_iterator() = default;
             chunk_iterator(const TraceBuffer& buffer_);
             chunk_iterator(const TraceBuffer& buffer_, size_t index_);
             const_reference operator*() const;
