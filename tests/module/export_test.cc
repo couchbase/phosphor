@@ -81,7 +81,7 @@ TEST_F(ExportTest, FullBufferTest) {
     phosphor::StringPtr p;
     do {
         p = exporter.read(80);
-        EXPECT_LE(p->size(), 80);
+        EXPECT_LE(p->size(), 80UL);
     } while (p->size());
     EXPECT_EQ("", *exporter.read(4096));
 }
@@ -138,7 +138,7 @@ TEST_F(ExportTest, test) {
     phosphor::StringPtr p;
     do {
         p = exporter.read(80);
-        EXPECT_LE(p->size(), 80);
+        EXPECT_LE(p->size(), 80UL);
     } while (p->size());
     EXPECT_EQ("", *exporter.read(4096));
 }

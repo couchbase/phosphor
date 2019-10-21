@@ -31,7 +31,7 @@ int setenv(const char* name, const char* value, int overwrite);
 TEST(TraceLogConfigTest, startup_trace) {
     TraceLogConfig config;
     TraceConfig trace_config(BufferMode::fixed, 10000);
-    EXPECT_EQ(10000,
+    EXPECT_EQ(10000UL,
               config.setStartupTrace(trace_config)
                       .getStartupTrace()
                       ->getBufferSize());
@@ -58,7 +58,7 @@ TEST(TraceConfigTest, createFixed) {
         FAIL();
     }
 
-    EXPECT_EQ(1337, config.getBufferSize());
+    EXPECT_EQ(1337UL, config.getBufferSize());
     EXPECT_EQ(BufferMode::fixed, config.getBufferMode());
 }
 
@@ -75,7 +75,7 @@ TEST(TraceConfigTest, createRing) {
         FAIL();
     }
 
-    EXPECT_EQ(1337, config.getBufferSize());
+    EXPECT_EQ(1337UL, config.getBufferSize());
     EXPECT_EQ(BufferMode::ring, config.getBufferMode());
 }
 
@@ -119,7 +119,7 @@ TEST(TraceConfigTest, updateFromString) {
             "disabled-categories:*rld");
 
     EXPECT_EQ(BufferMode::ring, config.getBufferMode());
-    EXPECT_EQ(1024, config.getBufferSize());
+    EXPECT_EQ(1024UL, config.getBufferSize());
     EXPECT_TRUE(config.getStoppedCallback());
     EXPECT_TRUE(config.getStopTracingOnDestruct());
     EXPECT_THAT(config.getEnabledCategories(),
@@ -136,7 +136,7 @@ TEST(TraceConfigTest, fromString) {
                     "disabled-categories:*rld");
 
     EXPECT_EQ(BufferMode::ring, config.getBufferMode());
-    EXPECT_EQ(1024, config.getBufferSize());
+    EXPECT_EQ(1024UL, config.getBufferSize());
     EXPECT_TRUE(config.getStoppedCallback());
     EXPECT_TRUE(config.getStopTracingOnDestruct());
     EXPECT_THAT(config.getEnabledCategories(),

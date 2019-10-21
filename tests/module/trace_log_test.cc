@@ -145,11 +145,11 @@ TEST_F(TraceLogTest, bufferGenerationCheck) {
     start_basic();
     trace_log.stop();
     TraceContext context = trace_log.getTraceContext();
-    EXPECT_EQ(0, context.getBuffer()->getGeneration());
+    EXPECT_EQ(0UL, context.getBuffer()->getGeneration());
     start_basic();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    EXPECT_EQ(1, context.getBuffer()->getGeneration());
+    EXPECT_EQ(1UL, context.getBuffer()->getGeneration());
 }
 
 TEST_F(TraceLogTest, logTillFullAndEvenThen) {
@@ -365,14 +365,14 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     trace_log.deregisterThread();
     trace_log.registerThread("name1");
     auto context = trace_log.getTraceContext();
-    ASSERT_NE(0, context.getThreadNames().size());
+    ASSERT_FALSE(context.getThreadNames().empty());
     auto it = context.getThreadNames().begin();
     EXPECT_EQ("name1", it->second);
 
     // Thread name shouldn't persist after de-registering when not running
     trace_log.deregisterThread();
     context = trace_log.getTraceContext();
-    EXPECT_EQ(0, context.getThreadNames().size());
+    EXPECT_TRUE( context.getThreadNames().empty());
 
     // Thread name should persist even after de-registering when running
     trace_log.registerThread("name1");
@@ -380,14 +380,14 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     trace_log.deregisterThread();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    ASSERT_NE(0, context.getThreadNames().size());
+    ASSERT_FALSE( context.getThreadNames().empty());
     it = context.getThreadNames().begin();
     EXPECT_EQ("name1", it->second);
 
     // Registering a new name should override the old one
     trace_log.registerThread("name2");
     context = trace_log.getTraceContext();
-    ASSERT_NE(0, context.getThreadNames().size());
+    ASSERT_FALSE(context.getThreadNames().empty());
     it = context.getThreadNames().begin();
     EXPECT_EQ("name2", it->second);
 
@@ -396,11 +396,11 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     trace_log.deregisterThread();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    EXPECT_NE(0, context.getThreadNames().size());
+    EXPECT_FALSE( context.getThreadNames().empty());
     start_basic();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    EXPECT_EQ(0, context.getThreadNames().size());
+    EXPECT_TRUE(context.getThreadNames().empty());
 
     trace_log.registerThread();
 }

@@ -42,7 +42,7 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
     TraceChunk chunk;
     chunk.reset(0);
 
-    int count = 0;
+    size_t count = 0;
     while (!chunk.isFull()) {
         EXPECT_EQ(count, chunk.count());
         chunk.addEvent() = TraceEvent(
@@ -144,23 +144,23 @@ TEST_P(TraceBufferTest, GetChunk) {
     ASSERT_NE(nullptr, chunk);
 
     /* Expect chunks recieved from buffer are empty */
-    EXPECT_EQ(0, chunk->count());
+    EXPECT_EQ(0UL, chunk->count());
 }
 
 TEST_P(TraceBufferTest, generation) {
     buffer = factory(1337, 1);
-    EXPECT_EQ(1337, buffer->getGeneration());
+    EXPECT_EQ(1337UL, buffer->getGeneration());
 }
 
 TEST_P(TraceBufferTest, chunkCount) {
     make_buffer(3);
-    EXPECT_EQ(0, buffer->chunk_count());
+    EXPECT_EQ(0UL, buffer->chunk_count());
     buffer->getChunk();
-    EXPECT_EQ(1, buffer->chunk_count());
+    EXPECT_EQ(1UL, buffer->chunk_count());
     buffer->getChunk();
-    EXPECT_EQ(2, buffer->chunk_count());
+    EXPECT_EQ(2UL, buffer->chunk_count());
     buffer->getChunk();
-    EXPECT_EQ(3, buffer->chunk_count());
+    EXPECT_EQ(3UL, buffer->chunk_count());
 }
 
 TEST_P(TraceBufferTest, iteratorChunksEmpty) {
@@ -243,7 +243,7 @@ TEST_P(FillableTraceBufferTest, GetChunk) {
     ASSERT_NE(nullptr, chunk);
 
     /* Expect chunks recieved from buffer are empty */
-    EXPECT_EQ(0, chunk->count());
+    EXPECT_EQ(0UL, chunk->count());
 
     buffer->returnChunk(*chunk);
     EXPECT_EQ(nullptr, buffer->getChunk());
@@ -317,7 +317,7 @@ TEST_P(UnFillableTraceBufferTest, GetChunk) {
     ASSERT_NE(nullptr, chunk);
 
     /* Expect chunks recieved from buffer are empty */
-    EXPECT_EQ(0, chunk->count());
+    EXPECT_EQ(0UL, chunk->count());
 
     buffer->returnChunk(*chunk);
     EXPECT_NO_THROW(buffer->getChunk());
@@ -328,13 +328,13 @@ TEST_P(UnFillableTraceBufferTest, GetChunk) {
 TEST_P(UnFillableTraceBufferTest, CorrectCount) {
     /* Make a buffer with one chunk */
     make_buffer(1);
-    EXPECT_EQ(0, buffer->chunk_count());
+    EXPECT_EQ(0UL, buffer->chunk_count());
     TraceChunk* chunk = buffer->getChunk();
     buffer->returnChunk(*chunk);
-    EXPECT_EQ(1, buffer->chunk_count());
+    EXPECT_EQ(1UL, buffer->chunk_count());
     chunk = buffer->getChunk();
     buffer->returnChunk(*chunk);
-    EXPECT_EQ(1, buffer->chunk_count());
+    EXPECT_EQ(1UL, buffer->chunk_count());
 }
 
 TEST_P(UnFillableTraceBufferTest, StatsTest) {
