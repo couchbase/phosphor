@@ -138,7 +138,7 @@ TEST_P(MemoryTrackingTest, full_log) {
     EXPECT_LE(overhead2, 100 * KILOBYTE);
 }
 
-INSTANTIATE_TEST_CASE_P(Basic,
+INSTANTIATE_TEST_SUITE_P(Basic,
                         MemoryTrackingTest,
                         testing::Values(1, 2, 5, 10, 20, 50, 100),
                         [](const testing::TestParamInfo<size_t>& param_info) {

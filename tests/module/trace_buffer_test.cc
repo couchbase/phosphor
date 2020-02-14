@@ -390,7 +390,7 @@ TEST_P(UnFillableTraceBufferTest, StatsTest) {
     Mock::VerifyAndClearExpectations(&callback);
 }
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     BuiltIn,
     TraceBufferTest,
     testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
@@ -400,7 +400,7 @@ INSTANTIATE_TEST_CASE_P(
         return info.param.second;
     });
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     BuiltIn,
     FillableTraceBufferTest,
     testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
@@ -409,7 +409,7 @@ INSTANTIATE_TEST_CASE_P(
         return info.param.second;
     });
 
-INSTANTIATE_TEST_CASE_P(
+INSTANTIATE_TEST_SUITE_P(
     BuiltIn,
     UnFillableTraceBufferTest,
     testing::Values(TraceBufferTest::ParamType(make_ring_buffer, "RingBuffer")),
