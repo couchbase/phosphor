@@ -74,12 +74,6 @@
 #define PHOSPHOR_INSTANCE phosphor::TraceLog::getInstance()
 
 /**
- * Deprecated alias for converting pointers to a const void*. Unnecessary
- * as Phosphor now supports arbitrary pointer types for TraceArguments.
- */
-#define PHOSPHOR_PTR(arg) arg
-
-/**
  * Utility for inlining up to 8 bytes of any string, including dynamically
  * allocated strings. Accepts std::string or char* as argument. Strings
  * longer than 8 bytes will be truncated.
