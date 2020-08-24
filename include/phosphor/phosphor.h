@@ -282,7 +282,7 @@
             PHOSPHOR_INTERNAL_UID(category_enabled_temp)                       \
                             ->load(std::memory_order_acquire) !=               \
                     phosphor::CategoryStatus::Disabled,                        \
-            mutex);
+            mutex)
 
 #define TRACE_LOCKGUARD_TIMED(mutex, category, name, limit)                  \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
@@ -302,7 +302,7 @@
                             ->load(std::memory_order_acquire) !=             \
                     phosphor::CategoryStatus::Disabled,                      \
             mutex,                                                           \
-            limit);
+            limit)
 
 /** @} */
 
