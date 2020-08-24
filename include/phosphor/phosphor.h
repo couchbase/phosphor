@@ -187,7 +187,7 @@
                                     ->load(std::memory_order_acquire) != \
                             phosphor::CategoryStatus::Disabled,          \
                     phosphor::NoneType(),                                \
-                    phosphor::NoneType());
+                    phosphor::NoneType())
 
 #define TRACE_EVENT1(category, name, arg1_name, arg1)                      \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                        \
@@ -201,7 +201,7 @@
                                     ->load(std::memory_order_acquire) !=   \
                             phosphor::CategoryStatus::Disabled,            \
                     arg1,                                                  \
-                    phosphor::NoneType());
+                    phosphor::NoneType())
 
 #define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2)   \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
@@ -215,7 +215,7 @@
                                     ->load(std::memory_order_acquire) != \
                             phosphor::CategoryStatus::Disabled,          \
                     arg1,                                                \
-                    arg2);
+                    arg2)
 
 #define TRACE_FUNCTION0(category) \
     TRACE_EVENT0(category, __func__)
