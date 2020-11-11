@@ -34,17 +34,19 @@ public:
         : running(false) {
     }
 
-    void startWorkload(size_t thread_count, std::function<void()> workload) {
+    void startWorkload(size_t thread_count, phosphor::TraceLog& traceLog, std::function<void()> workload) {
         ASSERT_FALSE(running);
         running = true;
 
         barrier.reset(thread_count + 1);
         for (size_t i = 0; i < thread_count; ++i) {
-            threads.emplace_back([workload, this]() {
+            threads.emplace_back([&traceLog, workload, this]() {
                 barrier.wait();
+                traceLog.registerThread();
                 do {
                     workload();
                 } while(running);
+                traceLog.deregisterThread();
             });
         }
         barrier.wait();
@@ -78,7 +80,7 @@ TEST_F(ThreadedTest, ThreadedStop) {
 
     phosphor::TraceLog log;
 
-    startWorkload(4, [&log, &tpi]() {
+    startWorkload(4, log, [&log, &tpi]() {
         log.logEvent(&tpi, 0, 0);
     });
 
@@ -103,7 +105,7 @@ TEST_F(ThreadedTest, ThreadedInternalStop) {
 
     phosphor::TraceLog log;
 
-    startWorkload(4, [&log, &tpi]() {
+    startWorkload(4, log, [&log, &tpi]() {
         log.logEvent(&tpi, 0, 0);
     });
 

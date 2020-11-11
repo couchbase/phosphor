@@ -120,10 +120,12 @@ TEST_F(MemoryTrackingTest, empty_log) {
 TEST_P(MemoryTrackingTest, full_log) {
     log->start(phosphor::TraceConfig(phosphor::BufferMode::fixed,
                                      GetParam() * MEGABYTE));
+    log->registerThread();
     while (log->isEnabled()) {
         log->logEvent(
             &tpi, 0, phosphor::NoneType());
     }
+    log->deregisterThread();
     size_t overhead{memory_change()};
 
     // Requirement M.8: Memory usage should not exceed 110%

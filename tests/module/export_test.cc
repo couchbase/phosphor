@@ -197,10 +197,12 @@ TEST_F(FileStopCallbackTest, test_to_file) {
     log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 80000)
                   .setStoppedCallback(
                       std::make_shared<FileStopCallback>(filename)));
+    log.registerThread();
     while (log.isEnabled()) {
         log.logEvent(
             &tpi, 0, NoneType());
     }
+    log.deregisterThread();
 }
 
 TEST_F(FileStopCallbackTest, file_open_fail) {

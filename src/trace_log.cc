@@ -272,6 +272,27 @@ namespace phosphor {
             return {};
         }
 
+        // If ChunkTenant isn't registered then cannot safely get hold
+        // of a chunk, given on shutdown it would't be possible for
+        // TraceLog to evict the ChunkTenant (it wouldn't appear in
+        // registered_chunk_tenants) - return null.
+        //
+        // Note: We _could_ call registerThread() to auto-register,
+        // however that creates the opposite problem - the
+        // auto-registered thread would need to be auto-deregistered,
+        // otherwise a dangling ChunkTenant* would be left in
+        // registered_chunk_tenants.  Auto de-registering (via
+        // ~ChunkTenant) is problematic with the current locking, as
+        // we either end up with a data-race if ~ChunkTenant doesn't
+        // lock the TraceLog ptr is uses to call unregister, or a
+        // deadlock if that attempts to lock using ChunkLock.  Folly's
+        // ThreadLocal would probably address this (it has it's own
+        // registry of in-existance thread-locals), but that's a non-trivial
+        // change.
+        if (!thread_chunk.initialised) {
+            return {};
+        }
+
         if (!thread_chunk.chunk || thread_chunk.chunk->isFull()) {
             // If we're missing our chunk then it might be because we're
             // meant to be stopping right now.
@@ -291,12 +312,6 @@ namespace phosphor {
     }
 
     bool TraceLog::replaceChunk(ChunkTenant& ct) {
-        // Temporary addition until ChunkTenant initialisation
-        // is guaranteed by C++11 `thread_local`
-        if (!ct.initialised) {
-            registerThread();
-        }
-
         if (ct.chunk) {
             buffer->returnChunk(*ct.chunk);
             ct.chunk = nullptr;

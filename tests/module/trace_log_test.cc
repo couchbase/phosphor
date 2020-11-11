@@ -182,9 +182,11 @@ TEST_F(TraceLogTest, logTillFullThreaded) {
 
     for (int i = 0; i < thread_count; ++i) {
         threads.emplace_back([this]() {
+            trace_log.registerThread();
             while (trace_log.isEnabled()) {
                 log_event();
             }
+            trace_log.deregisterThread();
         });
     }
     for (std::thread& thread : threads) {
@@ -268,6 +270,63 @@ TEST(TraceLogStaticTest, registerDeRegisterWithChunk) {
     trace_log.registerThread();
     trace_log.logEvent(&tpi2, 0, 0);
     EXPECT_NO_THROW(trace_log.deregisterThread());
+}
+
+// Test behaviour when at least one thread doesn't register itself - it any
+// only it's events should be discarded; other registered threads should still
+// log.
+TEST(TraceLogStaticTest, registerSomeThreads) {
+    TraceLog trace_log;
+    trace_log.start(TraceConfig(BufferMode::fixed, sizeof(TraceChunk) * 2));
+    // First thread - not registered.
+    std::thread([&trace_log]() mutable {
+        trace_log.logEvent(&tpi0, 1, 1);
+    }).join();
+
+    // Second thread - registered.
+    std::thread([&trace_log]() mutable {
+        trace_log.registerThread("second");
+        trace_log.logEvent(&tpi0, 2, 2);
+        trace_log.deregisterThread();
+    }).join();
+
+    // Check with have a single event, from the second thread.
+    trace_log.stop();
+    auto context = trace_log.getTraceContext();
+    auto* buffer = context.getBuffer();
+    auto event = buffer->begin();
+    ASSERT_NE(buffer->end(), event);
+    EXPECT_EQ(2, event->getArgs().at(0).as_int);
+    EXPECT_EQ(buffer->end(), ++event);
+}
+
+// Test behaviour when a thread doesn't explicitly register (or
+// deregister) itself.
+// Prior to MB-42441 threads were implicitly registered by
+// TraceLog::replaceChunk() if not already registered, but crucially
+// will *not* be implicitly deregistered; resulting in dangling
+// pointers being left in registered_chunk_tenants.
+TEST(TraceLogStaticTest, noExplicitRegisterWithChunk) {
+    {
+        TraceLog trace_log;
+        const int numThreads = 32;
+        trace_log.start(TraceConfig(BufferMode::ring,
+                                    sizeof(TraceChunk) * numThreads));
+        // Use heap-allocated thread objects to increase ease of ASan etc
+        // detecting the invalid memory usage.
+        std::vector<std::unique_ptr<std::thread>> threads;
+        for (int i = 0; i < numThreads; i++) {
+            threads.emplace_back(new std::thread{[&trace_log]{
+                trace_log.logEvent(&tpi2, 0, 0);
+                    }});
+        }
+        for (auto& t : threads) {
+            t->join();
+        }
+        threads.clear();
+
+        trace_log.stop();
+    }
 }
 
 struct DoneCallback : public TracingStoppedCallback {

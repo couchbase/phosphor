@@ -39,9 +39,11 @@ public:
                                       sizeof(phosphor::TraceChunk))
                         .setCategories({{"category"}, {"ex*"}},
                                        {{"excluded"}}));
+        PHOSPHOR_INSTANCE.registerThread("MacroTraceEventTest");
     }
 
     ~MacroTraceEventTest() {
+        PHOSPHOR_INSTANCE.deregisterThread();
         PHOSPHOR_INSTANCE.stop();
         auto buffer = PHOSPHOR_INSTANCE.getBuffer();
         auto event = buffer->begin();
