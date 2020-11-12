@@ -65,4 +65,4 @@ BENCHMARK(SlaveSlave)
     ->RangeMultiplier(2)
     ->Range(1, 128);
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();

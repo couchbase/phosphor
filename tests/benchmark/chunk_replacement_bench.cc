@@ -59,4 +59,4 @@ void RegisterTenants(benchmark::State& state) {
 }
 BENCHMARK(RegisterTenants)->ThreadRange(1, phosphor::benchNumThreads());
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();

@@ -134,4 +134,4 @@ void NullBench(benchmark::State& state) {
 BENCHMARK(NullBench);
 BENCHMARK(NullBench)->ThreadPerCpu();
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();

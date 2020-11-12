@@ -68,4 +68,4 @@ void NewCategories(benchmark::State& state) {
 
 BENCHMARK(NewCategories)->ThreadRange(1, phosphor::benchNumThreads());
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();

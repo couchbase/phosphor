@@ -17,13 +17,6 @@
 
 #include <benchmark/benchmark.h>
 
-/* google/benchmark doesn't expose the NumCPUs method in the public
- * API, so forward-declare it ourselves.
- */
-namespace benchmark {
-int NumCPUs();
-}
-
 /*
  * Helper functions for benchmarking phosphor.
  */
@@ -35,7 +28,7 @@ int benchNumThreads() {
     if (override != nullptr) {
         return std::stoi(override);
     }
-    return 2 * benchmark::NumCPUs();
+    return 2 * benchmark::CPUInfo::Get().num_cpus;
 }
 
 } // namespace phosphor

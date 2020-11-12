@@ -50,4 +50,4 @@ void RegisterThread(benchmark::State& state) {
 }
 BENCHMARK(RegisterThread)->ThreadRange(1, phosphor::benchNumThreads());
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();
