@@ -184,7 +184,7 @@ namespace phosphor {
 
             size_t count = 0;
 
-            while (*s++ && maxsize--) {
+            while (maxsize-- && *s++) {
                 count++;
             }
 

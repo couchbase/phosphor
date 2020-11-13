@@ -87,7 +87,7 @@ TEST_F(ThreadedTest, ThreadedStop) {
     log.stop();
 
     // Extra paranoia, delete the buffer we might be using
-    log.getBuffer().release();
+    log.getBuffer().reset();
 
     stopWorkload();
 }
@@ -114,7 +114,7 @@ TEST_F(ThreadedTest, ThreadedInternalStop) {
     } while(log.isEnabled());
 
     // Extra paranoia, delete the buffer we might be using
-    log.getBuffer().release();
+    log.getBuffer().reset();
 
     stopWorkload();
 }

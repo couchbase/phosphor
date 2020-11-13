@@ -59,7 +59,7 @@ namespace phosphor {
     }
 
     TraceLogConfig &TraceLogConfig::clearStartupTrace() {
-        startup_trace.release();
+        startup_trace.reset();
         return *this;
     }
 
