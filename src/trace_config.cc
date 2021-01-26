@@ -27,17 +27,7 @@
 namespace phosphor {
 
     std::ostream &operator<<(std::ostream &stream, const BufferMode mode) {
-        switch (mode) {
-            case BufferMode::custom:
-                stream << "custom";
-                break;
-            case BufferMode::fixed:
-                stream << "fixed";
-                break;
-            case BufferMode::ring:
-                stream << "ring";
-                break;
-        }
+        stream << to_string(mode);
         return stream;
     }
 

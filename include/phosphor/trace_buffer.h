@@ -390,4 +390,14 @@ namespace phosphor {
 
     PHOSPHOR_API
     buffer_ptr make_ring_buffer(size_t generation, size_t buffer_size);
-}
+
+/// Parse the buffer mode from provided string (the comparison is case
+/// insensitive). throws std::invalid_argument for invalid modes
+PHOSPHOR_API
+BufferMode parseBufferMode(std::string_view mode);
+} // namespace phosphor
+
+/// Get a textual representation for the provided buffer mode. Throws
+/// std::invalid_argument for invalid modes
+PHOSPHOR_API
+std::string to_string(phosphor::BufferMode mode);

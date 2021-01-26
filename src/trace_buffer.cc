@@ -322,4 +322,34 @@ namespace phosphor {
                                                   size_t buffer_size) {
         return utils::make_unique<RingTraceBuffer>(generation, buffer_size);
     }
+
+PHOSPHOR_API
+BufferMode parseBufferMode(std::string_view mode) {
+    if (mode == "custom") {
+        return BufferMode::custom;
+    }
+    if (mode == "fixed") {
+        return BufferMode::fixed;
+    }
+    if (mode == "ring") {
+        return BufferMode::ring;
+    }
+    throw std::invalid_argument("parseBufferMode(): Invalid buffer mode: " +
+            std::string(mode));
+}
+} // namespace phosphor
+
+PHOSPHOR_API
+std::string to_string(phosphor::BufferMode mode) {
+    switch (mode) {
+    case phosphor::BufferMode::custom:
+        return "custom";
+    case phosphor::BufferMode::fixed:
+        return "fixed";
+    case phosphor::BufferMode::ring:
+        return "ring";
+    }
+    throw std::invalid_argument(
+            "to_string(BufferMode): " + std::to_string(uint64_t(mode)) +
+                    " is not a valid BufferMode");
 }
