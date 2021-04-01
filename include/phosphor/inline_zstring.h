@@ -30,8 +30,9 @@
 namespace phosphor {
 
     /**
-     * inline_zstring is a class which stores null-terminated
-     * strings within itself.
+     * inline_zstring is a class which stores strings within itself. Strings
+     * less than the maximum size are null-terminated; those at max_length
+     * size are not.
      *
      * @tparam max_length Max size of any inlined strings
      */
@@ -43,23 +44,23 @@ namespace phosphor {
         /**
          * Explicit constructor from std::string
          */
-        explicit inline_zstring(const std::string& s) {
-            strncpy(_s, s.c_str(),
-                    (s.size() < max_length) ? s.size() : max_length);
+        explicit inline_zstring(const std::string& s)
+            : inline_zstring(s.c_str(), s.size()) {
         }
 
         /**
          * Explicit constructor from const char* (null-terminated).
          */
-        explicit inline_zstring(const char* s) {
-            strncpy(_s, s, max_length);
+        explicit inline_zstring(const char* s) : inline_zstring(s, strlen(s)) {
         }
 
         /**
          * Explicit constructor from const char* of a specific length.
          */
         explicit inline_zstring(const char* s, size_t len) {
-            strncpy(_s, s, std::min(len, max_length));
+            const auto copyLen = (len < max_length) ? len : max_length;
+            memcpy(_s, s, copyLen);
+            memset(_s + copyLen, 0, max_length - copyLen);
         }
 
         /**
