@@ -33,15 +33,11 @@ Once the trace buffer becomes full you can retrieve it and iterate over it:
 
 ## Build
 
-Phosphor is written in C++11 and requires a mostly conforming compiler. Many
-early C++11 implementations used slow or even inaccurate clock sources which can
-cause issues with tracing.
+Phosphor is written in C++17 and requires a mostly conforming compiler.
 
-Phosphor can be built with CMake, a top level Makefile is provided for
-convenience. A simple `make compile` and `make test` will compile and run the
-tests.
-
-Phosphor can be built and tested with code coverage by running `make covered`.
+Phosphor is built as part of the full server build.
+See [Build Couchbase server](https://github.com/couchbase/tlm#how-to-build) for
+more information.
 
 ## Documentation
 
