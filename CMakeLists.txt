@@ -6,10 +6,6 @@ include(check_unit_test_enabled)
 
 check_unit_test_enabled(phosphor COUCHBASE_PHOSPHOR_BUILD_UNIT_TESTS)
 
-IF (${CMAKE_MAJOR_VERSION} GREATER 2)
-    CMAKE_POLICY(SET CMP0042 NEW)
-ENDIF ()
-
 INCLUDE_DIRECTORIES(BEFORE
         ${phosphor_SOURCE_DIR}/include
         ${phosphor_SOURCE_DIR}/src
