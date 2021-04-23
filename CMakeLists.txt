@@ -49,6 +49,8 @@ ADD_LIBRARY(phosphor SHARED
         ${phosphor_HEADER_FILES}
         ${phosphor_SOURCE_FILES})
 
+TARGET_INCLUDE_DIRECTORIES(phosphor PUBLIC ${phosphor_SOURCE_DIR}/include)
+
 INSTALL(TARGETS phosphor
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
@@ -63,6 +65,8 @@ IF(CB_SANITIZERS)
     ${phosphor_HEADER_FILES}
     ${phosphor_SOURCE_FILES})
   REMOVE_SANITIZERS(phosphor_unsanitized)
+
+  TARGET_INCLUDE_DIRECTORIES(phosphor_unsanitized PUBLIC ${phosphor_SOURCE_DIR}/include)
 
   INSTALL(TARGETS phosphor_unsanitized
     RUNTIME DESTINATION bin
