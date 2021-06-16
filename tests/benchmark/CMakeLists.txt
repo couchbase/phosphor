@@ -1,5 +1,5 @@
 MACRO (M_ADD_LIBRARY_BENCHMARK name)
-    ADD_EXECUTABLE(
+    cb_add_test_executable(
             ${name}
             ${ARGN}
             bench_common.cc
@@ -11,7 +11,7 @@ MACRO (M_ADD_LIBRARY_BENCHMARK name)
 ENDMACRO()
 
 MACRO (M_ADD_MODULE_BENCHMARK name)
-    ADD_EXECUTABLE(
+    cb_add_test_executable(
             ${name}
             ${ARGN}
             bench_common.cc

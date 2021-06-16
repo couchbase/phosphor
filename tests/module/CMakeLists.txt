@@ -1,5 +1,5 @@
 MACRO (M_ADD_MODULE_GTEST name)
-    ADD_EXECUTABLE(
+    cb_add_test_executable(
             ${name}
             ${phosphor_SOURCE_DIR}/tests/test_main.cc
             ${ARGN}

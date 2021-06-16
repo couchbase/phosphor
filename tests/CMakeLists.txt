@@ -8,7 +8,7 @@ IF(DEFINED COUCHBASE_SERVER_BUILD)
 ENDIF()
 
 MACRO (M_ADD_LIBRARY_GTEST name)
-    ADD_EXECUTABLE(
+    cb_add_test_executable(
             ${name}
             ${phosphor_SOURCE_DIR}/tests/test_main.cc
             ${ARGN}
