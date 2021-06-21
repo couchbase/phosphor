@@ -7,7 +7,7 @@ IF (NOT (CB_THREADSANITIZER OR CB_ADDRESSSANITIZER))
     cb_add_test_executable(
             memory_usage_test
             memory_usage_test.cc
-            ${phosphor_SOURCE_DIR}/tests/test_main.cc)
+            $<TARGET_OBJECTS:phosphor_test_main>)
     TARGET_LINK_LIBRARIES(memory_usage_test
             gmock gtest phosphor)
     ADD_TEST(NAME memory_usage_test COMMAND memory_usage_test)

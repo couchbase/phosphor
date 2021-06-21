@@ -1,7 +1,7 @@
 MACRO (M_ADD_MODULE_GTEST name)
     cb_add_test_executable(
             ${name}
-            ${phosphor_SOURCE_DIR}/tests/test_main.cc
+            $<TARGET_OBJECTS:phosphor_test_main>
             ${ARGN}
     )
     TARGET_LINK_LIBRARIES(${name}

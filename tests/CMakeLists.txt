@@ -7,10 +7,13 @@ IF(DEFINED COUCHBASE_SERVER_BUILD)
     SET(_extra_test_libs platform)
 ENDIF()
 
+add_library(phosphor_test_main OBJECT test_main.cc)
+set_target_properties(phosphor_test_main PROPERTIES EXCLUDE_FROM_ALL TRUE)
+
 MACRO (M_ADD_LIBRARY_GTEST name)
     cb_add_test_executable(
             ${name}
-            ${phosphor_SOURCE_DIR}/tests/test_main.cc
+            $<TARGET_OBJECTS:phosphor_test_main>
             ${ARGN}
     )
     TARGET_LINK_LIBRARIES(${name}
