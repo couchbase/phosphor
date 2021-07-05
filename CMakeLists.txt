@@ -2,9 +2,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
 PROJECT(phosphor)
 
 INCLUDE(CTest)
-include(check_unit_test_enabled)
-
-check_unit_test_enabled(phosphor COUCHBASE_PHOSPHOR_BUILD_UNIT_TESTS)
 
 INCLUDE_DIRECTORIES(BEFORE
         ${phosphor_SOURCE_DIR}/include
@@ -82,9 +79,7 @@ IF(hasParent)
     SET(PHOSPHOR_LIB phosphor PARENT_SCOPE)
 ENDIF()
 
-if (COUCHBASE_PHOSPHOR_BUILD_UNIT_TESTS)
-    ADD_SUBDIRECTORY(tests)
-endif(COUCHBASE_PHOSPHOR_BUILD_UNIT_TESTS)
+add_subdirectory(tests)
 
 option(PHOSPHOR_BUILD_EXAMPLES "Enable building the examples" OFF)
 IF(PHOSPHOR_BUILD_EXAMPLES)
