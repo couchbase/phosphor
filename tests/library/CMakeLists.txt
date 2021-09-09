@@ -9,7 +9,7 @@ IF (NOT (CB_THREADSANITIZER OR CB_ADDRESSSANITIZER))
             memory_usage_test.cc
             $<TARGET_OBJECTS:phosphor_test_main>)
     TARGET_LINK_LIBRARIES(memory_usage_test
-            gmock gtest phosphor)
+                          GTest::gmock GTest::gtest phosphor)
     ADD_TEST(NAME memory_usage_test COMMAND memory_usage_test)
 ENDIF()
 

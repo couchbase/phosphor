@@ -8,6 +8,7 @@ IF(DEFINED COUCHBASE_SERVER_BUILD)
 ENDIF()
 
 add_library(phosphor_test_main OBJECT test_main.cc)
+target_link_libraries(phosphor_test_main PRIVATE GTest::gtest)
 set_target_properties(phosphor_test_main PROPERTIES EXCLUDE_FROM_ALL TRUE)
 
 MACRO (M_ADD_LIBRARY_GTEST name)
@@ -17,8 +18,8 @@ MACRO (M_ADD_LIBRARY_GTEST name)
             ${ARGN}
     )
     TARGET_LINK_LIBRARIES(${name}
-            gmock
-            gtest
+            GTest::gmock
+            GTest::gtest
             ${_extra_test_libs}
             phosphor)
     ADD_TEST(NAME ${name} COMMAND ${name})
@@ -27,13 +28,8 @@ ENDMACRO()
 INCLUDE_DIRECTORIES(AFTER
             ${phosphor_SOURCE_DIR}/tests/include)
 
-IF(DEFINED gtest_SOURCE_DIR)
-    INCLUDE_DIRECTORIES(AFTER
-            ${gtest_SOURCE_DIR}/include
-            ${gmock_SOURCE_DIR}/include)
-    ADD_SUBDIRECTORY(module)
-    ADD_SUBDIRECTORY(library)
-ENDIF ()
+ADD_SUBDIRECTORY(module)
+ADD_SUBDIRECTORY(library)
 
 option(PHOSPHOR_ENABLE_BENCHMARKING "Enable benchmarking of Phosphor." OFF)
 IF(DEFINED benchmark_SOURCE_DIR AND PHOSPHOR_ENABLE_BENCHMARKING)
