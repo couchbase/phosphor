@@ -36,7 +36,7 @@ phosphor::tracepoint_info tpi = {
  */
 void TracingOnOff(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         if (state.range(0)) {
             log.start(
                 phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
@@ -52,7 +52,7 @@ void TracingOnOff(benchmark::State& state) {
         }
     }
     log.deregisterThread();
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         log.stop();
     }
 }
@@ -67,7 +67,7 @@ BENCHMARK(TracingOnOff)->Arg(false)->ThreadPerCpu();
  * flag instead of the global tracing flag.
  */
 void TracingOnOffMacro(benchmark::State& state) {
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         if (state.range(0)) {
             PHOSPHOR_INSTANCE.start(
                     phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
@@ -82,7 +82,7 @@ void TracingOnOffMacro(benchmark::State& state) {
         }
     }
     PHOSPHOR_INSTANCE.deregisterThread();
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         PHOSPHOR_INSTANCE.stop();
     }
 }
@@ -90,5 +90,3 @@ BENCHMARK(TracingOnOffMacro)->Arg(true)->ThreadPerCpu();
 BENCHMARK(TracingOnOffMacro)->Arg(false)->ThreadPerCpu();
 BENCHMARK(TracingOnOffMacro)->Arg(true);
 BENCHMARK(TracingOnOffMacro)->Arg(false);
-
-BENCHMARK_MAIN();

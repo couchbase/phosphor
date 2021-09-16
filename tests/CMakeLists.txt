@@ -30,15 +30,4 @@ INCLUDE_DIRECTORIES(AFTER
 
 ADD_SUBDIRECTORY(module)
 ADD_SUBDIRECTORY(library)
-
-option(PHOSPHOR_ENABLE_BENCHMARKING "Enable benchmarking of Phosphor." OFF)
-IF(DEFINED benchmark_SOURCE_DIR AND PHOSPHOR_ENABLE_BENCHMARKING)
-    IF(CB_CODE_COVERAGE)
-        message(SEND_ERROR "\
-Benchmarking will not be representative with code coverage enabled. It has a \
-10-50x performance impact on some benchmarks")
-    ENDIF()
-    INCLUDE_DIRECTORIES(AFTER
-            ${benchmark_SOURCE_DIR}/include)
-    ADD_SUBDIRECTORY(benchmark)
-ENDIF ()
+ADD_SUBDIRECTORY(benchmark)

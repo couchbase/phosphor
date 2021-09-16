@@ -29,7 +29,7 @@
 class CategoryOnOffBench : public benchmark::Fixture {
 protected:
     void SetUp(const benchmark::State& state) override {
-        if (state.thread_index == 0) {
+        if (state.thread_index() == 0) {
             phosphor::TraceConfig config(phosphor::BufferMode::ring,
                                          1024 * 1024);
             if (state.range(0)) {
@@ -46,7 +46,7 @@ protected:
 
     void TearDown(const benchmark::State& state) override {
         PHOSPHOR_INSTANCE.deregisterThread();
-        if (state.thread_index == 0) {
+        if (state.thread_index() == 0) {
             PHOSPHOR_INSTANCE.stop();
         }
     }
@@ -133,5 +133,3 @@ void NullBench(benchmark::State& state) {
 }
 BENCHMARK(NullBench);
 BENCHMARK(NullBench)->ThreadPerCpu();
-
-BENCHMARK_MAIN();

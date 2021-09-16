@@ -41,13 +41,13 @@ void NewCategories(benchmark::State& state) {
     static std::unique_ptr<CategoryRegistry> registry;
     static Barrier barrier{0};
 
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         size_t i = 1;
         for (auto& category : categories) {
             category = std::string('A', i++);
         }
         registry = utils::make_unique<CategoryRegistry>();
-        barrier.reset(state.threads);
+        barrier.reset(state.threads());
     }
 
     while (state.KeepRunning()) {
@@ -67,5 +67,3 @@ void NewCategories(benchmark::State& state) {
 }
 
 BENCHMARK(NewCategories)->ThreadRange(1, phosphor::benchNumThreads());
-
-BENCHMARK_MAIN();

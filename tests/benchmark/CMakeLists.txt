@@ -1,23 +1,12 @@
 MACRO (M_ADD_LIBRARY_BENCHMARK name)
-    cb_add_test_executable(
-            ${name}
-            ${ARGN}
-            bench_common.cc
-    )
-    TARGET_LINK_LIBRARIES(${name}
-            benchmark
-            phosphor)
+    cb_add_test_executable(${name} ${ARGN} bench_common.cc)
+    TARGET_LINK_LIBRARIES(${name} benchmark::benchmark benchmark::benchmark_main phosphor)
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()
 
 MACRO (M_ADD_MODULE_BENCHMARK name)
-    cb_add_test_executable(
-            ${name}
-            ${ARGN}
-            bench_common.cc
-    )
-    TARGET_LINK_LIBRARIES(${name}
-            benchmark)
+    cb_add_test_executable(${name} ${ARGN} bench_common.cc)
+    TARGET_LINK_LIBRARIES(${name} benchmark::benchmark benchmark::benchmark_main)
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()
 

@@ -43,20 +43,18 @@ public:
 void RegisterTenants(benchmark::State& state) {
     static MockTraceLog log{phosphor::TraceLogConfig()};
     log.registerThread();
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         log.start(phosphor::TraceConfig(
-            phosphor::BufferMode::ring,
-            (sizeof(phosphor::TraceChunk) * (10 * state.threads))));
+                phosphor::BufferMode::ring,
+                (sizeof(phosphor::TraceChunk) * (10 * state.threads()))));
     }
 
     while (state.KeepRunning()) {
         log.replaceChunk();
     }
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         log.stop();
     }
     log.deregisterThread();
 }
 BENCHMARK(RegisterTenants)->ThreadRange(1, phosphor::benchNumThreads());
-
-BENCHMARK_MAIN();

@@ -33,10 +33,10 @@ phosphor::tracepoint_info tpi = {
 
 void RegisterThread(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         log.start(phosphor::TraceConfig(
-            phosphor::BufferMode::ring,
-            (sizeof(phosphor::TraceChunk) * (1 + state.threads))));
+                phosphor::BufferMode::ring,
+                (sizeof(phosphor::TraceChunk) * (1 + state.threads()))));
     }
     log.registerThread();
     while (state.KeepRunning()) {
@@ -44,10 +44,8 @@ void RegisterThread(benchmark::State& state) {
             &tpi, 0, phosphor::NoneType());
     }
     log.deregisterThread();
-    if (state.thread_index == 0) {
+    if (state.thread_index() == 0) {
         log.stop();
     }
 }
 BENCHMARK(RegisterThread)->ThreadRange(1, phosphor::benchNumThreads());
-
-BENCHMARK_MAIN();
