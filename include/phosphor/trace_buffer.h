@@ -264,14 +264,16 @@ namespace phosphor {
          *         }
          *     }
          */
-        class PHOSPHOR_API chunk_iterator
-            : public std::iterator<std::bidirectional_iterator_tag,
-                                   TraceChunk> {
+        class PHOSPHOR_API chunk_iterator {
+        public:
+            using iterator_category = std::bidirectional_iterator_tag;
+            using value_type = TraceChunk;
+            using difference_type = std::ptrdiff_t;
+            using pointer = TraceChunk*;
+            using reference = TraceChunk&;
             using const_reference = const TraceChunk&;
             using const_pointer = const TraceChunk*;
-            using _self = chunk_iterator;
 
-        public:
             chunk_iterator(const TraceBuffer& buffer_);
             chunk_iterator(const TraceBuffer& buffer_, size_t index_);
             const_reference operator*() const;
