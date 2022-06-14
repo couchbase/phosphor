@@ -42,7 +42,7 @@ namespace gsl_p {
     template <typename T>
     class multidimensional_iterator {
         using __self = multidimensional_iterator<T>;
-        using U = decltype((*((T*)nullptr))->begin());
+        using U = decltype((*std::declval<T>()).begin());
         using child_value_type = typename std::iterator_traits<U>::value_type;
         using parent_value_type = typename std::iterator_traits<T>::value_type;
 
