@@ -41,33 +41,28 @@ SET(phosphor_SOURCE_FILES
         ${phosphor_SOURCE_DIR}/src/utils/memory.cc
         ${phosphor_SOURCE_DIR}/src/utils/string_utils.cc)
 
-ADD_LIBRARY(phosphor SHARED
+ADD_LIBRARY(phosphor STATIC
         ${phosphor_HEADER_FILES}
         ${phosphor_SOURCE_FILES})
 
 TARGET_INCLUDE_DIRECTORIES(phosphor PUBLIC ${phosphor_SOURCE_DIR}/include)
 
-INSTALL(TARGETS phosphor
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib)
+SET_TARGET_PROPERTIES(phosphor PROPERTIES POSITION_INDEPENDENT_CODE true)
 
 # To allow targets which depend on phosphor, but don't themselves
 # support running under Sanitizers (e.g. Erlang NIFs use platform
 # which uses phosphor), add a variant library 'phosphor_unsanitized'
 # which has Sanitizers disabled on it.
 IF(CB_SANITIZERS)
-  ADD_LIBRARY(phosphor_unsanitized SHARED
+  ADD_LIBRARY(phosphor_unsanitized STATIC
     ${phosphor_HEADER_FILES}
     ${phosphor_SOURCE_FILES})
   REMOVE_SANITIZERS(phosphor_unsanitized)
 
   TARGET_INCLUDE_DIRECTORIES(phosphor_unsanitized PUBLIC ${phosphor_SOURCE_DIR}/include)
 
-  INSTALL(TARGETS phosphor_unsanitized
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib)
+  SET_TARGET_PROPERTIES(phosphor_unsanitized
+    PROPERTIES POSITION_INDEPENDENT_CODE true)
 ELSE()
   ADD_LIBRARY(phosphor_unsanitized ALIAS phosphor)
 ENDIF()
