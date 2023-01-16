@@ -89,25 +89,28 @@ TEST(TraceEvent, toJSON) {
     constexpr phosphor::tracepoint_info tpi = {
         "category",
         "name",
-        TraceEvent::Type::Instant,
+        TraceEvent::Type::Complete,
         {{"arg1", "arg2"}},
         {{TraceArgument::Type::is_bool, TraceArgument::Type::is_none}}
     };
 
-    TraceEvent event(
-        &tpi,
-        {{0, 0}});
+    // Use fixed time_point and duration which have a sub-microsecond values
+    // to test our correct printing of fractional microseconds.
+    std::chrono::steady_clock::time_point now{std::chrono::nanoseconds{2002}};
+    std::chrono::nanoseconds duration{std::chrono::nanoseconds{3033}};
+
+    TraceEvent event(&tpi, now, duration, {{0, 0}});
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-        "\"ts\":[0-9]+,\"pid\":" +
+        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"X\",\"dur\":3\\.033,"
+        "\"ts\":2\\.002,\"pid\":" +
         std::to_string(phosphor::platform::getCurrentProcessID()) +
         ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false\\}\\}");
 #else
-        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"i\",\"s\":\"t\","
-        "\"ts\":\\d+,\"pid\":" +
+        "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"X\",\"dur\":3\\.033,"
+        "\"ts\":2\\.002,\"pid\":" +
         std::to_string(phosphor::platform::getCurrentProcessID()) +
         ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false\\}\\}");
@@ -131,13 +134,13 @@ TEST(TraceEvent, toJSONAlt) {
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-        "\"ts\":[0-9]+,\"pid\":" +
+        "\"ts\":[0-9.]+,\"pid\":" +
         std::to_string(phosphor::platform::getCurrentProcessID()) +
         ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
 #else
         "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-        "\"ts\":\\d+,\"pid\":" +
+        "\"ts\":\\d+\\.?\\d*,\"pid\":" +
         std::to_string(phosphor::platform::getCurrentProcessID()) +
         ",\"tid\":0,"
         "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
@@ -293,11 +296,11 @@ TEST(TraceEventTypeToJSON, Complete) {
     MockTraceEvent event(
             &tpi,
             std::chrono::steady_clock::now(),
-            std::chrono::microseconds(1),
+            std::chrono::nanoseconds(1001),
             {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("X", std::string(res.type));
-    EXPECT_EQ(",\"dur\":1.000", res.extras);
+    EXPECT_EQ(R"(,"dur":1.001)", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, Invalid) {

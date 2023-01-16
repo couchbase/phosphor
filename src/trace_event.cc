@@ -82,8 +82,9 @@ namespace phosphor {
         output += ",\"ph\":\"" + std::string(type_converted.type) + "\"";
         output += type_converted.extras;
 
-        output += ",\"ts\":" + std::to_string(time / 1000);
-        output += ",\"pid\":" + std::to_string(platform::getCurrentProcessID()),
+        const auto [time_us, time_ns] = std::lldiv(time, 1000);
+        output += utils::format_string(",\"ts\":%lld.%03lld", time_us, time_ns);
+        output += ",\"pid\":" + std::to_string(platform::getCurrentProcessID());
         output += ",\"tid\":" + std::to_string(thread_id);
 
         output += ",\"args\":{";
@@ -191,8 +192,9 @@ namespace phosphor {
             return res;
         case Type::Complete:
             res.type = "X";
-            const double duration_us = duration / 1000.0;
-            res.extras = utils::format_string(",\"dur\":%.3f", duration_us);
+            const auto [dur_us, dur_ns] = std::lldiv(duration, 1000);
+            res.extras = utils::format_string(
+                    ",\"dur\":%lld.%03lld", dur_us, dur_ns);
             return res;
         }
         throw std::invalid_argument(
