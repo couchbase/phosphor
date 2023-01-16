@@ -43,6 +43,13 @@ namespace phosphor {
         }
 
         /**
+         * Explicit constructor from std::string_view
+         */
+        explicit inline_zstring(std::string_view s)
+            : inline_zstring(s.data(), s.size()) {
+        }
+
+        /**
          * Explicit constructor from const char* (null-terminated).
          */
         explicit inline_zstring(const char* s) : inline_zstring(s, strlen(s)) {
