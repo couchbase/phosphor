@@ -315,6 +315,18 @@
  *     // Thread 2
  *     TRACE_ASYNC_END0('Memcached:Frontend', 'EWOULDBLOCK', 123)
  *
+ * There is also support for explicitly specifying the start and end
+ * times of async events (instead of using clock::now() when the macro is
+ * invoked), for example if it's not possible to emit the phosphor event when
+ * the async event actually stats / ends:
+ *
+ *     TRACE_ASYNC_COMPLETE1("executor/finest",
+ *                           "GlobalTask::execute::scheduleOverhead",
+ *                           this,
+ *                           scheduledFor,
+ *                           executedAt,
+ *                           "task",
+ *                           getTaskName(taskId));
  * @{
  */
 #define TRACE_ASYNC_START0(category, name, id)  \
@@ -352,6 +364,57 @@
         id, \
         arg1_name, \
         arg1)
+
+#define TRACE_ASYNC_COMPLETE2(                                               \
+        category, name, id, start, end, arg1_name, arg1, arg2_name, arg2)    \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_async_start,                        \
+                                     category,                               \
+                                     name,                                   \
+                                     phosphor::TraceEvent::Type::AsyncStart, \
+                                     "id",                                   \
+                                     void*,                                  \
+                                     arg1_name,                              \
+                                     decltype(arg1));                        \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_async_end,                          \
+                                     category,                               \
+                                     name,                                   \
+                                     phosphor::TraceEvent::Type::AsyncEnd,   \
+                                     "id_end",                               \
+                                     void*,                                  \
+                                     arg2_name,                              \
+                                     decltype(arg2));                        \
+    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                  \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)                         \
+                ->load(std::memory_order_acquire) !=                         \
+        phosphor::CategoryStatus::Disabled) {                                \
+        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi_async_start),  \
+                                   start,                                    \
+                                   {},                                       \
+                                   id,                                       \
+                                   arg1);                                    \
+        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi_async_end),    \
+                                   end,                                      \
+                                   {},                                       \
+                                   id,                                       \
+                                   arg2);                                    \
+    }
+
+#define TRACE_ASYNC_COMPLETE1(category, name, id, start, end, arg1_name, arg1) \
+    TRACE_ASYNC_COMPLETE2(category,                                            \
+                          name,                                                \
+                          id,                                                  \
+                          start,                                               \
+                          end,                                                 \
+                          arg1_name,                                           \
+                          arg1,                                                \
+                          {},                                                  \
+                          phosphor::NoneType())
+
+#define TRACE_ASYNC_COMPLETE0(category, name, id, start, end) \
+    TRACE_ASYNC_COMPLETE1(                                    \
+            category, name, id, start, end, {}, phosphor::NoneType())
+
 /** @} */
 
 /**

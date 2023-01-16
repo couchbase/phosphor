@@ -13,6 +13,7 @@
 
 #include "phosphor/platform/thread.h"
 #include "utils/string_utils.h"
+#include <cinttypes>
 
 namespace phosphor {
 
@@ -165,12 +166,12 @@ namespace phosphor {
         case Type::AsyncStart:
             res.type = "b";
             res.extras =
-                utils::format_string(",\"id\": \"0x%X\"", args[0].as_int);
+                utils::format_string(",\"id\": \"0x%" PRIxPTR "\"", args[0].as_pointer);
             return res;
         case Type::AsyncEnd:
             res.type = "e";
             res.extras =
-                utils::format_string(",\"id\": \"0x%X\"", args[0].as_int);
+                utils::format_string(",\"id\": \"0x%" PRIxPTR "\"", args[0].as_pointer);
             return res;
         case Type::SyncStart:
             res.type = "B";

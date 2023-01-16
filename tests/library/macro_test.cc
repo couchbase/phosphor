@@ -323,6 +323,86 @@ TEST_F(MacroTraceEventTest, Complete) {
     });
 }
 
+TEST_F(MacroTraceEventTest, AsyncComplete0) {
+    void* id = this;
+    const auto start = std::chrono::steady_clock::now();
+    const auto end = start + std::chrono::microseconds(1);
+
+    // Async "complete" events are actually encoded as a pair of
+    // start & end events as Google Trace format doesn't support a single
+    // event for async events, so we have two events to add to verifications.
+    TRACE_ASYNC_COMPLETE0("category", "name", id, start, end);
+    verifications.emplace_back([=](const auto& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(start.time_since_epoch().count(), event.getTime());
+        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncStart, event.getType());
+        EXPECT_STREQ("id", event.getArgNames()[0]);
+        EXPECT_EQ(id, event.getArgs()[0].as_pointer);
+    });
+    verifications.emplace_back([=](const auto& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(end.time_since_epoch().count(), event.getTime());
+        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncEnd, event.getType());
+    });
+}
+
+TEST_F(MacroTraceEventTest, AsyncComplete1) {
+    void* id = this;
+    const auto start = std::chrono::steady_clock::now();
+    const auto end = start + std::chrono::microseconds(2);
+
+    TRACE_ASYNC_COMPLETE1("category", "name", id, start, end, "my_arg1", 3);
+    verifications.emplace_back([=](const auto& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(start.time_since_epoch().count(), event.getTime());
+        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncStart, event.getType());
+        EXPECT_STREQ("id", event.getArgNames()[0]);
+        EXPECT_EQ(id, event.getArgs()[0].as_pointer);
+        EXPECT_STREQ("my_arg1", event.getArgNames()[1]);
+        EXPECT_EQ(3, event.getArgs()[1].as_int);
+    });
+    verifications.emplace_back([=](const auto& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(end.time_since_epoch().count(), event.getTime());
+        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncEnd, event.getType());
+        EXPECT_STREQ("id_end", event.getArgNames()[0]);
+        EXPECT_EQ(id, event.getArgs()[0].as_pointer);
+    });
+}
+
+TEST_F(MacroTraceEventTest, AsyncComplete2) {
+    int variable = 4;
+    void* id = this;
+    const auto start = std::chrono::steady_clock::now();
+    const auto end = start + std::chrono::microseconds(3);
+    TRACE_ASYNC_COMPLETE2(
+            "category", "name", id, start, end, "my_arg1", 3, "my_arg2", variable);
+    verifications.emplace_back([=](const auto& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(start.time_since_epoch().count(), event.getTime());
+        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncStart, event.getType());
+        EXPECT_STREQ("id", event.getArgNames()[0]);
+        EXPECT_EQ(id, event.getArgs()[0].as_pointer);
+        EXPECT_STREQ("my_arg1", event.getArgNames()[1]);
+        EXPECT_EQ(3, event.getArgs()[1].as_int);
+    });
+    verifications.emplace_back([=](const auto& event) {
+        EXPECT_STREQ("name", event.getName());
+        EXPECT_STREQ("category", event.getCategory());
+        EXPECT_EQ(end.time_since_epoch().count(), event.getTime());
+        EXPECT_EQ(phosphor::TraceEvent::Type::AsyncEnd, event.getType());
+        EXPECT_STREQ("id_end", event.getArgNames()[0]);
+        EXPECT_EQ(id, event.getArgs()[0].as_pointer);
+        EXPECT_STREQ("my_arg2", event.getArgNames()[1]);
+        EXPECT_EQ(4, event.getArgs()[1].as_int);
+    });
+}
+
 TEST_F(MacroTraceEventTest, InlineString) {
     TRACE_INSTANT1("category", "name", "arg", PHOSPHOR_INLINE_STR("Hello, World!"));
     verifications.emplace_back([](const phosphor::TraceEvent& event) {
