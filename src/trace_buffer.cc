@@ -204,7 +204,7 @@ namespace phosphor {
         ~RingTraceBuffer() override = default;
 
         TraceChunk* getChunk() override {
-            TraceChunk* chunk = reinterpret_cast<TraceChunk*>(0xDEADB33F);
+            TraceChunk* chunk = nullptr;
 
             auto offset = actual_count++;
 
