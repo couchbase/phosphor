@@ -33,7 +33,7 @@ namespace phosphor {
      * has been registered as it requires resources allocated
      * that are only referred to from thread-local storage.
      */
-    THREAD_LOCAL ChunkTenant thread_chunk;
+    thread_local ChunkTenant thread_chunk;
 
     TraceLog::TraceLog(const TraceLogConfig& _config)
         : enabled(false), generation(0) {
