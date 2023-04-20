@@ -15,16 +15,6 @@
 
 #include "core.h"
 
-#if __APPLE__
-/*
- * Apple's clang is awkward and disables thread_local keyword support
- * @todo Fixed in XCode 8 (MacOS 10.11.5 / 10.12 or later)
- */
-#define THREAD_LOCAL __thread
-#else
-#define THREAD_LOCAL thread_local
-#endif
-
 namespace phosphor {
     namespace platform {
 
@@ -66,7 +56,7 @@ namespace phosphor {
          * @return thread id for the calling thread
          */
         inline uint32_t getCurrentThreadIDCached() {
-            static THREAD_LOCAL uint32_t thread_id;
+            static thread_local uint32_t thread_id;
 
             if (unlikely(!thread_id)) {
                 thread_id = getCurrentThreadID();

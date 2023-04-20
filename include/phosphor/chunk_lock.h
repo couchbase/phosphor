@@ -195,11 +195,4 @@ struct PHOSPHOR_API ChunkTenant {
      */
     bool initialised;
 };
-
-// @todo Remove requirement when moving to XCode 8 (10.11.5 / 10.12 or later)
-#if defined(__APPLE__)
-static_assert(std::is_trivially_constructible<ChunkTenant>::value,
-              "ChunkTenant must be trivially constructible as MacOS"
-              "only supports trivially constructible thread_locals");
-#endif
 }
