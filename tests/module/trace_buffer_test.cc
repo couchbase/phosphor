@@ -385,28 +385,26 @@ TEST_P(UnFillableTraceBufferTest, StatsTest) {
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    BuiltIn,
-    TraceBufferTest,
-    testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
-                                               "FixedBuffer"),
-                    TraceBufferTest::ParamType(make_ring_buffer, "RingBuffer")),
-    [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
-        return info.param.second;
-    });
+        BuiltIn,
+        TraceBufferTest,
+        testing::Values(
+                TraceBufferTest::ParamType(make_fixed_buffer, "FixedBuffer"),
+                TraceBufferTest::ParamType(make_ring_buffer, "RingBuffer")),
+        [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>&
+                   testInfo) { return testInfo.param.second; });
 
 INSTANTIATE_TEST_SUITE_P(
-    BuiltIn,
-    FillableTraceBufferTest,
-    testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
-                                               "FixedBuffer")),
-    [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
-        return info.param.second;
-    });
+        BuiltIn,
+        FillableTraceBufferTest,
+        testing::Values(TraceBufferTest::ParamType(make_fixed_buffer,
+                                                   "FixedBuffer")),
+        [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>&
+                   testInfo) { return testInfo.param.second; });
 
 INSTANTIATE_TEST_SUITE_P(
-    BuiltIn,
-    UnFillableTraceBufferTest,
-    testing::Values(TraceBufferTest::ParamType(make_ring_buffer, "RingBuffer")),
-    [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>& info) {
-        return info.param.second;
-    });
+        BuiltIn,
+        UnFillableTraceBufferTest,
+        testing::Values(TraceBufferTest::ParamType(make_ring_buffer,
+                                                   "RingBuffer")),
+        [](const ::testing::TestParamInfo<TraceBufferTest::ParamType>&
+                   testInfo) { return testInfo.param.second; });
