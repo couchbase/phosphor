@@ -244,18 +244,17 @@ namespace phosphor {
 
     void TraceLog::getStats(StatsCallback& addStats) const {
         std::lock_guard<std::mutex> lh(mutex);
-        using gsl_p::make_span;
-
+        using namespace std::string_view_literals;
         registry.getStats(addStats);
         if (buffer) {
             buffer->getStats(addStats);
         }
 
-        addStats("log_is_enabled", isEnabled());
-        addStats("log_has_buffer", buffer != nullptr);
-        addStats("log_thread_names", thread_names.size());
-        addStats("log_deregistered_threads", deregistered_threads.size());
-        addStats("log_registered_tenants", registered_chunk_tenants.size());
+        addStats("log_is_enabled"sv, isEnabled());
+        addStats("log_has_buffer"sv, buffer != nullptr);
+        addStats("log_thread_names"sv, thread_names.size());
+        addStats("log_deregistered_threads"sv, deregistered_threads.size());
+        addStats("log_registered_tenants"sv, registered_chunk_tenants.size());
     }
 
     std::unique_lock<ChunkTenant> TraceLog::getChunkTenant() {

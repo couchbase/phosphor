@@ -201,7 +201,7 @@ namespace phosphor {
          *
          * Implementations MUST supply the following stats as minimum:
          *
-         * - buffer_name <cstring_span>: Textual representation of buffer type
+         * - buffer_name <string_view>: Textual representation of buffer type
          * - buffer_is_full <bool>: True if the buffer is full
          * - buffer_chunk_count <size_t>: Chunks that are returned or loaned
          * - buffer_loaned_chunks <size_t>: Currently loaned chunks

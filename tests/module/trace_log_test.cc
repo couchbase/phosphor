@@ -459,34 +459,33 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
 }
 
 TEST_F(TraceLogTest, StatsTest) {
+    using namespace std::string_view_literals;
     using namespace testing;
 
     NiceMock<MockStatsCallback> callback;
 
-    EXPECT_CALL(callback, callB(gsl_p::make_span("log_has_buffer"), false));
-    EXPECT_CALL(callback, callB(gsl_p::make_span("log_is_enabled"), false));
+    EXPECT_CALL(callback, callB("log_has_buffer"sv, false));
+    EXPECT_CALL(callback, callB("log_is_enabled"sv, false));
 
     // we don't register/deregister any threads in this test so both should be 0
-    EXPECT_CALL(callback,
-                callU(gsl_p::make_span("log_thread_names"), 0));
-    EXPECT_CALL(callback,
-                callU(gsl_p::make_span("log_deregistered_threads"), 0));
+    EXPECT_CALL(callback, callU("log_thread_names"sv, 0));
+    EXPECT_CALL(callback, callU("log_deregistered_threads"sv, 0));
 
     // this is just the amount of groups the registry starts with by default
-    EXPECT_CALL(callback, callU(gsl_p::make_span("registry_group_count"), 3));
+    EXPECT_CALL(callback, callU("registry_group_count"sv, 3));
 
     // PITA to check for correct values here so just make sure they exist
-    EXPECT_CALL(callback, callU(gsl_p::make_span("log_registered_tenants"), _));
+    EXPECT_CALL(callback, callU("log_registered_tenants"sv, _));
     trace_log.getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 
     start_basic();
     callback.expectAny();
-    EXPECT_CALL(callback, callB(gsl_p::make_span("log_has_buffer"), true));
-    EXPECT_CALL(callback, callB(gsl_p::make_span("log_is_enabled"), true));
+    EXPECT_CALL(callback, callB("log_has_buffer"sv, true));
+    EXPECT_CALL(callback, callB("log_is_enabled"sv, true));
 
     // Check that we have at least one of the buffer stats
-    EXPECT_CALL(callback, callS(gsl_p::make_span("buffer_name"), _));
+    EXPECT_CALL(callback, callS("buffer_name"sv, _));
     trace_log.getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 }

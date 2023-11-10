@@ -20,26 +20,25 @@ class MockStatsCallback : public phosphor::StatsCallback {
 public:
     // Giving mockable names, also not overloading
     // as it makes it easier to add expectations
-    MOCK_CONST_METHOD2(callS, void(gsl_p::cstring_span, gsl_p::cstring_span));
-    MOCK_CONST_METHOD2(callB, void(gsl_p::cstring_span, bool));
-    MOCK_CONST_METHOD2(callU, void(gsl_p::cstring_span, size_t));
-    MOCK_CONST_METHOD2(callI, void(gsl_p::cstring_span, phosphor::ssize_t));
-    MOCK_CONST_METHOD2(callD, void(gsl_p::cstring_span, double));
+    MOCK_CONST_METHOD2(callS, void(std::string_view, std::string_view));
+    MOCK_CONST_METHOD2(callB, void(std::string_view, bool));
+    MOCK_CONST_METHOD2(callU, void(std::string_view, size_t));
+    MOCK_CONST_METHOD2(callI, void(std::string_view, phosphor::ssize_t));
+    MOCK_CONST_METHOD2(callD, void(std::string_view, double));
 
-    virtual void operator()(gsl_p::cstring_span key,
-                            gsl_p::cstring_span value) {
+    void operator()(std::string_view key, std::string_view value) override {
         callS(key, value);
     }
-    virtual void operator()(gsl_p::cstring_span key, bool value) {
+    void operator()(std::string_view key, bool value) override {
         callB(key, value);
     }
-    virtual void operator()(gsl_p::cstring_span key, size_t value) {
+    void operator()(std::string_view key, size_t value) override {
         callU(key, value);
     }
-    virtual void operator()(gsl_p::cstring_span key, phosphor::ssize_t value) {
+    void operator()(std::string_view key, phosphor::ssize_t value) override {
         callI(key, value);
     }
-    virtual void operator()(gsl_p::cstring_span key, double value) {
+    void operator()(std::string_view key, double value) override {
         callD(key, value);
     }
 
