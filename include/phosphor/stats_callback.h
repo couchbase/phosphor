@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include <gsl_p/span.h>
+#include <string_view>
 
 namespace phosphor {
 
@@ -38,23 +38,12 @@ namespace phosphor {
  */
 class StatsCallback {
 public:
-    /**
-     * Utility template method for passing a string literal as the first
-     * argument instead of a string span
-     * @param s String to convert to a span
-     * @param value Value to forward
-     */
-    template <size_t N, typename T>
-    void operator()(const char (&s)[N], T&& value) {
-        this->operator()(gsl_p::make_span(s), std::forward<T>(value));
-    }
-
-    virtual void operator()(gsl_p::cstring_span key,
-                            gsl_p::cstring_span value) = 0;
-    virtual void operator()(gsl_p::cstring_span key, bool value) = 0;
-    virtual void operator()(gsl_p::cstring_span key, size_t value) = 0;
-    virtual void operator()(gsl_p::cstring_span key, ssize_t value) = 0;
-    virtual void operator()(gsl_p::cstring_span key, double value) = 0;
+    virtual ~StatsCallback() = default;
+    virtual void operator()(std::string_view key, std::string_view value) = 0;
+    virtual void operator()(std::string_view key, bool value) = 0;
+    virtual void operator()(std::string_view key, size_t value) = 0;
+    virtual void operator()(std::string_view key, ssize_t value) = 0;
+    virtual void operator()(std::string_view key, double value) = 0;
 };
 
 }

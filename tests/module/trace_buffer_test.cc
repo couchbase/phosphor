@@ -244,6 +244,7 @@ TEST_P(FillableTraceBufferTest, GetChunk) {
 }
 
 TEST_P(FillableTraceBufferTest, StatsTest) {
+    using namespace std::string_view_literals;
     using namespace testing;
 
     make_buffer(1);
@@ -251,15 +252,13 @@ TEST_P(FillableTraceBufferTest, StatsTest) {
 
     // Minimum set of stats any impl needs
     callback.expectAny();
-    EXPECT_CALL(callback, callS(gsl_p::make_span("buffer_name"), _));
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), false));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 0));
-    EXPECT_CALL(callback,
-                callU(gsl_p::make_span("buffer_total_loaned"), 0));
-    EXPECT_CALL(callback,
-                callU(gsl_p::make_span("buffer_loaned_chunks"), 0));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_size"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_generation"), 0));
+    EXPECT_CALL(callback, callS("buffer_name"sv, _));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, false));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 0));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 0));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 0));
+    EXPECT_CALL(callback, callU("buffer_size"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_generation"sv, 0));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 
@@ -267,20 +266,20 @@ TEST_P(FillableTraceBufferTest, StatsTest) {
     ASSERT_NE(nullptr, chunk);
     // Just the stats we need to check again
     callback.expectAny();
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), true));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_total_loaned"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_loaned_chunks"), 1));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, true));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 1));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 
     buffer->returnChunk(*chunk);
     // Just the stats we need to check again
     callback.expectAny();
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), true));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_total_loaned"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_loaned_chunks"), 0));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, true));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 0));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 
@@ -288,10 +287,10 @@ TEST_P(FillableTraceBufferTest, StatsTest) {
     EXPECT_EQ(nullptr, chunk);
     // Just the stats we need to check again
     callback.expectAny();
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), true));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_total_loaned"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_loaned_chunks"), 0));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, true));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 0));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 }
@@ -332,6 +331,7 @@ TEST_P(UnFillableTraceBufferTest, CorrectCount) {
 }
 
 TEST_P(UnFillableTraceBufferTest, StatsTest) {
+    using namespace std::string_view_literals;
     using namespace testing;
 
     make_buffer(1);
@@ -339,15 +339,13 @@ TEST_P(UnFillableTraceBufferTest, StatsTest) {
 
     // Minimum set of stats any impl needs
     callback.expectAny();
-    EXPECT_CALL(callback, callS(gsl_p::make_span("buffer_name"), _));
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), false));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 0));
-    EXPECT_CALL(callback,
-                callU(gsl_p::make_span("buffer_total_loaned"), 0));
-    EXPECT_CALL(callback,
-                callU(gsl_p::make_span("buffer_loaned_chunks"), 0));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_size"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_generation"), 0));
+    EXPECT_CALL(callback, callS("buffer_name"sv, _));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, false));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 0));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 0));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 0));
+    EXPECT_CALL(callback, callU("buffer_size"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_generation"sv, 0));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 
@@ -355,20 +353,20 @@ TEST_P(UnFillableTraceBufferTest, StatsTest) {
     ASSERT_NE(nullptr, chunk);
     // Just the stats we need to check again
     callback.expectAny();
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), false));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_total_loaned"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_loaned_chunks"), 1));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, false));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 1));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 
     buffer->returnChunk(*chunk);
     // Just the stats we need to check again
     callback.expectAny();
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), false));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_total_loaned"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_loaned_chunks"), 0));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, false));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 0));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 
@@ -376,10 +374,10 @@ TEST_P(UnFillableTraceBufferTest, StatsTest) {
     ASSERT_NE(nullptr, chunk);
     // Just the stats we need to check again
     callback.expectAny();
-    EXPECT_CALL(callback, callB(gsl_p::make_span("buffer_is_full"), false));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_chunk_count"), 1));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_total_loaned"), 2));
-    EXPECT_CALL(callback, callU(gsl_p::make_span("buffer_loaned_chunks"), 1));
+    EXPECT_CALL(callback, callB("buffer_is_full"sv, false));
+    EXPECT_CALL(callback, callU("buffer_chunk_count"sv, 1));
+    EXPECT_CALL(callback, callU("buffer_total_loaned"sv, 2));
+    EXPECT_CALL(callback, callU("buffer_loaned_chunks"sv, 1));
     buffer->getStats(callback);
     Mock::VerifyAndClearExpectations(&callback);
 }

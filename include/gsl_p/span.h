@@ -70,32 +70,4 @@ template <class CharT>
 bool operator==(span<CharT> lhs, span<CharT> rhs) {
     return lhs.compare(rhs) == 0;
 }
-
-/**
- * Creates a span from a reference to a C-Array
- * @tparam T Underlying type of array
- * @param s Reference to array
- * @return span of the array
- */
-template <typename T, size_t N>
-constexpr span<T> make_span(T (&s)[N]) {
-    return {s, N};
-}
-
-/**
- * Specialisation of make_span for string literals (removes null byte)
- * @param s Reference to string literal
- * @return span of the string literal
- */
-template <size_t N>
-constexpr span<const char> make_span(const char (&s)[N]) {
-    return {s, N - 1};
-}
-
-using string_span = span<char>;
-using cstring_span = span<const char>;
-
-inline std::ostream& operator<<(std::ostream& os, const gsl_p::cstring_span& s) {
-    return os.write(s.data(), s.size());
-}
 }

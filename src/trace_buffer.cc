@@ -129,16 +129,15 @@ namespace phosphor {
         }
 
         void getStats(StatsCallback& addStats) const override {
-            using gsl_p::make_span;
-
-            addStats("buffer_name", make_span("FixedTraceBuffer"));
-            addStats("buffer_is_full", isFull());
+            using namespace std::string_view_literals;
+            addStats("buffer_name"sv, "FixedTraceBuffer"sv);
+            addStats("buffer_is_full"sv, isFull());
             auto count = chunk_count();
-            addStats("buffer_chunk_count", count);
-            addStats("buffer_total_loaned", count);
-            addStats("buffer_loaned_chunks", on_loan);
-            addStats("buffer_size", buffer.size());
-            addStats("buffer_generation", generation);
+            addStats("buffer_chunk_count"sv, count);
+            addStats("buffer_total_loaned"sv, count);
+            addStats("buffer_loaned_chunks"sv, on_loan);
+            addStats("buffer_size"sv, buffer.size());
+            addStats("buffer_generation"sv, generation);
         }
 
         size_t getGeneration() const override {
@@ -233,17 +232,16 @@ namespace phosphor {
         }
 
         void getStats(StatsCallback& addStats) const override {
-            using gsl_p::make_span;
-
-            addStats("buffer_name", make_span("RingTraceBuffer"));
-            addStats("buffer_is_full", isFull());
-            addStats("buffer_chunk_count",
+            using namespace std::string_view_literals;
+            addStats("buffer_name"sv, "RingTraceBuffer"sv);
+            addStats("buffer_is_full"sv, isFull());
+            addStats("buffer_chunk_count"sv,
                      std::min(actual_count.load(std::memory_order_relaxed),
                               buffer.size()));
-            addStats("buffer_total_loaned", actual_count);
-            addStats("buffer_loaned_chunks", on_loan);
-            addStats("buffer_size", buffer.size());
-            addStats("buffer_generation", generation);
+            addStats("buffer_total_loaned"sv, actual_count);
+            addStats("buffer_loaned_chunks"sv, on_loan);
+            addStats("buffer_size"sv, buffer.size());
+            addStats("buffer_generation"sv, generation);
         }
 
         size_t getGeneration() const override {
