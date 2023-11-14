@@ -44,6 +44,7 @@ SET(phosphor_SOURCE_FILES
 ADD_LIBRARY(phosphor STATIC
         ${phosphor_HEADER_FILES}
         ${phosphor_SOURCE_FILES})
+cb_enable_unity_build(phosphor)
 
 TARGET_INCLUDE_DIRECTORIES(phosphor PUBLIC ${phosphor_SOURCE_DIR}/include)
 
@@ -57,6 +58,7 @@ IF(CB_SANITIZERS)
   ADD_LIBRARY(phosphor_unsanitized STATIC
     ${phosphor_HEADER_FILES}
     ${phosphor_SOURCE_FILES})
+  cb_enable_unity_build(phosphor_unsanitized)
   REMOVE_SANITIZERS(phosphor_unsanitized)
 
   TARGET_INCLUDE_DIRECTORIES(phosphor_unsanitized PUBLIC ${phosphor_SOURCE_DIR}/include)
