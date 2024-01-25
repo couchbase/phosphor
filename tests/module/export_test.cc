@@ -80,16 +80,14 @@ TEST_F(ExportTest, fulltest) {
     JSONExport exporter(context);
     auto p = exporter.read();
     EXPECT_TRUE(exporter.done());
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ('}', p.back());
 }
 
 TEST_F(ExportTest, SingleEvent) {
     addOneToContextBuffer();
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ('}', p.back());
     EXPECT_EQ("", exporter.read(4096));
 }
 
@@ -98,8 +96,7 @@ TEST_F(ExportTest, SingleThreadFullBuffer) {
     fillContextBuffer();
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ('}', p.back());
     EXPECT_EQ("", exporter.read(4096));
 }
 
@@ -108,8 +105,7 @@ TEST_F(ExportTest, LotsOfThreadsFullBuffer) {
     fillContextBuffer();
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ('}', p.back());
     EXPECT_EQ("", exporter.read(4096));
 }
 
@@ -117,8 +113,7 @@ TEST_F(ExportTest, LotsOfThreadsEmptyBuffer) {
     addThreadsToContext(100);
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', p[p.size() - 2]);
-    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ('}', p.back());
     EXPECT_EQ("", exporter.read(4096));
 }
 
