@@ -67,8 +67,7 @@ BENCHMARK_DEFINE_F(CategoryOnOffBench, LockguardTimedFast)
     // Mutex per thread; so uncontended test.
     std::mutex mutex;
     while (state.KeepRunning()) {
-        TRACE_LOCKGUARD_TIMED(
-                mutex, "cat_1", "name", std::chrono::seconds(10));
+        TRACE_LOCKGUARD_TIMED(mutex, "cat_1", "name", std::chrono::seconds(10));
     }
 }
 BENCHMARK_REGISTER_F(CategoryOnOffBench, LockguardTimedFast)->Arg(true);

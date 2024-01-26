@@ -15,9 +15,9 @@
 
 #include <gtest/gtest.h>
 
+using phosphor::inline_zstring;
 using phosphor::TraceArgument;
 using phosphor::TraceArgumentConversion;
-using phosphor::inline_zstring;
 
 // Opaque forward decl for checking pointer partial specialization
 class Opaque;
@@ -67,36 +67,36 @@ TEST(TraceArgument, enum_conversions) {
 
 template <class T>
 std::string inner_to_string_test(T src) {
-    return TraceArgumentConversion<T>::asArgument(src)
-            .to_string(TraceArgumentConversion<T>::getType());
+    return TraceArgumentConversion<T>::asArgument(src).to_string(
+            TraceArgumentConversion<T>::getType());
 }
 
 TEST(TraceArgument, to_string) {
     EXPECT_EQ(inner_to_string_test(true), "true");
     EXPECT_EQ(inner_to_string_test(false), "false");
 
-    EXPECT_EQ(inner_to_string_test(3), "3");    // Signed positive int
-    EXPECT_EQ(inner_to_string_test(-3), "-3");  // Signed negative int
+    EXPECT_EQ(inner_to_string_test(3), "3"); // Signed positive int
+    EXPECT_EQ(inner_to_string_test(-3), "-3"); // Signed negative int
 
-    EXPECT_EQ(inner_to_string_test(3u), "3");  // Unsigned int
+    EXPECT_EQ(inner_to_string_test(3u), "3"); // Unsigned int
 
-    EXPECT_EQ(inner_to_string_test(3.0), "3.000000");  // Double
+    EXPECT_EQ(inner_to_string_test(3.0), "3.000000"); // Double
 
     std::stringstream pointer_val;
     pointer_val << reinterpret_cast<const Opaque*>(0xFF);
     EXPECT_EQ(inner_to_string_test(reinterpret_cast<const Opaque*>(0xFF)),
-              "\"" + pointer_val.str() + "\"");  // Pointer
+              "\"" + pointer_val.str() + "\""); // Pointer
     EXPECT_EQ(inner_to_string_test("Hello, World"),
-              "\"Hello, World\"");  // Pointer
+              "\"Hello, World\""); // Pointer
 
     EXPECT_EQ(inner_to_string_test(inline_zstring<8>("Hello, World!")),
-              "\"Hello, W\"");  // Pointer
+              "\"Hello, W\""); // Pointer
 
     EXPECT_EQ(TraceArgument().to_string(TraceArgument::Type::is_none),
               "\"Type::is_none\"");
 
     // This is *extremely* naughty and shouldn't need checking
     EXPECT_THROW(
-        TraceArgument().to_string(static_cast<TraceArgument::Type>(0xFF)),
-        std::invalid_argument);
+            TraceArgument().to_string(static_cast<TraceArgument::Type>(0xFF)),
+            std::invalid_argument);
 }

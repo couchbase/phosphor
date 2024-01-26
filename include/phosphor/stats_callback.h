@@ -46,4 +46,4 @@ public:
     virtual void operator()(std::string_view key, double value) = 0;
 };
 
-}
+} // namespace phosphor

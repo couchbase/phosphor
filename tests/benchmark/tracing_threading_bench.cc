@@ -17,13 +17,12 @@
 
 using phosphor::utils::make_unique;
 
-phosphor::tracepoint_info tpi = {
-    "category",
-    "name",
-    phosphor::TraceEvent::Type::Instant,
-    {{"arg1", "arg2"}},
-    {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_none}}
-};
+phosphor::tracepoint_info tpi = {"category",
+                                 "name",
+                                 phosphor::TraceEvent::Type::Instant,
+                                 {{"arg1", "arg2"}},
+                                 {{phosphor::TraceArgument::Type::is_int,
+                                   phosphor::TraceArgument::Type::is_none}}};
 
 void RegisterThread(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
@@ -34,8 +33,7 @@ void RegisterThread(benchmark::State& state) {
     }
     log.registerThread();
     while (state.KeepRunning()) {
-        log.logEvent(
-            &tpi, 0, phosphor::NoneType());
+        log.logEvent(&tpi, 0, phosphor::NoneType());
     }
     log.deregisterThread();
     if (state.thread_index() == 0) {

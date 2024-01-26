@@ -16,34 +16,34 @@
 
 namespace phosphor {
 
-    namespace utils {
-        /**
-         * C++11 polyfill for C++14's std::make_unique
-         */
-        template <typename T, typename... Args>
-        std::unique_ptr<T> make_unique(Args&&... args) {
-            return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-        }
-
-        /**
-         * unique_ptr compatible deleter for make_unique_FILE which closes
-         * a file when it goes out of scope.
-         */
-        struct FILEDeleter {
-            void operator()(FILE* ptr) const {
-                std::fclose(ptr);
-            }
-        };
-
-        /**
-         * Alias for a unique_ptr for a FILE* handle
-         */
-        using unique_FILE = std::unique_ptr<FILE, FILEDeleter>;
-
-        /**
-         * make_unique equivalant for a FILE* that will ensure the file is
-         * closed properly when the unique_ptr goes out of scope.
-         */
-        unique_FILE make_unique_FILE(const char* filename, const char* flags);
-    }
+namespace utils {
+/**
+ * C++11 polyfill for C++14's std::make_unique
+ */
+template <typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args&&... args) {
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
+
+/**
+ * unique_ptr compatible deleter for make_unique_FILE which closes
+ * a file when it goes out of scope.
+ */
+struct FILEDeleter {
+    void operator()(FILE* ptr) const {
+        std::fclose(ptr);
+    }
+};
+
+/**
+ * Alias for a unique_ptr for a FILE* handle
+ */
+using unique_FILE = std::unique_ptr<FILE, FILEDeleter>;
+
+/**
+ * make_unique equivalant for a FILE* that will ensure the file is
+ * closed properly when the unique_ptr goes out of scope.
+ */
+unique_FILE make_unique_FILE(const char* filename, const char* flags);
+} // namespace utils
+} // namespace phosphor

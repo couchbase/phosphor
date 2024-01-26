@@ -19,68 +19,67 @@
 
 namespace phosphor {
 
-    // Forward declare
-    class TraceBuffer;
+// Forward declare
+class TraceBuffer;
+
+/**
+ * TraceContext is an object which encapsulates all information
+ * and metadata surrounding a trace that might be required to
+ * perform an export.
+ *
+ * The TraceContext enforces movement semantics as it contains
+ * a std::unique_ptr
+ */
+class PHOSPHOR_API TraceContext {
+public:
+    using ThreadNamesMap = std::unordered_map<uint64_t, std::string>;
+
+    ~TraceContext();
+
+    TraceContext(std::unique_ptr<TraceBuffer>&& buffer);
+
+    TraceContext(std::unique_ptr<TraceBuffer>&& buffer,
+                 const ThreadNamesMap& _thread_names);
+
+    TraceContext(TraceContext&& other);
+
+    TraceContext& operator=(TraceContext&& other);
+
+    const TraceBuffer* getBuffer() const {
+        return trace_buffer.get();
+    }
 
     /**
-     * TraceContext is an object which encapsulates all information
-     * and metadata surrounding a trace that might be required to
-     * perform an export.
-     *
-     * The TraceContext enforces movement semantics as it contains
-     * a std::unique_ptr
+     * Return a pointer to the trace buffer for this context.
      */
-    class PHOSPHOR_API TraceContext{
-    public:
-        using ThreadNamesMap = std::unordered_map<uint64_t, std::string>;
+    TraceBuffer* getBuffer() {
+        return trace_buffer.get();
+    }
 
-        ~TraceContext();
+    /**
+     * Return the map of thread IDs -> names
+     */
+    const ThreadNamesMap& getThreadNames() const {
+        return thread_names;
+    }
 
-        TraceContext(std::unique_ptr<TraceBuffer>&& buffer);
+protected:
+    /**
+     * Add an element to the thread name map.
+     */
+    void addThreadName(uint64_t id, const std::string& name);
 
-        TraceContext(std::unique_ptr<TraceBuffer>&& buffer,
-                     const ThreadNamesMap& _thread_names);
+private:
+    /**
+     * The trace buffer from the trace
+     */
+    std::unique_ptr<TraceBuffer> trace_buffer;
 
-        TraceContext(TraceContext&& other);
+    /**
+     * A mapping of thread ids to thread names for all threads that
+     * were registered at any point when the trace was being conducted.
+     */
+    ThreadNamesMap thread_names;
+};
 
-        TraceContext& operator=(TraceContext&& other);
-
-        const TraceBuffer* getBuffer() const {
-            return trace_buffer.get();
-        }
-
-        /**
-         * Return a pointer to the trace buffer for this context.
-         */
-        TraceBuffer* getBuffer() {
-            return trace_buffer.get();
-        }
-
-        /**
-         * Return the map of thread IDs -> names
-         */
-        const ThreadNamesMap& getThreadNames() const {
-            return thread_names;
-        }
-
-    protected:
-
-        /**
-         * Add an element to the thread name map.
-         */
-        void addThreadName(uint64_t id, const std::string& name);
-
-    private:
-        /**
-         * The trace buffer from the trace
-         */
-        std::unique_ptr<TraceBuffer> trace_buffer;
-
-        /**
-        * A mapping of thread ids to thread names for all threads that
-        * were registered at any point when the trace was being conducted.
-        */
-        ThreadNamesMap thread_names;
-    };
-
-}
+} // namespace phosphor

@@ -23,4 +23,3 @@ namespace phosphor {
 int benchNumThreads();
 
 } // namespace phosphor
-

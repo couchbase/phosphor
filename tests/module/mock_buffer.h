@@ -9,8 +9,8 @@
  *   the file licenses/APL2.txt.
  */
 
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include <phosphor/stats_callback.h>
 #include <phosphor/trace_buffer.h>

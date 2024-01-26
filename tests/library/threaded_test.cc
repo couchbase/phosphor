@@ -18,17 +18,18 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <phosphor/trace_log.h>
 #include "barrier.h"
 #include "utils/memory.h"
+#include <phosphor/trace_log.h>
 
 class ThreadedTest : public ::testing::Test {
 public:
-    ThreadedTest()
-        : running(false) {
+    ThreadedTest() : running(false) {
     }
 
-    void startWorkload(size_t thread_count, phosphor::TraceLog& traceLog, std::function<void()> workload) {
+    void startWorkload(size_t thread_count,
+                       phosphor::TraceLog& traceLog,
+                       std::function<void()> workload) {
         ASSERT_FALSE(running);
         running = true;
 
@@ -39,7 +40,7 @@ public:
                 traceLog.registerThread();
                 do {
                     workload();
-                } while(running);
+                } while (running);
                 traceLog.deregisterThread();
             });
         }
@@ -50,33 +51,30 @@ public:
         ASSERT_TRUE(running);
 
         running = false;
-        for(auto& thread : threads) {
+        for (auto& thread : threads) {
             thread.join();
         }
     }
+
 private:
     std::vector<std::thread> threads;
     std::atomic<bool> running;
 
     Barrier barrier;
-
-
 };
 
 TEST_F(ThreadedTest, ThreadedStop) {
     const phosphor::tracepoint_info tpi = {
-        "category",
-        "name",
-        phosphor::TraceEvent::Type::Instant,
-        {{"arg1", "arg2"}},
-        {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_int}}
-    };
+            "category",
+            "name",
+            phosphor::TraceEvent::Type::Instant,
+            {{"arg1", "arg2"}},
+            {{phosphor::TraceArgument::Type::is_int,
+              phosphor::TraceArgument::Type::is_int}}};
 
     phosphor::TraceLog log;
 
-    startWorkload(4, log, [&log, &tpi]() {
-        log.logEvent(&tpi, 0, 0);
-    });
+    startWorkload(4, log, [&log, &tpi]() { log.logEvent(&tpi, 0, 0); });
 
     log.start(phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
     std::this_thread::sleep_for(std::chrono::microseconds(100));
@@ -90,24 +88,22 @@ TEST_F(ThreadedTest, ThreadedStop) {
 
 TEST_F(ThreadedTest, ThreadedInternalStop) {
     const phosphor::tracepoint_info tpi = {
-        "category",
-        "name",
-        phosphor::TraceEvent::Type::Instant,
-        {{"arg1", "arg2"}},
-        {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_int}}
-    };
+            "category",
+            "name",
+            phosphor::TraceEvent::Type::Instant,
+            {{"arg1", "arg2"}},
+            {{phosphor::TraceArgument::Type::is_int,
+              phosphor::TraceArgument::Type::is_int}}};
 
     phosphor::TraceLog log;
 
-    startWorkload(4, log, [&log, &tpi]() {
-        log.logEvent(&tpi, 0, 0);
-    });
+    startWorkload(4, log, [&log, &tpi]() { log.logEvent(&tpi, 0, 0); });
 
     log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 1024 * 1024));
     do {
         // Wait for the log to stop tracing internally
         std::this_thread::sleep_for(std::chrono::microseconds(100));
-    } while(log.isEnabled());
+    } while (log.isEnabled());
 
     // Extra paranoia, delete the buffer we might be using
     log.getBuffer().reset();

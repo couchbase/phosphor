@@ -20,42 +20,42 @@
 #include "relaxed_atomic.h"
 
 namespace phosphor {
-    /**
-     * Enumeration of the possible types of a TraceArgument
-     */
-    enum class TraceArgumentType : char {
-        is_bool,
-        is_uint,
-        is_int,
-        is_double,
-        is_pointer,
-        is_string,
-        is_istring,
-        is_none
-    };
+/**
+ * Enumeration of the possible types of a TraceArgument
+ */
+enum class TraceArgumentType : char {
+    is_bool,
+    is_uint,
+    is_int,
+    is_double,
+    is_pointer,
+    is_string,
+    is_istring,
+    is_none
+};
 
-    /**
-     * Enumeration of the possible types of a TraceEvent
-     */
-    enum class TraceEventType : char {
-        AsyncStart,
-        AsyncEnd,
-        SyncStart,
-        SyncEnd,
-        Instant,
-        GlobalInstant,
-        Complete
-    };
+/**
+ * Enumeration of the possible types of a TraceEvent
+ */
+enum class TraceEventType : char {
+    AsyncStart,
+    AsyncEnd,
+    SyncStart,
+    SyncEnd,
+    Instant,
+    GlobalInstant,
+    Complete
+};
 
-    /**
-     * The tracepoint_info struct holds data that
-     * is static for a given tracepoint.
-     */
-    struct tracepoint_info {
-        const char* category;
-        const char* name;
-        TraceEventType type;
-        std::array<const char*, 2> argument_names;
-        std::array<TraceArgumentType, 2> argument_types;
-    };
-}
+/**
+ * The tracepoint_info struct holds data that
+ * is static for a given tracepoint.
+ */
+struct tracepoint_info {
+    const char* category;
+    const char* name;
+    TraceEventType type;
+    std::array<const char*, 2> argument_names;
+    std::array<TraceArgumentType, 2> argument_types;
+};
+} // namespace phosphor

@@ -34,7 +34,7 @@
 #endif
 
 namespace phosphor {
-    // Introducing cross-platform ssize_t (doesn't exist on windows)
-    // as future-proofing if e.g. negative statistics are ever needed
-    using ssize_t = std::make_signed<size_t>::type;
-}
+// Introducing cross-platform ssize_t (doesn't exist on windows)
+// as future-proofing if e.g. negative statistics are ever needed
+using ssize_t = std::make_signed<size_t>::type;
+} // namespace phosphor

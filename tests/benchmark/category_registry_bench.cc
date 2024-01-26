@@ -31,7 +31,8 @@ using namespace phosphor;
  */
 void NewCategories(benchmark::State& state) {
     // Registry comes with 3 items already in it
-    static std::array<std::string, (CategoryRegistry::registry_size - 3)> categories;
+    static std::array<std::string, (CategoryRegistry::registry_size - 3)>
+            categories;
     static std::unique_ptr<CategoryRegistry> registry;
     static Barrier barrier{0};
 
@@ -52,9 +53,8 @@ void NewCategories(benchmark::State& state) {
 
         // Wait for all the threads to sync up so we can reset
         // the category registry.
-        barrier.wait([](){
-            registry = utils::make_unique<CategoryRegistry>();
-        });
+        barrier.wait(
+                []() { registry = utils::make_unique<CategoryRegistry>(); });
 
         state.ResumeTiming();
     }

@@ -26,4 +26,3 @@ int benchNumThreads() {
 }
 
 } // namespace phosphor
-

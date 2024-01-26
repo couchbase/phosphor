@@ -24,19 +24,20 @@ protected:
 };
 
 TEST_F(ChunkLockTest, basic) {
-	lock.slave().lock();
-	lock.slave().unlock();
+    lock.slave().lock();
+    lock.slave().unlock();
 
-	lock.master().lock();
-	EXPECT_FALSE(lock.slave().try_lock());
-	lock.master().unlock();
-	EXPECT_TRUE(lock.slave().try_lock());
-	lock.slave().unlock();
+    lock.master().lock();
+    EXPECT_FALSE(lock.slave().try_lock());
+    lock.master().unlock();
+    EXPECT_TRUE(lock.slave().try_lock());
+    lock.slave().unlock();
 }
 
 class ThreadedChunkLockTest : public ChunkLockTest {
 protected:
-    ThreadedChunkLockTest() : step(0) {}
+    ThreadedChunkLockTest() : step(0) {
+    }
 
     virtual ~ThreadedChunkLockTest() {
         for (auto& thread : threads) {
@@ -101,7 +102,7 @@ TEST_F(ThreadedChunkLockTest, MasterSlave) {
     threads.emplace_back([this]() {
         while (step.load() != 1) {
         }
-        while(!lock.slave().try_lock()) {
+        while (!lock.slave().try_lock()) {
         }
         lock.slave().unlock();
     });

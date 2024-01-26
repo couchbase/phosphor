@@ -24,10 +24,9 @@ namespace phosphor {
 /**
  * Tag type for selecting non trivial constructor of ChunkLock and ChunkTenant
  */
-struct non_trivial_constructor_t {
-};
+struct non_trivial_constructor_t {};
 
-constexpr non_trivial_constructor_t non_trivial_constructor {};
+constexpr non_trivial_constructor_t non_trivial_constructor{};
 
 class SlaveChunkLock;
 class MasterChunkLock;
@@ -55,7 +54,6 @@ class TraceChunk;
  */
 class PHOSPHOR_API ChunkLock {
 public:
-
     /**
      * ChunkLock is trivially constructible to allow for use in
      * MacOS compatible `thread_local` variables.
@@ -195,4 +193,4 @@ struct PHOSPHOR_API ChunkTenant {
      */
     bool initialised;
 };
-}
+} // namespace phosphor

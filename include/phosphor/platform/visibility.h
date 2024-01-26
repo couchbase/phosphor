@@ -13,16 +13,16 @@
 
 /* Macros for handling symbol visibility */
 
-
 /* EXPORT_SYMBOL
  *
  * Use for symbols which should be exported (externally visible) from a
  * library.
  */
-#if (defined(__SUNPRO_C) && (__SUNPRO_C >= 0x550)) || (defined(__SUNPRO_CC) && (__SUNPRO_CC >= 0x550))
+#if (defined(__SUNPRO_C) && (__SUNPRO_C >= 0x550)) || \
+        (defined(__SUNPRO_CC) && (__SUNPRO_CC >= 0x550))
 #define PHOSPHOR_API __global
 #elif defined __GNUC__
-#define PHOSPHOR_API __attribute__ ((visibility("default")))
+#define PHOSPHOR_API __attribute__((visibility("default")))
 #elif defined(_MSC_VER)
 #define PHOSPHOR_API __declspec(dllexport)
 #else

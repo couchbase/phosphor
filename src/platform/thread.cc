@@ -27,31 +27,31 @@
 #include "phosphor/platform/thread.h"
 
 namespace phosphor {
-    namespace platform {
+namespace platform {
 
-        uint32_t getCurrentThreadID() {
+uint32_t getCurrentThreadID() {
 #if defined(__APPLE__)
-            auto tid = pthread_mach_thread_np(pthread_self());
+    auto tid = pthread_mach_thread_np(pthread_self());
 #elif defined(__linux__)
-            pid_t tid = syscall(__NR_gettid);
+    pid_t tid = syscall(__NR_gettid);
 #elif defined(_WIN32)
-            auto tid = GetCurrentThreadId();
+    auto tid = GetCurrentThreadId();
 #elif defined(__FreeBSD__)
-            auto tid = pthread_getthreadid_np();
+    auto tid = pthread_getthreadid_np();
 #else
 #error Unsupported platform, no way to get threadid
 #endif
-            static_assert(sizeof(tid) <= 4,
-                          "Size of thread id must be 32 bits or less.");
-            return tid;
-        }
-
-        int getCurrentProcessID() {
-#if defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__)
-            return getpid();
-#else
-            return _getpid();
-#endif
-        }
-    }
+    static_assert(sizeof(tid) <= 4,
+                  "Size of thread id must be 32 bits or less.");
+    return tid;
 }
+
+int getCurrentProcessID() {
+#if defined(__APPLE__) || defined(__linux__) || defined(__FreeBSD__)
+    return getpid();
+#else
+    return _getpid();
+#endif
+}
+} // namespace platform
+} // namespace phosphor

@@ -11,16 +11,14 @@
 
 class Barrier {
 public:
-    Barrier()
-        : n_threads(0) {
+    Barrier() : n_threads(0) {
     }
 
     /**
      * Create a Barrier.
      *  @param n_threads Total number of threads to wait for.
      */
-    Barrier(size_t n_threads_)
-        : n_threads(n_threads_) {
+    Barrier(size_t n_threads_) : n_threads(n_threads_) {
     }
 
     /**
@@ -47,9 +45,7 @@ public:
         const size_t threshold = go + 1;
 
         if (++thread_count != n_threads) {
-            cv.wait(lh, [this, threshold](){
-                return go >= threshold;
-            });
+            cv.wait(lh, [this, threshold]() { return go >= threshold; });
         } else {
             ++go;
             thread_count = 0;
@@ -59,11 +55,12 @@ public:
     }
 
 private:
-    static void do_nothing() {}
+    static void do_nothing() {
+    }
 
     size_t n_threads;
-    size_t thread_count {0};
-    size_t go {0};
+    size_t thread_count{0};
+    size_t go{0};
     std::mutex m;
     std::condition_variable cv;
 };

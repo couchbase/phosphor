@@ -19,73 +19,73 @@
 
 namespace phosphor {
 
-    template <typename T>
-    class RelaxedAtomic {
-    public:
-        RelaxedAtomic() = default;
+template <typename T>
+class RelaxedAtomic {
+public:
+    RelaxedAtomic() = default;
 
-        RelaxedAtomic(const T& initial) {
-            value.store(initial, std::memory_order_relaxed);
-        }
+    RelaxedAtomic(const T& initial) {
+        value.store(initial, std::memory_order_relaxed);
+    }
 
-        RelaxedAtomic(const RelaxedAtomic& other) {
-            value.store(other.value.load(std::memory_order_relaxed),
-                        std::memory_order_relaxed);
-        }
+    RelaxedAtomic(const RelaxedAtomic& other) {
+        value.store(other.value.load(std::memory_order_relaxed),
+                    std::memory_order_relaxed);
+    }
 
-        operator T() const {
-            return value.load(std::memory_order_relaxed);
-        }
+    operator T() const {
+        return value.load(std::memory_order_relaxed);
+    }
 
-        T load() const {
-            return value.load(std::memory_order_relaxed);
-        }
+    T load() const {
+        return value.load(std::memory_order_relaxed);
+    }
 
-        RelaxedAtomic& operator=(const RelaxedAtomic& rhs) {
-            value.store(rhs.load(), std::memory_order_relaxed);
-            return *this;
-        }
+    RelaxedAtomic& operator=(const RelaxedAtomic& rhs) {
+        value.store(rhs.load(), std::memory_order_relaxed);
+        return *this;
+    }
 
-        RelaxedAtomic& operator=(T val) {
-            value.store(val, std::memory_order_relaxed);
-            return *this;
-        }
+    RelaxedAtomic& operator=(T val) {
+        value.store(val, std::memory_order_relaxed);
+        return *this;
+    }
 
-        T operator++() {
-            return value.fetch_add(1, std::memory_order_relaxed) + 1;
-        }
+    T operator++() {
+        return value.fetch_add(1, std::memory_order_relaxed) + 1;
+    }
 
-        T operator++(int) {
-            return value.fetch_add(1, std::memory_order_relaxed);
-        }
+    T operator++(int) {
+        return value.fetch_add(1, std::memory_order_relaxed);
+    }
 
-        T operator--() {
-            return value.fetch_sub(1, std::memory_order_relaxed) - 1;
-        }
+    T operator--() {
+        return value.fetch_sub(1, std::memory_order_relaxed) - 1;
+    }
 
-        T operator--(int) {
-            return value.fetch_sub(1, std::memory_order_relaxed);
-        }
+    T operator--(int) {
+        return value.fetch_sub(1, std::memory_order_relaxed);
+    }
 
-    protected:
-        std::atomic<T> value;
-    };
+protected:
+    std::atomic<T> value;
+};
 
-    class RelaxedAtomicCString : public RelaxedAtomic<const char *> {
-    public:
-        RelaxedAtomicCString() = default;
+class RelaxedAtomicCString : public RelaxedAtomic<const char*> {
+public:
+    RelaxedAtomicCString() = default;
 
-        RelaxedAtomicCString(const char* initial) {
-            value.store(initial, std::memory_order_relaxed);
-        }
+    RelaxedAtomicCString(const char* initial) {
+        value.store(initial, std::memory_order_relaxed);
+    }
 
-        RelaxedAtomicCString(const RelaxedAtomicCString& other) {
-            value.store(other.load(), std::memory_order_relaxed);
-        }
+    RelaxedAtomicCString(const RelaxedAtomicCString& other) {
+        value.store(other.load(), std::memory_order_relaxed);
+    }
 
-        operator std::string() const {
-            return std::string(value.load(std::memory_order_relaxed));
-        }
-    };
+    operator std::string() const {
+        return std::string(value.load(std::memory_order_relaxed));
+    }
+};
 
-}
+} // namespace phosphor

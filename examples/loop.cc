@@ -14,7 +14,7 @@
 #include <iostream>
 
 int main(int argc, char** argv) {
-    while(PHOSPHOR_INSTANCE.isEnabled()) {
+    while (PHOSPHOR_INSTANCE.isEnabled()) {
         TRACE_INSTANT0("category", "name");
     }
 }

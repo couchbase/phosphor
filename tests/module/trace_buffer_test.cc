@@ -29,8 +29,7 @@ phosphor::tracepoint_info tpi = {
         "name",
         TraceEvent::Type::Instant,
         {{"arg1", "arg2"}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-};
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}};
 
 TEST(TraceChunkTest, fillAndOverfillAndCount) {
     TraceChunk chunk;
@@ -39,9 +38,7 @@ TEST(TraceChunkTest, fillAndOverfillAndCount) {
     size_t count = 0;
     while (!chunk.isFull()) {
         EXPECT_EQ(count, chunk.count());
-        chunk.addEvent() = TraceEvent(
-            &tpi,
-            {{0, 0}});
+        chunk.addEvent() = TraceEvent(&tpi, {{0, 0}});
         count++;
     }
     EXPECT_EQ(count, chunk.count());
@@ -54,20 +51,18 @@ TEST(TraceChunkTest, string_check) {
     chunk.reset(0);
 
     while (!chunk.isFull()) {
-        chunk.addEvent() = TraceEvent(
-            &tpi,
-            {{0, 0}});
+        chunk.addEvent() = TraceEvent(&tpi, {{0, 0}});
     }
 
     auto event_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-        "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
-        "category, name, type=Instant, "
-        "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
+            "TraceEvent<[0-9]+d [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{9}, "
+            "category, name, type=Instant, "
+            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #else
-        "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
-        "category, name, type=Instant, "
-        "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
+            "TraceEvent<\\d+d \\d+:\\d+:\\d+.\\d+, "
+            "category, name, type=Instant, "
+            "arg1=\"Type::is_none\", arg2=\"Type::is_none\">");
 #endif
 
     for (size_t i = 0; i < chunk.count(); ++i) {
@@ -94,7 +89,7 @@ TEST(TraceChunkTest, string_check) {
 }
 
 class TraceBufferTest : public testing::TestWithParam<
-                            std::pair<trace_buffer_factory, std::string>> {
+                                std::pair<trace_buffer_factory, std::string>> {
 public:
     TraceBufferTest() {
         factory = GetParam().first;

@@ -30,15 +30,17 @@ int setenv(const char* name, const char* value, int overwrite) {
 // Ensure the PHOSPHOR_TRACING_START environment variable is not used
 class TestEnvironment : public ::testing::Environment {
 public:
-  TestEnvironment() {}
-  ~TestEnvironment() {}
+    TestEnvironment() {
+    }
+    ~TestEnvironment() {
+    }
 
-  void SetUp() {
-      setenv("PHOSPHOR_TRACING_START", "", true);
-  }
+    void SetUp() {
+        setenv("PHOSPHOR_TRACING_START", "", true);
+    }
 };
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     ::testing::AddGlobalTestEnvironment(new TestEnvironment());
     return RUN_ALL_TESTS();

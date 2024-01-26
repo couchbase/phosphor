@@ -124,10 +124,10 @@ TEST(TraceConfigTest, updateFromString) {
 TEST(TraceConfigTest, fromString) {
     TraceConfig config = TraceConfig::fromString(
             "buffer-mode:ring;"
-                    "buffer-size:1024;"
-                    "save-on-stop:out.json;"
-                    "enabled-categories:hello,world;"
-                    "disabled-categories:*rld");
+            "buffer-size:1024;"
+            "save-on-stop:out.json;"
+            "enabled-categories:hello,world;"
+            "disabled-categories:*rld");
 
     EXPECT_EQ(BufferMode::ring, config.getBufferMode());
     EXPECT_EQ(1024UL, config.getBufferSize());
@@ -138,7 +138,7 @@ TEST(TraceConfigTest, fromString) {
     EXPECT_THAT(config.getDisabledCategories(), testing::ElementsAre("*rld"));
 
     EXPECT_FALSE(TraceConfig::fromString("buffer-mode:fixed;"
-                                                 "buffer-size:1024;")
+                                         "buffer-size:1024;")
                          .getStopTracingOnDestruct());
 
     EXPECT_THROW(TraceConfig::fromString("buffer-mode:other"),
@@ -156,19 +156,22 @@ TEST(TraceConfigTest, fromString) {
 TEST(TraceConfigTest, toString) {
     TraceConfig config(BufferMode::fixed, 1337);
     config.setCategories({{"hello"}}, {{"world"}});
-    EXPECT_EQ("buffer-mode:fixed;buffer-size:1337;"
-                      "enabled-categories:hello;disabled-categories:world",
-              *config.toString());
+    EXPECT_EQ(
+            "buffer-mode:fixed;buffer-size:1337;"
+            "enabled-categories:hello;disabled-categories:world",
+            *config.toString());
 
     TraceConfig config2(BufferMode::ring, 0);
-    EXPECT_EQ("buffer-mode:ring;buffer-size:0;"
-                      "enabled-categories:*;disabled-categories:",
-              *config2.toString());
+    EXPECT_EQ(
+            "buffer-mode:ring;buffer-size:0;"
+            "enabled-categories:*;disabled-categories:",
+            *config2.toString());
 
     TraceConfig config3(make_fixed_buffer, 1337);
-    EXPECT_EQ("buffer-mode:custom;buffer-size:1337;"
-                      "enabled-categories:*;disabled-categories:",
-              *config3.toString());
+    EXPECT_EQ(
+            "buffer-mode:custom;buffer-size:1337;"
+            "enabled-categories:*;disabled-categories:",
+            *config3.toString());
 }
 
 TEST(TraceConfigTest, getBufferFactoryReturnsCorrectFactoryForBuiltIns) {

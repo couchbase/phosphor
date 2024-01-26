@@ -18,16 +18,14 @@
  * representations, e.g. object sizes etc.
  */
 
-phosphor::tracepoint_info tpi = {
-    "category",
-    "name",
-    phosphor::TraceEvent::Type::Instant,
-    {{"arg1", "arg2"}},
-    {{phosphor::TraceArgument::Type::is_none, phosphor::TraceArgument::Type::is_none}}
-};
+phosphor::tracepoint_info tpi = {"category",
+                                 "name",
+                                 phosphor::TraceEvent::Type::Instant,
+                                 {{"arg1", "arg2"}},
+                                 {{phosphor::TraceArgument::Type::is_none,
+                                   phosphor::TraceArgument::Type::is_none}}};
 
 int main(int argc, char** argv) {
-
     using namespace phosphor;
 
     std::cout << "\nStructure Sizes\n";
@@ -42,7 +40,7 @@ int main(int argc, char** argv) {
 
     TraceLog log;
     log.start(TraceConfig(BufferMode::fixed, 100 * 1024 * 1024));
-    while(log.isEnabled()) {
+    while (log.isEnabled()) {
         log.logEvent(&tpi, NoneType(), NoneType());
     }
     auto buffer = log.getBuffer();
@@ -50,12 +48,12 @@ int main(int argc, char** argv) {
     std::cout << "\nCapacities\n";
     std::cout << "===================\n";
     std::cout << "TraceChunk: " << TraceChunk::chunk_size << " trace events\n";
-    std::cout << "100MiB TraceBuffer: " << buffer->chunk_count() << " trace chunks\n";
+    std::cout << "100MiB TraceBuffer: " << buffer->chunk_count()
+              << " trace chunks\n";
 
     int n = 0;
-    for(const auto& event : *buffer) {
+    for (const auto& event : *buffer) {
         n++;
     }
     std::cout << "100MiB TraceBuffer: " << n << " trace events\n";
-
 }

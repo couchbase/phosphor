@@ -97,49 +97,45 @@
  *
  * @{
  */
-#define TRACE_EVENT_START0(category, name)      \
-    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
-        category, name, phosphor::TraceEvent::Type::SyncStart)
+#define TRACE_EVENT_START0(category, name) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(        \
+            category, name, phosphor::TraceEvent::Type::SyncStart)
 
-#define TRACE_EVENT_END0(category, name)        \
-    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
-        category, name, phosphor::TraceEvent::Type::SyncEnd)
+#define TRACE_EVENT_END0(category, name) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(      \
+            category, name, phosphor::TraceEvent::Type::SyncEnd)
 
-#define TRACE_EVENT_START1(category, name, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT1( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::SyncStart, \
-        arg1_name, \
-        arg1)
+#define TRACE_EVENT_START1(category, name, arg1_name, arg1)               \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1(category,                              \
+                                   name,                                  \
+                                   phosphor::TraceEvent::Type::SyncStart, \
+                                   arg1_name,                             \
+                                   arg1)
 
-#define TRACE_EVENT_END1(category, name, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT1( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::SyncEnd, \
-        arg1_name, \
-        arg1)
+#define TRACE_EVENT_END1(category, name, arg1_name, arg1)               \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1(category,                            \
+                                   name,                                \
+                                   phosphor::TraceEvent::Type::SyncEnd, \
+                                   arg1_name,                           \
+                                   arg1)
 
 #define TRACE_EVENT_START2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::SyncStart, \
-        arg1_name, \
-        arg1, \
-        arg2_name, \
-        arg2)
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(category,                                 \
+                                   name,                                     \
+                                   phosphor::TraceEvent::Type::SyncStart,    \
+                                   arg1_name,                                \
+                                   arg1,                                     \
+                                   arg2_name,                                \
+                                   arg2)
 
 #define TRACE_EVENT_END2(category, name, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::SyncEnd, \
-        arg1_name, \
-        arg1, \
-        arg2_name, \
-        arg2)
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(category,                               \
+                                   name,                                   \
+                                   phosphor::TraceEvent::Type::SyncEnd,    \
+                                   arg1_name,                              \
+                                   arg1,                                   \
+                                   arg2_name,                              \
+                                   arg2)
 /** @} */
 
 /**
@@ -169,50 +165,64 @@
  *
  * @{
  */
-#define TRACE_EVENT0(category, name)                                     \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                             \
-            category, name, phosphor::TraceEvent::Type::Complete, \
-            "", phosphor::NoneType, "", phosphor::NoneType) \
-    phosphor::ScopedEventGuard<phosphor::NoneType, phosphor::NoneType>   \
-            PHOSPHOR_INTERNAL_UID(guard)(                                \
-                    &PHOSPHOR_INTERNAL_UID(tpi),                         \
-                    PHOSPHOR_INTERNAL_UID(category_enabled_temp)         \
-                                    ->load(std::memory_order_acquire) != \
-                            phosphor::CategoryStatus::Disabled,          \
-                    phosphor::NoneType(),                                \
-                    phosphor::NoneType())
+#define TRACE_EVENT0(category, name)                                   \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                    \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                           \
+            category,                                                  \
+            name,                                                      \
+            phosphor::TraceEvent::Type::Complete,                      \
+            "",                                                        \
+            phosphor::NoneType,                                        \
+            "",                                                        \
+            phosphor::NoneType)                                        \
+    phosphor::ScopedEventGuard<phosphor::NoneType, phosphor::NoneType> \
+    PHOSPHOR_INTERNAL_UID(guard)(                                      \
+            &PHOSPHOR_INTERNAL_UID(tpi),                               \
+            PHOSPHOR_INTERNAL_UID(category_enabled_temp)               \
+                            ->load(std::memory_order_acquire) !=       \
+                    phosphor::CategoryStatus::Disabled,                \
+            phosphor::NoneType(),                                      \
+            phosphor::NoneType())
 
-#define TRACE_EVENT1(category, name, arg1_name, arg1)                      \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO                                        \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                               \
-            category, name, phosphor::TraceEvent::Type::Complete, \
-            arg1_name, decltype(arg1),"", phosphor::NoneType) \
-    phosphor::ScopedEventGuard<decltype(arg1), phosphor::NoneType>         \
-            PHOSPHOR_INTERNAL_UID(guard)(                                  \
-                    &PHOSPHOR_INTERNAL_UID(tpi),                           \
-                    PHOSPHOR_INTERNAL_UID(category_enabled_temp)           \
-                                    ->load(std::memory_order_acquire) !=   \
-                            phosphor::CategoryStatus::Disabled,            \
-                    arg1,                                                  \
-                    phosphor::NoneType())
+#define TRACE_EVENT1(category, name, arg1_name, arg1)              \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                       \
+            category,                                              \
+            name,                                                  \
+            phosphor::TraceEvent::Type::Complete,                  \
+            arg1_name,                                             \
+            decltype(arg1),                                        \
+            "",                                                    \
+            phosphor::NoneType)                                    \
+    phosphor::ScopedEventGuard<decltype(arg1), phosphor::NoneType> \
+    PHOSPHOR_INTERNAL_UID(guard)(                                  \
+            &PHOSPHOR_INTERNAL_UID(tpi),                           \
+            PHOSPHOR_INTERNAL_UID(category_enabled_temp)           \
+                            ->load(std::memory_order_acquire) !=   \
+                    phosphor::CategoryStatus::Disabled,            \
+            arg1,                                                  \
+            phosphor::NoneType())
 
-#define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2)   \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO                                      \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                             \
-            category, name, phosphor::TraceEvent::Type::Complete, \
-            arg1_name, decltype(arg1), arg2_name, decltype(arg2)) \
-    phosphor::ScopedEventGuard<decltype(arg1), decltype(arg2)>           \
-            PHOSPHOR_INTERNAL_UID(guard)(                                \
-                    &PHOSPHOR_INTERNAL_UID(tpi),                         \
-                    PHOSPHOR_INTERNAL_UID(category_enabled_temp)         \
-                                    ->load(std::memory_order_acquire) != \
-                            phosphor::CategoryStatus::Disabled,          \
-                    arg1,                                                \
-                    arg2)
+#define TRACE_EVENT2(category, name, arg1_name, arg1, arg2_name, arg2) \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                    \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                           \
+            category,                                                  \
+            name,                                                      \
+            phosphor::TraceEvent::Type::Complete,                      \
+            arg1_name,                                                 \
+            decltype(arg1),                                            \
+            arg2_name,                                                 \
+            decltype(arg2))                                            \
+    phosphor::ScopedEventGuard<decltype(arg1), decltype(arg2)>         \
+    PHOSPHOR_INTERNAL_UID(guard)(                                      \
+            &PHOSPHOR_INTERNAL_UID(tpi),                               \
+            PHOSPHOR_INTERNAL_UID(category_enabled_temp)               \
+                            ->load(std::memory_order_acquire) !=       \
+                    phosphor::CategoryStatus::Disabled,                \
+            arg1,                                                      \
+            arg2)
 
-#define TRACE_FUNCTION0(category) \
-    TRACE_EVENT0(category, __func__)
+#define TRACE_FUNCTION0(category) TRACE_EVENT0(category, __func__)
 
 #define TRACE_FUNCTION1(category, arg1_name, arg1) \
     TRACE_EVENT1(category, __func__, arg1_name, arg1)
@@ -259,35 +269,51 @@
  *
  * @{
  */
-#define TRACE_LOCKGUARD(mutex, category, name)                                 \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO                                            \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
-            tpi_wait, category, name ".wait", \
-            phosphor::TraceEvent::Type::Complete, \
-            "this", void*, "", phosphor::NoneType); \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
-            tpi_held, category, name ".held", \
-            phosphor::TraceEvent::Type::Complete, \
-            "", void*, "", phosphor::NoneType); \
-    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                    \
-    phosphor::MutexEventGuard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)(   \
-            &PHOSPHOR_INTERNAL_UID(tpi_wait),                                  \
-            &PHOSPHOR_INTERNAL_UID(tpi_held),                                  \
-            PHOSPHOR_INTERNAL_UID(category_enabled_temp)                       \
-                            ->load(std::memory_order_acquire) !=               \
-                    phosphor::CategoryStatus::Disabled,                        \
+#define TRACE_LOCKGUARD(mutex, category, name)                               \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_wait,                               \
+                                     category,                               \
+                                     name ".wait",                           \
+                                     phosphor::TraceEvent::Type::Complete,   \
+                                     "this",                                 \
+                                     void*,                                  \
+                                     "",                                     \
+                                     phosphor::NoneType);                    \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_held,                               \
+                                     category,                               \
+                                     name ".held",                           \
+                                     phosphor::TraceEvent::Type::Complete,   \
+                                     "",                                     \
+                                     void*,                                  \
+                                     "",                                     \
+                                     phosphor::NoneType);                    \
+    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                  \
+    phosphor::MutexEventGuard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)( \
+            &PHOSPHOR_INTERNAL_UID(tpi_wait),                                \
+            &PHOSPHOR_INTERNAL_UID(tpi_held),                                \
+            PHOSPHOR_INTERNAL_UID(category_enabled_temp)                     \
+                            ->load(std::memory_order_acquire) !=             \
+                    phosphor::CategoryStatus::Disabled,                      \
             mutex)
 
 #define TRACE_LOCKGUARD_TIMED(mutex, category, name, limit)                  \
     PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
-            tpi_wait, category, name ".wait", \
-            phosphor::TraceEvent::Type::Complete, \
-            "this", void*, "", phosphor::NoneType); \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(                                        \
-            tpi_held, category, name ".held", \
-            phosphor::TraceEvent::Type::Complete, \
-            "", void*, "", phosphor::NoneType); \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_wait,                               \
+                                     category,                               \
+                                     name ".wait",                           \
+                                     phosphor::TraceEvent::Type::Complete,   \
+                                     "this",                                 \
+                                     void*,                                  \
+                                     "",                                     \
+                                     phosphor::NoneType);                    \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_held,                               \
+                                     category,                               \
+                                     name ".held",                           \
+                                     phosphor::TraceEvent::Type::Complete,   \
+                                     "",                                     \
+                                     void*,                                  \
+                                     "",                                     \
+                                     phosphor::NoneType);                    \
     PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                  \
     phosphor::MutexEventGuard<decltype(mutex)> PHOSPHOR_INTERNAL_UID(guard)( \
             &PHOSPHOR_INTERNAL_UID(tpi_wait),                                \
@@ -329,75 +355,62 @@
  *                           getTaskName(taskId));
  * @{
  */
-#define TRACE_ASYNC_START0(category, name, id)  \
-     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::AsyncStart, \
-        "id", \
-        id)
+#define TRACE_ASYNC_START0(category, name, id) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1(            \
+            category, name, phosphor::TraceEvent::Type::AsyncStart, "id", id)
 
-#define TRACE_ASYNC_START1(category, name, id, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::AsyncStart, \
-        "id", \
-        id, \
-        arg1_name, \
-        arg1)
+#define TRACE_ASYNC_START1(category, name, id, arg1_name, arg1)            \
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(category,                               \
+                                   name,                                   \
+                                   phosphor::TraceEvent::Type::AsyncStart, \
+                                   "id",                                   \
+                                   id,                                     \
+                                   arg1_name,                              \
+                                   arg1)
 
-#define TRACE_ASYNC_END0(category, name, id)    \
-     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::AsyncEnd, \
-        "id_end", \
-        id)
+#define TRACE_ASYNC_END0(category, name, id)                             \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1(category,                             \
+                                   name,                                 \
+                                   phosphor::TraceEvent::Type::AsyncEnd, \
+                                   "id_end",                             \
+                                   id)
 
-#define TRACE_ASYNC_END1(category, name, id, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::AsyncEnd, \
-        "id_end", \
-        id, \
-        arg1_name, \
-        arg1)
+#define TRACE_ASYNC_END1(category, name, id, arg1_name, arg1)            \
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(category,                             \
+                                   name,                                 \
+                                   phosphor::TraceEvent::Type::AsyncEnd, \
+                                   "id_end",                             \
+                                   id,                                   \
+                                   arg1_name,                            \
+                                   arg1)
 
-#define TRACE_ASYNC_COMPLETE2(                                               \
-        category, name, id, start, end, arg1_name, arg1, arg2_name, arg2)    \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_async_start,                        \
-                                     category,                               \
-                                     name,                                   \
-                                     phosphor::TraceEvent::Type::AsyncStart, \
-                                     "id",                                   \
-                                     void*,                                  \
-                                     arg1_name,                              \
-                                     decltype(arg1));                        \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_async_end,                          \
-                                     category,                               \
-                                     name,                                   \
-                                     phosphor::TraceEvent::Type::AsyncEnd,   \
-                                     "id_end",                               \
-                                     void*,                                  \
-                                     arg2_name,                              \
-                                     decltype(arg2));                        \
-    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                  \
-    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)                         \
-                ->load(std::memory_order_acquire) !=                         \
-        phosphor::CategoryStatus::Disabled) {                                \
-        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi_async_start),  \
-                                   start,                                    \
-                                   {},                                       \
-                                   id,                                       \
-                                   arg1);                                    \
-        PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi_async_end),    \
-                                   end,                                      \
-                                   {},                                       \
-                                   id,                                       \
-                                   arg2);                                    \
+#define TRACE_ASYNC_COMPLETE2(                                                 \
+        category, name, id, start, end, arg1_name, arg1, arg2_name, arg2)      \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                            \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_async_start,                          \
+                                     category,                                 \
+                                     name,                                     \
+                                     phosphor::TraceEvent::Type::AsyncStart,   \
+                                     "id",                                     \
+                                     void*,                                    \
+                                     arg1_name,                                \
+                                     decltype(arg1));                          \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_async_end,                            \
+                                     category,                                 \
+                                     name,                                     \
+                                     phosphor::TraceEvent::Type::AsyncEnd,     \
+                                     "id_end",                                 \
+                                     void*,                                    \
+                                     arg2_name,                                \
+                                     decltype(arg2));                          \
+    PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)                    \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)                           \
+                ->load(std::memory_order_acquire) !=                           \
+        phosphor::CategoryStatus::Disabled) {                                  \
+        PHOSPHOR_INSTANCE.logEvent(                                            \
+                &PHOSPHOR_INTERNAL_UID(tpi_async_start), start, {}, id, arg1); \
+        PHOSPHOR_INSTANCE.logEvent(                                            \
+                &PHOSPHOR_INTERNAL_UID(tpi_async_end), end, {}, id, arg2);     \
     }
 
 #define TRACE_ASYNC_COMPLETE1(category, name, id, start, end, arg1_name, arg1) \
@@ -429,27 +442,25 @@
  *
  *  @{
  */
-#define TRACE_INSTANT0(category, name)          \
-    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
-        category, name, phosphor::TraceEvent::Type::Instant)
+#define TRACE_INSTANT0(category, name) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(    \
+            category, name, phosphor::TraceEvent::Type::Instant)
 
-#define TRACE_INSTANT1(category, name, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::Instant, \
-        arg1_name, \
-        arg1)
+#define TRACE_INSTANT1(category, name, arg1_name, arg1)                 \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1(category,                            \
+                                   name,                                \
+                                   phosphor::TraceEvent::Type::Instant, \
+                                   arg1_name,                           \
+                                   arg1)
 
 #define TRACE_INSTANT2(category, name, arg1_name, arg1, arg2_name, arg2) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::Instant, \
-        arg1_name, \
-        arg1, \
-        arg2_name, \
-        arg2)
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(category,                             \
+                                   name,                                 \
+                                   phosphor::TraceEvent::Type::Instant,  \
+                                   arg1_name,                            \
+                                   arg1,                                 \
+                                   arg2_name,                            \
+                                   arg2)
 /** @} */
 
 /**
@@ -465,28 +476,25 @@
  *
  *  @{
  */
-#define TRACE_GLOBAL0(category, name)           \
-    PHOSPHOR_INTERNAL_TRACE_EVENT0(             \
-        category, name, phosphor::TraceEvent::Type::GlobalInstant)
+#define TRACE_GLOBAL0(category, name) \
+    PHOSPHOR_INTERNAL_TRACE_EVENT0(   \
+            category, name, phosphor::TraceEvent::Type::GlobalInstant)
 
+#define TRACE_GLOBAL1(category, name, arg1_name, arg1)                        \
+    PHOSPHOR_INTERNAL_TRACE_EVENT1(category,                                  \
+                                   name,                                      \
+                                   phosphor::TraceEvent::Type::GlobalInstant, \
+                                   arg1_name,                                 \
+                                   arg1)
 
-#define TRACE_GLOBAL1(category, name, arg1_name, arg1) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT1( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::GlobalInstant, \
-        arg1_name, \
-        arg1)
-
-#define TRACE_GLOBAL2(category, name, arg1_name, arg1, arg2_name, arg2) \
-     PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, \
-        name, \
-        phosphor::TraceEvent::Type::GlobalInstant, \
-        arg1_name, \
-        arg1, \
-        arg2_name, \
-        arg2)
+#define TRACE_GLOBAL2(category, name, arg1_name, arg1, arg2_name, arg2)       \
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(category,                                  \
+                                   name,                                      \
+                                   phosphor::TraceEvent::Type::GlobalInstant, \
+                                   arg1_name,                                 \
+                                   arg1,                                      \
+                                   arg2_name,                                 \
+                                   arg2)
 /** @} */
 
 /**
@@ -520,33 +528,33 @@
  *     TRACE_COMPLETE("my_category", "name", start, end, "vbid", 0);
  * @{
  */
-#define TRACE_COMPLETE0(category, name, start, end) \
-    PHOSPHOR_INTERNAL_TRACE_COMPLETE0(category,                          \
-                                  name,                               \
-                                  phosphor::TraceEvent::Type::Complete, \
-                                  start,                              \
-                                  (end - start))
+#define TRACE_COMPLETE0(category, name, start, end)                         \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE0(category,                             \
+                                      name,                                 \
+                                      phosphor::TraceEvent::Type::Complete, \
+                                      start,                                \
+                                      (end - start))
 
-#define TRACE_COMPLETE1(category, name, start, end, arg1_name, arg1) \
-    PHOSPHOR_INTERNAL_TRACE_COMPLETE1(category,                          \
-                                  name,                               \
-                                  phosphor::TraceEvent::Type::Complete, \
-                                  start,                              \
-                                  (end - start),                      \
-                                  arg1_name,                          \
-                                  arg1)
+#define TRACE_COMPLETE1(category, name, start, end, arg1_name, arg1)        \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE1(category,                             \
+                                      name,                                 \
+                                      phosphor::TraceEvent::Type::Complete, \
+                                      start,                                \
+                                      (end - start),                        \
+                                      arg1_name,                            \
+                                      arg1)
 
-#define TRACE_COMPLETE2(                                              \
-        category, name, start, end, arg1_name, arg1, arg2_name, arg2) \
-    PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category,                          \
-                                  name,                               \
-                                  phosphor::TraceEvent::Type::Complete, \
-                                  start,                              \
-                                  (end - start),                      \
-                                  arg1_name,                          \
-                                  arg1,                               \
-                                  arg2_name,                          \
-                                  arg2)
+#define TRACE_COMPLETE2(                                                    \
+        category, name, start, end, arg1_name, arg1, arg2_name, arg2)       \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category,                             \
+                                      name,                                 \
+                                      phosphor::TraceEvent::Type::Complete, \
+                                      start,                                \
+                                      (end - start),                        \
+                                      arg1_name,                            \
+                                      arg1,                                 \
+                                      arg2_name,                            \
+                                      arg2)
 /** @} */
 
 #else // if: defined(PHOSPHOR_DISABLED) && PHOSPHOR_DISABLED != 0

@@ -14,17 +14,17 @@
 #include <phosphor/platform/core.h>
 
 namespace phosphor {
-    namespace utils {
+namespace utils {
 
-        /**
-         * A length-bounded strlen implementation
-         *
-         * @param s null-terminated string to check length of
-         * @param maxsize Upper-bound on string length
-         * @return Length of s, or maxsize if s might be longer
-         *         than maxsize.
-         */
-        PHOSPHOR_API
-        size_t strnlen_s(const char* s, size_t maxsize);
-    }
-}
+/**
+ * A length-bounded strlen implementation
+ *
+ * @param s null-terminated string to check length of
+ * @param maxsize Upper-bound on string length
+ * @return Length of s, or maxsize if s might be longer
+ *         than maxsize.
+ */
+PHOSPHOR_API
+size_t strnlen_s(const char* s, size_t maxsize);
+} // namespace utils
+} // namespace phosphor

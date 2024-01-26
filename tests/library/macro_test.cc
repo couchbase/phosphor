@@ -215,7 +215,8 @@ TEST_F(MacroTraceEventTest, LockGuardTimedSlow) {
         MockUniqueLock m;
         EXPECT_CALL(m, lock()).Times(1);
         EXPECT_CALL(m, unlock()).Times(1);
-        TRACE_LOCKGUARD_TIMED(m, "category", "name", std::chrono::nanoseconds(0));
+        TRACE_LOCKGUARD_TIMED(
+                m, "category", "name", std::chrono::nanoseconds(0));
         verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("name.wait", event.getName());
             EXPECT_STREQ("category", event.getCategory());
@@ -257,7 +258,7 @@ void macro_test_functionD() {
 TEST_F(MacroTraceEventTest, Function) {
     {
         macro_test_functionA();
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("macro_test_functionA", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
@@ -265,7 +266,7 @@ TEST_F(MacroTraceEventTest, Function) {
     }
     {
         macro_test_functionC();
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("macro_test_functionC", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
@@ -275,7 +276,7 @@ TEST_F(MacroTraceEventTest, Function) {
     }
     {
         macro_test_functionD();
-        verifications.emplace_back([](const phosphor::TraceEvent &event) {
+        verifications.emplace_back([](const phosphor::TraceEvent& event) {
             EXPECT_STREQ("macro_test_functionD", event.getName());
             EXPECT_STREQ("category", event.getCategory());
             EXPECT_EQ(phosphor::TraceEvent::Type::Complete, event.getType());
@@ -379,8 +380,15 @@ TEST_F(MacroTraceEventTest, AsyncComplete2) {
     void* id = this;
     const auto start = std::chrono::steady_clock::now();
     const auto end = start + std::chrono::microseconds(3);
-    TRACE_ASYNC_COMPLETE2(
-            "category", "name", id, start, end, "my_arg1", 3, "my_arg2", variable);
+    TRACE_ASYNC_COMPLETE2("category",
+                          "name",
+                          id,
+                          start,
+                          end,
+                          "my_arg1",
+                          3,
+                          "my_arg2",
+                          variable);
     verifications.emplace_back([=](const auto& event) {
         EXPECT_STREQ("name", event.getName());
         EXPECT_STREQ("category", event.getCategory());
@@ -404,29 +412,27 @@ TEST_F(MacroTraceEventTest, AsyncComplete2) {
 }
 
 TEST_F(MacroTraceEventTest, InlineString) {
-    TRACE_INSTANT1("category", "name", "arg", PHOSPHOR_INLINE_STR("Hello, World!"));
+    TRACE_INSTANT1(
+            "category", "name", "arg", PHOSPHOR_INLINE_STR("Hello, World!"));
     verifications.emplace_back([](const phosphor::TraceEvent& event) {
         EXPECT_STREQ("name", event.getName());
         EXPECT_STREQ("category", event.getCategory());
         EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
-        EXPECT_EQ("Hello, W",
-                  std::string(event.getArgs()[0].as_istring));
+        EXPECT_EQ("Hello, W", std::string(event.getArgs()[0].as_istring));
     });
     TRACE_INSTANT1("category", "name", "arg", PHOSPHOR_INLINE_STR("Hello"));
     verifications.emplace_back([](const phosphor::TraceEvent& event) {
         EXPECT_STREQ("name", event.getName());
         EXPECT_STREQ("category", event.getCategory());
         EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
-        EXPECT_EQ("Hello",
-                  std::string(event.getArgs()[0].as_istring));
+        EXPECT_EQ("Hello", std::string(event.getArgs()[0].as_istring));
     });
     TRACE_INSTANT1("category", "name", "arg", PHOSPHOR_INLINE_STR(""));
     verifications.emplace_back([](const phosphor::TraceEvent& event) {
         EXPECT_STREQ("name", event.getName());
         EXPECT_STREQ("category", event.getCategory());
         EXPECT_EQ(phosphor::TraceEvent::Type::Instant, event.getType());
-        EXPECT_EQ("",
-                  std::string(event.getArgs()[0].as_istring));
+        EXPECT_EQ("", std::string(event.getArgs()[0].as_istring));
     });
 }
 

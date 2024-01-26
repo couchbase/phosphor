@@ -10,8 +10,8 @@
  */
 
 #include <benchmark/benchmark.h>
-#include <limits>
 #include <gsl_p/dyn_array.h>
+#include <limits>
 
 #include "bench_common.h"
 #include "phosphor/chunk_lock.h"
@@ -53,8 +53,8 @@ void SlaveSlaveShared(benchmark::State& state) {
         locks.resize(0);
     }
 }
-BENCHMARK(SlaveSlave)->Threads(phosphor::benchNumThreads())->RangeMultiplier(2)->Range(1, 128);
 BENCHMARK(SlaveSlave)
-    ->Threads(128)
-    ->RangeMultiplier(2)
-    ->Range(1, 128);
+        ->Threads(phosphor::benchNumThreads())
+        ->RangeMultiplier(2)
+        ->Range(1, 128);
+BENCHMARK(SlaveSlave)->Threads(128)->RangeMultiplier(2)->Range(1, 128);

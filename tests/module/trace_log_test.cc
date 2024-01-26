@@ -36,22 +36,19 @@ phosphor::tracepoint_info tpi0 = {
         "name",
         TraceEvent::Type::Instant,
         {{"arg1", "arg2"}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-};
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}};
 phosphor::tracepoint_info tpi1 = {
         "category",
         "name",
         TraceEvent::Type::Instant,
         {{"arg1", "arg2"}},
-        {{TraceArgument::Type::is_int, TraceArgument::Type::is_none}}
-};
+        {{TraceArgument::Type::is_int, TraceArgument::Type::is_none}}};
 phosphor::tracepoint_info tpi2 = {
         "category",
         "name",
         TraceEvent::Type::Instant,
         {{"arg1", "arg2"}},
-        {{TraceArgument::Type::is_int, TraceArgument::Type::is_int}}
-};
+        {{TraceArgument::Type::is_int, TraceArgument::Type::is_int}}};
 
 class MockTraceLog : public TraceLog {
     friend class TraceLogTest;
@@ -172,7 +169,7 @@ TEST_F(TraceLogTest, logTillFullThreaded) {
     const int thread_count = 8;
     std::vector<std::thread> threads;
     trace_log.start(
-        TraceConfig(BufferMode::fixed, min_buffer_size * thread_count * 4));
+            TraceConfig(BufferMode::fixed, min_buffer_size * thread_count * 4));
 
     for (int i = 0; i < thread_count; ++i) {
         threads.emplace_back([this]() {
@@ -200,12 +197,11 @@ TEST_F(TraceLogTest, StopRestartVerify) {
     start_basic();
 
     static tracepoint_info tpi0_alt = {
-        "category2",
-        "name",
-        TraceEvent::Type::Instant,
-        {{"arg1", "arg2"}},
-        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-    };
+            "category2",
+            "name",
+            TraceEvent::Type::Instant,
+            {{"arg1", "arg2"}},
+            {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}};
     trace_log.logEvent(&tpi0_alt, 0, 0);
 
     // Fetch the buffer and ensure that it contains our second event
@@ -220,7 +216,7 @@ TEST_F(TraceLogTest, StopRestartVerify) {
 
 TEST_F(TraceLogTest, CategoryConfig) {
     trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size)
-                        .setCategories({{"*"}}, {{"world"}}));
+                            .setCategories({{"*"}}, {{"world"}}));
     EXPECT_EQ(CategoryStatus::Enabled, trace_log.getCategoryStatus("hello"));
     EXPECT_EQ(CategoryStatus::Disabled, trace_log.getCategoryStatus("world"));
 }
@@ -304,15 +300,14 @@ TEST(TraceLogStaticTest, noExplicitRegisterWithChunk) {
     {
         TraceLog trace_log;
         const int numThreads = 32;
-        trace_log.start(TraceConfig(BufferMode::ring,
-                                    sizeof(TraceChunk) * numThreads));
+        trace_log.start(
+                TraceConfig(BufferMode::ring, sizeof(TraceChunk) * numThreads));
         // Use heap-allocated thread objects to increase ease of ASan etc
         // detecting the invalid memory usage.
         std::vector<std::unique_ptr<std::thread>> threads;
         for (int i = 0; i < numThreads; i++) {
-            threads.emplace_back(new std::thread{[&trace_log]{
-                trace_log.logEvent(&tpi2, 0, 0);
-                    }});
+            threads.emplace_back(new std::thread{
+                    [&trace_log] { trace_log.logEvent(&tpi2, 0, 0); }});
         }
         for (auto& t : threads) {
             t->join();
@@ -332,11 +327,10 @@ struct DoneCallback : public TracingStoppedCallback {
     }
 };
 TEST_F(TraceLogTest, testDoneCallback) {
-
     auto callback = std::make_shared<DoneCallback>();
 
     trace_log.start(TraceConfig(BufferMode::fixed, min_buffer_size * 4)
-                        .setStoppedCallback(callback));
+                            .setStoppedCallback(callback));
 
     while (trace_log.isEnabled()) {
         log_event();
@@ -353,12 +347,13 @@ TEST_F(TraceLogTest, nonBlockingStop) {
 
     // Return nullptr to indicate buffer is full
     EXPECT_CALL(*buffer_ptr, getChunk())
-        .WillRepeatedly(testing::Return(nullptr));
+            .WillRepeatedly(testing::Return(nullptr));
 
-    trace_log.start(
-        TraceConfig([&buffer](size_t generation,
-                              size_t buffer_size) { return std::move(buffer); },
-                    min_buffer_size * 4));
+    trace_log.start(TraceConfig(
+            [&buffer](size_t generation, size_t buffer_size) {
+                return std::move(buffer);
+            },
+            min_buffer_size * 4));
 
     {
         std::lock_guard<TraceLog> lg(trace_log);
@@ -400,21 +395,20 @@ TEST(TraceLogAltTest, stopOnDestruct) {
     {
         TraceLog trace_log;
         trace_log.start(TraceConfig(BufferMode::fixed, 80000)
-                            .setStoppedCallback(callback)
-                            .setStopTracingOnDestruct(true));
+                                .setStoppedCallback(callback)
+                                .setStopTracingOnDestruct(true));
     }
     EXPECT_TRUE(callback->invoked);
     callback->invoked = false;
     {
         TraceLog trace_log;
         trace_log.start(TraceConfig(BufferMode::fixed, 80000)
-                            .setStoppedCallback(callback));
+                                .setStoppedCallback(callback));
     }
     EXPECT_FALSE(callback->invoked);
 }
 
 TEST_F(TraceLogTest, RegisterDeregisterRegister) {
-
     trace_log.deregisterThread();
     trace_log.registerThread("name1");
     auto context = trace_log.getTraceContext();
@@ -425,7 +419,7 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     // Thread name shouldn't persist after de-registering when not running
     trace_log.deregisterThread();
     context = trace_log.getTraceContext();
-    EXPECT_TRUE( context.getThreadNames().empty());
+    EXPECT_TRUE(context.getThreadNames().empty());
 
     // Thread name should persist even after de-registering when running
     trace_log.registerThread("name1");
@@ -433,7 +427,7 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     trace_log.deregisterThread();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    ASSERT_FALSE( context.getThreadNames().empty());
+    ASSERT_FALSE(context.getThreadNames().empty());
     it = context.getThreadNames().begin();
     EXPECT_EQ("name1", it->second);
 
@@ -449,7 +443,7 @@ TEST_F(TraceLogTest, RegisterDeregisterRegister) {
     trace_log.deregisterThread();
     trace_log.stop();
     context = trace_log.getTraceContext();
-    EXPECT_FALSE( context.getThreadNames().empty());
+    EXPECT_FALSE(context.getThreadNames().empty());
     start_basic();
     trace_log.stop();
     context = trace_log.getTraceContext();

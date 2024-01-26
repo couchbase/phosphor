@@ -14,17 +14,16 @@
 
 #include "phosphor/tools/export.h"
 
-using phosphor::tools::JSONExport;
 using phosphor::tools::FileStopCallback;
+using phosphor::tools::JSONExport;
 using namespace phosphor;
 
 tracepoint_info tpi = {
-    "category",
-    "name",
-    TraceEvent::Type::Instant,
-    {{"arg1", "arg2"}},
-    {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}
-};
+        "category",
+        "name",
+        TraceEvent::Type::Instant,
+        {{"arg1", "arg2"}},
+        {{TraceArgument::Type::is_none, TraceArgument::Type::is_none}}};
 
 class MockTraceContext : public phosphor::TraceContext {
 public:
@@ -45,18 +44,14 @@ public:
         while (!context.getBuffer()->isFull()) {
             auto* chunk = context.getBuffer()->getChunk();
             while (!chunk->isFull()) {
-                chunk->addEvent() = phosphor::TraceEvent(
-                        &tpi,
-                        {{0, 0}});
+                chunk->addEvent() = phosphor::TraceEvent(&tpi, {{0, 0}});
             }
         }
     }
 
     void addOneToContextBuffer() {
         auto* chunk = context.getBuffer()->getChunk();
-        chunk->addEvent() = phosphor::TraceEvent(
-                &tpi,
-                {{0, 0}});
+        chunk->addEvent() = phosphor::TraceEvent(&tpi, {{0, 0}});
     }
 
     void addThreadsToContext(size_t count) {
@@ -153,9 +148,9 @@ TEST(MockFileStopCallbackTest, valid_name) {
     callback = MockFileStopCallback("test.%p.json");
     auto filename_pid_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-        "test.[0-9]+.json");
+            "test.[0-9]+.json");
 #else
-        "test.\\d+.json");
+            "test.\\d+.json");
 #endif
 
     EXPECT_THAT(*callback.generateFilePathAsPtr(), filename_pid_regex);
@@ -163,9 +158,9 @@ TEST(MockFileStopCallbackTest, valid_name) {
     callback = MockFileStopCallback("test.%d.json");
     auto filename_date_regex = testing::MatchesRegex(
 #if GTEST_USES_POSIX_RE
-        "test.[0-9]{4}.[0-9]{2}.[0-9]{2}T[0-9]{2}.[0-9]{2}.[0-9]{2}Z.json");
+            "test.[0-9]{4}.[0-9]{2}.[0-9]{2}T[0-9]{2}.[0-9]{2}.[0-9]{2}Z.json");
 #else
-        "test.\\d+.\\d+.\\d+T\\d+.\\d+.\\d+Z.json");
+            "test.\\d+.\\d+.\\d+T\\d+.\\d+.\\d+Z.json");
 #endif
 
     EXPECT_THAT(*callback.generateFilePathAsPtr(), filename_date_regex);
@@ -189,12 +184,11 @@ TEST_F(FileStopCallbackTest, test_to_file) {
     filename = "filecallbacktest.json";
 
     log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 80000)
-                  .setStoppedCallback(
-                      std::make_shared<FileStopCallback>(filename)));
+                      .setStoppedCallback(
+                              std::make_shared<FileStopCallback>(filename)));
     log.registerThread();
     while (log.isEnabled()) {
-        log.logEvent(
-            &tpi, 0, NoneType());
+        log.logEvent(&tpi, 0, NoneType());
     }
     log.deregisterThread();
 }
@@ -203,7 +197,7 @@ TEST_F(FileStopCallbackTest, file_open_fail) {
     phosphor::TraceLog log;
     filename = "";
     log.start(phosphor::TraceConfig(phosphor::BufferMode::fixed, 80000)
-                  .setStoppedCallback(
-                      std::make_shared<FileStopCallback>(filename)));
+                      .setStoppedCallback(
+                              std::make_shared<FileStopCallback>(filename)));
     EXPECT_THROW(log.stop(), std::runtime_error);
 }

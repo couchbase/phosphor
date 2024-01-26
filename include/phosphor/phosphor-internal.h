@@ -18,14 +18,11 @@
 /*
  * Generates a variable name that will be unique per-line for the given prefix
  */
-#define PHOSPHOR_INTERNAL_UID3(a, b) \
-    phosphor_internal_ ##a##_##b
+#define PHOSPHOR_INTERNAL_UID3(a, b) phosphor_internal_##a##_##b
 
-#define PHOSPHOR_INTERNAL_UID2(a, b) \
-    PHOSPHOR_INTERNAL_UID3(a, b)
+#define PHOSPHOR_INTERNAL_UID2(a, b) PHOSPHOR_INTERNAL_UID3(a, b)
 
-#define PHOSPHOR_INTERNAL_UID(prefix) \
-    PHOSPHOR_INTERNAL_UID2(prefix, __LINE__)
+#define PHOSPHOR_INTERNAL_UID(prefix) PHOSPHOR_INTERNAL_UID2(prefix, __LINE__)
 
 /*
  * Sets up the category status variables
@@ -41,17 +38,33 @@
             category_enabled_temp) = PHOSPHOR_INTERNAL_UID(category_enabled) \
                                              .load(std::memory_order_acquire);
 
-#define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name, category, name, type, \
-                                         argNameA, argTypeA, argNameB, argTypeB) \
-    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID(          \
-            tpi_name) = {category, name, type, {{argNameA, argNameB}}, \
-                         {{phosphor::TraceArgumentConversion<argTypeA>::getType(), \
-                           phosphor::TraceArgumentConversion<argTypeB>::getType()}}};
+#define PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi_name,                    \
+                                         category,                    \
+                                         name,                        \
+                                         type,                        \
+                                         argNameA,                    \
+                                         argTypeA,                    \
+                                         argNameB,                    \
+                                         argTypeB)                    \
+    constexpr static phosphor::tracepoint_info PHOSPHOR_INTERNAL_UID( \
+            tpi_name) = {                                             \
+            category,                                                 \
+            name,                                                     \
+            type,                                                     \
+            {{argNameA, argNameB}},                                   \
+            {{phosphor::TraceArgumentConversion<argTypeA>::getType(), \
+              phosphor::TraceArgumentConversion<argTypeB>::getType()}}};
 
-#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category, name, type, \
-                                                argNameA, argTypeA, argNameB, argTypeB) \
-    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi, category, name, type, \
-                                     argNameA, argTypeA, argNameB, argTypeB); \
+#define PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(                      \
+        category, name, type, argNameA, argTypeA, argNameB, argTypeB) \
+    PHOSPHOR_INTERNAL_INITIALIZE_TPI(tpi,                             \
+                                     category,                        \
+                                     name,                            \
+                                     type,                            \
+                                     argNameA,                        \
+                                     argTypeA,                        \
+                                     argNameB,                        \
+                                     argTypeB);                       \
     PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)
 
 #define PHOSPHOR_INTERNAL_INITIALIZE_CATEGORY_ENABLED(category)      \
@@ -70,13 +83,19 @@
  * for comparison to 0 rather than comparison to 1 which saves an instruction
  * on the disabled path when compiled.
  */
-#define PHOSPHOR_INTERNAL_TRACE_EVENT2(category, name, type, \
-                                       argNameA, argA, argNameB, argB) \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT( \
-        category, name, type, argNameA, decltype(argA), argNameB, decltype(argB)) \
-    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
-          != phosphor::CategoryStatus::Disabled) { \
+#define PHOSPHOR_INTERNAL_TRACE_EVENT2(                                      \
+        category, name, type, argNameA, argA, argNameB, argB)                \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                          \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category,                        \
+                                            name,                            \
+                                            type,                            \
+                                            argNameA,                        \
+                                            decltype(argA),                  \
+                                            argNameB,                        \
+                                            decltype(argB))                  \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)                         \
+                ->load(std::memory_order_acquire) !=                         \
+        phosphor::CategoryStatus::Disabled) {                                \
         PHOSPHOR_INSTANCE.logEvent(&PHOSPHOR_INTERNAL_UID(tpi), argA, argB); \
     }
 
@@ -84,46 +103,69 @@
  * Traces an event of a specified type with one argument
  */
 #define PHOSPHOR_INTERNAL_TRACE_EVENT1(category, name, type, argNameA, argA) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, name, type, argNameA, argA, "", phosphor::NoneType())
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(                                          \
+            category, name, type, argNameA, argA, "", phosphor::NoneType())
 
 /*
  * Traces an event of a specified type with zero arguments
  */
 #define PHOSPHOR_INTERNAL_TRACE_EVENT0(category, name, type) \
-    PHOSPHOR_INTERNAL_TRACE_EVENT2( \
-        category, name, type, \
-        "", phosphor::NoneType(), "", phosphor::NoneType())
+    PHOSPHOR_INTERNAL_TRACE_EVENT2(category,                 \
+                                   name,                     \
+                                   type,                     \
+                                   "",                       \
+                                   phosphor::NoneType(),     \
+                                   "",                       \
+                                   phosphor::NoneType())
 
 /*
  * Traces a complete event of a specified type with two arguments
  */
 // NOTE: `type` is currently unecessarily passed into here. This is to allow for
 // moving `type` from the TraceEvent object into the tpi in a future commit.
-#define PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category, name, type, start, duration, \
-                                          argNameA, argA, argNameB, argB) \
-    PHOSPHOR_INTERNAL_CATEGORY_INFO \
-    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT( \
-        category, name, type, argNameA, decltype(argA), argNameB, decltype(argB)) \
-    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)->load(std::memory_order_acquire) \
-          != phosphor::CategoryStatus::Disabled) { \
-        PHOSPHOR_INSTANCE.logEvent( \
-            &PHOSPHOR_INTERNAL_UID(tpi), start, duration, argA, argB); \
+#define PHOSPHOR_INTERNAL_TRACE_COMPLETE2(                                     \
+        category, name, type, start, duration, argNameA, argA, argNameB, argB) \
+    PHOSPHOR_INTERNAL_CATEGORY_INFO                                            \
+    PHOSPHOR_INTERNAL_INITIALIZE_TRACEPOINT(category,                          \
+                                            name,                              \
+                                            type,                              \
+                                            argNameA,                          \
+                                            decltype(argA),                    \
+                                            argNameB,                          \
+                                            decltype(argB))                    \
+    if (PHOSPHOR_INTERNAL_UID(category_enabled_temp)                           \
+                ->load(std::memory_order_acquire) !=                           \
+        phosphor::CategoryStatus::Disabled) {                                  \
+        PHOSPHOR_INSTANCE.logEvent(                                            \
+                &PHOSPHOR_INTERNAL_UID(tpi), start, duration, argA, argB);     \
     }
 
 /*
  * Traces a complete event of a specified type with one argument
  */
-#define PHOSPHOR_INTERNAL_TRACE_COMPLETE1(category, name, type, start, duration, \
-                                          argNameA, argA) \
-    PHOSPHOR_INTERNAL_TRACE_COMPLETE2( \
-        category, name, type, start, duration, \
-        argNameA, argA, "", phosphor::NoneType())
+#define PHOSPHOR_INTERNAL_TRACE_COMPLETE1(                     \
+        category, name, type, start, duration, argNameA, argA) \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category,                \
+                                      name,                    \
+                                      type,                    \
+                                      start,                   \
+                                      duration,                \
+                                      argNameA,                \
+                                      argA,                    \
+                                      "",                      \
+                                      phosphor::NoneType())
 
 /*
  * Traces a complete event of a specified type with zero arguments
  */
-#define PHOSPHOR_INTERNAL_TRACE_COMPLETE0(category, name, type, start, duration) \
-    PHOSPHOR_INTERNAL_TRACE_COMPLETE2( \
-        category, name, type, start, duration, \
-        "", phosphor::NoneType(), "", phosphor::NoneType())
+#define PHOSPHOR_INTERNAL_TRACE_COMPLETE0(                  \
+        category, name, type, start, duration)              \
+    PHOSPHOR_INTERNAL_TRACE_COMPLETE2(category,             \
+                                      name,                 \
+                                      type,                 \
+                                      start,                \
+                                      duration,             \
+                                      "",                   \
+                                      phosphor::NoneType(), \
+                                      "",                   \
+                                      phosphor::NoneType())

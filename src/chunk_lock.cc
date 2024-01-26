@@ -15,12 +15,10 @@
 
 namespace phosphor {
 
-ChunkLock::ChunkLock(non_trivial_constructor_t t)
-    : state(State::Unlocked) {
+ChunkLock::ChunkLock(non_trivial_constructor_t t) : state(State::Unlocked) {
 }
 
-ChunkLock::ChunkLock(const ChunkLock& other)
-   : state(other.state.load()) {
+ChunkLock::ChunkLock(const ChunkLock& other) : state(other.state.load()) {
 }
 
 ChunkLock& ChunkLock::operator=(const ChunkLock& other) {
@@ -52,7 +50,8 @@ void ChunkLock::unlockSlave() {
 #else
     auto expected = State::SlaveLocked;
     assert(state.compare_exchange_strong(expected, State::Unlocked) &&
-           "ChunkLock::unlockSlave() should only be called while State::SlaveLocked");
+           "ChunkLock::unlockSlave() should only be called while "
+           "State::SlaveLocked");
     (void)expected;
 #endif
 }
@@ -74,7 +73,8 @@ void ChunkLock::unlockMaster() {
 #else
     auto expected = State::MasterLocked;
     assert(state.compare_exchange_strong(expected, State::Unlocked) &&
-           "ChunkLock::unlockMaster() should only be called while State::MasterLocked");
+           "ChunkLock::unlockMaster() should only be called while "
+           "State::MasterLocked");
     (void)expected;
 #endif
 }
@@ -106,4 +106,4 @@ void MasterChunkLock::unlock() {
 ChunkTenant::ChunkTenant(non_trivial_constructor_t t)
     : lck(non_trivial_constructor), chunk(nullptr), initialised(true) {
 }
-}
+} // namespace phosphor

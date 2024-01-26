@@ -13,10 +13,10 @@
 
 namespace phosphor {
 
-    namespace utils {
+namespace utils {
 
-        unique_FILE make_unique_FILE(const char* filename, const char* flags) {
-            return unique_FILE(std::fopen(filename, flags));
-        }
-    }
+unique_FILE make_unique_FILE(const char* filename, const char* flags) {
+    return unique_FILE(std::fopen(filename, flags));
 }
+} // namespace utils
+} // namespace phosphor

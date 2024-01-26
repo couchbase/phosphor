@@ -75,13 +75,12 @@ public:
     }
 };
 
-phosphor::tracepoint_info tpi = {
-        "category",
-        "name",
-        phosphor::TraceEvent::Type::Instant,
-        {{"arg1", "arg2"}},
-        {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_none}}
-};
+phosphor::tracepoint_info tpi = {"category",
+                                 "name",
+                                 phosphor::TraceEvent::Type::Instant,
+                                 {{"arg1", "arg2"}},
+                                 {{phosphor::TraceArgument::Type::is_int,
+                                   phosphor::TraceArgument::Type::is_none}}};
 
 class MemoryTrackingTest : public testing::TestWithParam<size_t> {
 public:
@@ -116,8 +115,7 @@ TEST_P(MemoryTrackingTest, full_log) {
                                      GetParam() * MEGABYTE));
     log->registerThread();
     while (log->isEnabled()) {
-        log->logEvent(
-            &tpi, 0, phosphor::NoneType());
+        log->logEvent(&tpi, 0, phosphor::NoneType());
     }
     log->deregisterThread();
     size_t overhead{memory_change()};
@@ -135,8 +133,8 @@ TEST_P(MemoryTrackingTest, full_log) {
 }
 
 INSTANTIATE_TEST_SUITE_P(Basic,
-                        MemoryTrackingTest,
-                        testing::Values(1, 2, 5, 10, 20, 50, 100),
-                        [](const testing::TestParamInfo<size_t>& param_info) {
-                            return std::to_string(param_info.param) + "MiB";
-                        });
+                         MemoryTrackingTest,
+                         testing::Values(1, 2, 5, 10, 20, 50, 100),
+                         [](const testing::TestParamInfo<size_t>& param_info) {
+                             return std::to_string(param_info.param) + "MiB";
+                         });

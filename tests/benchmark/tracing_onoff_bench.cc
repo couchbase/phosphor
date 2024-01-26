@@ -15,13 +15,12 @@
 
 #include "utils/memory.h"
 
-phosphor::tracepoint_info tpi = {
-        "category",
-        "name",
-        phosphor::TraceEvent::Type::Instant,
-        {{"arg1", "arg2"}},
-        {{phosphor::TraceArgument::Type::is_int, phosphor::TraceArgument::Type::is_none}}
-};
+phosphor::tracepoint_info tpi = {"category",
+                                 "name",
+                                 phosphor::TraceEvent::Type::Instant,
+                                 {{"arg1", "arg2"}},
+                                 {{phosphor::TraceArgument::Type::is_int,
+                                   phosphor::TraceArgument::Type::is_none}}};
 
 /*
  * The TracingOnOff test evaluates the performance of tracing when it is both
@@ -32,8 +31,8 @@ void TracingOnOff(benchmark::State& state) {
     static phosphor::TraceLog log{phosphor::TraceLogConfig()};
     if (state.thread_index() == 0) {
         if (state.range(0)) {
-            log.start(
-                phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
+            log.start(phosphor::TraceConfig(phosphor::BufferMode::ring,
+                                            1024 * 1024));
         }
     }
     log.registerThread();
@@ -41,8 +40,7 @@ void TracingOnOff(benchmark::State& state) {
         // It's likely that the benchmark management overhead will be the
         // significant factor in this instance so run it multiple times
         for (int i = 0; i < 100; i++) {
-            log.logEvent(
-                &tpi, 0, phosphor::NoneType());
+            log.logEvent(&tpi, 0, phosphor::NoneType());
         }
     }
     log.deregisterThread();
@@ -63,8 +61,8 @@ BENCHMARK(TracingOnOff)->Arg(false)->ThreadPerCpu();
 void TracingOnOffMacro(benchmark::State& state) {
     if (state.thread_index() == 0) {
         if (state.range(0)) {
-            PHOSPHOR_INSTANCE.start(
-                    phosphor::TraceConfig(phosphor::BufferMode::ring, 1024 * 1024));
+            PHOSPHOR_INSTANCE.start(phosphor::TraceConfig(
+                    phosphor::BufferMode::ring, 1024 * 1024));
         }
     }
     PHOSPHOR_INSTANCE.registerThread();

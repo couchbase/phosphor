@@ -16,53 +16,53 @@
 #include "core.h"
 
 namespace phosphor {
-    namespace platform {
+namespace platform {
 
-        /**
-         * Get the system process id for the calling process
-         *
-         * This is a platform abstraction for getting the process id
-         * and will likely require reimplementation for different
-         * platforms.
-         *
-         * @return process id for the calling process
-         */
-        PHOSPHOR_API
-        int getCurrentProcessID();
+/**
+ * Get the system process id for the calling process
+ *
+ * This is a platform abstraction for getting the process id
+ * and will likely require reimplementation for different
+ * platforms.
+ *
+ * @return process id for the calling process
+ */
+PHOSPHOR_API
+int getCurrentProcessID();
 
-        /**
-         * Get the system thread id for the calling thread
-         *
-         * This is a platform abstraction for getting the thread id
-         * and will likely require reimplementation for different
-         * platforms.
-         *
-         * @return thread id for the calling thread
-         */
-        PHOSPHOR_API
-        uint32_t getCurrentThreadID();
+/**
+ * Get the system thread id for the calling thread
+ *
+ * This is a platform abstraction for getting the thread id
+ * and will likely require reimplementation for different
+ * platforms.
+ *
+ * @return thread id for the calling thread
+ */
+PHOSPHOR_API
+uint32_t getCurrentThreadID();
 
-        /**
-         * Get the cached system thread id for the calling thread
-         *
-         * This is virtually identical to getCurrentThreadID()
-         * except the thread id is cached in a thread local
-         * variable for performance reasons (e.g. to avoid a
-         * syscall in a given platform abstraction).
-         *
-         * This function is inline as it is expected performance
-         * is important if the cached version is used.
-         *
-         * @return thread id for the calling thread
-         */
-        inline uint32_t getCurrentThreadIDCached() {
-            static thread_local uint32_t thread_id;
+/**
+ * Get the cached system thread id for the calling thread
+ *
+ * This is virtually identical to getCurrentThreadID()
+ * except the thread id is cached in a thread local
+ * variable for performance reasons (e.g. to avoid a
+ * syscall in a given platform abstraction).
+ *
+ * This function is inline as it is expected performance
+ * is important if the cached version is used.
+ *
+ * @return thread id for the calling thread
+ */
+inline uint32_t getCurrentThreadIDCached() {
+    static thread_local uint32_t thread_id;
 
-            if (unlikely(!thread_id)) {
-                thread_id = getCurrentThreadID();
-            }
-
-            return thread_id;
-        }
+    if (unlikely(!thread_id)) {
+        thread_id = getCurrentThreadID();
     }
+
+    return thread_id;
 }
+} // namespace platform
+} // namespace phosphor
