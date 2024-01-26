@@ -31,8 +31,8 @@ public:
     using TraceContext::TraceContext;
 
     // Expose normally protected method as public for testing.
-    void public_addThreadName(uint64_t id, const std::string& name) {
-        addThreadName(id, name);
+    void public_addThreadName(uint64_t id, std::string name) {
+        addThreadName(id, std::move(name));
     }
 };
 

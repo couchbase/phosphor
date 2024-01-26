@@ -15,8 +15,6 @@
 #include <string>
 #include <unordered_map>
 
-#include "phosphor/platform/core.h"
-
 namespace phosphor {
 
 // Forward declare
@@ -39,11 +37,11 @@ public:
     TraceContext(std::unique_ptr<TraceBuffer>&& buffer);
 
     TraceContext(std::unique_ptr<TraceBuffer>&& buffer,
-                 const ThreadNamesMap& _thread_names);
+                 ThreadNamesMap _thread_names);
 
-    TraceContext(TraceContext&& other);
+    TraceContext(TraceContext&& other) noexcept;
 
-    TraceContext& operator=(TraceContext&& other);
+    TraceContext& operator=(TraceContext&& other) noexcept;
 
     const TraceBuffer* getBuffer() const {
         return trace_buffer.get();
@@ -67,7 +65,7 @@ protected:
     /**
      * Add an element to the thread name map.
      */
-    void addThreadName(uint64_t id, const std::string& name);
+    void addThreadName(uint64_t id, std::string name);
 
 private:
     /**
