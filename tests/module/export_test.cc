@@ -67,12 +67,12 @@ protected:
 TEST_F(ExportTest, FullBufferTest) {
     fillContextBuffer();
     JSONExport exporter(context);
-    phosphor::StringPtr p;
+    std::string p;
     do {
         p = exporter.read(80);
-        EXPECT_LE(p->size(), 80UL);
-    } while (p->size());
-    EXPECT_EQ("", *exporter.read(4096));
+        EXPECT_LE(p.size(), 80UL);
+    } while (p.size());
+    EXPECT_EQ("", exporter.read(4096));
 }
 
 TEST_F(ExportTest, fulltest) {
@@ -80,17 +80,17 @@ TEST_F(ExportTest, fulltest) {
     JSONExport exporter(context);
     auto p = exporter.read();
     EXPECT_TRUE(exporter.done());
-    EXPECT_EQ('}', (*p)[p->size() - 2]);
-    EXPECT_EQ('\n', (*p)[p->size() - 1]);
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
 }
 
 TEST_F(ExportTest, SingleEvent) {
     addOneToContextBuffer();
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', (*p)[p->size() - 2]);
-    EXPECT_EQ('\n', (*p)[p->size() - 1]);
-    EXPECT_EQ("", *exporter.read(4096));
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
 }
 
 TEST_F(ExportTest, SingleThreadFullBuffer) {
@@ -98,9 +98,9 @@ TEST_F(ExportTest, SingleThreadFullBuffer) {
     fillContextBuffer();
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', (*p)[p->size() - 2]);
-    EXPECT_EQ('\n', (*p)[p->size() - 1]);
-    EXPECT_EQ("", *exporter.read(4096));
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
 }
 
 TEST_F(ExportTest, LotsOfThreadsFullBuffer) {
@@ -108,69 +108,34 @@ TEST_F(ExportTest, LotsOfThreadsFullBuffer) {
     fillContextBuffer();
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', (*p)[p->size() - 2]);
-    EXPECT_EQ('\n', (*p)[p->size() - 1]);
-    EXPECT_EQ("", *exporter.read(4096));
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
 }
 
 TEST_F(ExportTest, LotsOfThreadsEmptyBuffer) {
     addThreadsToContext(100);
     JSONExport exporter(context);
     auto p = exporter.read();
-    EXPECT_EQ('}', (*p)[p->size() - 2]);
-    EXPECT_EQ('\n', (*p)[p->size() - 1]);
-    EXPECT_EQ("", *exporter.read(4096));
+    EXPECT_EQ('}', p[p.size() - 2]);
+    EXPECT_EQ('\n', p[p.size() - 1]);
+    EXPECT_EQ("", exporter.read(4096));
 }
 
 TEST_F(ExportTest, test) {
     JSONExport exporter(context);
-    phosphor::StringPtr p;
+    std::string p;
     do {
         p = exporter.read(80);
-        EXPECT_LE(p->size(), 80UL);
-    } while (p->size());
-    EXPECT_EQ("", *exporter.read(4096));
-}
-
-class MockFileStopCallback : public FileStopCallback {
-public:
-    using FileStopCallback::FileStopCallback;
-
-    StringPtr generateFilePathAsPtr() {
-        return FileStopCallback::generateFilePathAsPtr();
-    }
-};
-
-TEST(MockFileStopCallbackTest, valid_name) {
-    MockFileStopCallback callback("test.json");
-    EXPECT_EQ("test.json", *callback.generateFilePathAsPtr());
-
-    callback = MockFileStopCallback("test.%p.json");
-    auto filename_pid_regex = testing::MatchesRegex(
-#if GTEST_USES_POSIX_RE
-            "test.[0-9]+.json");
-#else
-            "test.\\d+.json");
-#endif
-
-    EXPECT_THAT(*callback.generateFilePathAsPtr(), filename_pid_regex);
-
-    callback = MockFileStopCallback("test.%d.json");
-    auto filename_date_regex = testing::MatchesRegex(
-#if GTEST_USES_POSIX_RE
-            "test.[0-9]{4}.[0-9]{2}.[0-9]{2}T[0-9]{2}.[0-9]{2}.[0-9]{2}Z.json");
-#else
-            "test.\\d+.\\d+.\\d+T\\d+.\\d+.\\d+Z.json");
-#endif
-
-    EXPECT_THAT(*callback.generateFilePathAsPtr(), filename_date_regex);
+        EXPECT_LE(p.size(), 80UL);
+    } while (p.size());
+    EXPECT_EQ("", exporter.read(4096));
 }
 
 class FileStopCallbackTest : public testing::Test {
 public:
-    FileStopCallbackTest() = default;
-    ~FileStopCallbackTest() {
-        if (filename != "") {
+    void TearDown() override {
+        if (!filename.empty()) {
             std::remove(filename.c_str());
         }
     }
@@ -178,6 +143,31 @@ public:
 protected:
     std::string filename;
 };
+
+TEST_F(FileStopCallbackTest, valid_name) {
+    FileStopCallback callback("test.json");
+    EXPECT_EQ("test.json", callback.generateFilePath());
+
+    callback = FileStopCallback("test.%p.json");
+    auto filename_pid_regex = testing::MatchesRegex(
+#if GTEST_USES_POSIX_RE
+            "test.[0-9]+.json");
+#else
+            "test.\\d+.json");
+#endif
+
+    EXPECT_THAT(callback.generateFilePath(), filename_pid_regex);
+
+    callback = FileStopCallback("test.%d.json");
+    auto filename_date_regex = testing::MatchesRegex(
+#if GTEST_USES_POSIX_RE
+            "test.[0-9]{4}.[0-9]{2}.[0-9]{2}T[0-9]{2}.[0-9]{2}.[0-9]{2}Z.json");
+#else
+            "test.\\d+.\\d+.\\d+T\\d+.\\d+.\\d+Z.json");
+#endif
+
+    EXPECT_THAT(callback.generateFilePath(), filename_date_regex);
+}
 
 TEST_F(FileStopCallbackTest, test_to_file) {
     phosphor::TraceLog log;

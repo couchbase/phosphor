@@ -159,19 +159,19 @@ TEST(TraceConfigTest, toString) {
     EXPECT_EQ(
             "buffer-mode:fixed;buffer-size:1337;"
             "enabled-categories:hello;disabled-categories:world",
-            *config.toString());
+            config.toString());
 
     TraceConfig config2(BufferMode::ring, 0);
     EXPECT_EQ(
             "buffer-mode:ring;buffer-size:0;"
             "enabled-categories:*;disabled-categories:",
-            *config2.toString());
+            config2.toString());
 
     TraceConfig config3(make_fixed_buffer, 1337);
     EXPECT_EQ(
             "buffer-mode:custom;buffer-size:1337;"
             "enabled-categories:*;disabled-categories:",
-            *config3.toString());
+            config3.toString());
 }
 
 TEST(TraceConfigTest, getBufferFactoryReturnsCorrectFactoryForBuiltIns) {

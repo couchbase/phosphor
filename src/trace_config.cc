@@ -25,14 +25,6 @@ std::ostream& operator<<(std::ostream& stream, const BufferMode mode) {
     return stream;
 }
 
-void StringPtrDeleter::operator()(const std::string* ptr) {
-    delete ptr;
-}
-
-StringPtr make_String(const std::string& str) {
-    return StringPtr(new std::string(str));
-}
-
 /*
  * TraceLogConfig implementation
  */
@@ -217,7 +209,7 @@ TraceConfig TraceConfig::fromString(const std::string& config) {
     return config_obj;
 }
 
-StringPtr TraceConfig::toString() const {
+std::string TraceConfig::toString() const {
     std::stringstream result;
 
     result << "buffer-mode:" << buffer_factory_container.mode << ";";
@@ -229,7 +221,7 @@ StringPtr TraceConfig::toString() const {
 
     // Can't easily do the 'save-on-stop' callback
 
-    return make_String(result.str());
+    return result.str();
 }
 
 TraceConfig::BufferFactoryContainer::BufferFactoryContainer(BufferMode m)

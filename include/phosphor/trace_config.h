@@ -63,35 +63,6 @@ public:
 std::ostream& operator<<(std::ostream& stream, const BufferMode mode);
 
 /**
- * Custom deleter for our StringPtr class. Exists to create an
- * explicitly non-inline destructor.
- */
-struct StringPtrDeleter {
-    void operator()(const std::string* ptr);
-};
-
-/**
- * String is used to expose string objects to clients, for example
- * when reading phosphor config strings.
- *
- * This is part of the DLL interface, and hence we need a type
- * which cannot be deleted directly by the client application -
- * phosphor itself must delete it to prevent mismatches between
- * allocate and free. Therefore we use a unique_ptr with a custom
- * (non-inline) deleter to ensure phosphor itself always deletes
- * any instances.
- */
-using StringPtr = std::unique_ptr<const std::string, StringPtrDeleter>;
-
-/**
- * make_unique equivilent for the StringPtr class.
- *
- * This should be used to contruct all instances of StringPtr, to ensure
- * matching alloc/free.
- */
-StringPtr make_String(const std::string& str);
-
-/**
  * The TraceLogConfig is used to perform a one-time config of a
  * TraceLog for anything that must be set only once e.g. the config
  * to automatically use on startup.
@@ -292,7 +263,7 @@ public:
      *
      * @return The config string
      */
-    StringPtr toString() const;
+    std::string toString() const;
 
 protected:
     // Utility class to simplify maintenance of the mode/factory invariants

@@ -63,14 +63,14 @@ public:
      *          the point that was previously left off. This will
      *          return less than 'length' at the end of the buffer.
      */
-    StringPtr read(size_t length);
+    std::string read(size_t length);
 
     /**
      * Read entire buffer's worth of JSON
      *
      * @returns The entire buffer converted to JSON
      */
-    StringPtr read();
+    std::string read();
 
     /**
      * @return True if the export is complete
@@ -124,15 +124,11 @@ public:
      */
     void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) override;
 
-protected:
-    /*
-     * Exposed for testing
-     */
-    StringPtr generateFilePathAsPtr();
+    /// Exposed for testing
+    std::string generateFilePath();
 
 private:
     std::string file_path;
-    std::string generateFilePath();
 };
 } // namespace tools
 } // namespace phosphor

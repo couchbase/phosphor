@@ -105,11 +105,11 @@ TEST_F(TraceLogTest, multiStart) {
 
     trace_log.start(configA);
     EXPECT_TRUE(trace_log.isEnabled());
-    EXPECT_EQ(*configA.toString(), *trace_log.getTraceConfig().toString());
+    EXPECT_EQ(configA.toString(), trace_log.getTraceConfig().toString());
 
     trace_log.start(configB);
     EXPECT_TRUE(trace_log.isEnabled());
-    EXPECT_EQ(*configB.toString(), *trace_log.getTraceConfig().toString());
+    EXPECT_EQ(configB.toString(), trace_log.getTraceConfig().toString());
     trace_log.stop();
     EXPECT_FALSE(trace_log.isEnabled());
     trace_log.stop();
@@ -226,7 +226,7 @@ TEST_F(TraceLogTest, GetConfig) {
     config.setCategories({{"*"}}, {{"world"}});
 
     trace_log.start(config);
-    EXPECT_EQ(*config.toString(), *trace_log.getTraceConfig().toString());
+    EXPECT_EQ(config.toString(), trace_log.getTraceConfig().toString());
     EXPECT_EQ(BufferMode::fixed, trace_log.getTraceConfig().getBufferMode());
     EXPECT_EQ(sizeof(TraceChunk), trace_log.getTraceConfig().getBufferSize());
 }

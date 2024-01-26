@@ -102,18 +102,18 @@ size_t JSONExport::read(char* out, size_t length) {
     return cursor;
 }
 
-StringPtr JSONExport::read(size_t length) {
+std::string JSONExport::read(size_t length) {
     std::string out;
     out.resize(length, '\0');
     out.resize(read(&out[0], length));
-    return make_String(out);
+    return out;
 }
 
 bool JSONExport::done() {
     return state == State::dead;
 }
 
-StringPtr JSONExport::read() {
+std::string JSONExport::read() {
     std::string out;
 
     size_t last_wrote;
@@ -123,7 +123,7 @@ StringPtr JSONExport::read() {
     } while (!done());
 
     out.resize(out.size() - (4096 - last_wrote));
-    return make_String(out);
+    return out;
 }
 
 FileStopCallback::FileStopCallback(const std::string& _file_path)
@@ -176,8 +176,5 @@ std::string FileStopCallback::generateFilePath() {
     return target;
 }
 
-StringPtr FileStopCallback::generateFilePathAsPtr() {
-    return make_String(generateFilePath());
-}
 } // namespace tools
 } // namespace phosphor
