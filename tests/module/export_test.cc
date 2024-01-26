@@ -9,10 +9,11 @@
  *   the file licenses/APL2.txt.
  */
 
+#include "phosphor/platform/thread.h"
+#include "phosphor/tools/export.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-
-#include "phosphor/tools/export.h"
+#include <nlohmann/json.hpp>
 
 using phosphor::tools::FileStopCallback;
 using phosphor::tools::JSONExport;
@@ -60,71 +61,118 @@ public:
         }
     }
 
+    /**
+     * Get all the trace data as JSON
+     *
+     * @param chunked if it should be read as smaller chunks
+     * @return the full JSON
+     */
+    nlohmann::json getTraceJson(bool chunked = false) {
+        JSONExport exporter(context);
+        std::string data;
+        if (chunked) {
+            do {
+                auto section = exporter.read(80);
+                if (section.empty()) {
+                    break;
+                }
+                data.append(section);
+            } while (true);
+        } else {
+            data = exporter.read();
+        }
+
+        // Verify that we've actually hit the end
+        auto extra = exporter.read(4096);
+        if (!extra.empty()) {
+            throw std::runtime_error("getExportedData: more data returned: " +
+                                     extra);
+        }
+
+        // Parse the JSON and verify that it contains the traceEvents
+        // block and that it is an array
+        const auto json = nlohmann::json::parse(data);
+        EXPECT_TRUE(json.is_object()) << json.dump(2);
+        EXPECT_TRUE(json.contains("traceEvents")) << json.dump();
+        EXPECT_TRUE(json["traceEvents"].is_array()) << json.dump();
+
+        return json;
+    }
+
 protected:
     MockTraceContext context;
 };
 
-TEST_F(ExportTest, FullBufferTest) {
+TEST_F(ExportTest, FullBufferTest_Chunked) {
     fillContextBuffer();
-    JSONExport exporter(context);
-    std::string p;
-    do {
-        p = exporter.read(80);
-        EXPECT_LE(p.size(), 80UL);
-    } while (p.size());
-    EXPECT_EQ("", exporter.read(4096));
+    const auto json = getTraceJson(true);
+    EXPECT_EQ(100, json["traceEvents"].size());
+    auto entry = json["traceEvents"][0];
+    EXPECT_TRUE(entry.is_object()) << entry.dump();
+    // The actual entries is tested in TraceEvents unit test
 }
 
-TEST_F(ExportTest, fulltest) {
+TEST_F(ExportTest, FullBufferTest_SingleShot) {
     fillContextBuffer();
-    JSONExport exporter(context);
-    auto p = exporter.read();
-    EXPECT_TRUE(exporter.done());
-    EXPECT_EQ('}', p.back());
+    const auto json = getTraceJson();
+    EXPECT_EQ(100, json["traceEvents"].size());
+    auto entry = json["traceEvents"][0];
+    EXPECT_TRUE(entry.is_object()) << entry.dump();
+    // The actual entries is tested in TraceEvents unit test
 }
 
 TEST_F(ExportTest, SingleEvent) {
     addOneToContextBuffer();
-    JSONExport exporter(context);
-    auto p = exporter.read();
-    EXPECT_EQ('}', p.back());
-    EXPECT_EQ("", exporter.read(4096));
+    const auto json = getTraceJson();
+    EXPECT_EQ(1, json["traceEvents"].size());
+    auto entry = json["traceEvents"][0];
+    EXPECT_TRUE(entry.is_object()) << entry.dump();
+}
+
+TEST_F(ExportTest, SingleThread) {
+    addThreadsToContext(1);
+    auto json = getTraceJson();
+    EXPECT_EQ(1, json["traceEvents"].size());
+    auto entry = json["traceEvents"][0];
+    EXPECT_TRUE(entry.is_object()) << entry.dump();
+
+    // Verify that the entry is correct
+    EXPECT_EQ(phosphor::platform::getCurrentProcessID(), entry.value("pid", 0));
+    entry["pid"] = 0;
+    EXPECT_EQ(
+            R"({"args":{"name":"0"},"name":"thread_name","ph":"M","pid":0,"tid":0})",
+            entry.dump());
 }
 
 TEST_F(ExportTest, SingleThreadFullBuffer) {
     addThreadsToContext(1);
     fillContextBuffer();
-    JSONExport exporter(context);
-    auto p = exporter.read();
-    EXPECT_EQ('}', p.back());
-    EXPECT_EQ("", exporter.read(4096));
+    const auto json = getTraceJson();
+    EXPECT_EQ(101, json["traceEvents"].size());
+    auto entry = json["traceEvents"][0];
+    EXPECT_TRUE(entry.is_object()) << entry.dump();
 }
 
 TEST_F(ExportTest, LotsOfThreadsFullBuffer) {
     addThreadsToContext(100);
     fillContextBuffer();
-    JSONExport exporter(context);
-    auto p = exporter.read();
-    EXPECT_EQ('}', p.back());
-    EXPECT_EQ("", exporter.read(4096));
+    const auto json = getTraceJson();
+    EXPECT_EQ(200, json["traceEvents"].size());
+    auto entry = json["traceEvents"][0];
+    EXPECT_TRUE(entry.is_object()) << entry.dump();
 }
 
 TEST_F(ExportTest, LotsOfThreadsEmptyBuffer) {
     addThreadsToContext(100);
-    JSONExport exporter(context);
-    auto p = exporter.read();
-    EXPECT_EQ('}', p.back());
-    EXPECT_EQ("", exporter.read(4096));
+    const auto json = getTraceJson();
+    EXPECT_EQ(100, json["traceEvents"].size());
+    auto entry = json["traceEvents"][0];
+    EXPECT_TRUE(entry.is_object()) << entry.dump();
 }
 
-TEST_F(ExportTest, test) {
-    JSONExport exporter(context);
-    std::string p;
-    do {
-        p = exporter.read(80);
-        EXPECT_LE(p.size(), 80UL);
-    } while (p.size());
-    EXPECT_EQ("", exporter.read(4096));
+TEST_F(ExportTest, TestEmpty) {
+    const auto json = getTraceJson();
+    EXPECT_EQ(0, json["traceEvents"].size());
 }
 
 class FileStopCallbackTest : public testing::Test {

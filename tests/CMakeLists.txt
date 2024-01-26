@@ -17,11 +17,12 @@ MACRO (M_ADD_LIBRARY_GTEST name)
             $<TARGET_OBJECTS:phosphor_test_main>
             ${ARGN}
     )
-    TARGET_LINK_LIBRARIES(${name}
+    target_link_libraries(${name}
             GTest::gmock
             GTest::gtest
             ${_extra_test_libs}
-            phosphor)
+            phosphor
+            nlohmann_json::nlohmann_json)
     ADD_TEST(NAME ${name} COMMAND ${name})
 ENDMACRO()
 

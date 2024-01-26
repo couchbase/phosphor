@@ -9,13 +9,12 @@
  *   the file licenses/APL2.txt.
  */
 
-#include <sstream>
-
-#include <gmock/gmock.h>
-#include <gtest/gtest.h>
-
 #include "phosphor/platform/thread.h"
 #include "phosphor/trace_event.h"
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
+#include <sstream>
 
 using phosphor::TraceArgument;
 using phosphor::TraceEvent;
@@ -82,7 +81,44 @@ TEST(TraceEvent, typeToString) {
                  std::invalid_argument);
 }
 
-TEST(TraceEvent, toJSON) {
+class TraceEventJsonTest : public testing::Test {
+protected:
+    static void assertStringField(const nlohmann::json& json,
+                                  const std::string& field,
+                                  const std::string& value) {
+        ASSERT_TRUE(json.contains(field)) << json.dump();
+        ASSERT_TRUE(json[field].is_string()) << json.dump();
+        EXPECT_EQ(value, json[field].get<std::string>());
+    }
+
+    static void assertFloatField(const nlohmann::json& json,
+                                 const std::string& field,
+                                 const std::optional<float> value = {}) {
+        ASSERT_TRUE(json.contains(field)) << json.dump();
+        ASSERT_TRUE(json[field].is_number_float()) << json.dump();
+        if (value.has_value()) {
+            EXPECT_EQ(*value, json[field].get<float>());
+        }
+    }
+
+    static void assertNumericField(const nlohmann::json& json,
+                                   const std::string& field,
+                                   const int value) {
+        ASSERT_TRUE(json.contains(field)) << json.dump();
+        ASSERT_TRUE(json[field].is_number()) << json.dump();
+        EXPECT_EQ(value, json[field].get<int>());
+    }
+
+    static void assertBooleanField(const nlohmann::json& json,
+                                   const std::string& field,
+                                   const bool value) {
+        ASSERT_TRUE(json.contains(field)) << json.dump();
+        ASSERT_TRUE(json[field].is_boolean()) << json.dump();
+        EXPECT_EQ(value, json[field].get<bool>());
+    }
+};
+
+TEST_F(TraceEventJsonTest, toJSON) {
     constexpr phosphor::tracepoint_info tpi = {
             "category",
             "name",
@@ -97,26 +133,27 @@ TEST(TraceEvent, toJSON) {
 
     TraceEvent event(&tpi, now, duration, {{0, 0}});
 
-    auto event_regex = testing::MatchesRegex(
-#if GTEST_USES_POSIX_RE
-            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"X\",\"dur\":"
-            "3\\.033,"
-            "\"ts\":2\\.002,\"pid\":" +
-            std::to_string(phosphor::platform::getCurrentProcessID()) +
-            ",\"tid\":0,"
-            "\"args\":\\{\"arg1\":false\\}\\}");
-#else
-            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"X\",\"dur\":"
-            "3\\.033,"
-            "\"ts\":2\\.002,\"pid\":" +
-            std::to_string(phosphor::platform::getCurrentProcessID()) +
-            ",\"tid\":0,"
-            "\"args\":\\{\"arg1\":false\\}\\}");
-#endif
-    EXPECT_THAT(event.to_json(0), event_regex);
+    // Verify that all is as expected
+    const auto json = nlohmann::json::parse(event.to_json(0));
+    ASSERT_TRUE(json.is_object()) << json.dump();
+
+    ASSERT_TRUE(json.contains("args")) << json.dump();
+    ASSERT_TRUE(json["args"].is_object());
+
+    const auto& args = json["args"];
+    EXPECT_EQ(1, args.size()) << args.dump();
+    assertBooleanField(args, "arg1", false);
+
+    assertStringField(json, "cat", "category");
+    assertFloatField(json, "dur", 3.033f);
+    assertStringField(json, "name", "name");
+    assertStringField(json, "ph", "X");
+    assertNumericField(json, "pid", phosphor::platform::getCurrentProcessID());
+    assertNumericField(json, "tid", 0);
+    assertFloatField(json, "ts", 2.002f);
 }
 
-TEST(TraceEvent, toJSONAlt) {
+TEST_F(TraceEventJsonTest, toJSONAlt) {
     constexpr phosphor::tracepoint_info tpi = {
             "category",
             "name",
@@ -126,21 +163,28 @@ TEST(TraceEvent, toJSONAlt) {
 
     TraceEvent event(&tpi, {{0, 0}});
 
-    auto event_regex = testing::MatchesRegex(
-#if GTEST_USES_POSIX_RE
-            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-            "\"ts\":[0-9.]+,\"pid\":" +
-            std::to_string(phosphor::platform::getCurrentProcessID()) +
-            ",\"tid\":0,"
-            "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
-#else
-            "\\{\"name\":\"name\",\"cat\":\"category\",\"ph\":\"E\","
-            "\"ts\":\\d+\\.?\\d*,\"pid\":" +
-            std::to_string(phosphor::platform::getCurrentProcessID()) +
-            ",\"tid\":0,"
-            "\"args\":\\{\"arg1\":false,\"arg2\":false\\}\\}");
-#endif
-    EXPECT_THAT(event.to_json(0), event_regex);
+    const auto json = nlohmann::json::parse(event.to_json(0));
+    ASSERT_TRUE(json.is_object());
+
+    // Verify that we have the expected number of elements (we'll check them
+    // later on)
+    EXPECT_EQ(7, json.size()) << json.dump();
+
+    ASSERT_TRUE(json.contains("args"));
+    const auto& args = json["args"];
+    ASSERT_TRUE(args.is_object());
+    ASSERT_EQ(2, args.size());
+    assertBooleanField(args, "arg1", false);
+    assertBooleanField(args, "arg2", false);
+
+    assertStringField(json, "cat", "category");
+    assertStringField(json, "name", "name");
+    assertStringField(json, "ph", "E");
+    assertNumericField(json, "pid", phosphor::platform::getCurrentProcessID());
+    assertNumericField(json, "tid", 0);
+    // we can't validate the actual value of ts as it is a generated value..
+    // check that it is a flat
+    assertFloatField(json, "ts");
 }
 
 class MockTraceEvent : public TraceEvent {
@@ -185,7 +229,7 @@ TEST(TraceEventTypeToJSON, Instant) {
     MockTraceEvent event(&tpi, {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.type));
-    EXPECT_EQ(",\"s\":\"t\"", res.extras);
+    EXPECT_EQ(R"(,"s":"t")", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, SyncStart) {
@@ -227,7 +271,7 @@ TEST(TraceEventTypeToJSON, AsyncStart) {
     MockTraceEvent event(&tpi, {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("b", std::string(res.type));
-    EXPECT_EQ(",\"id\": \"0x0\"", res.extras);
+    EXPECT_EQ(R"(,"id": "0x0")", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, AsyncEnd) {
@@ -241,7 +285,7 @@ TEST(TraceEventTypeToJSON, AsyncEnd) {
     MockTraceEvent event(&tpi, {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("e", std::string(res.type));
-    EXPECT_EQ(",\"id\": \"0x0\"", res.extras);
+    EXPECT_EQ(R"(,"id": "0x0")", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, GlobalInstant) {
@@ -255,7 +299,7 @@ TEST(TraceEventTypeToJSON, GlobalInstant) {
     MockTraceEvent event(&tpi, {{0, 0}});
     auto res = event.typeToJSON();
     EXPECT_EQ("i", std::string(res.type));
-    EXPECT_EQ(",\"s\":\"g\"", res.extras);
+    EXPECT_EQ(R"(,"s":"g")", res.extras);
 }
 
 TEST(TraceEventTypeToJSON, Complete) {
