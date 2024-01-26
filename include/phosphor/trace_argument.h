@@ -22,7 +22,6 @@
 #include <type_traits>
 
 #include "inline_zstring.h"
-#include "platform/core.h"
 #include "tracepoint_info.h"
 
 namespace phosphor {

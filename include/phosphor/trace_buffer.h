@@ -25,7 +25,6 @@
 
 #include <gsl_p/iterator.h>
 
-#include "phosphor/platform/core.h"
 #include "trace_event.h"
 
 namespace phosphor {
@@ -40,7 +39,7 @@ namespace phosphor {
  * The TraceChunk should be used from a single thread to
  * store various events.
  */
-class PHOSPHOR_API TraceChunk {
+class TraceChunk {
 public:
     static constexpr auto chunk_page_count = PHOSPHOR_CHUNK_PAGE_COUNT;
     static constexpr auto page_size = 4096;
@@ -264,7 +263,7 @@ public:
      *         }
      *     }
      */
-    class PHOSPHOR_API chunk_iterator {
+    class chunk_iterator {
     public:
         using iterator_category = std::bidirectional_iterator_tag;
         using value_type = TraceChunk;
@@ -334,7 +333,7 @@ public:
      *         // Do something with every chunk
      *     }
      */
-    class PHOSPHOR_API chunk_iterable {
+    class chunk_iterable {
     public:
         /**
          * @param buffer_ The buffer to iterate over
@@ -382,19 +381,15 @@ using buffer_ptr = std::unique_ptr<TraceBuffer>;
 using trace_buffer_factory =
         std::function<buffer_ptr(size_t generation, size_t buffer_size)>;
 
-PHOSPHOR_API
 buffer_ptr make_fixed_buffer(size_t generation, size_t buffer_size);
 
-PHOSPHOR_API
 buffer_ptr make_ring_buffer(size_t generation, size_t buffer_size);
 
 /// Parse the buffer mode from provided string (the comparison is case
 /// insensitive). throws std::invalid_argument for invalid modes
-PHOSPHOR_API
 BufferMode parseBufferMode(std::string_view mode);
 } // namespace phosphor
 
 /// Get a textual representation for the provided buffer mode. Throws
 /// std::invalid_argument for invalid modes
-PHOSPHOR_API
 std::string to_string(phosphor::BufferMode mode);

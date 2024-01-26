@@ -14,8 +14,6 @@
 #include <cstddef>
 #include <type_traits>
 
-#include "visibility.h"
-
 #if defined(__GNUC__) || defined(__clang__)
 /**
  * Branch prediction hint for the compiler where the given

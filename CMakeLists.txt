@@ -25,7 +25,6 @@ SET(phosphor_HEADER_FILES
         ${phosphor_SOURCE_DIR}/include/phosphor/tracepoint_info.h
         ${phosphor_SOURCE_DIR}/include/phosphor/platform/core.h
         ${phosphor_SOURCE_DIR}/include/phosphor/platform/thread.h
-        ${phosphor_SOURCE_DIR}/include/phosphor/platform/visibility.h
         ${phosphor_SOURCE_DIR}/include/phosphor/tools/export.h)
 
 SET(phosphor_SOURCE_FILES

@@ -44,7 +44,7 @@ namespace phosphor {
  *
  * This class's public interface is *generally* thread-safe.
  */
-class PHOSPHOR_API TraceLog {
+class TraceLog {
 public:
     /**
      * Constructor for creating a TraceLog with a specific log

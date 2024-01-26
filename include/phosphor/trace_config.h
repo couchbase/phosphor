@@ -19,8 +19,8 @@
 namespace phosphor {
 
 // Forward declare
-class PHOSPHOR_API TraceLog;
-class PHOSPHOR_API TraceConfig;
+class TraceLog;
+class TraceConfig;
 
 /**
  * Functor type for a callback to be used when a TraceLog stops
@@ -60,14 +60,13 @@ public:
 /**
  * ostream operator overload for BufferMode
  */
-PHOSPHOR_API
 std::ostream& operator<<(std::ostream& stream, const BufferMode mode);
 
 /**
  * Custom deleter for our StringPtr class. Exists to create an
  * explicitly non-inline destructor.
  */
-struct PHOSPHOR_API StringPtrDeleter {
+struct StringPtrDeleter {
     void operator()(const std::string* ptr);
 };
 
@@ -101,7 +100,7 @@ StringPtr make_String(const std::string& str);
  * created, or by using the TraceLog::configure() method *prior* to
  * the first time the TraceLog is started.
  */
-class PHOSPHOR_API TraceLogConfig {
+class TraceLogConfig {
 public:
     /**
      * Default constructor
@@ -166,7 +165,7 @@ protected:
  * All other arguments are optional and may be specified using chainable
  * methods.
  */
-class PHOSPHOR_API TraceConfig {
+class TraceConfig {
 public:
     TraceConfig();
 

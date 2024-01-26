@@ -315,7 +315,6 @@ std::unique_ptr<TraceBuffer> make_ring_buffer(size_t generation,
     return utils::make_unique<RingTraceBuffer>(generation, buffer_size);
 }
 
-PHOSPHOR_API
 BufferMode parseBufferMode(std::string_view mode) {
     if (mode == "custom") {
         return BufferMode::custom;
@@ -331,7 +330,6 @@ BufferMode parseBufferMode(std::string_view mode) {
 }
 } // namespace phosphor
 
-PHOSPHOR_API
 std::string to_string(phosphor::BufferMode mode) {
     switch (mode) {
     case phosphor::BufferMode::custom:

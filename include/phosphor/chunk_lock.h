@@ -17,8 +17,6 @@
 
 #include <atomic>
 
-#include "platform/core.h"
-
 namespace phosphor {
 
 /**
@@ -52,7 +50,7 @@ class TraceChunk;
  *
  * This is somewhat similar to a Reader/Writer lock with only one reader
  */
-class PHOSPHOR_API ChunkLock {
+class ChunkLock {
 public:
     /**
      * ChunkLock is trivially constructible to allow for use in
@@ -141,7 +139,7 @@ protected:
 /**
  * Lockable concept implementation around a ChunkLock's slave lock
  */
-class PHOSPHOR_API SlaveChunkLock : public ChunkLock {
+class SlaveChunkLock : public ChunkLock {
 public:
     void lock();
     bool try_lock();
@@ -151,13 +149,13 @@ public:
 /**
  * BasicLockable concept implementation around a ChunkLock's master lock
  */
-class PHOSPHOR_API MasterChunkLock : public ChunkLock {
+class MasterChunkLock : public ChunkLock {
 public:
     void lock();
     void unlock();
 };
 
-struct PHOSPHOR_API ChunkTenant {
+struct ChunkTenant {
     /**
      * ChunkTenant is trivially constructible to allow for use in
      * MacOS compatible `thread_local` variables.

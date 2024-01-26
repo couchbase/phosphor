@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "platform/core.h"
 #include <string_view>
 
 namespace phosphor {

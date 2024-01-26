@@ -11,8 +11,6 @@
 
 #pragma once
 
-#include <phosphor/platform/core.h>
-
 namespace phosphor {
 namespace utils {
 
@@ -24,7 +22,6 @@ namespace utils {
  * @return Length of s, or maxsize if s might be longer
  *         than maxsize.
  */
-PHOSPHOR_API
 size_t strnlen_s(const char* s, size_t maxsize);
 } // namespace utils
 } // namespace phosphor

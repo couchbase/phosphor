@@ -31,7 +31,7 @@ namespace phosphor {
 
 constexpr auto arg_count = 2;
 
-class PHOSPHOR_API TraceEvent {
+class TraceEvent {
 public:
     using Type = TraceEventType;
     /**
@@ -168,7 +168,6 @@ private:
  * @param trace_event TraceEvent to be streamed
  * @return Output stream passed in
  */
-PHOSPHOR_API
 std::ostream& operator<<(std::ostream& os, const TraceEvent& trace_event);
 
 static_assert(

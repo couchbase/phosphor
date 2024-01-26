@@ -27,7 +27,6 @@ namespace platform {
  *
  * @return process id for the calling process
  */
-PHOSPHOR_API
 int getCurrentProcessID();
 
 /**
@@ -39,7 +38,6 @@ int getCurrentProcessID();
  *
  * @return thread id for the calling thread
  */
-PHOSPHOR_API
 uint32_t getCurrentThreadID();
 
 /**

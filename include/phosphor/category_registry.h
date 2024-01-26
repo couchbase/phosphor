@@ -21,8 +21,6 @@
 #include <string>
 #include <vector>
 
-#include "phosphor/platform/core.h"
-
 namespace phosphor {
 
 /**
@@ -39,7 +37,7 @@ class StatsCallback;
  * CategoryRegistry encapsulates the logic for enabling/disabling
  * of various tracing categories
  */
-class PHOSPHOR_API CategoryRegistry {
+class CategoryRegistry {
 public:
     /**
      * Number of unique category permutations that a registry supports

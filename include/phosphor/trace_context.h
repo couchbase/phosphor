@@ -30,7 +30,7 @@ class TraceBuffer;
  * The TraceContext enforces movement semantics as it contains
  * a std::unique_ptr
  */
-class PHOSPHOR_API TraceContext {
+class TraceContext {
 public:
     using ThreadNamesMap = std::unordered_map<uint64_t, std::string>;
 
