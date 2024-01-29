@@ -9,26 +9,22 @@
  *   the file licenses/APL2.txt.
  */
 
-#include <chrono>
-#include <ctime>
-
-#include "phosphor/platform/thread.h"
 #include "phosphor/tools/export.h"
-
+#include "phosphor/platform/thread.h"
 #include "utils/memory.h"
 #include "utils/string_utils.h"
+#include <ctime>
+#include <system_error>
 
-namespace phosphor {
-namespace tools {
+namespace phosphor::tools {
 
 std::string threadAssociationToString(
         const std::pair<uint64_t, std::string>& assoc) {
-    return utils::format_string(
-            "{\"name\":\"thread_name\",\"ph\":\"M\",\"pid\":%d,"
-            "\"tid\":%d,\"args\":{\"name\":\"%s\"}}",
-            platform::getCurrentProcessID(),
-            assoc.first,
-            assoc.second.c_str());
+    return utils::format_string(R"({"name":"thread_name","ph":"M","pid":%d,)"
+                                R"("tid":%d,"args":{"name":"%s"}})",
+                                platform::getCurrentProcessID(),
+                                assoc.first,
+                                assoc.second.c_str());
 }
 
 JSONExport::JSONExport(const TraceContext& _context)
@@ -45,7 +41,7 @@ size_t JSONExport::read(char* out, size_t length) {
 
     while (cursor < length && !(state == State::dead && cache.empty())) {
         if (!cache.empty()) {
-            size_t copied = cache.copy((out + cursor), length - cursor);
+            const auto copied = cache.copy((out + cursor), length - cursor);
             cache.erase(0, copied);
             cursor += copied;
 
@@ -125,28 +121,30 @@ std::string JSONExport::read() {
     return out;
 }
 
-FileStopCallback::FileStopCallback(const std::string& _file_path)
-    : file_path(_file_path) {
+FileStopCallback::FileStopCallback(std::string file_path)
+    : file_path(std::move(file_path)) {
 }
 
 FileStopCallback::~FileStopCallback() = default;
 
 void FileStopCallback::operator()(TraceLog& log,
                                   std::lock_guard<TraceLog>& lh) {
-    std::string formatted_path = generateFilePath();
-    auto fp = utils::make_unique_FILE(formatted_path.c_str(), "w");
-    if (fp == nullptr) {
-        throw std::runtime_error(
+    const auto formatted_path = generateFilePath();
+    const auto fp = utils::make_unique_FILE(formatted_path.c_str(), "w");
+    if (!fp) {
+        throw std::system_error(
+                errno,
+                std::system_category(),
                 "phosphor::tools::ToFileStoppedCallback(): Couldn't"
                 " Couldn't open file: " +
-                formatted_path);
+                        formatted_path);
     }
 
     const TraceContext context = log.getTraceContext(lh);
     char chunk[4096];
     JSONExport exporter(context);
-    while (auto count = exporter.read(chunk, sizeof(chunk))) {
-        auto ret = fwrite(chunk, sizeof(chunk[0]), count, fp.get());
+    while (const auto count = exporter.read(chunk, sizeof(chunk))) {
+        const auto ret = fwrite(chunk, sizeof(chunk[0]), count, fp.get());
         if (ret != count) {
             throw std::runtime_error(
                     "phosphor::tools::ToFileStoppedCallback(): Couldn't"
@@ -156,13 +154,13 @@ void FileStopCallback::operator()(TraceLog& log,
     }
 }
 
-std::string FileStopCallback::generateFilePath() {
+std::string FileStopCallback::generateFilePath() const {
     std::string target = file_path;
 
     utils::string_replace(
             target, "%p", std::to_string(platform::getCurrentProcessID()));
 
-    std::time_t now = std::chrono::system_clock::to_time_t(
+    const auto now = std::chrono::system_clock::to_time_t(
             std::chrono::system_clock::now());
     std::string timestamp;
     timestamp.resize(sizeof("YYYY-MM-DDTHH:MM:SSZ"));
@@ -175,5 +173,4 @@ std::string FileStopCallback::generateFilePath() {
     return target;
 }
 
-} // namespace tools
-} // namespace phosphor
+} // namespace phosphor::tools

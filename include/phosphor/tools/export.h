@@ -41,7 +41,7 @@ public:
     /**
      * Creates the export object
      */
-    JSONExport(const TraceContext& _context);
+    explicit JSONExport(const TraceContext& _context);
 
     ~JSONExport();
 
@@ -105,16 +105,16 @@ protected:
  * everything that a given process has traced when the global TraceLog
  * is destructed).
  */
-class FileStopCallback : public TracingStoppedCallback {
+class FileStopCallback final : public TracingStoppedCallback {
 public:
     /**
-     * @param _file_path File path to save the buffer to on completion,
-     *                   may accept the wild cards %p for PID and %d for
-     *                   an ISOish timestamp 'YYYY.MM.DDTHH.MM.SS'
+     * @param file_path File path to save the buffer to on completion,
+     *                  may accept the wild cards %p for PID and %d for
+     *                  an ISOish timestamp 'YYYY.MM.DDTHH.MM.SS'
      */
-    FileStopCallback(const std::string& _file_path = "phosphor.%p.json");
+    explicit FileStopCallback(std::string file_path = "phosphor.%p.json");
 
-    ~FileStopCallback();
+    ~FileStopCallback() override;
 
     /**
      * Callback method called by TraceLog
@@ -125,7 +125,7 @@ public:
     void operator()(TraceLog& log, std::lock_guard<TraceLog>& lh) override;
 
     /// Exposed for testing
-    std::string generateFilePath();
+    std::string generateFilePath() const;
 
 private:
     std::string file_path;
