@@ -24,7 +24,7 @@ using namespace phosphor;
 /*
  * Basic tracepoint_info used in tests
  */
-phosphor::tracepoint_info tpi = {
+static phosphor::tracepoint_info tpi = {
         "category",
         "name",
         TraceEvent::Type::Instant,

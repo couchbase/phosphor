@@ -19,7 +19,7 @@ using phosphor::tools::FileStopCallback;
 using phosphor::tools::JSONExport;
 using namespace phosphor;
 
-tracepoint_info tpi = {
+static tracepoint_info tpi = {
         "category",
         "name",
         TraceEvent::Type::Instant,
