@@ -76,9 +76,4 @@ ENDIF()
 
 add_subdirectory(tests)
 
-option(PHOSPHOR_BUILD_EXAMPLES "Enable building the examples" OFF)
-IF(PHOSPHOR_BUILD_EXAMPLES)
-    ADD_SUBDIRECTORY(examples)
-ENDIF ()
-
 ENABLE_CODE_COVERAGE_REPORT()
