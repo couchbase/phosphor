@@ -261,9 +261,8 @@ public:
         // then return the buffer size instead.
         if (actual_count > buffer.size()) {
             return buffer.size();
-        } else {
-            return actual_count;
         }
+        return actual_count;
     }
 
     chunk_iterator chunk_begin() const override {

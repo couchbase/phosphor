@@ -53,9 +53,8 @@ const AtomicCategoryStatus& CategoryRegistry::getStatus(
         group_statuses[currIndex] = calculateEnabled(currIndex);
         group_count.fetch_add(1, std::memory_order_release);
         return group_statuses[currIndex];
-    } else {
-        return group_statuses[index_category_limit];
     }
+    return group_statuses[index_category_limit];
 }
 
 CategoryStatus CategoryRegistry::calculateEnabled(
