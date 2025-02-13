@@ -26,8 +26,7 @@
 
 #include "phosphor/platform/thread.h"
 
-namespace phosphor {
-namespace platform {
+namespace phosphor::platform {
 
 uint32_t getCurrentThreadID() {
 #if defined(__APPLE__)
@@ -53,5 +52,4 @@ int getCurrentProcessID() {
     return _getpid();
 #endif
 }
-} // namespace platform
-} // namespace phosphor
+} // namespace phosphor::platform
