@@ -20,7 +20,6 @@ namespace phosphor {
 
 // Forward declare
 class TraceLog;
-class TraceConfig;
 
 /**
  * Functor type for a callback to be used when a TraceLog stops
@@ -61,62 +60,6 @@ public:
  * ostream operator overload for BufferMode
  */
 std::ostream& operator<<(std::ostream& stream, const BufferMode mode);
-
-/**
- * The TraceLogConfig is used to perform a one-time config of a
- * TraceLog for anything that must be set only once e.g. the config
- * to automatically use on startup.
- *
- * The TraceLogConfig can either be passed in when the TraceLog is
- * created, or by using the TraceLog::configure() method *prior* to
- * the first time the TraceLog is started.
- */
-class TraceLogConfig {
-public:
-    /**
-     * Default constructor
-     */
-    TraceLogConfig() {
-    }
-
-    /**
-     * Sets the TraceLog to start tracing immediately on construction
-     * with a particular config
-     *
-     * @param _startup_trace A reference to a preexisting config that
-     *                       will be copied for internal storage.
-     * @return A reference to this config
-     */
-    TraceLogConfig& setStartupTrace(const TraceConfig& _startup_trace);
-
-    /**
-     * Clears the startup trace config that has previously been stored
-     * so that tracing on startup can be disabled.
-     *
-     * @return A reference to this config
-     */
-    TraceLogConfig& clearStartupTrace();
-
-    /**
-     * @return a pointer to the TraceConfig (Because it is potentially null,
-     *         i.e. tracing should not start)
-     */
-    TraceConfig* getStartupTrace() const;
-
-    /**
-     * Factory method which sets up a TraceLogConfig from the
-     * environment variables
-     *
-     * Note: This is a member function because MSVC2012 can't do
-     * copy elision properly.
-     *
-     * @param the TraceLogConfig to initialise
-     */
-    TraceLogConfig& fromEnvironment();
-
-protected:
-    std::unique_ptr<TraceConfig> startup_trace;
-};
 
 /**
  * The TraceConfig is used to configure a TraceLog for starting Trace
@@ -294,6 +237,62 @@ protected:
 
     std::vector<std::string> enabled_categories;
     std::vector<std::string> disabled_categories;
+};
+
+/**
+ * The TraceLogConfig is used to perform a one-time config of a
+ * TraceLog for anything that must be set only once e.g. the config
+ * to automatically use on startup.
+ *
+ * The TraceLogConfig can either be passed in when the TraceLog is
+ * created, or by using the TraceLog::configure() method *prior* to
+ * the first time the TraceLog is started.
+ */
+class TraceLogConfig {
+public:
+    /**
+     * Default constructor
+     */
+    TraceLogConfig() {
+    }
+
+    /**
+     * Sets the TraceLog to start tracing immediately on construction
+     * with a particular config
+     *
+     * @param _startup_trace A reference to a preexisting config that
+     *                       will be copied for internal storage.
+     * @return A reference to this config
+     */
+    TraceLogConfig& setStartupTrace(const TraceConfig& _startup_trace);
+
+    /**
+     * Clears the startup trace config that has previously been stored
+     * so that tracing on startup can be disabled.
+     *
+     * @return A reference to this config
+     */
+    TraceLogConfig& clearStartupTrace();
+
+    /**
+     * @return a pointer to the TraceConfig (Because it is potentially null,
+     *         i.e. tracing should not start)
+     */
+    TraceConfig* getStartupTrace() const;
+
+    /**
+     * Factory method which sets up a TraceLogConfig from the
+     * environment variables
+     *
+     * Note: This is a member function because MSVC2012 can't do
+     * copy elision properly.
+     *
+     * @param the TraceLogConfig to initialise
+     */
+    TraceLogConfig& fromEnvironment();
+
+protected:
+    std::unique_ptr<TraceConfig> startup_trace;
 };
 
 } // namespace phosphor
