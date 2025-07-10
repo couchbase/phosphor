@@ -308,7 +308,7 @@ bool TraceLog::replaceChunk(ChunkTenant& ct) {
     return enabled && buffer && (ct.chunk = buffer->getChunk());
 }
 
-void TraceLog::evictThreads(std::lock_guard<TraceLog>& lh) {
+void TraceLog::evictThreads(std::lock_guard<TraceLog>&) {
     for (auto* chunk_tenant : registered_chunk_tenants) {
         chunk_tenant->lck.master().lock();
         chunk_tenant->chunk = nullptr;

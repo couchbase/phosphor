@@ -194,8 +194,8 @@ TEST_P(TraceBufferTest, fullChunks) {
     fill_chunk(buffer->getChunk());
     fill_chunk(buffer->getChunk());
     fill_chunk(buffer->getChunk());
-    int event_count = 0;
-    int i = 0;
+    size_t event_count = 0;
+    size_t i = 0;
     for (const auto& chunk : buffer->chunks()) {
         i += 1;
         event_count += chunk.count();

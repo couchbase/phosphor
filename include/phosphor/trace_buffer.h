@@ -80,7 +80,7 @@ public:
      * @return A const reference to a TraceEvent in the chunk
      *         that can be used to review the event data
      */
-    const TraceEvent& operator[](const int index) const;
+    const TraceEvent& operator[](const size_t index) const;
 
     /**
      * Determine if the chunk is full
@@ -229,7 +229,7 @@ public:
      * @throw std::logic_error if chunks are currently loaned
      *        out to chunk tenants.
      */
-    virtual const TraceChunk& operator[](const int index) const = 0;
+    virtual const TraceChunk& operator[](const size_t index) const = 0;
 
     /**
      * Used for determining the number of chunks in the buffer

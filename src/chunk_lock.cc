@@ -15,7 +15,7 @@
 
 namespace phosphor {
 
-ChunkLock::ChunkLock(non_trivial_constructor_t t) : state(State::Unlocked) {
+ChunkLock::ChunkLock(non_trivial_constructor_t) : state(State::Unlocked) {
 }
 
 ChunkLock::ChunkLock(const ChunkLock& other) : state(other.state.load()) {
@@ -103,7 +103,7 @@ void MasterChunkLock::unlock() {
     unlockMaster();
 }
 
-ChunkTenant::ChunkTenant(non_trivial_constructor_t t)
+ChunkTenant::ChunkTenant(non_trivial_constructor_t)
     : lck(non_trivial_constructor), chunk(nullptr), initialised(true) {
 }
 } // namespace phosphor

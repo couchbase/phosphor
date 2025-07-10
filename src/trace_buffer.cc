@@ -48,7 +48,7 @@ TraceEvent& TraceChunk::addEvent() {
     return chunk[next_free++];
 }
 
-const TraceEvent& TraceChunk::operator[](const int index) const {
+const TraceEvent& TraceChunk::operator[](const size_t index) const {
     return chunk[index];
 }
 
@@ -147,7 +147,7 @@ public:
         return BufferMode::fixed;
     }
 
-    const TraceChunk& operator[](const int index) const override {
+    const TraceChunk& operator[](const size_t index) const override {
         return buffer[index];
     }
 
@@ -252,7 +252,7 @@ public:
         return BufferMode::ring;
     }
 
-    const TraceChunk& operator[](const int index) const override {
+    const TraceChunk& operator[](const size_t index) const override {
         return buffer[index];
     }
 

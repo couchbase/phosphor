@@ -32,7 +32,7 @@ uint32_t getCurrentThreadID() {
 #if defined(__APPLE__)
     auto tid = pthread_mach_thread_np(pthread_self());
 #elif defined(__linux__)
-    pid_t tid = syscall(__NR_gettid);
+    pid_t tid = static_cast<pid_t>(syscall(SYS_gettid));
 #elif defined(_WIN32)
     auto tid = GetCurrentThreadId();
 #elif defined(__FreeBSD__)

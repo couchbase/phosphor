@@ -39,7 +39,7 @@ void NewCategories(benchmark::State& state) {
     if (state.thread_index() == 0) {
         size_t i = 1;
         for (auto& category : categories) {
-            category = std::string('A', i++);
+            category = std::string(i++, 'A');
         }
         registry = utils::make_unique<CategoryRegistry>();
         barrier.reset(state.threads());
