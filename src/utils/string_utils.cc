@@ -1,4 +1,3 @@
-/* -*- Mode: C++; tab-width: 4; c-basic-offset: 4; indent-tabs-mode: nil -*- */
 /*
  *     Copyright 2016-Present Couchbase, Inc.
  *
@@ -16,8 +15,7 @@
 
 #include "string_utils.h"
 
-namespace phosphor {
-namespace utils {
+namespace phosphor::utils {
 
 std::string format_string(const char* fmt...) {
     std::vector<char> buffer;
@@ -46,17 +44,14 @@ std::string format_string(const char* fmt...) {
     return buffer.data();
 }
 
-std::string escape_json(const std::string& input) {
+static std::string escape_json(const std::string_view input) {
     std::string output;
     output.reserve(input.length());
 
-    for (std::string::size_type i = 0; i < input.length(); ++i) {
-        switch (input[i]) {
+    for (const auto& c : input) {
+        switch (c) {
         case '"':
             output += "\\\"";
-            break;
-        case '/':
-            output += "\\/";
             break;
         case '\b':
             output += "\\b";
@@ -77,7 +72,7 @@ std::string escape_json(const std::string& input) {
             output += "\\\\";
             break;
         default:
-            output += input[i];
+            output.push_back(c);
             break;
         }
     }
@@ -184,5 +179,4 @@ size_t strnlen_s(const char* s, size_t maxsize) {
 
     return count;
 }
-} // namespace utils
-} // namespace phosphor
+} // namespace phosphor::utils

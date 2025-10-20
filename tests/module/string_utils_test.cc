@@ -39,7 +39,8 @@ using phosphor::utils::to_json;
 TEST(ToJSONTest, test) {
     // TODO: More extensive testing of escaping
     EXPECT_EQ("\"Hello, World\"", to_json("Hello, World"));
-    EXPECT_EQ("\"\\b\\f\\n\\r\\t\\\\\\/\\\"\"", to_json("\b\f\n\r\t\\/\""));
+    const std::string expected = R"("\b\f\n\r\t\\/\"")";
+    EXPECT_EQ(expected, to_json("\b\f\n\r\t\\/\""));
 }
 
 using phosphor::utils::split_string;
