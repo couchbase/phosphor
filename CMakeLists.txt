@@ -1,13 +1,6 @@
 project(phosphor)
 
-if (WIN32)
-    # Set Compiler warning level to /W4
-    add_compile_options(/W4)
-    if (COUCHBASE_KV_COMMIT_VALIDATION)
-        # Enable warnings as errors when building under CV
-        add_compile_definitions(/WX)
-    endif ()
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(
             -Werror=shorten-64-to-32
             -Werror=implicit-int-conversion)
