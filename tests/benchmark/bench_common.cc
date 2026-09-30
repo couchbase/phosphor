@@ -10,6 +10,8 @@
  */
 
 #include <benchmark/benchmark.h>
+#include <cstdlib>
+#include <string>
 
 /*
  * Helper functions for benchmarking phosphor.
@@ -18,7 +20,7 @@
 namespace phosphor {
 
 int benchNumThreads() {
-    char* override = getenv("PHOSPHOR_BENCH_NUM_THREADS");
+    char* override = std::getenv("PHOSPHOR_BENCH_NUM_THREADS");
     if (override != nullptr) {
         return std::stoi(override);
     }
